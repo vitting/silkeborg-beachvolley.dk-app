@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:validate/validate.dart';
 
 class UserCredentials {
@@ -17,6 +18,13 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    return SilkeborgBeachvolleyScaffold(
+      title: "Silkeborg Beachvolley",
+      body: _main()
+    );
+  }
+
+  Widget _main() {
     return Container(
       padding: EdgeInsets.all(8.0),
       child: Form(

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:intl/date_symbol_data_local.dart';
 import "package:intl/intl.dart";
 import "package:flutter/material.dart";
+import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:validate/validate.dart';
 
 class User {
@@ -31,21 +32,9 @@ class _EnrollmentState extends State<Enrollment> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(8.0),
-      child: Form(
-          key: _formKey,
-          child: ListView(
-            children: <Widget>[
-              _nameField(),
-              _adressField(),
-              _postalcodeField(),
-              _birthdayField(),
-              _emailField(),
-              _mobilenumberField(),
-              _sendButton(),
-            ],
-          )),
+    return SilkeborgBeachvolleyScaffold(
+      title: "Sileborg Beachvolley",
+      body: _main(),
     );
   }
 
@@ -66,6 +55,25 @@ class _EnrollmentState extends State<Enrollment> {
         });
       });
     }
+  }
+
+  Widget _main() {
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      child: Form(
+          key: _formKey,
+          child: ListView(
+            children: <Widget>[
+              _nameField(),
+              _adressField(),
+              _postalcodeField(),
+              _birthdayField(),
+              _emailField(),
+              _mobilenumberField(),
+              _sendButton(),
+            ],
+          )),
+    );
   }
 
   Widget _nameField() {

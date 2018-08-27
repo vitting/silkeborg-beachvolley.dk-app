@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:silkeborgbeachvolley/ui/scoreboard/scoreboard_controls_points.dart';
 import 'package:silkeborgbeachvolley/ui/scoreboard/scoreboard_controls_sets.dart';
 import 'package:silkeborgbeachvolley/ui/scoreboard/scoreboard_controls_timeouts.dart';
@@ -27,6 +28,13 @@ class _ScoreBoardState extends State<ScoreBoard> {
 
   @override
   Widget build(BuildContext context) {
+    return SilkeborgBeachvolleyScaffold(
+      title: "Silkeborg Beachvolley",
+      body: _main()
+    );
+  }
+
+  Widget _main() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(

@@ -3,7 +3,8 @@ import "package:flutter/material.dart";
 class SilkeborgBeachvolleyScaffold extends StatelessWidget {
   final String title;
   final Widget body;
-  SilkeborgBeachvolleyScaffold({this.title, this.body});
+  final Widget floatingActionButton;
+  SilkeborgBeachvolleyScaffold({this.title, this.body, this.floatingActionButton});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,7 +12,8 @@ class SilkeborgBeachvolleyScaffold extends StatelessWidget {
         title: Text(title),
         centerTitle: true
       ),
-      body: body
+      body: body,
+      floatingActionButton: floatingActionButton
     );
   }
 }
