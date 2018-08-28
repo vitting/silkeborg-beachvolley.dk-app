@@ -3,17 +3,17 @@ import "package:flutter/material.dart";
 class SilkeborgBeachvolleyScaffold extends StatelessWidget {
   final String title;
   final Widget body;
-  final Widget floatingActionButton;
-  SilkeborgBeachvolleyScaffold({this.title, this.body, this.floatingActionButton});
+  final FloatingActionButton floatingActionButton;
+  final BottomNavigationBar bottomNavigationBar;
+  SilkeborgBeachvolleyScaffold(
+      {this.title, this.body, this.floatingActionButton, this.bottomNavigationBar});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-        centerTitle: true
-      ),
+      appBar: AppBar(title: Text(title), centerTitle: true),
       body: body,
-      floatingActionButton: floatingActionButton
+      floatingActionButton: floatingActionButton,
+      bottomNavigationBar: bottomNavigationBar
     );
   }
 }

@@ -70,6 +70,6 @@ class NewsListItem extends StatelessWidget {
   Future _openNewsItemDetail(BuildContext context) async {
     var result = await Navigator
         .of(context)
-        .push(MaterialPageRoute(builder: (context) => NewsDetailItem(item)));
+        .push(MaterialPageRoute(builder: (context) => NewsDetailItem(item), fullscreenDialog: true));
   }
 }

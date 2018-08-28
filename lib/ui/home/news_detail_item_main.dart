@@ -94,7 +94,7 @@ class _NewsDetailItemState extends State<NewsDetailItem> {
           decoration: InputDecoration(
               labelText: "Skriv kommentar",
               suffixIcon: IconButton(
-                icon: Icon(Icons.insert_comment),
+                icon: Icon(Icons.send),
                 onPressed: () {
                   if (newComment.text.isNotEmpty) {
                     var comment = {
