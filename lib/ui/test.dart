@@ -1,14 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-
-final FirebaseAuth _auth = FirebaseAuth.instance;
-final GoogleSignIn _googleSignIn = new GoogleSignIn();
-final FacebookLogin _facebookSignIn = new FacebookLogin();
 
 class TestWidget extends StatefulWidget {
   @override
@@ -16,21 +10,8 @@ class TestWidget extends StatefulWidget {
 }
 
 class _TestWidgetState extends State<TestWidget> {
-  bool _isLoggedIn = false;
-
   @override
     void initState() {
-      //User is not signed in
-      // if (_auth.currentUser() == null) {
-      //   setState(() {
-      //     _isLoggedIn = false;          
-      //   });
-      // } else {
-      //   setState(() {
-      //     _isLoggedIn = true;          
-      //   });
-      // }
-
       super.initState();
     }
 
@@ -43,8 +24,8 @@ class _TestWidgetState extends State<TestWidget> {
           children: <Widget>[
             RaisedButton(
               onPressed: () {
-                _signInWithGoogle().then((String value) {
-                  print(value);
+                UserAuth.signInWithGoogle().then((FirebaseUser value) {
+                  print("$value");
                 }).catchError((onError) {
                   print(onError);
                 });
@@ -53,34 +34,27 @@ class _TestWidgetState extends State<TestWidget> {
             ),
             RaisedButton(
               onPressed: () {
-                _signOutWithGoogle();
+                UserAuth.signOutWithGoogle();
               },
               child: Text("Google Signout")
             ),
             RaisedButton(
               onPressed: () {
-                _signInWithFacebook().then((String value) {
-                  print(value);
+                UserAuth.signInWithFacebook().then((FirebaseUser value) {
+                  print("$value");
                 }).catchError((error) => print(error));
               },
               child: Text("Facebook Signin")
             ),
             RaisedButton(
               onPressed: () {
-                _signOutWithFacebook();
+                UserAuth.signOutWithFacebook();
               },
               child: Text("Facebook SignOut")
             ),
             RaisedButton(
               onPressed: () {
-                _facebookSignIn.isLoggedIn.then((value) => print(value)).catchError((error) => print(error));
-                FirebaseAuth.instance.signOut();
-              },
-              child: Text("Firebase SignOut")
-            ),
-            RaisedButton(
-              onPressed: () {
-                _currentUser().then((user) {
+                UserAuth.currentUser.then((user) {
                   print("CurrentUSER: $user");
                 }).catchError((onError) {
                   print(onError);
@@ -92,46 +66,6 @@ class _TestWidgetState extends State<TestWidget> {
         ),
       ),
     );
-  }
-
-
-  Future<void> _signOutWithFacebook() async {
-    await _facebookSignIn.logOut();
-    await _auth.signOut();
-  }
-
-  Future<String> _signInWithFacebook() async {
-    FacebookLoginResult result = await _facebookSignIn.logInWithReadPermissions(["email"]);
-    FirebaseUser user = await _auth.signInWithFacebook(
-      accessToken: result.accessToken.token
-    );
-
-    final FirebaseUser currentUser = await _auth.currentUser();
-    return 'signInWithFacebook succeeded: $user';
-  }
-
-
-  Future<FirebaseUser> _currentUser() async  {
-    final FirebaseUser currentUser = await _auth.currentUser();
-    
-    return currentUser;
-  }
-
-  Future<void> _signOutWithGoogle() async {
-    await _googleSignIn.signOut();
-    await _auth.signOut();
-  }
-
-  Future<String> _signInWithGoogle() async {
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
-    final FirebaseUser user = await _auth.signInWithGoogle(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-    final FirebaseUser currentUser = await _auth.currentUser();
-    return 'signInWithGoogle succeeded: $user';
   }
 }
 

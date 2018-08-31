@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import "package:flutter/material.dart";
 import 'package:silkeborgbeachvolley/ui/home/create_news_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/news_list_item.dart';
@@ -12,18 +11,37 @@ class News extends StatefulWidget {
 }
 
 class _NewsState extends State<News> {
+  
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: "Silkeborg Beachvolley",
-      body: _main(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          _openCreateNewsDialog();
-        },
-      ),
-    );
+        title: "Silkeborg Beachvolley",
+        body: _main(),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            _openCreateNewsDialog();
+          },
+        ),
+        actions: <Widget>[
+          PopupMenuButton<int>(
+            initialValue: 1,
+            onSelected: (value) async {
+              if (value == 1) {
+                Navigator.pushNamed(context, "/settings");   
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem(
+                  child: Text("Indstillinger"),
+                  value: 1,
+                )
+              ];
+            },
+            icon: Icon(Icons.more_vert),
+          )
+        ]);
   }
 
   Widget _main() {
@@ -37,16 +55,15 @@ class _NewsState extends State<News> {
   }
 
   Future _openCreateNewsDialog() async {
-    CreateNewsValues createNewsValues = await Navigator
-        .of(context)
+    CreateNewsValues createNewsValues = await Navigator.of(context)
         .push(new MaterialPageRoute<CreateNewsValues>(
             builder: (BuildContext context) {
               return new CreateNews();
             },
-            fullscreenDialog: true));
+            fullscreenDialog: false));
 
-      if (createNewsValues != null) {
-        print(createNewsValues.body + "/" + createNewsValues.type.toString());
-      }
+    if (createNewsValues != null) {
+      print(createNewsValues.body + "/" + createNewsValues.type.toString());
+    }
   }
 }
