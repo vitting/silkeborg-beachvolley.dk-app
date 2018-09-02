@@ -25,36 +25,4 @@ class SilkeborgBeachvolleyScaffold extends StatelessWidget {
         floatingActionButton: floatingActionButton,
         bottomNavigationBar: bottomNavigationBar);
   }
-
-  // List<Widget> _actions(BuildContext context) {
-  //   return <Widget>[
-  //     PopupMenuButton<int>(
-  //       initialValue: 1,
-  //       onSelected: (value) {
-  //         _actionsSelected(context, value);
-  //       },
-  //       itemBuilder: (BuildContext context) {
-  //         return [
-  //           PopupMenuItem(
-  //             child: Text("Indstillinger"),
-  //             value: 1,
-  //           )
-  //         ];
-  //       },
-  //       icon: Icon(Icons.more_vert),
-  //     )
-  //   ];
-  // }
-
-  // void _actionsSelected(BuildContext context, int value) async {
-  //   if (value == 1) {
-  //     var result = await Navigator.pushNamed(context, "/settings");
-
-  //     if (result) {
-        
-  //     }
-
-
-  //   }
-  // }
 }

@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import "package:shared_preferences/shared_preferences.dart";
+import 'package:silkeborgbeachvolley/helpers/local_user_info_class.dart';
 
 class UserAuth {
   static FirebaseAuth _firebaseAuth;
@@ -51,6 +52,8 @@ class UserAuth {
   //SignIn with Google credentials and signin user in Firebase Auth
   static Future<FirebaseUser> signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await googleSignIn.signIn();
+    if (googleUser == null) return null;
+
     final GoogleSignInAuthentication _googleAuth =
         await googleUser.authentication;
     final FirebaseUser user = await firebaseAuth.signInWithGoogle(
@@ -79,6 +82,8 @@ class UserAuth {
 
     FacebookLoginResult result =
         await facebookSignIn.logInWithReadPermissions(facebookPermissions);
+    
+    if (result.status == FacebookLoginStatus.cancelledByUser) return null;
     FirebaseUser user = await firebaseAuth.signInWithFacebook(
         accessToken: result.accessToken.token);
 
@@ -105,5 +110,30 @@ class UserAuth {
   static Future<bool> setLoginProvider(String providerName) async {
     final SharedPreferences _prefs = await sharedPrefs;
     return await _prefs.setString("login_provider", providerName);
+  }
+
+  static Future<void> setLocalUserInfo(FirebaseUser user) async {
+    final SharedPreferences _prefs = await sharedPrefs;
+    String _name;
+    String _photoUrl;
+    String _id;
+
+    if (user != null) {
+      _name = user.displayName;
+      _photoUrl = user.photoUrl;
+      _id = user.uid;
+    }
+
+    await _prefs.setString("name", _name);
+    await _prefs.setString("photo_url", _photoUrl);
+    await _prefs.setString("user_id", _id);
+  }
+
+  static Future<LocalUserInfo> getLoclUserInfo() async {
+    final SharedPreferences _prefs = await sharedPrefs;
+    final _id = _prefs.getString("user_id");
+    final _name = _prefs.getString("name");
+    final _photoUrl = _prefs.getString("photo_url");
+    return LocalUserInfo(_id, _name, _photoUrl);
   }
 }

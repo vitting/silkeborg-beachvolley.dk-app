@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
-import 'package:silkeborgbeachvolley/ui/home/news_main.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/bulletin_main.dart';
 import 'package:silkeborgbeachvolley/ui/login/login_main.dart';
 
 class Home extends StatefulWidget {
@@ -14,6 +14,8 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     UserAuth.firebaseAuth.onAuthStateChanged.listen((user) {
+      UserAuth.setLocalUserInfo(user);
+    
       setState(() {
         isLoggedIn = user == null ? false : true;        
       });
@@ -22,6 +24,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoggedIn ? News() : Login();
+    return isLoggedIn ? Bulletin() : Login();
   }
 }

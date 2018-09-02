@@ -1,0 +1,68 @@
+import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:silkeborgbeachvolley/helpers/bulletin_comment_item_class.dart';
+import 'package:silkeborgbeachvolley/helpers/bulletin_item_class.dart';
+
+class BulletinFirestore {
+  static final _bulletinCollectionName = "bulletins";
+  static final _bulletinCommentsCollectionName = "bulletins_comments";
+  static Firestore _firestore;
+
+  static Firestore get firestoreInstance {
+    if (_firestore == null) {
+      _firestore = Firestore.instance;
+    }
+
+    return _firestore;
+  }
+
+  static Stream<QuerySnapshot> getAllBulletinComments(String commentsId) {
+    try {
+      return firestoreInstance.collection(_bulletinCommentsCollectionName).where(
+        "id",
+        isEqualTo: commentsId
+      ).snapshots();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static Future<void> saveCommentItem(BulletinCommentItem bulletinCommentItem) async {
+    try {
+      return await firestoreInstance.collection(_bulletinCommentsCollectionName).add(bulletinCommentItem.toMap());
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static Stream<QuerySnapshot> getAllBulletinsAsStream() {
+    try {
+      return firestoreInstance.collection(_bulletinCollectionName).where(
+        "type",
+        isEqualTo: "news"
+      ).snapshots();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static Future<void> saveBulletinItem(BulletinItem bulletinItem) async {
+    try {
+      return await firestoreInstance
+        .collection(_bulletinCollectionName).document(bulletinItem.id).setData(bulletinItem.toMap());  
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static Future<void> updateBulletinItem(BulletinItem bulletinItem) async {
+    try {
+      return await firestoreInstance
+        .collection(_bulletinCollectionName)
+        .document(bulletinItem.id)
+        .updateData(bulletinItem.toMap());  
+    } catch (e) {
+      print(e);
+    }
+  }
+}
