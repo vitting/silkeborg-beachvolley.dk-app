@@ -1,7 +1,7 @@
 import 'package:silkeborgbeachvolley/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_formatters.dart';
 
-class BulletinItem {
+class BulletinItemData {
   String id;
   String type;
   String body;
@@ -11,7 +11,7 @@ class BulletinItem {
   String authorPhotoUrl;
   int numberOfcomments;
   
-  BulletinItem(
+  BulletinItemData(
       {this.id = "",
       this.type = BulletinType.none,
       this.body = "",
@@ -39,8 +39,8 @@ class BulletinItem {
   String get creationDateFormatted =>
       DateTimeFormatters.formatDateDDMMYYYHHNN(creationDate);
 
-  static BulletinItem fromMap(Map<String, dynamic> item) {
-    return new BulletinItem(
+  static BulletinItemData fromMap(Map<String, dynamic> item) {
+    return new BulletinItemData(
         id: item["id"] == null ? "" : item["id"],
         type: item["type"] == null ? "" : item["type"],
         authorId: item["author"]["id"] == null ? "" : item["author"]["id"],

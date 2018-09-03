@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:silkeborgbeachvolley/helpers/bulletin_comment_item_class.dart';
-import 'package:silkeborgbeachvolley/helpers/bulletin_item_class.dart';
+import 'package:silkeborgbeachvolley/helpers/bulletin_item_data_class.dart';
 
 class BulletinFirestore {
   static final _bulletinCollectionName = "bulletins";
@@ -46,7 +46,7 @@ class BulletinFirestore {
     }
   }
 
-  static Future<void> saveBulletinItem(BulletinItem bulletinItem) async {
+  static Future<void> saveBulletinItem(BulletinItemData bulletinItem) async {
     try {
       return await firestoreInstance
         .collection(_bulletinCollectionName).document(bulletinItem.id).setData(bulletinItem.toMap());  
@@ -55,7 +55,7 @@ class BulletinFirestore {
     }
   }
 
-  static Future<void> updateBulletinItem(BulletinItem bulletinItem) async {
+  static Future<void> updateBulletinItem(BulletinItemData bulletinItem) async {
     try {
       return await firestoreInstance
         .collection(_bulletinCollectionName)

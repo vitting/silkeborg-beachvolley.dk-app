@@ -3,7 +3,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/bulletin_firestore.dart';
-import 'package:silkeborgbeachvolley/helpers/bulletin_item_class.dart';
+import 'package:silkeborgbeachvolley/helpers/bulletin_item_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/local_user_info_class.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
@@ -19,7 +19,7 @@ class CreateBulletinItem extends StatefulWidget {
 
 class _CreateBulletinItemState extends State<CreateBulletinItem> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final BulletinItem _bulletinItem = new BulletinItem(type: BulletinType.news);
+  final BulletinItemData _bulletinItem = new BulletinItemData(type: BulletinType.news);
   bool _saving = false;
 
   @override
@@ -120,7 +120,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
                     _saving = false;      
                   });
                   Navigator.of(context)
-                    .pop<BulletinItem>(_bulletinItem);
+                    .pop<BulletinItemData>(_bulletinItem);
                 }
               },
             )),
@@ -134,7 +134,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
     );
   }
 
-  Future<void> _saveBulletinItem(BulletinItem item) async {
+  Future<void> _saveBulletinItem(BulletinItemData item) async {
     final Uuid _uuid = new Uuid();
     LocalUserInfo _localuserInfo = await UserAuth.getLoclUserInfo();
     item.authorId = _localuserInfo.id;

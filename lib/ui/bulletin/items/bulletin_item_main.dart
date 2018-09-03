@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/helpers/bulletin_item_class.dart';
+import 'package:silkeborgbeachvolley/helpers/bulletin_item_data_class.dart';
+import 'package:silkeborgbeachvolley/helpers/bulletin_news_item_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/local_user_info_class.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/bulletin_detail_item_main.dart';
@@ -14,28 +15,32 @@ class BulletinItemMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BulletinItem _bulletinItem = BulletinItem.fromMap(item);
-    return _bulletinItemBody(context, _bulletinItem);
+    BulletinItemData _bulletinItem = BulletinItemData.fromMap(item);
+    return _bulletinItemBody2(context, _bulletinItem);
   }
 
-  Widget _bulletinItemBody(BuildContext context, BulletinItem bulletinItem) {
+  Widget _bulletinItemBody(BuildContext context, BulletinItemData bulletinItem) {
     return BulletinNewsItem(
-      bulletinItem: bulletinItem,
-      onTap: () async {
-        _navigateTobulletinDetailItem(context, bulletinItem);
-      },
-      onLongPress: () async {
-        LocalUserInfo localUserInfo = await UserAuth.getLoclUserInfo();
-        print("${localUserInfo.id} / ${bulletinItem.authorId}");
-        if (localUserInfo.id == bulletinItem.authorId)
-          _bulletinItemPopupMenu(context);
-      }
-    );
+        bulletinItem: bulletinItem,
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+        onTap: () async {
+          _navigateTobulletinDetailItem(context, bulletinItem);
+        },
+        onLongPress: () async {
+          LocalUserInfo localUserInfo = await UserAuth.getLoclUserInfo();
+          print("${localUserInfo.id} / ${bulletinItem.authorId}");
+          if (localUserInfo.id == bulletinItem.authorId)
+            _bulletinItemPopupMenu(context);
+        });
   }
 
-  Widget _bulletinItemBody2(BuildContext context, BulletinItem bulletinItem) {
+  Widget _bulletinItemBody2(BuildContext context, BulletinItemData bulletinItem) {
     return BulletinEventItem(
       bulletinItem: bulletinItem,
+      maxLines: 3,
+      overflow: TextOverflow.ellipsis,
+      showDivider: true,
       onTap: () async {
         _navigateTobulletinDetailItem(context, bulletinItem);
       },
@@ -48,52 +53,24 @@ class BulletinItemMain extends StatelessWidget {
     );
   }
 
-  Widget _bulletinItemBody3(BuildContext context, BulletinItem bulletinItem) {
+  Widget _bulletinItemBody3(BuildContext context, BulletinItemData bulletinItem) {
     return BulletinGameItem(
-      bulletinItem: bulletinItem,
-      onTap: () async {
-        _navigateTobulletinDetailItem(context, bulletinItem);
-      },
-      onLongPress: () async {
-        LocalUserInfo localUserInfo = await UserAuth.getLoclUserInfo();
-        print("${localUserInfo.id} / ${bulletinItem.authorId}");
-        if (localUserInfo.id == bulletinItem.authorId)
-          _bulletinItemPopupMenu(context);
-      }
-    );
-  }
-
-  Widget _bulletinDateTimeNumberOfComments(
-      BuildContext context, BulletinItem bulletinItem) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
-      child: Row(
-        children: <Widget>[
-          Icon(Icons.access_time, size: 12.0),
-          Padding(
-              padding: const EdgeInsets.only(left: 5.0, right: 20.0),
-              child: Text(
-                bulletinItem.creationDateFormatted,
-                textAlign: TextAlign.start,
-                style: TextStyle(fontSize: 12.0),
-              )),
-          Icon(
-            Icons.chat_bubble_outline,
-            size: 12.0,
-          ),
-          Padding(
-              padding: const EdgeInsetsDirectional.only(start: 5.0),
-              child: Text(
-                bulletinItem.numberOfcomments.toString(),
-                style: TextStyle(fontSize: 12.0),
-              ))
-        ],
-      ),
-    );
+        bulletinItem: bulletinItem,
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+        onTap: () async {
+          _navigateTobulletinDetailItem(context, bulletinItem);
+        },
+        onLongPress: () async {
+          LocalUserInfo localUserInfo = await UserAuth.getLoclUserInfo();
+          print("${localUserInfo.id} / ${bulletinItem.authorId}");
+          if (localUserInfo.id == bulletinItem.authorId)
+            _bulletinItemPopupMenu(context);
+        });
   }
 
   Future<bool> _navigateTobulletinDetailItem(
-      BuildContext context, BulletinItem bulletinItem) async {
+      BuildContext context, BulletinItemData bulletinItem) async {
     return await Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => BulletinDetailItem(bulletinItem)));
   }

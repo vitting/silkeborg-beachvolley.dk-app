@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/helpers/bulletin_item_class.dart';
+import 'package:silkeborgbeachvolley/helpers/bulletin_item_data_class.dart';
 
 class BulletinItemDateTimeNumberOfComments extends StatelessWidget {
-  final BulletinItem bulletinItem;
+  final BulletinItemData bulletinItem;
 
   BulletinItemDateTimeNumberOfComments(this.bulletinItem);
 

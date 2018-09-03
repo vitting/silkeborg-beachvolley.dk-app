@@ -4,13 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/bulletin_comment_item_class.dart';
 import 'package:silkeborgbeachvolley/helpers/bulletin_firestore.dart';
-import 'package:silkeborgbeachvolley/helpers/bulletin_item_class.dart';
+import 'package:silkeborgbeachvolley/helpers/bulletin_item_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/local_user_info_class.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_news_item.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class BulletinDetailItem extends StatefulWidget {
-  final BulletinItem bulletinItem;
+  final BulletinItemData bulletinItem;
   BulletinDetailItem(this.bulletinItem);
 
   @override
@@ -18,14 +19,13 @@ class BulletinDetailItem extends StatefulWidget {
 }
 
 class _BulletinDetailItemState extends State<BulletinDetailItem> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ScrollController _listScrollController = ScrollController();
-  int _numberOfComments = 0;
-  BulletinItem _bulletinItem;
+  BulletinItemData _bulletinItem;
   @override
   void initState() {
     super.initState();
     _bulletinItem = widget.bulletinItem;
-    _numberOfComments = _bulletinItem.numberOfcomments;
   }
 
   @override
@@ -50,12 +50,12 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
       padding: EdgeInsets.all(10.0),
       children: <Widget>[
         _firstItem(),
+        _addComment(),
         StreamBuilder(
           stream: BulletinFirestore.getAllBulletinComments(_bulletinItem.id),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) return Text('Henter data...');
-            if (snapshot.hasData) _numberOfComments = snapshot.data.documents.length;
             return Column(
                 children: snapshot.data.documents
                     .map<Widget>((DocumentSnapshot document) {
@@ -68,69 +68,38 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
   }
 
   Widget _firstItem() {
-    return ListBody(
-      children: <Widget>[
-        ListTile(
-          title: _nameDateNumberOfComments(),
-          leading: CircleAvatar(
-              backgroundImage: NetworkImage(_bulletinItem.authorPhotoUrl)),
-          subtitle: Text(_bulletinItem.body),
-        ),
-        _addComment()
-      ],
-    );
-  }
-
-  _nameDateNumberOfComments() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(_bulletinItem.authorName),
-        Row(
-          children: <Widget>[
-            Icon(Icons.access_time, size: 10.0),
-            Padding(
-              padding: const EdgeInsets.only(left: 5.0),
-              child: Text(
-                _bulletinItem.creationDateFormatted,
-                style: TextStyle(fontSize: 10.0),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 5.0),
-              child: Icon(Icons.chat_bubble_outline, size: 10.0),
-            ),
-            Text(_numberOfComments.toString(),
-                style: TextStyle(fontSize: 10.0))
-          ],
-        )
-      ],
+    return BulletinNewsItem(
+      bulletinItem: _bulletinItem,
     );
   }
 
   Widget _addComment() {
-    TextEditingController newCommentController = new TextEditingController();
-
+    BulletinCommentItem bulletinCommentItem = new BulletinCommentItem();
     return ListBody(
       children: <Widget>[
-        TextField(
-          controller: newCommentController,
+        Form(
+          key: _formKey,
+          child: TextFormField(
+          onSaved: (String value) {
+            bulletinCommentItem.body = value;
+          },
+          validator: (String value) {
+            if (value.isEmpty) return "Skal ydfyldes";
+          },  
           decoration: InputDecoration(
               labelText: "Skriv en kommentar",
               suffixIcon: IconButton(
                   icon: Icon(Icons.send),
                   onPressed: () {
-                    if (newCommentController.text.isNotEmpty) {
-                      BulletinCommentItem bulletinCommentItem =
-                          new BulletinCommentItem(
-                              body: newCommentController.text);
-
+                    if (_formKey.currentState.validate()) {
+                      _formKey.currentState.save();
+                      _formKey.currentState.reset();
                       _saveBulletinCommentItem(bulletinCommentItem);
                     }
-
-                    newCommentController.clear();
                   })),
-        )
+        ),
+        ),
+        
       ],
     );
   }
