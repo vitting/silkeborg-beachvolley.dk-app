@@ -19,18 +19,20 @@ class BulletinDetailItem extends StatefulWidget {
 
 class _BulletinDetailItemState extends State<BulletinDetailItem> {
   final ScrollController _listScrollController = ScrollController();
+  int _numberOfComments = 0;
   BulletinItem _bulletinItem;
   @override
   void initState() {
     super.initState();
     _bulletinItem = widget.bulletinItem;
+    _numberOfComments = _bulletinItem.numberOfcomments;
   }
 
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
       title: "Silkeborg Beachvolley",
-      body: _main2(),
+      body: _main(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _listScrollController.animateTo(0.0,
@@ -42,7 +44,7 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
     );
   }
 
-  Widget _main2() {
+  Widget _main() {
     return ListView(
       controller: _listScrollController,
       padding: EdgeInsets.all(10.0),
@@ -53,6 +55,7 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) return Text('Henter data...');
+            if (snapshot.hasData) _numberOfComments = snapshot.data.documents.length;
             return Column(
                 children: snapshot.data.documents
                     .map<Widget>((DocumentSnapshot document) {
@@ -64,7 +67,21 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
     );
   }
 
-  _title() {
+  Widget _firstItem() {
+    return ListBody(
+      children: <Widget>[
+        ListTile(
+          title: _nameDateNumberOfComments(),
+          leading: CircleAvatar(
+              backgroundImage: NetworkImage(_bulletinItem.authorPhotoUrl)),
+          subtitle: Text(_bulletinItem.body),
+        ),
+        _addComment()
+      ],
+    );
+  }
+
+  _nameDateNumberOfComments() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -83,24 +100,10 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
               padding: const EdgeInsets.only(left: 20.0, right: 5.0),
               child: Icon(Icons.chat_bubble_outline, size: 10.0),
             ),
-            Text(_bulletinItem.numberOfcomments.toString(),
+            Text(_numberOfComments.toString(),
                 style: TextStyle(fontSize: 10.0))
           ],
         )
-      ],
-    );
-  }
-
-  Widget _firstItem() {
-    return ListBody(
-      children: <Widget>[
-        ListTile(
-          title: _title(),
-          leading: CircleAvatar(
-              backgroundImage: NetworkImage(_bulletinItem.authorPhotoUrl)),
-          subtitle: Text(_bulletinItem.body),
-        ),
-        _addComment()
       ],
     );
   }

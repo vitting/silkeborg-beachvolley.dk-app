@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/helpers/bulletin_item_class.dart';
 import 'package:silkeborgbeachvolley/helpers/bulletin_type_enum.dart';
@@ -54,7 +55,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
               RadioListTile<String>(
                 dense: true,
                 title: Text("Nyhed"),
-                secondary: Icon(Icons.receipt),
+                secondary: Icon(FontAwesomeIcons.newspaper),
                 groupValue: radioGroupValue,
                 value: BulletinType.news,
                 onChanged: (value) {
@@ -67,7 +68,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
               RadioListTile<String>(
                 dense: true,
                 title: Text("Begivenhed"),
-                secondary: Icon(Icons.info),
+                secondary: Icon(FontAwesomeIcons.calendarTimes),
                 groupValue: radioGroupValue,
                 value: BulletinType.event,
                 onChanged: (value) {
@@ -80,7 +81,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
               RadioListTile<String>(
                 dense: true,
                 title: Text("Spil"),
-                secondary: Icon(Icons.wb_sunny),
+                secondary: Icon(FontAwesomeIcons.volleyballBall),
                 groupValue: radioGroupValue,
                 value: BulletinType.play,
                 onChanged: (value) {

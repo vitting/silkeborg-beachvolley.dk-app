@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/helpers/bulletin_item_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/create_bulletin_item_main.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/bulletin_news_item.dart';
-// import 'package:silkeborgbeachvolley/ui/bulletin/testdata.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_item_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class Bulletin extends StatefulWidget {
@@ -43,15 +43,15 @@ class _BulletinState extends State<Bulletin> {
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           title: Text("Nyheder"),
-          icon: Icon(Icons.announcement),
+          icon: Icon(FontAwesomeIcons.newspaper),
         ),
         BottomNavigationBarItem(
-          title: Text("Arrangementer"),
-          icon: Icon(Icons.announcement),
+          title: Text("Begivenheder"),
+          icon: Icon(FontAwesomeIcons.calendarTimes),
         ),
         BottomNavigationBarItem(
           title: Text("Spil"),
-          icon: Icon(Icons.announcement),
+          icon: Icon(FontAwesomeIcons.volleyballBall),
         )
       ],
     );
@@ -83,12 +83,12 @@ class _BulletinState extends State<Bulletin> {
     return StreamBuilder(
       stream: BulletinFirestore.getAllBulletinsAsStream(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (!snapshot.hasData) return new Text('Henter data...');
+        if (!snapshot.hasData) return new Text('Henter opsalg...');
         return ListView.builder(
           itemCount: snapshot.data.documents.length,
           itemBuilder: (BuildContext context, int position) {
             DocumentSnapshot item = snapshot.data.documents[position];
-            return BulletinNewsItem(item.data);
+            return BulletinItemMain(item.data);
           },
         );
       },

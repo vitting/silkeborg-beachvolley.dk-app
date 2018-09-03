@@ -13,6 +13,7 @@ dependencies:
   uuid: ^1.0.3
   modal_progress_hud: ^0.1.0
   date_format: ^1.0.5
+  font_awesome_flutter: ^8.0.1
   flutter:
     sdk: flutter
 

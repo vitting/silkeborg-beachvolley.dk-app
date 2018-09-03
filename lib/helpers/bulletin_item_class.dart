@@ -52,6 +52,6 @@ class BulletinItem {
         body: item["body"] == null ? "" : item["body"],
         creationDate: item["creationDate"] == null ? "" : item["creationDate"],
         numberOfcomments:
-            item["numberOfComments"] == null ? 0 : item["numberOfComments"]);
+            item["numberOfcomments"] == null ? 0 : item["numberOfcomments"]);
   }
 }
