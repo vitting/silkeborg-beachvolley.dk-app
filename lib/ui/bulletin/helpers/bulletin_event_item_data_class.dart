@@ -1,6 +1,6 @@
-import 'package:silkeborgbeachvolley/helpers/bulletin_item_data_class.dart';
-import 'package:silkeborgbeachvolley/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_formatters.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 
 class BulletinEventItemData extends BulletinItemData {
   DateTime eventStartDate;

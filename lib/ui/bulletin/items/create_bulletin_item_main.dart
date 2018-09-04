@@ -2,10 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:silkeborgbeachvolley/helpers/bulletinItemCreator_class.dart';
-import 'package:silkeborgbeachvolley/helpers/bulletin_firestore.dart';
-import 'package:silkeborgbeachvolley/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_formatters.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletinItemCreator_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 enum EventDateTimeType { startDate, endDate, startTime, endTime }

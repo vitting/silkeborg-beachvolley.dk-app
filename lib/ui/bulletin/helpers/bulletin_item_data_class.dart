@@ -1,5 +1,5 @@
-import 'package:silkeborgbeachvolley/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_formatters.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 
 class BulletinItemData {
   String id;

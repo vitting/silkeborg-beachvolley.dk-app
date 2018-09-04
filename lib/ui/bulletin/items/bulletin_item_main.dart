@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/helpers/bulletin_event_item_data_class.dart';
-import 'package:silkeborgbeachvolley/helpers/bulletin_game_item_data_class.dart';
-import 'package:silkeborgbeachvolley/helpers/bulletin_item_data_class.dart';
-import 'package:silkeborgbeachvolley/helpers/bulletin_news_item_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/local_user_info_class.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/bulletin_detail_item_main.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_event_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_game_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_news_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_event_item.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_game_item.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_news_item.dart';

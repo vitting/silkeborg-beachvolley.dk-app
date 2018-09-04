@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:silkeborgbeachvolley/helpers/bulletin_comment_item_class.dart';
-import 'package:silkeborgbeachvolley/helpers/bulletin_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_comment_item_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data_class.dart';
 
 class BulletinFirestore {
   static final _bulletinCollectionName = "bulletins";

@@ -1,8 +1,8 @@
-import 'package:silkeborgbeachvolley/helpers/bulletin_item_data_class.dart';
-import 'package:silkeborgbeachvolley/helpers/bulletin_type_enum.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 
-class BulletinNewsItemData extends BulletinItemData {
-  BulletinNewsItemData(
+class BulletinGameItemData extends BulletinItemData {
+  BulletinGameItemData(
       {String id = "",
       String type = BulletinType.none,
       String body = "",
@@ -21,8 +21,8 @@ class BulletinNewsItemData extends BulletinItemData {
             authorPhotoUrl: authorPhotoUrl,
             numberOfcomments: numberOfcomments);
 
-  static BulletinNewsItemData fromMap(Map<String, dynamic> item) {
-    return new BulletinNewsItemData(
+  static BulletinGameItemData fromMap(Map<String, dynamic> item) {
+    return new BulletinGameItemData(
         id: item["id"] == null ? "" : item["id"],
         type: item["type"] == null ? "" : item["type"],
         authorId: item["author"]["id"] == null ? "" : item["author"]["id"],
