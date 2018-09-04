@@ -4,4 +4,8 @@ class DateTimeFormatters {
   static String formatDateDDMMYYYHHNN(DateTime date) {
     return formatDate(date, [dd, "-", mm, "-", yyyy, "  " , HH, ":", nn]);
   }
+
+  static String formatDateDDMMYYY(DateTime date) {
+    return formatDate(date, [dd, "-", mm, "-", yyyy]);
+  }
 }

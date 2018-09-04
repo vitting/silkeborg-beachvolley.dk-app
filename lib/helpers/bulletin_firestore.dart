@@ -47,6 +47,7 @@ class BulletinFirestore {
   }
 
   static Future<void> saveBulletinItem(BulletinItemData bulletinItem) async {
+    
     try {
       return await firestoreInstance
         .collection(_bulletinCollectionName).document(bulletinItem.id).setData(bulletinItem.toMap());  

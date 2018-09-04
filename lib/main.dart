@@ -11,6 +11,9 @@ void main() {
   
   runApp(new MaterialApp(
     title: 'Silkeborg Beachvolley',
+    theme: ThemeData(
+      // fontFamily: "Lato"
+    ),
     initialRoute: "/",
     routes: <String, WidgetBuilder>{ 
       "/": (BuildContext context) => Home(),

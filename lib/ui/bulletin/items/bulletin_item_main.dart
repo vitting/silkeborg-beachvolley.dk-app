@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/bulletin_event_item_data_class.dart';
+import 'package:silkeborgbeachvolley/helpers/bulletin_game_item_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/bulletin_item_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/bulletin_news_item_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/local_user_info_class.dart';
@@ -11,15 +13,15 @@ import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_news_item.dart';
 
 class BulletinItemMain extends StatelessWidget {
   final Map item;
-  BulletinItemMain(this.item);
+  final String type;
+  BulletinItemMain(this.item, this.type);
 
   @override
   Widget build(BuildContext context) {
-    BulletinItemData _bulletinItem = BulletinItemData.fromMap(item);
-    return _bulletinItemBody2(context, _bulletinItem);
+    return _bulletinNewsItem(context, BulletinNewsItemData.fromMap(item));
   }
 
-  Widget _bulletinItemBody(BuildContext context, BulletinItemData bulletinItem) {
+  Widget _bulletinNewsItem(BuildContext context, BulletinNewsItemData bulletinItem) {
     return BulletinNewsItem(
         bulletinItem: bulletinItem,
         maxLines: 3,
@@ -35,7 +37,7 @@ class BulletinItemMain extends StatelessWidget {
         });
   }
 
-  Widget _bulletinItemBody2(BuildContext context, BulletinItemData bulletinItem) {
+  Widget _bulletinEventItem(BuildContext context, BulletinEventItemData bulletinItem) {
     return BulletinEventItem(
       bulletinItem: bulletinItem,
       maxLines: 3,
@@ -53,7 +55,7 @@ class BulletinItemMain extends StatelessWidget {
     );
   }
 
-  Widget _bulletinItemBody3(BuildContext context, BulletinItemData bulletinItem) {
+  Widget _bulletinGameItem(BuildContext context, BulletinGameItemData bulletinItem) {
     return BulletinGameItem(
         bulletinItem: bulletinItem,
         maxLines: 3,

@@ -44,7 +44,7 @@ class _EnrollmentState extends State<Enrollment> {
         context: context,
         initialDate: new DateTime.now(),
         firstDate: new DateTime(1940),
-        lastDate: new DateTime(new DateTime.now().year),
+        lastDate: new DateTime(new DateTime.now().year + 1),
         initialDatePickerMode: DatePickerMode.year);
 
     if (picked != null && picked != new DateTime.now()) {

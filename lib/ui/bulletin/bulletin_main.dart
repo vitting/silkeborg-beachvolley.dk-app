@@ -4,8 +4,8 @@ import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/helpers/bulletin_item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/create_bulletin_item_main.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_item_main.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/create_bulletin_item_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class Bulletin extends StatefulWidget {
