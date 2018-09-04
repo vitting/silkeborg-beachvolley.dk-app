@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_play_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_item_datetime_numberofcomments.dart';
 
-class BulletinGameItem extends StatelessWidget {
-  final BulletinItemData bulletinItem;
+class BulletinPlayItem extends StatelessWidget {
+  final BulletinPlayItemData bulletinItem;
   final Function onTap;
   final Function onLongPress;
   final int maxLines;
   final TextOverflow overflow;
   final bool showDivider;
+  final int numberOfComments;
 
-  BulletinGameItem(
+  BulletinPlayItem(
       {this.bulletinItem,
       this.onTap,
       this.onLongPress,
       this.maxLines,
       this.overflow,
+      this.numberOfComments = -1,
       this.showDivider = true});
 
   @override
@@ -29,10 +31,10 @@ class BulletinGameItem extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 5.0),
-              child: Text("Nogen der vil spille på onsdag kl. 13?",
+              child: Text(bulletinItem.body,
                   maxLines: maxLines, overflow: overflow),
             ),
-            BulletinItemDateTimeNumberOfComments(bulletinItem)
+            BulletinItemDateTimeNumberOfComments(bulletinItem: bulletinItem, numberOfComments: numberOfComments)
           ],
         ),
         leading: CircleAvatar(

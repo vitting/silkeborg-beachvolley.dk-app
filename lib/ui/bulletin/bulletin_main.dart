@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_item_main.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/create_bulletin_item_main.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/create_bulletin_item_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class Bulletin extends StatefulWidget {
@@ -15,7 +15,7 @@ class Bulletin extends StatefulWidget {
 
 class _BulletinState extends State<Bulletin> {
   int _bottombarSelected = 0;
-  
+
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
@@ -80,15 +80,23 @@ class _BulletinState extends State<Bulletin> {
   }
 
   Widget _main() {
+    String type = "news";
+    if (_bottombarSelected == 0) type = "news";
+    if (_bottombarSelected == 1) type = "event";
+    if (_bottombarSelected == 2) type = "play";
+
     return StreamBuilder(
-      stream: BulletinFirestore.getAllBulletinsAsStream(),
+      stream: BulletinFirestore.getBulletinsByTypeAsStream(type),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (!snapshot.hasData) return new Text('Henter opsalg...');
+        if (snapshot.connectionState == ConnectionState.waiting ||
+            !snapshot.hasData)
+          return Center(child: Image.asset("assets/images/loader-bar.gif"));
+
         return ListView.builder(
           itemCount: snapshot.data.documents.length,
           itemBuilder: (BuildContext context, int position) {
             DocumentSnapshot item = snapshot.data.documents[position];
-            return BulletinItemMain(item.data);
+            return BulletinItemMain(item.data, type);
           },
         );
       },
@@ -96,16 +104,15 @@ class _BulletinState extends State<Bulletin> {
   }
 
   Future _gotoCreateNewsDialog(BuildContext context) async {
-    BulletinItemData bulletinItem =
-        await Navigator.of(context).push(new MaterialPageRoute<BulletinItemData>(
+    BulletinItemData bulletinItem = await Navigator.of(context)
+        .push(new MaterialPageRoute<BulletinItemData>(
             builder: (BuildContext context) {
               return new CreateBulletinItem();
             },
-            fullscreenDialog: false));
+            fullscreenDialog: true));
 
-    
     if (bulletinItem != null) {
       print(bulletinItem.body + "/" + bulletinItem.type.toString());
-    } 
+    }
   }
 }

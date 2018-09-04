@@ -41,5 +41,5 @@ class BulletinCommentItem {
   }
 
   String get creationDateFormatted =>
-      DateTimeFormatters.formatDateDDMMYYYHHNN(creationDate);
+      DateTimeFormatters.ddmmyyyyHHnn(creationDate);
 }

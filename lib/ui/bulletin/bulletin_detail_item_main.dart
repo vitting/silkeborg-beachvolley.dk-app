@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/local_user_info_class.dart';
+import 'package:silkeborgbeachvolley/helpers/system_helpers_class.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_comment_item_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
@@ -22,10 +23,13 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ScrollController _listScrollController = ScrollController();
   BulletinItemData _bulletinItem;
+  int _numberOfComments = 0;
+
   @override
   void initState() {
     super.initState();
     _bulletinItem = widget.bulletinItem;
+    _numberOfComments = _bulletinItem.numberOfcomments;
   }
 
   @override
@@ -49,17 +53,18 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
       controller: _listScrollController,
       padding: EdgeInsets.all(10.0),
       children: <Widget>[
-        _firstItem(),
+        _bulletinMainItem(),
         _addComment(),
         StreamBuilder(
           stream: BulletinFirestore.getAllBulletinComments(_bulletinItem.id),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (!snapshot.hasData) return Text('Henter data...');
+            if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData) return Center(child: Image.asset("assets/images/loader-bar.gif"));
+            _numberOfComments = snapshot.data.documents.length;
             return Column(
                 children: snapshot.data.documents
                     .map<Widget>((DocumentSnapshot document) {
-              return _commentItem(document.data);
+              return _commentField(document.data);
             }).toList());
           },
         )
@@ -67,9 +72,10 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
     );
   }
 
-  Widget _firstItem() {
+  Widget _bulletinMainItem() {
     return BulletinNewsItem(
       bulletinItem: _bulletinItem,
+      numberOfComments: _numberOfComments,
     );
   }
 
@@ -90,11 +96,12 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
               labelText: "Skriv en kommentar",
               suffixIcon: IconButton(
                   icon: Icon(Icons.send),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
                       _formKey.currentState.reset();
-                      _saveBulletinCommentItem(bulletinCommentItem);
+                      await _saveBulletinCommentItem(bulletinCommentItem);
+                      SystemHelpers.hideKeyboardWithNoFocus(context);
                     }
                   })),
         ),
@@ -104,7 +111,7 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
     );
   }
 
-  Widget _commentItem(Map<String, dynamic> item) {
+  Widget _commentField(Map<String, dynamic> item) {
     BulletinCommentItem _bulletinCommentItem =
         BulletinCommentItem.fromMap(item);
     return ListTile(

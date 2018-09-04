@@ -3,8 +3,8 @@ import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data_clas
 
 class BulletinItemDateTimeNumberOfComments extends StatelessWidget {
   final BulletinItemData bulletinItem;
-
-  BulletinItemDateTimeNumberOfComments(this.bulletinItem);
+  final int numberOfComments;
+  BulletinItemDateTimeNumberOfComments({this.bulletinItem, this.numberOfComments = -1});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class BulletinItemDateTimeNumberOfComments extends StatelessWidget {
           Padding(
               padding: const EdgeInsetsDirectional.only(start: 5.0),
               child: Text(
-                bulletinItem.numberOfcomments.toString(),
+                numberOfComments >= 0 ? numberOfComments.toString() : bulletinItem.numberOfcomments.toString(),
                 style: TextStyle(fontSize: 12.0),
               ))
         ],

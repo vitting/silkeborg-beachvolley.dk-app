@@ -37,7 +37,7 @@ class BulletinItemData {
   }
 
   String get creationDateFormatted =>
-      DateTimeFormatters.formatDateDDMMYYYHHNN(creationDate);
+      DateTimeFormatters.ddmmyyyyHHnn(creationDate);
 
   static BulletinItemData fromMap(Map<String, dynamic> item) {
     return new BulletinItemData(

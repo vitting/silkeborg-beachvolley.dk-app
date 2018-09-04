@@ -8,7 +8,7 @@ class BulletinEventItemData extends BulletinItemData {
   DateTime eventStartTime;
   DateTime eventEndTime;
   String eventLocation;
-
+  String eventTitle;
   
     BulletinEventItemData(
         {String id = "",
@@ -22,7 +22,7 @@ class BulletinEventItemData extends BulletinItemData {
         this.eventStartDate,
         this.eventEndDate,
         this.eventEndTime,
-        this.eventStartTime, this.eventLocation})
+        this.eventStartTime, this.eventLocation, this.eventTitle})
         : super(
               id: id,
               type: type,
@@ -37,17 +37,17 @@ class BulletinEventItemData extends BulletinItemData {
     Map<String, dynamic> toMap() {
       Map<String, dynamic> map = super.toMap();
       map.addAll({
-        "event": {"startDate": eventStartDate, "endDate": eventEndDate, "startTime": eventStartTime.toString(), "endTime": eventEndTime.toString(), "eventLocation": eventLocation}
+        "event": {"startDate": eventStartDate, "endDate": eventEndDate, "startTime": eventStartTime, "endTime": eventEndTime, "location": eventLocation, "title": eventTitle}
       });
   
       return map;
     }
   
     String get evnetStartDateFormatted =>
-        DateTimeFormatters.formatDateDDMMYYY(eventStartDate);  
+        DateTimeFormatters.ddmmyyyy(eventStartDate);  
   
     String get eventEndDateFormatted =>
-    DateTimeFormatters.formatDateDDMMYYY(eventStartDate);  
+    DateTimeFormatters.ddmmyyyy(eventStartDate);  
   
     static BulletinEventItemData fromMap(Map<String, dynamic> item) {
       return new BulletinEventItemData(
@@ -67,7 +67,8 @@ class BulletinEventItemData extends BulletinItemData {
           eventEndDate: item["event"]["endDate"] == null ? DateTime.now() : item["event"]["endDate"],
           eventStartTime: item["event"]["startTime"] == null ? DateTime.now() : item["event"]["startTime"],
           eventEndTime: item["event"]["endTime"] == null ? DateTime.now() : item["event"]["endTime"],
-          eventLocation: item["event"]["eventLocation"] = null ? "" : item["event"]["eventLocation"]
+          eventLocation: item["event"]["location"] == null ? "" : item["event"]["location"],
+          eventTitle: item["event"]["title"] == null ? "" : item["event"]["title"]
         );
     }
   }

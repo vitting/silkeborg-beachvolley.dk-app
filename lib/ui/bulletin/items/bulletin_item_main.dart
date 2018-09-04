@@ -4,21 +4,31 @@ import 'package:silkeborgbeachvolley/helpers/local_user_info_class.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/bulletin_detail_item_main.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_event_item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_game_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_play_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_news_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_event_item.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_game_item.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_play_item.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_news_item.dart';
 
 class BulletinItemMain extends StatelessWidget {
+  
   final Map item;
   final String type;
   BulletinItemMain(this.item, this.type);
 
   @override
   Widget build(BuildContext context) {
-    return _bulletinNewsItem(context, BulletinNewsItemData.fromMap(item));
+    print(type);
+    switch (type) {
+      case "news":
+        return _bulletinNewsItem(context, BulletinNewsItemData.fromMap(item));    
+      case "event":
+        return _bulletinEventItem(context, BulletinEventItemData.fromMap(item));    
+      case "play":
+        return _bulletinPlayItem(context, BulletinPlayItemData.fromMap(item));    
+    }
+    
   }
 
   Widget _bulletinNewsItem(BuildContext context, BulletinNewsItemData bulletinItem) {
@@ -31,7 +41,6 @@ class BulletinItemMain extends StatelessWidget {
         },
         onLongPress: () async {
           LocalUserInfo localUserInfo = await UserAuth.getLoclUserInfo();
-          print("${localUserInfo.id} / ${bulletinItem.authorId}");
           if (localUserInfo.id == bulletinItem.authorId)
             _bulletinItemPopupMenu(context);
         });
@@ -55,8 +64,8 @@ class BulletinItemMain extends StatelessWidget {
     );
   }
 
-  Widget _bulletinGameItem(BuildContext context, BulletinGameItemData bulletinItem) {
-    return BulletinGameItem(
+  Widget _bulletinPlayItem(BuildContext context, BulletinPlayItemData bulletinItem) {
+    return BulletinPlayItem(
         bulletinItem: bulletinItem,
         maxLines: 3,
         overflow: TextOverflow.ellipsis,
@@ -74,6 +83,7 @@ class BulletinItemMain extends StatelessWidget {
   Future<bool> _navigateTobulletinDetailItem(
       BuildContext context, BulletinItemData bulletinItem) async {
     return await Navigator.of(context).push(MaterialPageRoute(
+        fullscreenDialog: true,
         builder: (context) => BulletinDetailItem(bulletinItem)));
   }
 

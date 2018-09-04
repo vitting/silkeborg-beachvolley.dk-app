@@ -8,14 +8,15 @@ class BulletinNewsItem extends StatelessWidget {
   final Function onLongPress;
   final int maxLines;
   final TextOverflow overflow;
-  final showDivider;
-
+  final bool showDivider;
+  final int numberOfComments;
   BulletinNewsItem(
       {this.bulletinItem,
       this.onTap,
       this.onLongPress,
       this.maxLines,
       this.overflow,
+      this.numberOfComments = -1,
       this.showDivider = true});
 
   @override
@@ -32,7 +33,9 @@ class BulletinNewsItem extends StatelessWidget {
               child: Text(bulletinItem.body,
                   maxLines: maxLines, overflow: overflow),
             ),
-            BulletinItemDateTimeNumberOfComments(bulletinItem)
+            BulletinItemDateTimeNumberOfComments(
+              bulletinItem: bulletinItem,
+              numberOfComments: numberOfComments)
           ],
         ),
         leading: CircleAvatar(

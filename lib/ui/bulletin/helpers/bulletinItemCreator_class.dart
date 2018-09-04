@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/local_user_info_class.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_event_item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_game_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_play_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_news_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:uuid/uuid.dart';
@@ -14,7 +14,7 @@ class BulletinItemCreator {
       DateTime eventStartDate,
       DateTime eventEndDate,
       TimeOfDay eventStartTime,
-      TimeOfDay eventEndTime, String eventLocation}) async {
+      TimeOfDay eventEndTime, String eventLocation, String eventTitle}) async {
     Uuid _uuid = new Uuid();
     LocalUserInfo _localuserInfo = await UserAuth.getLoclUserInfo();
 
@@ -54,6 +54,7 @@ class BulletinItemCreator {
             body: body,
             creationDate: DateTime.now(),
             numberOfcomments: 0,
+            eventTitle: eventTitle,
             eventLocation: eventLocation,
             eventStartDate: start,
             eventEndDate: end,
@@ -61,7 +62,7 @@ class BulletinItemCreator {
             eventEndTime: end);
         break;
       case BulletinType.play:
-        return BulletinGameItemData(
+        return BulletinPlayItemData(
             type: type,
             authorId: _localuserInfo.id,
             authorName: _localuserInfo.name,

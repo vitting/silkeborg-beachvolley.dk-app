@@ -35,6 +35,17 @@ class BulletinFirestore {
     }
   }
 
+ static Stream<QuerySnapshot> getBulletinsByTypeAsStream(String type) {
+    try {
+      return firestoreInstance.collection(_bulletinCollectionName).where(
+        "type",
+        isEqualTo: type
+      ).snapshots();
+    } catch (e) {
+      print(e);
+    }
+  }
+
   static Stream<QuerySnapshot> getAllBulletinsAsStream() {
     try {
       return firestoreInstance.collection(_bulletinCollectionName).where(

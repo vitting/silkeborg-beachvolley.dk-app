@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_formatters.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletinItemCreator_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_fields_create_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
@@ -25,14 +26,8 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
   final TextEditingController _startTimeController =
       new TextEditingController();
   final TextEditingController _endTimeController = new TextEditingController();
+  final ItemFieldsCreate itemFieldsValue = ItemFieldsCreate();
   bool _saving = false;
-  String _selectedBulletinType = BulletinType.news;
-  String _selectedBulletinBody = "";
-  DateTime _selectedEventStartDate;
-  DateTime _selectedEventEndDate;
-  TimeOfDay _selectedEventStartTime;
-  TimeOfDay _selectedEventEndTime;
-  String _selectedEventLocation;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +67,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
                 value: BulletinType.news,
                 onChanged: (value) {
                   setState(() {
-                    _selectedBulletinType = value;
+                    itemFieldsValue.type = value;
                     radioGroupValue = value;
                   });
                 },
@@ -85,7 +80,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
                 value: BulletinType.event,
                 onChanged: (value) {
                   setState(() {
-                    _selectedBulletinType = value;
+                    itemFieldsValue.type = value;
                     radioGroupValue = value;
                   });
                 },
@@ -98,7 +93,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
                 value: BulletinType.play,
                 onChanged: (value) {
                   setState(() {
-                    _selectedBulletinType = value;
+                    itemFieldsValue.type = value;
                     radioGroupValue = value;
                   });
                 },
@@ -160,53 +155,60 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
         if (value.isEmpty) return "Opslaget skal udfyldes";
       },
       onSaved: (String value) {
-        _selectedBulletinBody = value;
+        itemFieldsValue.body = value;
       },
     );
   }
 
   List<Widget> _eventFields(BuildContext context) {
     List<Widget> widgets = [
+      TextFormField(
+        keyboardType: TextInputType.text,
+        maxLength: 50,
+        decoration: InputDecoration(labelText: "Titel"),
+        onSaved: (value) {
+          itemFieldsValue.eventTitle = value;
+        },
+        validator: (value) {
+          if (value.isEmpty) return "Titel skal udfyldes";
+        },
+      ),
       Row(
         children: <Widget>[
           Flexible(
             child: TextFormField(
-              keyboardType: TextInputType.datetime,
-              textAlign: TextAlign.center,
-              controller: _startDateController,
-              decoration: InputDecoration(
-                  labelText: "Start dato",
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.calendar_today),
-                    onPressed: () async {
-                      _selectDate(context, EventDateTimeType.startDate);
-                    },
-                  )),
-              validator: (value) {
-                if (value.isEmpty) return "Udfyld Start dato";
-              },
-              onSaved: (value) {},
-            ),
+                keyboardType: TextInputType.datetime,
+                textAlign: TextAlign.center,
+                controller: _startDateController,
+                decoration: InputDecoration(
+                    labelText: "Start dato",
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.calendar_today),
+                      onPressed: () async {
+                        _selectDate(context, EventDateTimeType.startDate);
+                      },
+                    )),
+                validator: (value) {
+                  if (value.isEmpty) return "Udfyld Start dato";
+                }),
           ),
           SizedBox(width: 20.0),
           Flexible(
             child: TextFormField(
-              keyboardType: TextInputType.datetime,
-              textAlign: TextAlign.center,
-              controller: _endDateController,
-              decoration: InputDecoration(
-                  labelText: "Slut dato",
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.calendar_today),
-                    onPressed: () async {
-                      _selectDate(context, EventDateTimeType.endDate);
-                    },
-                  )),
-              validator: (value) {
-                if (value.isEmpty) return "Udfyld Slut dato";
-              },
-              onSaved: (value) {},
-            ),
+                keyboardType: TextInputType.datetime,
+                textAlign: TextAlign.center,
+                controller: _endDateController,
+                decoration: InputDecoration(
+                    labelText: "Slut dato",
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.calendar_today),
+                      onPressed: () async {
+                        _selectDate(context, EventDateTimeType.endDate);
+                      },
+                    )),
+                validator: (value) {
+                  if (value.isEmpty) return "Udfyld Slut dato";
+                }),
           )
         ],
       ),
@@ -214,22 +216,20 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
         children: <Widget>[
           Flexible(
             child: TextFormField(
-              keyboardType: TextInputType.datetime,
-              textAlign: TextAlign.center,
-              controller: _startTimeController,
-              decoration: InputDecoration(
-                  labelText: "Start tid",
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.access_time),
-                    onPressed: () async {
-                      _selectTime(context, EventDateTimeType.startTime);
-                    },
-                  )),
-              validator: (value) {
-                if (value.isEmpty) return "Udfyld Start tid";
-              },
-              onSaved: (value) {},
-            ),
+                keyboardType: TextInputType.datetime,
+                textAlign: TextAlign.center,
+                controller: _startTimeController,
+                decoration: InputDecoration(
+                    labelText: "Start tid",
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.access_time),
+                      onPressed: () async {
+                        _selectTime(context, EventDateTimeType.startTime);
+                      },
+                    )),
+                validator: (value) {
+                  if (value.isEmpty) return "Udfyld Start tid";
+                }),
           ),
           SizedBox(width: 20.0),
           Flexible(
@@ -256,11 +256,9 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
       TextFormField(
         keyboardType: TextInputType.text,
         maxLength: 100,
-        decoration: InputDecoration(
-          labelText: "Sted"
-        ),
+        decoration: InputDecoration(labelText: "Sted"),
         onSaved: (value) {
-          _selectedEventLocation = value;
+          itemFieldsValue.eventLocation = value;
         },
         validator: (value) {
           if (value.isEmpty) return "Sted skal udfyldes";
@@ -281,17 +279,17 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
 
     if (picked != null) {
       setState(() {
-        String formattedDate = DateTimeFormatters.formatDateDDMMYYY(picked);
+        String formattedDate = DateTimeFormatters.ddmmyyyy(picked);
         switch (eventDateTimeType) {
           case EventDateTimeType.startDate:
             _startDateController.text = formattedDate;
             _endDateController.text = formattedDate;
-            _selectedEventStartDate = picked;
-            _selectedEventEndDate = picked;
+            itemFieldsValue.eventStartDate = picked;
+            itemFieldsValue.eventEndDate = picked;
             break;
           case EventDateTimeType.endDate:
             _endDateController.text = formattedDate;
-            _selectedEventEndDate = picked;
+            itemFieldsValue.eventEndDate = picked;
             break;
           default:
             print(formattedDate);
@@ -312,12 +310,13 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
             _startTimeController.text = picked.format(context);
             _endTimeController.text =
                 picked.replacing(hour: picked.hour + 2).format(context);
-            _selectedEventStartTime = picked;
-            _selectedEventEndTime = picked.replacing(hour: picked.hour + 2);
+            itemFieldsValue.eventStartTime = picked;
+            itemFieldsValue.eventEndTime =
+                picked.replacing(hour: picked.hour + 2);
             break;
           case EventDateTimeType.endTime:
             _endTimeController.text = picked.format(context);
-            _selectedEventEndTime = picked;
+            itemFieldsValue.eventEndTime = picked;
             break;
           default:
             print(picked);
@@ -328,13 +327,14 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
 
   Future<void> _saveBulletinItem() async {
     var item = await BulletinItemCreator.createBulletinItem(
-        body: _selectedBulletinBody,
-        type: _selectedBulletinType,
-        eventLocation: _selectedEventLocation,
-        eventStartDate: _selectedEventStartDate,
-        eventEndDate: _selectedEventEndDate,
-        eventStartTime: _selectedEventStartTime,
-        eventEndTime: _selectedEventEndTime);
+        body: itemFieldsValue.body,
+        type: itemFieldsValue.type,
+        eventTitle: itemFieldsValue.eventTitle,
+        eventLocation: itemFieldsValue.eventLocation,
+        eventStartDate: itemFieldsValue.eventStartDate,
+        eventEndDate: itemFieldsValue.eventEndDate,
+        eventStartTime: itemFieldsValue.eventStartTime,
+        eventEndTime: itemFieldsValue.eventEndTime);
 
     await BulletinFirestore.saveBulletinItem(item);
   }
