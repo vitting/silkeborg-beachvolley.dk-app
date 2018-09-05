@@ -4,6 +4,7 @@ import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class Settings extends StatelessWidget {
+  static final routeName = "/settings";
   @override
   Widget build(BuildContext context)  {
     return SilkeborgBeachvolleyScaffold(

@@ -7,6 +7,7 @@ import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.da
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class Login extends StatefulWidget {
+  static final routeName = "/login";
   @override
   _LoginState createState() => _LoginState();
 }

@@ -11,6 +11,7 @@ import 'package:silkeborgbeachvolley/ui/scoreboard/scoreboard_time.dart';
 import 'package:silkeborgbeachvolley/ui/scoreboard/scoreboard_timeouts.dart';
 
 class ScoreBoard extends StatefulWidget {
+  static final routeName = "/scoreboard";
   @override
   _ScoreBoardState createState() => _ScoreBoardState();
 }

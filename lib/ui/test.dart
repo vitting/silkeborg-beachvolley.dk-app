@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_firebase_class.dart';
 import 'package:uuid/uuid.dart';
+import 'dart:math';
 
 final Firestore firestore = Firestore.instance;
 final uuid = new Uuid();
@@ -70,6 +71,19 @@ class _TestWidgetState extends State<TestWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        child: RaisedButton(
+          onPressed: () {
+            //31-12-2019
+            String b = "31-22-2013";
+            RegExp reg = RegExp(r"^[0-3]\d-[0-1]\d-[1-2][09]\d\d$");
+            print(reg.hasMatch(b));
+
+
+
+
+
+          },
+        ),
         // child: RaisedButton(
         //   onPressed: () {
         //         users3.forEach((user) async {
@@ -77,31 +91,31 @@ class _TestWidgetState extends State<TestWidget> {
         //         });            
         //   },
         // ),
-      child: StreamBuilder(
-        stream: firestore.collection("users").snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) return new Text('Loading...');
-          return ListView(
-            children: snapshot.data.documents.map<Widget>((DocumentSnapshot document){
-              return ListTile(
-                leading: ClipRRect(
-                  borderRadius: BorderRadius.circular(50.0),
+      // child: StreamBuilder(
+      //   stream: firestore.collection("users").snapshots(),
+      //   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+      //     if (!snapshot.hasData) return new Text('Loading...');
+      //     return ListView(
+      //       children: snapshot.data.documents.map<Widget>((DocumentSnapshot document){
+      //         return ListTile(
+      //           leading: ClipRRect(
+      //             borderRadius: BorderRadius.circular(50.0),
 
-                  child: Image.network(
-                  document["photoUrl"],
-                  width: 50.0,
-                  height: 50.0,
-                  fit: BoxFit.cover,
-                  ),
-                ),
-                title: Text(document["email"]),
-                subtitle: Text(document.documentID),
-                contentPadding: EdgeInsetsDirectional.only(top: 20.0, bottom: 20.0),
-              );
-            }).toList(),            
-          );
-        },
-      ),
+      //             child: Image.network(
+      //             document["photoUrl"],
+      //             width: 50.0,
+      //             height: 50.0,
+      //             fit: BoxFit.cover,
+      //             ),
+      //           ),
+      //           title: Text(document["email"]),
+      //           subtitle: Text(document.documentID),
+      //           contentPadding: EdgeInsetsDirectional.only(top: 20.0, bottom: 20.0),
+      //         );
+      //       }).toList(),            
+      //     );
+      //   },
+      // ),
       
     ),
     );

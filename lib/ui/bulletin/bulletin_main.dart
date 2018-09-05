@@ -9,6 +9,7 @@ import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/create_bulleti
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class Bulletin extends StatefulWidget {
+  static final routeName = "/bulletin";
   @override
   _BulletinState createState() => _BulletinState();
 }
@@ -21,6 +22,7 @@ class _BulletinState extends State<Bulletin> {
     return SilkeborgBeachvolleyScaffold(
       title: "Silkeborg Beachvolley",
       body: _main(),
+      showDrawer: true,
       floatingActionButton: _scaffoldFloatingActionButton(context),
       actions: _scaffoldActions(context),
       bottomNavigationBar: _scaffoldBottomNavigationBar(),
@@ -107,16 +109,12 @@ Widget _scaffoldFloatingActionButton(BuildContext context) {
     );
   }
 
-  Future _gotoCreateNewsDialog(BuildContext context) async {
-    BulletinItemData bulletinItem = await Navigator.of(context)
+  Future<void> _gotoCreateNewsDialog(BuildContext context) async {
+    await Navigator.of(context)
         .push(new MaterialPageRoute<BulletinItemData>(
             builder: (BuildContext context) {
               return new CreateBulletinItem();
             },
             fullscreenDialog: true));
-
-    if (bulletinItem != null) {
-      print(bulletinItem.body + "/" + bulletinItem.type.toString());
-    }
   }
 }

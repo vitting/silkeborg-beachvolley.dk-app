@@ -117,16 +117,19 @@ class UserAuth {
     String _name;
     String _photoUrl;
     String _id;
+    String _email;
 
     if (user != null) {
       _name = user.displayName;
       _photoUrl = user.photoUrl;
       _id = user.uid;
+      _email = user.email;
     }
 
     await _prefs.setString("name", _name);
     await _prefs.setString("photo_url", _photoUrl);
     await _prefs.setString("user_id", _id);
+    await _prefs.setString("email", _email);
   }
 
   static Future<LocalUserInfo> getLoclUserInfo() async {
@@ -134,6 +137,7 @@ class UserAuth {
     final _id = _prefs.getString("user_id");
     final _name = _prefs.getString("name");
     final _photoUrl = _prefs.getString("photo_url");
-    return LocalUserInfo(_id, _name, _photoUrl);
+    final _email = _prefs.getString("email");
+    return LocalUserInfo(_id, _name, _photoUrl, _email);
   }
 }

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:silkeborgbeachvolley/helpers/datetime_formatters.dart';
+import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletinItemCreator_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_fields_create_class.dart';
@@ -279,7 +279,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
 
     if (picked != null) {
       setState(() {
-        String formattedDate = DateTimeFormatters.ddmmyyyy(picked);
+        String formattedDate = DateTimeHelpers.ddmmyyyy(picked);
         switch (eventDateTimeType) {
           case EventDateTimeType.startDate:
             _startDateController.text = formattedDate;

@@ -15,9 +15,9 @@ Map<int, String> months = {
   12: "December"
 };
 
-class DateTimeFormatters {
+class DateTimeHelpers {
   static String ddmmyyyyHHnn(DateTime date) {
-    return formatDate(date, [dd, "-", mm, "-", yyyy, "  " , HH, ":", nn]);
+    return formatDate(date, [dd, "-", mm, "-", yyyy, "  ", HH, ":", nn]);
   }
 
   static String ddmmyyyy(DateTime date) {
@@ -39,5 +39,26 @@ class DateTimeFormatters {
     return a.compareTo(b) == 0 ? true : false;
   }
 
+  static int getAge(DateTime birthdate) {
+    if (birthdate == null) return 0;
+    
+    DateTime today = DateTime.now();
+    int years = today.year - birthdate.year;
+    int age;
+    if (birthdate.month <= today.month) {
+      if (today.day < birthdate.day) {
+        age = years - 1;
+      } else
+        age = years;
+    } else {
+      age = years - 1;
+    }
 
+    return age;
+  }
+
+  static bool isVvalidDateFormat(String dateString) {
+    RegExp reg = RegExp(r"^[0-3]\d-[0-1]\d-[1-2][09]\d\d$");
+    return reg.hasMatch(dateString);
+  }
 }

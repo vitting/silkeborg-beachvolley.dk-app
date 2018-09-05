@@ -18,7 +18,6 @@ class BulletinItemMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(type);
     switch (type) {
       case "news":
         return _bulletinNewsItem(context, BulletinNewsItemData.fromMap(item));

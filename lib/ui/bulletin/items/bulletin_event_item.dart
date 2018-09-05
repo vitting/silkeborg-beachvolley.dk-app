@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:silkeborgbeachvolley/helpers/datetime_formatters.dart';
+import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_event_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_item_datetime_numberofcomments.dart';
 
@@ -41,18 +41,18 @@ class BulletinEventItem extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 5.0),
-                    child: Text(DateTimeFormatters.ddMMyyyy(
+                    child: Text(DateTimeHelpers.ddMMyyyy(
                         bulletinItem.eventStartDate)),
                   ),
                   
-                  DateTimeFormatters.dateCompare(bulletinItem.eventStartDate, bulletinItem.eventEndDate) ? Container() :
+                  DateTimeHelpers.dateCompare(bulletinItem.eventStartDate, bulletinItem.eventEndDate) ? Container() :
                   Row(
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Text("-"),
                       ),
-                      Text(DateTimeFormatters.ddMMyyyy(
+                      Text(DateTimeHelpers.ddMMyyyy(
                           bulletinItem.eventEndDate))
                     ],
                   )
@@ -69,9 +69,9 @@ class BulletinEventItem extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                    child: Text("Start: ${DateTimeFormatters.hhnn(bulletinItem.eventStartTime)}"),
+                    child: Text("Start: ${DateTimeHelpers.hhnn(bulletinItem.eventStartTime)}"),
                   ),
-                  Text("Slut: ${DateTimeFormatters.hhnn(bulletinItem.eventEndTime)}")
+                  Text("Slut: ${DateTimeHelpers.hhnn(bulletinItem.eventEndTime)}")
                 ],
               ),
             ),

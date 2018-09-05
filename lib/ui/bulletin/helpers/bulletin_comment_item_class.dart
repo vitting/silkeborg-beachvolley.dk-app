@@ -1,4 +1,4 @@
-import 'package:silkeborgbeachvolley/helpers/datetime_formatters.dart';
+import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 
 class BulletinCommentItem {
   String id;
@@ -41,5 +41,5 @@ class BulletinCommentItem {
   }
 
   String get creationDateFormatted =>
-      DateTimeFormatters.ddmmyyyyHHnn(creationDate);
+      DateTimeHelpers.ddmmyyyyHHnn(creationDate);
 }

@@ -1,29 +1,22 @@
 import 'dart:async';
-import 'package:intl/date_symbol_data_local.dart';
-import "package:intl/intl.dart";
 import "package:flutter/material.dart";
-import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
+import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
+import 'package:silkeborgbeachvolley/helpers/system_helpers_class.dart';
+import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_firestore.dart';
+import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_class.dart';
 import 'package:validate/validate.dart';
 
-class User {
-  String name = "";
-  String street = "";
-  String postalCode = "";
-  String birthdate = "";
-  String email = "";
-  String phone = "";
-}
-
 class Enrollment extends StatefulWidget {
+  static final routeName = "/enrollment";
+  Enrollment();
   @override
   _EnrollmentState createState() => _EnrollmentState();
 }
 
 class _EnrollmentState extends State<Enrollment> {
   final _birtdateController = TextEditingController();
-  final _user = new User();
+  final _user = new EnrollmentUser(createdDate: DateTime.now());
   final _formKey = GlobalKey<FormState>();
-
   @override
   void dispose() {
     _birtdateController.dispose();
@@ -32,48 +25,40 @@ class _EnrollmentState extends State<Enrollment> {
 
   @override
   Widget build(BuildContext context) {
-    return SilkeborgBeachvolleyScaffold(
-      title: "Sileborg Beachvolley",
-      body: _main(),
-    );
+    return _main();
+  }
+
+  Widget _main() {
+    return Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
+            _nameField(),
+            _adressField(),
+            _postalcodeField(),
+            _birthdayField(),
+            _emailField(),
+            _mobilenumberField(),
+            _sendButton(context),
+          ],
+        ));
   }
 
   //Datepicker dialog
   Future<Null> _selectDate(BuildContext context) async {
     var picked = await showDatePicker(
         context: context,
-        initialDate: new DateTime.now(),
-        firstDate: new DateTime(1940),
-        lastDate: new DateTime(new DateTime.now().year + 1),
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1940),
+        lastDate: DateTime(DateTime.now().year + 1),
         initialDatePickerMode: DatePickerMode.year);
 
-    if (picked != null && picked != new DateTime.now()) {
+    if (picked != null && picked != DateTime.now()) {
+      _user.birthdate = picked;
       setState(() {
-        //initializeDateFormatting loads the specified local
-        initializeDateFormatting("da", null).then((_) {
-          _birtdateController.text = new DateFormat.yMd("da").format(picked);
-        });
+        _birtdateController.text = DateTimeHelpers.ddmmyyyy(picked);
       });
     }
-  }
-
-  Widget _main() {
-    return Container(
-      padding: EdgeInsets.all(8.0),
-      child: Form(
-          key: _formKey,
-          child: ListView(
-            children: <Widget>[
-              _nameField(),
-              _adressField(),
-              _postalcodeField(),
-              _birthdayField(),
-              _emailField(),
-              _mobilenumberField(),
-              _sendButton(),
-            ],
-          )),
-    );
   }
 
   Widget _nameField() {
@@ -84,7 +69,6 @@ class _EnrollmentState extends State<Enrollment> {
       },
       keyboardType: TextInputType.text,
       maxLength: 30,
-      autofocus: true,
       onSaved: (String value) {
         _user.name = value.trim();
       },
@@ -117,7 +101,7 @@ class _EnrollmentState extends State<Enrollment> {
       keyboardType: TextInputType.number,
       maxLength: 4,
       onSaved: (String value) {
-        _user.postalCode = value.trim();
+        _user.postalCode = int.parse(value.trim());
       },
     );
   }
@@ -126,7 +110,7 @@ class _EnrollmentState extends State<Enrollment> {
     return TextFormField(
       decoration: InputDecoration(
         labelText: "Fødselsdato",
-        hintText: "dag/måned/år",
+        hintText: "Tryk på knappen og bruger kalenderen",
         suffixIcon: IconButton(
             icon: Icon(Icons.calendar_today),
             onPressed: () {
@@ -136,18 +120,10 @@ class _EnrollmentState extends State<Enrollment> {
       controller: _birtdateController,
       validator: (String value) {
         if (value.isEmpty) return "Indtast fødselsdato";
-
-        try {
-          DateFormat.yMd("da").parse(value.trim());
-        } catch (e) {
-          return "Indtast fødselsdato som dag/måned/år";
-        }
+        if (!DateTimeHelpers.isVvalidDateFormat(value)) return "Indtast fødselsdato i formatet dd-mm-yyyy"; 
       },
       keyboardType: TextInputType.datetime,
-      maxLength: 10,
-      onSaved: (String value) {
-        _user.birthdate = value.trim();
-      },
+      maxLength: 10
     );
   }
 
@@ -180,27 +156,28 @@ class _EnrollmentState extends State<Enrollment> {
       keyboardType: TextInputType.phone,
       maxLength: 8,
       onSaved: (String value) {
-        _user.phone = value.trim();
+        _user.phone = int.parse(value.trim());
       },
     );
   }
 
-  Widget _sendButton() {
+  Widget _sendButton(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.only(top: 10.0),
       child: RaisedButton(
         onPressed: () {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
             _formKey.currentState.reset();
             _birtdateController.text = "";
+            EnrollmentFirestore.saveEnrollment(_user);
+            SystemHelpers.hideKeyboardWithNoFocus(context);
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text("Tak for din indmeldelse i Silkeborg Beachvolley. Fortsæt til info om indbetaling."),
+            ));
           }
-
-          Scaffold
-              .of(context)
-              .showSnackBar(SnackBar(content: Text('Tak for din indmeldelse')));
         },
-        child: Text('Send'),
+        child: Text('Indsend formular'),
       ),
     );
   }

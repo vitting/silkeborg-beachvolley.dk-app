@@ -1,4 +1,4 @@
-import 'package:silkeborgbeachvolley/helpers/datetime_formatters.dart';
+import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 
 class BulletinItemData {
@@ -37,7 +37,7 @@ class BulletinItemData {
   }
 
   String get creationDateFormatted =>
-      DateTimeFormatters.ddmmyyyyHHnn(creationDate);
+      DateTimeHelpers.ddmmyyyyHHnn(creationDate);
 
   static BulletinItemData fromMap(Map<String, dynamic> item) {
     return new BulletinItemData(

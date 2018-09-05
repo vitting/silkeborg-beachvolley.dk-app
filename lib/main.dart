@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_stepper_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/bulletin_main.dart';
 import 'package:silkeborgbeachvolley/ui/login/login_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/scoreboard/scoreboard_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/settings_main.dart';
+import 'package:silkeborgbeachvolley/ui/test.dart';
 
 void main() {
 
@@ -12,17 +14,24 @@ void main() {
   runApp(new MaterialApp(
     title: 'Silkeborg Beachvolley',
     theme: ThemeData(
-      // fontFamily: "Lato"
+      // primaryColor: Colors.yellow
     ),
     initialRoute: "/",
+    onUnknownRoute: (RouteSettings v) {
+      print("ROUTE: ${v.name}");
+    },
+    onGenerateRoute: (RouteSettings v) {
+      print("ROUTE: ${v.name}");
+    },
     routes: <String, WidgetBuilder>{ 
       "/": (BuildContext context) => Home(),
       // "/": (BuildContext context) => TestWidget(),
-      "/enrollment": (BuildContext context) => Enrollment(),
-      "/scoreboard": (BuildContext context) => ScoreBoard(),
-      "/bulletin": (BuildContext context) => Bulletin(),
-      "/login": (BuildContext context) => Login(),
-      "/settings": (BuildContext context) => Settings()
+      Enrollment.routeName: (BuildContext context) => Enrollment(),
+      EnrollmentStepper.routeName: (BuildContext context) => EnrollmentStepper(), 
+      ScoreBoard.routeName: (BuildContext context) => ScoreBoard(),
+      Bulletin.routeName: (BuildContext context) => Bulletin(),
+      Login.routeName: (BuildContext context) => Login(),
+      Settings.routeName: (BuildContext context) => Settings()
     },
   ));
 }
