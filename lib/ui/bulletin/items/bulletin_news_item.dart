@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_item_datetime_numberofcomments.dart';
+import "package:cached_network_image/cached_network_image.dart";
 
 class BulletinNewsItem extends StatelessWidget {
   final BulletinItemData bulletinItem;
@@ -34,12 +35,21 @@ class BulletinNewsItem extends StatelessWidget {
                   maxLines: maxLines, overflow: overflow),
             ),
             BulletinItemDateTimeNumberOfComments(
-              bulletinItem: bulletinItem,
-              numberOfComments: numberOfComments)
+                bulletinItem: bulletinItem, numberOfComments: numberOfComments)
           ],
         ),
+        // leading: Container(
+        //   width: 40.0,
+        //   height: 40.0,
+        //   decoration: BoxDecoration(
+        //     shape: BoxShape.circle,
+        //     image: DecorationImage(
+        //       image: CachedNetworkImageProvider(bulletinItem.authorPhotoUrl),
+        //     ),
+        //   ),
+        // ),
         leading: CircleAvatar(
-            backgroundImage: NetworkImage(bulletinItem.authorPhotoUrl)),
+            backgroundImage: CachedNetworkImageProvider(bulletinItem.authorPhotoUrl)),
         onTap: onTap,
       )
     ];

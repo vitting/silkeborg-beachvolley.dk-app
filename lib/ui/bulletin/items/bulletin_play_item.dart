@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_play_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_item_datetime_numberofcomments.dart';
@@ -38,7 +39,8 @@ class BulletinPlayItem extends StatelessWidget {
           ],
         ),
         leading: CircleAvatar(
-            backgroundImage: NetworkImage(bulletinItem.authorPhotoUrl)),
+          backgroundImage: CachedNetworkImageProvider(bulletinItem.authorPhotoUrl)
+        ),
         onTap: onTap,
       )
     ];
