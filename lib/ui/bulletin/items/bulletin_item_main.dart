@@ -12,7 +12,6 @@ import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_play_item.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_news_item.dart';
 
 class BulletinItemMain extends StatelessWidget {
-  
   final Map item;
   final String type;
   BulletinItemMain(this.item, this.type);
@@ -22,69 +21,57 @@ class BulletinItemMain extends StatelessWidget {
     print(type);
     switch (type) {
       case "news":
-        return _bulletinNewsItem(context, BulletinNewsItemData.fromMap(item));    
+        return _bulletinNewsItem(context, BulletinNewsItemData.fromMap(item));
       case "event":
-        return _bulletinEventItem(context, BulletinEventItemData.fromMap(item));    
+        return _bulletinEventItem(context, BulletinEventItemData.fromMap(item));
       case "play":
-        return _bulletinPlayItem(context, BulletinPlayItemData.fromMap(item));    
+        return _bulletinPlayItem(context, BulletinPlayItemData.fromMap(item));
     }
-    
   }
 
-  Widget _bulletinNewsItem(BuildContext context, BulletinNewsItemData bulletinItem) {
+  Widget _bulletinNewsItem(
+      BuildContext context, BulletinNewsItemData bulletinItem) {
     return BulletinNewsItem(
         bulletinItem: bulletinItem,
-        maxLines: 3,
-        overflow: TextOverflow.ellipsis,
         onTap: () async {
           _navigateTobulletinDetailItem(context, bulletinItem);
         },
-        onLongPress: () async {
-          LocalUserInfo localUserInfo = await UserAuth.getLoclUserInfo();
-          if (localUserInfo.id == bulletinItem.authorId)
-            _bulletinItemPopupMenu(context);
-        });
+        onLongPress: () async => await _bulletinItemOnLongPress(context, bulletinItem.authorId)
+        );
   }
 
-  Widget _bulletinEventItem(BuildContext context, BulletinEventItemData bulletinItem) {
+  Widget _bulletinEventItem(
+      BuildContext context, BulletinEventItemData bulletinItem) {
     return BulletinEventItem(
-      bulletinItem: bulletinItem,
-      maxLines: 3,
-      overflow: TextOverflow.ellipsis,
-      showDivider: true,
-      onTap: () async {
-        _navigateTobulletinDetailItem(context, bulletinItem);
-      },
-      onLongPress: () async {
-        LocalUserInfo localUserInfo = await UserAuth.getLoclUserInfo();
-        print("${localUserInfo.id} / ${bulletinItem.authorId}");
-        if (localUserInfo.id == bulletinItem.authorId)
-          _bulletinItemPopupMenu(context);
-      },
-    );
+        bulletinItem: bulletinItem,
+        showDivider: true,
+        onTap: () async {
+          _navigateTobulletinDetailItem(context, bulletinItem);
+        },
+        onLongPress: () async => await _bulletinItemOnLongPress(context, bulletinItem.authorId));
   }
 
-  Widget _bulletinPlayItem(BuildContext context, BulletinPlayItemData bulletinItem) {
+  Widget _bulletinPlayItem(
+      BuildContext context, BulletinPlayItemData bulletinItem) {
     return BulletinPlayItem(
         bulletinItem: bulletinItem,
-        maxLines: 3,
-        overflow: TextOverflow.ellipsis,
         onTap: () async {
           _navigateTobulletinDetailItem(context, bulletinItem);
         },
-        onLongPress: () async {
-          LocalUserInfo localUserInfo = await UserAuth.getLoclUserInfo();
-          print("${localUserInfo.id} / ${bulletinItem.authorId}");
-          if (localUserInfo.id == bulletinItem.authorId)
-            _bulletinItemPopupMenu(context);
-        });
+        onLongPress: () async => await _bulletinItemOnLongPress(context, bulletinItem.authorId));
   }
 
-  Future<bool> _navigateTobulletinDetailItem(
+  Future<void> _navigateTobulletinDetailItem(
       BuildContext context, BulletinItemData bulletinItem) async {
-    return await Navigator.of(context).push(MaterialPageRoute(
+    await Navigator.of(context).push(MaterialPageRoute(
         fullscreenDialog: true,
         builder: (context) => BulletinDetailItem(bulletinItem)));
+  }
+
+  Future<void> _bulletinItemOnLongPress(BuildContext context, String authorId) async {
+    LocalUserInfo localUserInfo = await UserAuth.getLoclUserInfo();
+    print("${localUserInfo.id} / $authorId");
+    if (localUserInfo.id == authorId) _bulletinItemPopupMenu(context);
   }
 
   _bulletinItemPopupMenu(BuildContext context) {

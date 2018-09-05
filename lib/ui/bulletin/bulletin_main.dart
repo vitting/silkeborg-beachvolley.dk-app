@@ -21,16 +21,20 @@ class _BulletinState extends State<Bulletin> {
     return SilkeborgBeachvolleyScaffold(
       title: "Silkeborg Beachvolley",
       body: _main(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          _gotoCreateNewsDialog(context);
-        },
-      ),
+      floatingActionButton: _scaffoldFloatingActionButton(context),
       actions: _scaffoldActions(context),
       bottomNavigationBar: _scaffoldBottomNavigationBar(),
     );
   }
+
+Widget _scaffoldFloatingActionButton(BuildContext context) {
+  return FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          _gotoCreateNewsDialog(context);
+        },
+      );
+}
 
   Widget _scaffoldBottomNavigationBar() {
     return BottomNavigationBar(

@@ -8,7 +8,9 @@ import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_comment_item_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_event_item.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_news_item.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_play_item.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class BulletinDetailItem extends StatefulWidget {
@@ -22,7 +24,7 @@ class BulletinDetailItem extends StatefulWidget {
 class _BulletinDetailItemState extends State<BulletinDetailItem> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ScrollController _listScrollController = ScrollController();
-  BulletinItemData _bulletinItem;
+  var _bulletinItem;
   int _numberOfComments = 0;
 
   @override
@@ -53,13 +55,15 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
       controller: _listScrollController,
       padding: EdgeInsets.all(10.0),
       children: <Widget>[
-        _bulletinMainItem(),
+        _createBulletinMainItem(),
         _addComment(),
         StreamBuilder(
           stream: BulletinFirestore.getAllBulletinComments(_bulletinItem.id),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData) return Center(child: Image.asset("assets/images/loader-bar.gif"));
+            if (snapshot.connectionState == ConnectionState.waiting ||
+                !snapshot.hasData)
+              return Center(child: Image.asset("assets/images/loader-bar.gif"));
             _numberOfComments = snapshot.data.documents.length;
             return Column(
                 children: snapshot.data.documents
@@ -72,7 +76,24 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
     );
   }
 
-  Widget _bulletinMainItem() {
+  Widget _createBulletinMainItem() {
+    switch (_bulletinItem.type) {
+      case "news":
+        return BulletinNewsItem(
+          bulletinItem: _bulletinItem,
+          numberOfComments: _numberOfComments,
+        );
+      case "event":
+        return BulletinEventItem(
+          bulletinItem: _bulletinItem,
+          numberOfComments: _numberOfComments,
+        );
+      case "play":
+        return BulletinPlayItem(
+          bulletinItem: _bulletinItem,
+          numberOfComments: _numberOfComments,
+        );
+    }
     return BulletinNewsItem(
       bulletinItem: _bulletinItem,
       numberOfComments: _numberOfComments,
@@ -86,27 +107,26 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
         Form(
           key: _formKey,
           child: TextFormField(
-          onSaved: (String value) {
-            bulletinCommentItem.body = value;
-          },
-          validator: (String value) {
-            if (value.isEmpty) return "Skal ydfyldes";
-          },  
-          decoration: InputDecoration(
-              labelText: "Skriv en kommentar",
-              suffixIcon: IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () async {
-                    if (_formKey.currentState.validate()) {
-                      _formKey.currentState.save();
-                      _formKey.currentState.reset();
-                      await _saveBulletinCommentItem(bulletinCommentItem);
-                      SystemHelpers.hideKeyboardWithNoFocus(context);
-                    }
-                  })),
+            onSaved: (String value) {
+              bulletinCommentItem.body = value;
+            },
+            validator: (String value) {
+              if (value.isEmpty) return "Skal ydfyldes";
+            },
+            decoration: InputDecoration(
+                labelText: "Skriv en kommentar",
+                suffixIcon: IconButton(
+                    icon: Icon(Icons.send),
+                    onPressed: () async {
+                      if (_formKey.currentState.validate()) {
+                        _formKey.currentState.save();
+                        _formKey.currentState.reset();
+                        await _saveBulletinCommentItem(bulletinCommentItem);
+                        SystemHelpers.hideKeyboardWithNoFocus(context);
+                      }
+                    })),
+          ),
         ),
-        ),
-        
       ],
     );
   }

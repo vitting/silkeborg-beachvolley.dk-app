@@ -15,8 +15,8 @@ class BulletinPlayItem extends StatelessWidget {
       {this.bulletinItem,
       this.onTap,
       this.onLongPress,
-      this.maxLines,
-      this.overflow,
+      this.maxLines = 3,
+      this.overflow = TextOverflow.ellipsis,
       this.numberOfComments = -1,
       this.showDivider = true});
 

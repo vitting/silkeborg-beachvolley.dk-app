@@ -14,8 +14,9 @@ dependencies:
   modal_progress_hud: ^0.1.0
   date_format: ^1.0.5
   font_awesome_flutter: ^8.0.1
-  image: ^2.0.4
-  image_picker: ^0.4.10
+  # image: ^2.0.4
+  # image_picker: ^0.4.10
+  # cached_network_image: ^0.4.2
   flutter:
     sdk: flutter
 
