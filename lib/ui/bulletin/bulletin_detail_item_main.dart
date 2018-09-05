@@ -94,10 +94,6 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
           numberOfComments: _numberOfComments,
         );
     }
-    return BulletinNewsItem(
-      bulletinItem: _bulletinItem,
-      numberOfComments: _numberOfComments,
-    );
   }
 
   Widget _addComment() {
