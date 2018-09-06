@@ -2,13 +2,13 @@ name: silkeborgbeachvolley
 description: A new Flutter project.
 
 dependencies:
-  validate: ^1.6.1
+  validate: ^1.7.0
   intl: ^0.15.7
   google_sign_in: ^3.0.5
   flutter_facebook_login: ^1.1.1
-  firebase_auth: ^0.5.19
+  firebase_auth: ^0.5.20
   firebase_core: ^0.2.5
-  cloud_firestore: ^0.7.4
+  cloud_firestore: ^0.8.0
   shared_preferences: ^0.4.2
   uuid: ^1.0.3
   modal_progress_hud: ^0.1.0
