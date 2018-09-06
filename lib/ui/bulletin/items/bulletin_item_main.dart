@@ -18,46 +18,58 @@ class BulletinItemMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var bulletinItem;
     switch (type) {
       case "news":
-        return _bulletinNewsItem(context, BulletinNewsItemData.fromMap(item));
+        bulletinItem = _bulletinNewsItem(context, BulletinNewsItemData.fromMap(item));
+        break;
       case "event":
-        return _bulletinEventItem(context, BulletinEventItemData.fromMap(item));
+        bulletinItem = _bulletinEventItem(context, BulletinEventItemData.fromMap(item));
+        break;
       case "play":
-        return _bulletinPlayItem(context, BulletinPlayItemData.fromMap(item));
+        bulletinItem = _bulletinPlayItem(context, BulletinPlayItemData.fromMap(item));
+        break;
     }
+
+    return bulletinItem;
   }
 
   Widget _bulletinNewsItem(
       BuildContext context, BulletinNewsItemData bulletinItem) {
-    return BulletinNewsItem(
+    return Card(
+      child: BulletinNewsItem(
         bulletinItem: bulletinItem,
         onTap: () async {
           _navigateTobulletinDetailItem(context, bulletinItem);
         },
         onLongPress: () async => await _bulletinItemOnLongPress(context, bulletinItem.authorId)
-        );
+        ),
+    );
   }
 
   Widget _bulletinEventItem(
       BuildContext context, BulletinEventItemData bulletinItem) {
-    return BulletinEventItem(
-        bulletinItem: bulletinItem,
-        showDivider: true,
-        onTap: () async {
-          _navigateTobulletinDetailItem(context, bulletinItem);
-        },
-        onLongPress: () async => await _bulletinItemOnLongPress(context, bulletinItem.authorId));
+    return Card(
+          child: BulletinEventItem(
+          bulletinItem: bulletinItem,
+          showDivider: true,
+          onTap: () async {
+            _navigateTobulletinDetailItem(context, bulletinItem);
+          },
+          onLongPress: () async => await _bulletinItemOnLongPress(context, bulletinItem.authorId)),
+    );
   }
 
   Widget _bulletinPlayItem(
       BuildContext context, BulletinPlayItemData bulletinItem) {
-    return BulletinPlayItem(
-        bulletinItem: bulletinItem,
-        onTap: () async {
-          _navigateTobulletinDetailItem(context, bulletinItem);
-        },
-        onLongPress: () async => await _bulletinItemOnLongPress(context, bulletinItem.authorId));
+    return Card(
+          child: BulletinPlayItem(
+          bulletinItem: bulletinItem,
+          onTap: () async {
+            _navigateTobulletinDetailItem(context, bulletinItem);
+          },
+          onLongPress: () async => await _bulletinItemOnLongPress(context, bulletinItem.authorId)),
+    );
   }
 
   Future<void> _navigateTobulletinDetailItem(

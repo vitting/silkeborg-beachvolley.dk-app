@@ -20,11 +20,10 @@ class _BulletinState extends State<Bulletin> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: "Silkeborg Beachvolley",
+      title: "Opslag",
       body: _main(),
       showDrawer: true,
       floatingActionButton: _scaffoldFloatingActionButton(context),
-      actions: _scaffoldActions(context),
       bottomNavigationBar: _scaffoldBottomNavigationBar(),
     );
   }
@@ -53,7 +52,7 @@ Widget _scaffoldFloatingActionButton(BuildContext context) {
         ),
         BottomNavigationBarItem(
           title: Text("Begivenheder"),
-          icon: Icon(FontAwesomeIcons.calendarTimes),
+          icon: Icon(FontAwesomeIcons.calendarAlt),
         ),
         BottomNavigationBarItem(
           title: Text("Spil"),
@@ -61,28 +60,6 @@ Widget _scaffoldFloatingActionButton(BuildContext context) {
         )
       ],
     );
-  }
-
-  List<Widget> _scaffoldActions(BuildContext context) {
-    return [
-      PopupMenuButton<int>(
-        initialValue: 1,
-        onSelected: (value) async {
-          if (value == 1) {
-            Navigator.pushNamed(context, "/settings");
-          }
-        },
-        itemBuilder: (BuildContext context) {
-          return [
-            PopupMenuItem(
-              child: Text("Indstillinger"),
-              value: 1,
-            )
-          ];
-        },
-        icon: Icon(Icons.more_vert),
-      )
-    ];
   }
 
   Widget _main() {

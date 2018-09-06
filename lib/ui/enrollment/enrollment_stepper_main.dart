@@ -19,7 +19,7 @@ class _EnrollmentStepperState extends State<EnrollmentStepper> {
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
       title: "Indmeldelse",
-      body: Container(
+      body: Card(
         child: Stepper(
           onStepCancel: () {
             _stepperOnCancel();

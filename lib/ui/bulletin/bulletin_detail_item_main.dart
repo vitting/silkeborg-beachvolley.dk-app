@@ -53,7 +53,6 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
   Widget _main() {
     return ListView(
       controller: _listScrollController,
-      padding: EdgeInsets.all(10.0),
       children: <Widget>[
         _createBulletinMainItem(),
         _addComment(),
@@ -62,13 +61,14 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting ||
-                !snapshot.hasData)
-              return Center(child: Image.asset("assets/images/loader-bar.gif"));
+                !snapshot.hasData) return Center(child: Image.asset("assets/images/loader-bar.gif"));
             _numberOfComments = snapshot.data.documents.length;
             return Column(
                 children: snapshot.data.documents
                     .map<Widget>((DocumentSnapshot document) {
-              return _commentField(document.data);
+              return Card(
+                child: _commentField(document.data),
+              );
             }).toList());
           },
         )
@@ -77,50 +77,65 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
   }
 
   Widget _createBulletinMainItem() {
+    var item;
     switch (_bulletinItem.type) {
       case "news":
-        return BulletinNewsItem(
+        item = Card(
+          child: BulletinNewsItem(
           bulletinItem: _bulletinItem,
           numberOfComments: _numberOfComments,
+        )
         );
+        break;
       case "event":
-        return BulletinEventItem(
+        item = Card(
+          child: BulletinEventItem(
           bulletinItem: _bulletinItem,
           numberOfComments: _numberOfComments,
+        )
         );
+        break;
       case "play":
-        return BulletinPlayItem(
+        item = Card(
+          child: BulletinPlayItem(
           bulletinItem: _bulletinItem,
           numberOfComments: _numberOfComments,
+        )
         );
+        break;
     }
+
+    return item;
   }
 
   Widget _addComment() {
     BulletinCommentItem bulletinCommentItem = new BulletinCommentItem();
     return ListBody(
       children: <Widget>[
-        Form(
-          key: _formKey,
-          child: TextFormField(
-            onSaved: (String value) {
-              bulletinCommentItem.body = value;
-            },
-            validator: (String value) {
-              if (value.isEmpty) return "Skal ydfyldes";
-            },
-            decoration: InputDecoration(
-                labelText: "Skriv en kommentar",
-                suffixIcon: IconButton(
-                    icon: Icon(Icons.send),
-                    onPressed: () async {
-                      if (_formKey.currentState.validate()) {
-                        _formKey.currentState.save();
-                        _formKey.currentState.reset();
-                        await _saveBulletinCommentItem(bulletinCommentItem);
-                        SystemHelpers.hideKeyboardWithNoFocus(context);
-                      }
-                    })),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Form(
+            key: _formKey,
+            child: TextFormField(
+              onSaved: (String value) {
+                bulletinCommentItem.body = value;
+              },
+              validator: (String value) {
+                if (value.isEmpty) return "Skal ydfyldes";
+              },
+              decoration: InputDecoration(
+                  labelText: "Skriv en kommentar",
+                  suffixIcon: IconButton(
+                      icon: Icon(Icons.send),
+                      onPressed: () async {
+                        if (_formKey.currentState.validate()) {
+                          _formKey.currentState.save();
+                          _formKey.currentState.reset();
+                          await _saveBulletinCommentItem(bulletinCommentItem);
+                          SystemHelpers.hideKeyboardWithNoFocus(context);
+                        }
+                      })),
+            ),
           ),
         ),
       ],

@@ -119,9 +119,7 @@ class _SilkeborgBeachvolleyScaffoldState
           leading: Icon(Icons.album),
           title: Text("Log ud"),
           onTap: () {
-            // Navigator.of(context).popAndPushNamed(Enrollment.routeName);
-            Navigator.pushNamedAndRemoveUntil(
-                context, Enrollment.routeName, ModalRoute.withName("/"));
+            Navigator.of(context).pushNamed("/settings");
           },
         ),
         ListTile(

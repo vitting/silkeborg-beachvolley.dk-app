@@ -14,8 +14,7 @@ dependencies:
   modal_progress_hud: ^0.1.0
   date_format: ^1.0.5
   font_awesome_flutter: ^8.0.1
-  # image: ^2.0.4
-  # image_picker: ^0.4.10
+  image: ^2.0.4
   cached_network_image: ^0.4.2
   flutter:
     sdk: flutter
@@ -42,7 +41,15 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+   - assets/images/flogo-HexRBG-Wht-100.png
    - assets/images/loader-bar.gif
+   - assets/images/testpic1.jpg
+   - assets/images/testpic2.jpg
+   - assets/images/testpic3.jpg
+   - assets/images/testpic4.jpg
+   - assets/images/testpic5.jpg
+   - assets/images/testpic6.jpg
+
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

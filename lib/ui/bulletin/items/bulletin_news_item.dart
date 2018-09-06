@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_item_datetime_numberofcomments.dart';
 import "package:cached_network_image/cached_network_image.dart";
+import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_news_item_pictures.dart';
 
 class BulletinNewsItem extends StatelessWidget {
   final BulletinItemData bulletinItem;
@@ -23,9 +24,22 @@ class BulletinNewsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = [
-      ListTile(
+      ListTile(        
         onLongPress: onLongPress,
-        title: Text(bulletinItem.authorName),
+        title: Padding(
+          padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+          child: Row(
+            children: <Widget>[
+              CircleAvatar(
+                  backgroundImage:
+                      CachedNetworkImageProvider(bulletinItem.authorPhotoUrl)),
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Text(bulletinItem.authorName),
+              )
+            ],
+          ),
+        ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -34,29 +48,22 @@ class BulletinNewsItem extends StatelessWidget {
               child: Text(bulletinItem.body,
                   maxLines: maxLines, overflow: overflow),
             ),
+            BulletinNewsItemPictures(
+              images: [
+                "assets/images/testpic1.jpg",
+                "assets/images/testpic2.jpg",
+                "assets/images/testpic3.jpg",
+                "assets/images/testpic4.jpg"
+              ],
+            ),
             BulletinItemDateTimeNumberOfComments(
                 bulletinItem: bulletinItem, numberOfComments: numberOfComments)
           ],
         ),
-        // leading: Container(
-        //   width: 40.0,
-        //   height: 40.0,
-        //   decoration: BoxDecoration(
-        //     shape: BoxShape.circle,
-        //     image: DecorationImage(
-        //       image: CachedNetworkImageProvider(bulletinItem.authorPhotoUrl),
-        //     ),
-        //   ),
-        // ),
-        leading: CircleAvatar(
-            backgroundImage: CachedNetworkImageProvider(bulletinItem.authorPhotoUrl)),
         onTap: onTap,
       )
     ];
 
-    if (showDivider) {
-      widgets.add(Divider());
-    }
     return ListBody(children: widgets);
   }
 }

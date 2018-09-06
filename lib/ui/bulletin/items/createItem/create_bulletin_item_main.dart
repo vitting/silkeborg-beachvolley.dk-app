@@ -34,16 +34,19 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
     return SilkeborgBeachvolleyScaffold(
         title: "Silkeborg Beachvolley",
         body: ModalProgressHUD(
-            opacity: 0.5, child: _main(), inAsyncCall: _saving));
+            opacity: 0.5, child: _main(), inAsyncCall: _saving)
+    );
   }
 
   Widget _main() {
-    return ListView(
-      padding: EdgeInsets.all(10.0),
-      children: <Widget>[
-        _chooseBulletinType(),
-        _createBulletinItemForm(context)
-      ],
+    return Card(
+          child: ListView(
+        padding: EdgeInsets.all(10.0),
+        children: <Widget>[
+          _chooseBulletinType(),
+          _createBulletinItemForm(context)
+        ],
+      ),
     );
   }
 
@@ -53,7 +56,13 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
       children: <Widget>[
         Text(
           "Opslags type",
-          style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16.0),
+          style: TextStyle(
+            color: Theme.of(context).textTheme.caption.color,
+            fontSize: 16.0,
+            fontWeight: Theme.of(context).textTheme.caption.fontWeight
+            
+          )
+          ,
         ),
         Container(
           margin: EdgeInsetsDirectional.only(start: 20.0, end: 20.0, top: 10.0),

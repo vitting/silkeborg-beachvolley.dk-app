@@ -9,7 +9,7 @@ class BulletinItemDateTimeNumberOfComments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
+      padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
       child: Row(
         children: <Widget>[
           Icon(Icons.access_time, size: 12.0),
