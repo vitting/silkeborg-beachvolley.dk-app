@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_item_main.dart';
@@ -73,7 +74,7 @@ Widget _scaffoldFloatingActionButton(BuildContext context) {
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting ||
             !snapshot.hasData)
-          return Center(child: Image.asset("assets/images/loader-bar.gif"));
+          return LoaderSpinner();
 
         return ListView.builder(
           itemCount: snapshot.data.documents.length,

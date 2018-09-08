@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
+import 'package:transparent_image/transparent_image.dart';
 import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_type.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class BulletinNewsItemPictures extends StatelessWidget {
   final List<dynamic> images;
   final List<ImageInfoData> imageInfoData;
   final Function onLongpressImageSelected;
   final BulletinImageType type;
+  final bool useSquareOnOddImageCount;
 
   BulletinNewsItemPictures(
       {this.type,
+      this.useSquareOnOddImageCount = false,
       this.images,
       this.imageInfoData,
       this.onLongpressImageSelected});
@@ -30,9 +35,8 @@ class BulletinNewsItemPictures extends StatelessWidget {
 
   List<Widget> _generateImageMain(BoxConstraints constraints) {
     List<Widget> widgets = [];
-    print(constraints.maxWidth);
     double halfParentWidth = (constraints.maxWidth / 2).floor().toDouble() - 1;
-    double fullParentWidth = constraints.maxWidth;
+    double fullParentWidth = useSquareOnOddImageCount ? halfParentWidth : constraints.maxWidth;
 
     if (images != null && type == BulletinImageType.network) {
       switch (images.length) {
@@ -91,8 +95,7 @@ class BulletinNewsItemPictures extends StatelessWidget {
     return widgets;
   }
 
-  Widget _generateImages1ColumnNetwork(
-      double width, double height, String image) {
+  Widget _generateImages1ColumnNetwork(double width, double height, String image) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -101,12 +104,14 @@ class BulletinNewsItemPictures extends StatelessWidget {
             if (onLongpressImageSelected != null)
               onLongpressImageSelected(image);
           },
-          child: Image(
+          child: CachedNetworkImage(
+            placeholder: LoaderSpinner(),
+            errorWidget: Image.memory(kTransparentImage),
+            imageUrl: image,
+            fit: BoxFit.cover,
             width: width,
             height: height,
-            fit: BoxFit.cover,
-            image: NetworkImage(image),
-          ),
+          )
         )
       ],
     );
@@ -142,11 +147,13 @@ class BulletinNewsItemPictures extends StatelessWidget {
               if (onLongpressImageSelected != null)
                 onLongpressImageSelected(image1);
             },
-            child: Image(
+            child: CachedNetworkImage(
+              placeholder: LoaderSpinner(),
+              errorWidget: Image.memory(kTransparentImage),
+              imageUrl: image1,
               width: width - 1,
               height: height,
               fit: BoxFit.cover,
-              image: NetworkImage(image1),
             ),
           ),
         ),
@@ -157,11 +164,13 @@ class BulletinNewsItemPictures extends StatelessWidget {
               if (onLongpressImageSelected != null)
                 onLongpressImageSelected(image2);
             },
-            child: Image(
+            child: CachedNetworkImage(
+              placeholder: LoaderSpinner(),
+              errorWidget: Image.memory(kTransparentImage),
+              imageUrl: image2,
               width: width,
               height: height,
               fit: BoxFit.cover,
-              image: NetworkImage(image2),
             ),
           ),
         )

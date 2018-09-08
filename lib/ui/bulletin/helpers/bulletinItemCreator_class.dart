@@ -61,7 +61,9 @@ class BulletinItemCreator {
             eventStartDate: start,
             eventEndDate: end,
             eventStartTime: start,
-            eventEndTime: end);
+            eventEndTime: end,
+            eventImage: images.length == 0 ? "" : images[0]
+            );
         break;
       case BulletinType.play:
         return BulletinPlayItemData(

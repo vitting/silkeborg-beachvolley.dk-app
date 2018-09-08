@@ -36,6 +36,15 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
   final ItemFieldsCreate itemFieldsValue = ItemFieldsCreate();
   List<ImageInfoData> _imageFiles = [];
   bool _saving = false;
+  @override
+  void dispose() {
+    super.dispose();
+    if (_imageFiles.length > 0) {
+      _imageFiles.forEach((ImageInfoData image) async {
+        await _deleteImageFromCacheAndStorage(image, false);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,30 +55,34 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
   }
 
   Widget _main() {
+    List<Widget> widgets = [
+      BulletinChooseType(
+        onChange: (value) {
+          setState(() {
+            itemFieldsValue.type = value;
+            radioGroupValue = value;
+          });
+        },
+        radioGroupValue: radioGroupValue,
+      ),
+      _createBulletinItemForm(context),
+    ];
+
+    if (radioGroupValue == BulletinType.news)
+      widgets.add(BulletinNewsItemPictures(
+        useSquareOnOddImageCount: true,
+        imageInfoData: _imageFiles,
+        onLongpressImageSelected: (image) {
+          if (image != null && image is ImageInfoData) {
+            _removePhoto(image);
+          }
+        },
+      ));
+
     return Card(
       child: ListView(
         padding: EdgeInsets.all(10.0),
-        children: <Widget>[
-          BulletinChooseType(
-            onChange: (value) {
-              setState(() {
-                itemFieldsValue.type = value;
-                radioGroupValue = value;
-              });
-            },
-            radioGroupValue: radioGroupValue,
-          ),
-          _createBulletinItemForm(context),
-          BulletinNewsItemPictures(
-            imageInfoData: _imageFiles,
-            onLongpressImageSelected: (image) {
-              if (image is ImageInfoData) {
-                print(image.filename);
-                _removePhoto(image);
-              }
-            },
-          )
-        ],
+        children: widgets,
       ),
     );
   }
@@ -85,15 +98,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
     List<Widget> widgets = [];
 
     if (radioGroupValue == BulletinType.event) {
-      widgets.add(
-        BulletinEventFields(
-        startDateController: _startDateController,
-        endDateController: _endDateController,
-        startTimeController: _startTimeController,
-        endTimeController: _endTimeController,
-        itemFieldsValue: itemFieldsValue,
-      )
-      );
+      widgets.add(_eventFields());
       widgets.add(_textField());
     } else {
       widgets.add(_textField());
@@ -102,35 +107,53 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
     return widgets;
   }
 
+  Widget _eventFields() {
+    return BulletinEventFields(
+      startDateController: _startDateController,
+      endDateController: _endDateController,
+      startTimeController: _startTimeController,
+      endTimeController: _endTimeController,
+      itemFieldsValue: itemFieldsValue,
+      eventImage: _imageFiles.length != 0 ? _imageFiles[0] : null,
+      onTapImage: (ImageInfoData data) {
+        if (data == null) {
+          _addPhoto();
+        } else {
+          _removePhoto(data);
+        }
+      },
+    );
+  }
+
   Widget _textField() {
     return BulletinTextField(
         onPressedSave: _textFieldOnpressedSave,
         onPressedPhoto: radioGroupValue == BulletinType.news ? _addPhoto : null,
-        onSave: _textFieldOnSave
-      );
+        onSave: _textFieldOnSave);
   }
 
-_textFieldOnSave(String value){
-itemFieldsValue.body = value;
-}
-
-_textFieldOnpressedSave() async {
-if (_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
-                    _formKey.currentState.reset();
-
-                    setState(() {
-                      _saving = true;
-                    });
-                    await _saveBulletinItem();
-                    setState(() {
-                      radioGroupValue = BulletinType.news;
-                      _saving = false;
-                    });
-                    Navigator.of(context).pop();
-                  }
+  _textFieldOnSave(String value) {
+    itemFieldsValue.body = value;
   }
-  
+
+  _textFieldOnpressedSave() async {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      _formKey.currentState.reset();
+
+      setState(() {
+        _saving = true;
+      });
+      await _saveBulletinItem();
+      setState(() {
+        radioGroupValue = BulletinType.news;
+        _imageFiles.clear();
+        _saving = false;
+      });
+      Navigator.of(context).pop();
+    }
+  }
+
   Future<void> _saveBulletinItem() async {
     var item = await BulletinItemCreator.createBulletinItem(
         body: itemFieldsValue.body,
@@ -143,8 +166,7 @@ if (_formKey.currentState.validate()) {
         eventEndTime: itemFieldsValue.eventEndTime,
         images: _imageFiles.map<String>((ImageInfoData data) {
           return data.linkFirebaseStorage;
-        }).toList()
-        );
+        }).toList());
 
     await BulletinFirestore.saveBulletinItem(item);
   }
@@ -164,7 +186,6 @@ if (_formKey.currentState.validate()) {
                   leading: Icon(Icons.photo),
                   title: Text("Galleri"),
                   onTap: () async {
-                    print("Galleri");
                     Navigator.of(context).pop();
                     _selectPhoto("gallery");
                   },
@@ -173,7 +194,6 @@ if (_formKey.currentState.validate()) {
                   leading: Icon(Icons.camera),
                   title: Text("Kamera"),
                   onTap: () async {
-                    print("Kamera");
                     Navigator.of(context).pop();
                     _selectPhoto("camera");
                   },
@@ -189,30 +209,78 @@ if (_formKey.currentState.validate()) {
         source: mode == "gallery" ? ImageSource.gallery : ImageSource.camera);
 
     ImageInfoData imageInfoData =
-        await ImageHelpers.processNewsImage(imageFile);
+        await ImageHelpers.processImage(imageFile, _getImageSize());
 
     if (imageInfoData.imageFile != null) {
-      imageInfoData.linkFirebaseStorage = await BulletinFireStorage.saveToFirebaseStorage(imageInfoData.imageFile, imageInfoData.filename);
+      imageInfoData.imagesStoreageFolder = _getStorageFolder();
+      imageInfoData.linkFirebaseStorage =
+          await BulletinFireStorage.saveToFirebaseStorage(
+              imageInfoData.imageFile,
+              imageInfoData.filename,
+              imageInfoData.imagesStoreageFolder);
 
       if (imageInfoData.linkFirebaseStorage.isNotEmpty) {
         setState(() {
           _imageFiles.add(imageInfoData);
         });
       }
-      
     }
   }
 
+  int _getImageSize() {
+    int size = 0;
+    if (radioGroupValue == BulletinType.event) size = 90;
+    if (radioGroupValue == BulletinType.news) size = 1200;
+    return size;
+  }
+
+  String _getStorageFolder() {
+    String folder = "";
+    if (radioGroupValue == BulletinType.event) folder = "eventImages";
+    if (radioGroupValue == BulletinType.news) folder = "newsImages";
+
+    return folder;
+  }
+
   void _removePhoto(ImageInfoData image) async {
-    setState(() {
-      if (_imageFiles.remove(image)) {
-        try {
-          image.imageFile.delete();  
-          BulletinFireStorage.deleteFromFirebaseStorage(image.filename);
-        } catch (e) {
-          print("_removePhoto: $e");
-        }
-      }          
-    });
+    showModalBottomSheet<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ListTile(
+                  leading: Icon(Icons.delete),
+                  title: Text("Fjern billede"),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    setState(() {
+                      _deleteImageFromCacheAndStorage(image, true);
+                    });
+                  },
+                )
+              ],
+            ),
+          );
+        });
+  }
+
+  _deleteImageFromCacheAndStorage(
+      ImageInfoData image, bool removeFromList) async {
+    if (removeFromList) {
+      setState(() {
+        _imageFiles.remove(image);
+      });
+    }
+    ;
+
+    try {
+      image.imageFile.delete();
+      BulletinFireStorage.deleteFromFirebaseStorage(
+          image.filename, image.imagesStoreageFolder);
+    } catch (e) {
+      print("_removePhoto: $e");
+    }
   }
 }

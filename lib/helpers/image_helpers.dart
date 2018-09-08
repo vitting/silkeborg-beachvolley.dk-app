@@ -7,17 +7,17 @@ import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
 import 'package:uuid/uuid.dart';
 
 class ImageHelpers {
-  static Future<ImageInfoData> processNewsImage(File imageFile) async {
+  static Future<ImageInfoData> processImage(File imageFile, int maxImageSize) async {
     final uuid = new Uuid();
     final Image imageDecoded = decodeImage(await imageFile.readAsBytes());
     Image resizedImage;
     
     try {
-      if (imageDecoded.width >= 1200 || imageDecoded.height > 1200) {
+      if (imageDecoded.width >= maxImageSize || imageDecoded.height > maxImageSize) {
         if (imageDecoded.width >= imageDecoded.height) {
-          resizedImage = copyResize(imageDecoded, 1200);
+          resizedImage = copyResize(imageDecoded, maxImageSize);
         } else {
-          resizedImage = copyResize(imageDecoded, -1, 1200);
+          resizedImage = copyResize(imageDecoded, -1, maxImageSize);
         }
       } else {
         resizedImage = imageDecoded;

@@ -9,6 +9,7 @@ class BulletinEventItemData extends BulletinItemData {
   DateTime eventEndTime;
   String eventLocation;
   String eventTitle;
+  String eventImage;
   
     BulletinEventItemData(
         {String id = "",
@@ -22,7 +23,7 @@ class BulletinEventItemData extends BulletinItemData {
         this.eventStartDate,
         this.eventEndDate,
         this.eventEndTime,
-        this.eventStartTime, this.eventLocation, this.eventTitle})
+        this.eventStartTime, this.eventLocation, this.eventTitle, this.eventImage})
         : super(
               id: id,
               type: type,
@@ -37,7 +38,7 @@ class BulletinEventItemData extends BulletinItemData {
     Map<String, dynamic> toMap() {
       Map<String, dynamic> map = super.toMap();
       map.addAll({
-        "event": {"startDate": eventStartDate, "endDate": eventEndDate, "startTime": eventStartTime, "endTime": eventEndTime, "location": eventLocation, "title": eventTitle}
+        "event": {"startDate": eventStartDate, "endDate": eventEndDate, "startTime": eventStartTime, "endTime": eventEndTime, "location": eventLocation, "title": eventTitle, "image": eventImage}
       });
   
       return map;
@@ -68,7 +69,8 @@ class BulletinEventItemData extends BulletinItemData {
           eventStartTime: item["event"]["startTime"] == null ? DateTime.now() : item["event"]["startTime"],
           eventEndTime: item["event"]["endTime"] == null ? DateTime.now() : item["event"]["endTime"],
           eventLocation: item["event"]["location"] == null ? "" : item["event"]["location"],
-          eventTitle: item["event"]["title"] == null ? "" : item["event"]["title"]
+          eventTitle: item["event"]["title"] == null ? "" : item["event"]["title"],
+          eventImage: item["event"]["image"] == null ? "" : item["event"]["image"]
         );
     }
   }

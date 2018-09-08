@@ -7,6 +7,7 @@ class ImageInfoData {
   File imageFile;
   String filename;
   String linkFirebaseStorage;
+  String imagesStoreageFolder;
 
-  ImageInfoData({this.imageFile, this.width = 0, this.height = 0, this.type = "", this.filename = "", this.linkFirebaseStorage = ""});
+  ImageInfoData({this.imageFile, this.width = 0, this.height = 0, this.type = "", this.filename = "", this.linkFirebaseStorage = "", this.imagesStoreageFolder});
 }

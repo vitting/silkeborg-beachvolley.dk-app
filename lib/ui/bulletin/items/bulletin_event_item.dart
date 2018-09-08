@@ -1,5 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_event_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_item_datetime_numberofcomments.dart';
@@ -98,7 +98,17 @@ class BulletinEventItem extends StatelessWidget {
             BulletinItemDateTimeNumberOfComments(bulletinItem: bulletinItem, numberOfComments: numberOfComments)
           ],
         ),
-        leading: Icon(FontAwesomeIcons.calendarAlt),
+        leading: bulletinItem.eventImage.isNotEmpty ? Container(
+          width: 50.0,
+          height: 50.0,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              image: CachedNetworkImageProvider(bulletinItem.eventImage),
+              fit: BoxFit.fill
+            )
+          )
+        ) : Icon(Icons.event),
         onTap: onTap,
       ),
     ];

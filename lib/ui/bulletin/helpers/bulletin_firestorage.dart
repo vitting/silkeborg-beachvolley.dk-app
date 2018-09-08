@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class BulletinFireStorage {
-  static final String _newsImagesStoreageFolder = "newsImages";
   static FirebaseStorage _firestorage;
 
   static FirebaseStorage get firestorageInstance {
@@ -15,12 +14,12 @@ class BulletinFireStorage {
   }
 
   static Future<String> saveToFirebaseStorage(
-      File file, String tempFilename) async {
+      File file, String tempFilename, String imagesStoreageFolder) async {
     
     try {
       StorageUploadTask uploadTask = firestorageInstance
           .ref()
-          .child("$_newsImagesStoreageFolder/$tempFilename")
+          .child("$imagesStoreageFolder/$tempFilename")
           .putFile(file);
 
       final UploadTaskSnapshot snapshot = await uploadTask.future;
@@ -32,7 +31,7 @@ class BulletinFireStorage {
     }
   }
 
-  static Future<void> deleteFromFirebaseStorage(String filename) async {
-    await firestorageInstance.ref().child("$_newsImagesStoreageFolder/$filename").delete();
+  static Future<void> deleteFromFirebaseStorage(String filename, String imagesStoreageFolder) async {
+    await firestorageInstance.ref().child("$imagesStoreageFolder/$filename").delete();
   }
 }

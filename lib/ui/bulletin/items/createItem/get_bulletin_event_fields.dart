@@ -1,5 +1,6 @@
 import 'dart:async';
-
+import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
+import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_fields_create_class.dart';
@@ -11,8 +12,15 @@ class BulletinEventFields extends StatefulWidget {
   final TextEditingController startTimeController;
   final TextEditingController endTimeController;
   final ItemFieldsCreate itemFieldsValue;
-  BulletinEventFields({@required this.startDateController, @required this.endDateController, @required this.startTimeController, @required this.endTimeController, @required this.itemFieldsValue});
-  
+  final Function onTapImage;
+  final ImageInfoData eventImage;
+  BulletinEventFields(
+      {@required this.startDateController,
+      @required this.endDateController,
+      @required this.startTimeController,
+      @required this.endTimeController,
+      @required this.itemFieldsValue, @required this.onTapImage, @required this.eventImage});
+
   @override
   _BulletinEvetFieldsState createState() => _BulletinEvetFieldsState();
 }
@@ -22,108 +30,143 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-TextFormField(
-        keyboardType: TextInputType.text,
-        maxLength: 50,
-        decoration: InputDecoration(labelText: "Titel"),
-        onSaved: (value) {
-          widget.itemFieldsValue.eventTitle = value;
-        },
-        validator: (value) {
-          if (value.isEmpty) return "Titel skal udfyldes";
-        },
-      ),
-      Row(
-        children: <Widget>[
-          Flexible(
-            child: TextFormField(
-                keyboardType: TextInputType.datetime,
-                textAlign: TextAlign.center,
-                controller: widget.startDateController,
-                decoration: InputDecoration(
-                    labelText: "Start dato",
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.calendar_today),
-                      onPressed: () async {
-                        _selectDate(context, EventDateTimeType.startDate);
-                      },
-                    )),
-                validator: (value) {
-                  if (value.isEmpty) return "Udfyld Start dato";
-                }),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: Column(
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {
+                  widget.onTapImage(widget.eventImage);
+                },
+                child: Tooltip(
+                  message: "Vælg et billede. Det er ikke påkrævet.",
+                  child: Container(
+                width: 90.0,
+                height: 90.0,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey,
+                    width: 2.0
+                  ),
+                  color: Colors.grey,
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: widget.eventImage == null ? MemoryImage(kTransparentImage) : FileImage(widget.eventImage.imageFile)
+                  )
+                ),
+                child: Icon(
+                  widget.eventImage == null ? Icons.add_a_photo : Icons.delete,
+                  color: Colors.white,
+                ),
+              ),
+                ),
+              )
+            ],
           ),
-          SizedBox(width: 20.0),
-          Flexible(
-            child: TextFormField(
+        ),
+        TextFormField(
+          keyboardType: TextInputType.text,
+          maxLength: 50,
+          decoration: InputDecoration(labelText: "Titel"),
+          onSaved: (value) {
+            widget.itemFieldsValue.eventTitle = value;
+          },
+          validator: (value) {
+            if (value.isEmpty) return "Titel skal udfyldes";
+          },
+        ),
+        Row(
+          children: <Widget>[
+            Flexible(
+              child: TextFormField(
+                  keyboardType: TextInputType.datetime,
+                  textAlign: TextAlign.center,
+                  controller: widget.startDateController,
+                  decoration: InputDecoration(
+                      labelText: "Start dato",
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.calendar_today),
+                        onPressed: () async {
+                          _selectDate(context, EventDateTimeType.startDate);
+                        },
+                      )),
+                  validator: (value) {
+                    if (value.isEmpty) return "Udfyld Start dato";
+                  }),
+            ),
+            SizedBox(width: 20.0),
+            Flexible(
+              child: TextFormField(
+                  keyboardType: TextInputType.datetime,
+                  textAlign: TextAlign.center,
+                  controller: widget.endDateController,
+                  decoration: InputDecoration(
+                      labelText: "Slut dato",
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.calendar_today),
+                        onPressed: () async {
+                          _selectDate(context, EventDateTimeType.endDate);
+                        },
+                      )),
+                  validator: (value) {
+                    if (value.isEmpty) return "Udfyld Slut dato";
+                  }),
+            )
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Flexible(
+              child: TextFormField(
+                  keyboardType: TextInputType.datetime,
+                  textAlign: TextAlign.center,
+                  controller: widget.startTimeController,
+                  decoration: InputDecoration(
+                      labelText: "Start tid",
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.access_time),
+                        onPressed: () async {
+                          _selectTime(context, EventDateTimeType.startTime);
+                        },
+                      )),
+                  validator: (value) {
+                    if (value.isEmpty) return "Udfyld Start tid";
+                  }),
+            ),
+            SizedBox(width: 20.0),
+            Flexible(
+              child: TextFormField(
                 keyboardType: TextInputType.datetime,
                 textAlign: TextAlign.center,
-                controller: widget.endDateController,
+                controller: widget.endTimeController,
                 decoration: InputDecoration(
-                    labelText: "Slut dato",
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.calendar_today),
-                      onPressed: () async {
-                        _selectDate(context, EventDateTimeType.endDate);
-                      },
-                    )),
-                validator: (value) {
-                  if (value.isEmpty) return "Udfyld Slut dato";
-                }),
-          )
-        ],
-      ),
-      Row(
-        children: <Widget>[
-          Flexible(
-            child: TextFormField(
-                keyboardType: TextInputType.datetime,
-                textAlign: TextAlign.center,
-                controller: widget.startTimeController,
-                decoration: InputDecoration(
-                    labelText: "Start tid",
+                    labelText: "Slut tid",
                     suffixIcon: IconButton(
                       icon: Icon(Icons.access_time),
                       onPressed: () async {
-                        _selectTime(context, EventDateTimeType.startTime);
+                        _selectTime(context, EventDateTimeType.endTime);
                       },
                     )),
                 validator: (value) {
-                  if (value.isEmpty) return "Udfyld Start tid";
-                }),
-          ),
-          SizedBox(width: 20.0),
-          Flexible(
-            child: TextFormField(
-              keyboardType: TextInputType.datetime,
-              textAlign: TextAlign.center,
-              controller: widget.endTimeController,
-              decoration: InputDecoration(
-                  labelText: "Slut tid",
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.access_time),
-                    onPressed: () async {
-                      _selectTime(context, EventDateTimeType.endTime);
-                    },
-                  )),
-              validator: (value) {
-                if (value.isEmpty) return "Udfyld Slut tid";
-              },
-              onSaved: (value) {},
-            ),
-          )
-        ],
-      ),
-      TextFormField(
-        keyboardType: TextInputType.text,
-        maxLength: 100,
-        decoration: InputDecoration(labelText: "Sted"),
-        onSaved: (value) {
-          widget.itemFieldsValue.eventLocation = value;
-        },
-        validator: (value) {
-          if (value.isEmpty) return "Sted skal udfyldes";
-        },
-      )
+                  if (value.isEmpty) return "Udfyld Slut tid";
+                },
+                onSaved: (value) {},
+              ),
+            )
+          ],
+        ),
+        TextFormField(
+          keyboardType: TextInputType.text,
+          maxLength: 100,
+          decoration: InputDecoration(labelText: "Sted"),
+          onSaved: (value) {
+            widget.itemFieldsValue.eventLocation = value;
+          },
+          validator: (value) {
+            if (value.isEmpty) return "Sted skal udfyldes";
+          },
+        )
       ],
     );
   }
