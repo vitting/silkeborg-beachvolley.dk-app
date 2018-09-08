@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_type.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_news_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_item_datetime_numberofcomments.dart';
 import "package:cached_network_image/cached_network_image.dart";
 import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_news_item_pictures.dart';
 
 class BulletinNewsItem extends StatelessWidget {
-  final BulletinItemData bulletinItem;
+  final BulletinNewsItemData bulletinItem;
   final Function onTap;
   final Function onLongPress;
   final int maxLines;
@@ -49,12 +50,8 @@ class BulletinNewsItem extends StatelessWidget {
                   maxLines: maxLines, overflow: overflow),
             ),
             BulletinNewsItemPictures(
-              images: [
-                "assets/images/testpic1.jpg",
-                "assets/images/testpic2.jpg",
-                "assets/images/testpic3.jpg",
-                "assets/images/testpic4.jpg"
-              ],
+              images: bulletinItem.images,
+              type: BulletinImageType.network,
             ),
             BulletinItemDateTimeNumberOfComments(
                 bulletinItem: bulletinItem, numberOfComments: numberOfComments)

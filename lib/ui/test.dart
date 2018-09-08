@@ -1,64 +1,20 @@
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+// import 'package:multiple_image_picker/multiple_image_picker.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_firebase_class.dart';
+import 'package:silkeborgbeachvolley/ui/testers/test2.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:math';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
+
+final FirebaseStorage storage = FirebaseStorage.instance;
 final Firestore firestore = Firestore.instance;
 final uuid = new Uuid();
-List<UserInfoFirebase> userInfos = [
-  UserInfoFirebase(id: uuid.v4(), displayName: "Martin Jensen", email: "martin@hotmail.com", photoUrl: "https://picsum.photos/200/200/?random"),
-  UserInfoFirebase(id: uuid.v4(), displayName: "Knud Madsen", email: "knud@hotmail.com", photoUrl: "https://picsum.photos/200/200/?random"),
-  UserInfoFirebase(id: uuid.v4(), displayName: "Bettina Revenfelt", email: "bettina@hotmail.com", photoUrl: "https://picsum.photos/200/200/?random"),
-  UserInfoFirebase(id: uuid.v4(), displayName: "Julie Madsen", email: "julie@hotmail.com", photoUrl: "https://picsum.photos/200/200/?random")
-];
-
-//We Use Firebaseuser uid as key;
-List<Map<String, dynamic>> users = [
-  {
-    "displayName": "Christian Nicolaisen",
-    "email": "cvn@hotmail.com",
-    "photoUrl": "https://picsum.photos/200/200/?random"
-  },
-  {
-    "displayName": "Anders Nielsen",
-    "email": "anders@hotmail.com",
-    "photoUrl": "https://picsum.photos/200/200/?random"
-  },
-  {
-    "displayName": "Irene Hansen",
-    "email": "irene@hotmail.com",
-    "photoUrl": "https://picsum.photos/200/200/?random"
-  },
-  {
-    "displayName": "Mathilde Markussen",
-    "email": "mathilde@hotmail.com",
-    "photoUrl": "https://picsum.photos/200/200/?random"
-  },
-  {
-    "displayName": "Michael Tygesen",
-    "email": "michael@hotmail.com",
-    "photoUrl": "https://picsum.photos/200/200/?random"
-  }
-];
-
-List<Map<String, dynamic>> users3 = [
-  {
-    "date": DateTime.now(),
-    "displayName": "Hans Hansen",
-    "email": "hans@hotmail.com",
-    "photoUrl": "https://picsum.photos/200/200/?random"
-  },
-  {
-    "date": DateTime.now(),
-    "displayName": "Lone Schults",
-    "email": "lone@hotmail.com",
-    "photoUrl": "https://picsum.photos/200/200/?random"
-  }
-];
-
-
 
 class TestWidget extends StatefulWidget {
   @override
@@ -66,152 +22,145 @@ class TestWidget extends StatefulWidget {
 }
 
 class _TestWidgetState extends State<TestWidget> {
-    
+  List<File> _imageFiles = [];
+
   @override
   Widget build(BuildContext context) {
+    // Size size = MediaQuery.of(context).size;
+    // print("BUILD Width: ${size.width} / Height: ${size.height}");
+  
     return Scaffold(
-      body: Container(
-        child: RaisedButton(
-          onPressed: () {
-            //31-12-2019
-            String b = "31-22-2013";
-            RegExp reg = RegExp(r"^[0-3]\d-[0-1]\d-[1-2][09]\d\d$");
-            print(reg.hasMatch(b));
+      appBar: AppBar(),
+      body: ListView(
+        children: <Widget>[
+          GestureDetector(
+            onLongPress: () {
+              // _delete(file);
+            },
+            child: Image.file(null),
+          ),
+          RaisedButton(
+            onPressed: () async {
+              String link2;
+              print(link2);
+              File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+              File file = await Test2.processNewsImage(image);
+              _imageFiles.add(file);
+              
+              //Vi skal lave det sådan at hvis man sletter et billede inden man opretter nyheden så skal den fjernes
 
-
-
-
-
-          },
-        ),
-        // child: RaisedButton(
-        //   onPressed: () {
-        //         users3.forEach((user) async {
-        //           await firestore.collection("users").document(uuid.v4()).setData(user);
-        //         });            
-        //   },
-        // ),
-      // child: StreamBuilder(
-      //   stream: firestore.collection("users").snapshots(),
-      //   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-      //     if (!snapshot.hasData) return new Text('Loading...');
-      //     return ListView(
-      //       children: snapshot.data.documents.map<Widget>((DocumentSnapshot document){
-      //         return ListTile(
-      //           leading: ClipRRect(
-      //             borderRadius: BorderRadius.circular(50.0),
-
-      //             child: Image.network(
-      //             document["photoUrl"],
-      //             width: 50.0,
-      //             height: 50.0,
-      //             fit: BoxFit.cover,
-      //             ),
-      //           ),
-      //           title: Text(document["email"]),
-      //           subtitle: Text(document.documentID),
-      //           contentPadding: EdgeInsetsDirectional.only(top: 20.0, bottom: 20.0),
-      //         );
-      //       }).toList(),            
-      //     );
-      //   },
-      // ),
-      
-    ),
+              // print("************LINK $link");
+              // if (image != null) {
+              //   Uri downloadLink = await Test2.resizeImageTo1200(image);
+              //   print(downloadLink);
+              //   if (downloadLink != null) {
+              //     setState(() {
+              //       _images.add(image);
+              //     });
+              //   }
+              // }
+            },
+            child: Text("Image file"),
+          ),
+          RaisedButton(
+            onPressed: () async {
+              File image = await ImagePicker.pickImage(source: ImageSource.camera);
+              if (image != null) {
+                setState(() {
+                  _imageFiles.add(image);
+                });
+              }
+            },
+            child: Text("Image camera"),
+          ),
+          ListView.builder(
+            itemCount: _imageFiles.length,
+            shrinkWrap: true,
+            itemBuilder: (BuildContext context, int position) {
+              
+              return Image.file(_imageFiles[position], height: 100.0, width: 300.0,);
+            },
+          )
+        ],
+      )
     );
   }
 }
 
-// class TestWidget extends StatelessWidget {
-//   final uuid = new Uuid();
-//   final Firestore firestore = Firestore.instance;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Center(
-//       child: Container(
-//         constraints: BoxConstraints.expand(),
-//         color: Colors.white,
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           crossAxisAlignment: CrossAxisAlignment.center,
-//           children: <Widget>[
-//             RaisedButton(
-//               child: Text("Indsæt brugere"),
-//               onPressed: () {
-//                 users.forEach((user) async {
-//                   await firestore.collection("users").document(uuid.v4()).setData(user);
-//                 });
-//               },
-//             ),
-//             RaisedButton(
-//               child: Text("Indsæt brugere2"),
-//               onPressed: () {
-//                 userInfos.forEach((user) async {
-//                   await firestore.collection("users").document(user.id).setData(user.toMap());
-//                 });
-//               },
-//             ),
-//             RaisedButton(
-//               child: Text("Get brugere"),
-//               onPressed: () async {
-//                 QuerySnapshot snapshot = await firestore.collection("users").getDocuments();
-//                 snapshot.documents.forEach((document) {
-//                   // print("${document.data.toString()}");
-//                   print("${document.documentID}");
-//                 });
-//               },
-//             ),
-//             // StreamBuilder(
-//             //   stream: firestore.collection("users").snapshots(),
-//             //   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-//             //     return Text("Lalala");
-//             //     // if (!snapshot.hasData) return new Text('Loading...');
-//             //     // return ListView(
-//             //     //   children: snapshot.data.documents.map<Widget>((DocumentSnapshot document){
-//             //     //     return new ListTile(
-//             //     //       title: document["name"],
-//             //     //       subtitle: document["email"],
-//             //     //       leading: Image.network(document["photoUrl"]),
-//             //     //     );
-//             //     //   }).toList()
-//             //     // );
-//             //   },
-//             // )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-//   Future<Null> _askedToLead(BuildContext context) async {
-//     final _formKey = GlobalKey<FormState>();
-
-//     var result = await showDialog<int>(
-//         context: context,
-//         builder: (BuildContext context) {
-//           return new SimpleDialog(
-//             title: const Text('Opret nyhed'),
-//             children: <Widget>[
-//               Form(
-//                 key: _formKey,
-//                 child: Column(
-//                   children: <Widget>[
-//                     TextFormField(
-//                       decoration: InputDecoration(labelText: "Titel"),
-//                       onSaved: (String value) {},
-//                     ),
-//                     TextFormField(
-//                       decoration: InputDecoration(labelText: "Titel"),
-//                       onSaved: (String value) {},
-//                     )
-//                   ],
-//                 ),
+// CustomScrollView(
+//         slivers: <Widget>[
+//           SliverList(
+//             delegate: SliverChildListDelegate(<Widget>[
+//               Text("TEST"),
+//               Text("TEST"),
+//               Text("TEST"),
+//               Text("TEST"),
+//               Text("TEST"),
+//               Text("TEST"),
+//               Text("TEST"),
+//               Text("TEST"),
+//               Text("TEST"),
+//               Text("TEST"),
+//               Text("TEST"),
+//               Text("TEST"),
+//               Text("TEST"),
+//               Text("TEST"),
+//               Text("TEST"),
+//               Text("TEST"),
+//             ]),
+//           ),
+//           SliverList(
+//                 delegate: SliverChildListDelegate(<Widget> [
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3"),
+//                   Text("Test2"),
+//                   Text("Test3")
+//                 ]),
 //               )
-//             ],
-//           );
-//         });
-
-//     print(result);
-//   }
-// }
+//         ],
+//       )

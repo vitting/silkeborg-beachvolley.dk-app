@@ -2,6 +2,7 @@ import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data_clas
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 
 class BulletinNewsItemData extends BulletinItemData {
+  List<dynamic> images;
   BulletinNewsItemData(
       {String id = "",
       String type = BulletinType.none,
@@ -10,7 +11,9 @@ class BulletinNewsItemData extends BulletinItemData {
       String authorId = "",
       String authorName = "",
       String authorPhotoUrl = "",
-      int numberOfcomments = 0})
+      int numberOfcomments = 0,
+      this.images 
+      })
       : super(
             id: id,
             type: type,
@@ -21,6 +24,16 @@ class BulletinNewsItemData extends BulletinItemData {
             authorPhotoUrl: authorPhotoUrl,
             numberOfcomments: numberOfcomments);
 
+ @override
+    Map<String, dynamic> toMap() {
+      Map<String, dynamic> map = super.toMap();
+      map.addAll({
+        "images": images == null ? [] : images
+      });
+  
+      return map;
+    }
+  
   static BulletinNewsItemData fromMap(Map<String, dynamic> item) {
     return new BulletinNewsItemData(
         id: item["id"] == null ? "" : item["id"],
@@ -34,6 +47,9 @@ class BulletinNewsItemData extends BulletinItemData {
         body: item["body"] == null ? "" : item["body"],
         creationDate: item["creationDate"] == null ? "" : item["creationDate"],
         numberOfcomments:
-            item["numberOfcomments"] == null ? 0 : item["numberOfcomments"]);
+            item["numberOfcomments"] == null ? 0 : item["numberOfcomments"],
+        images: item["images"] == null ? [] : item["images"]
+            
+            );
   }
 }

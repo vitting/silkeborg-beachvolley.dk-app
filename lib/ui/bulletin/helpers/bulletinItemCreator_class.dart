@@ -14,7 +14,7 @@ class BulletinItemCreator {
       DateTime eventStartDate,
       DateTime eventEndDate,
       TimeOfDay eventStartTime,
-      TimeOfDay eventEndTime, String eventLocation, String eventTitle}) async {
+      TimeOfDay eventEndTime, String eventLocation, String eventTitle, List<String> images}) async {
     Uuid _uuid = new Uuid();
     LocalUserInfo _localuserInfo = await UserAuth.getLoclUserInfo();
 
@@ -28,7 +28,9 @@ class BulletinItemCreator {
             id: _uuid.v4(),
             body: body,
             creationDate: DateTime.now(),
-            numberOfcomments: 0);
+            numberOfcomments: 0,
+            images: images
+            );
         break;
       case BulletinType.event:
         // We are combining date and time 

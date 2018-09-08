@@ -15,6 +15,9 @@ dependencies:
   date_format: ^1.0.5
   font_awesome_flutter: ^8.0.1
   image: ^2.0.4
+  image_picker: ^0.4.10
+  path_provider: ^0.4.1
+  firebase_storage: ^1.0.2
   cached_network_image: ^0.4.2
   flutter:
     sdk: flutter
