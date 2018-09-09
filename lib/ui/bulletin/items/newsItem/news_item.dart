@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_type.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_news_item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_item_datetime_numberofcomments.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/image_type.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/item_datetime_numberofcomments.dart';
 import "package:cached_network_image/cached_network_image.dart";
-import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_news_item_pictures.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_pictures.dart';
 
 class BulletinNewsItem extends StatelessWidget {
   final BulletinNewsItemData bulletinItem;
@@ -11,7 +11,6 @@ class BulletinNewsItem extends StatelessWidget {
   final Function onLongPress;
   final int maxLines;
   final TextOverflow overflow;
-  final bool showDivider;
   final int numberOfComments;
   BulletinNewsItem(
       {this.bulletinItem,
@@ -19,8 +18,7 @@ class BulletinNewsItem extends StatelessWidget {
       this.onLongPress,
       this.maxLines = 3,
       this.overflow = TextOverflow.ellipsis,
-      this.numberOfComments = -1,
-      this.showDivider = true});
+      this.numberOfComments = -1});
 
   @override
   Widget build(BuildContext context) {

@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/local_user_info_class.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers_class.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_comment_item_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/detailItem/comment_item_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_event_item.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_news_item.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_play_item.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class BulletinDetailItem extends StatefulWidget {

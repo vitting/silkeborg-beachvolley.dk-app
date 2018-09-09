@@ -2,14 +2,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/local_user_info_class.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/bulletin_detail_item_main.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_event_item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_play_item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_news_item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_event_item.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_play_item.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_news_item.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/detailItem/detail_item_main.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item.dart';
 
 class BulletinItemMain extends StatelessWidget {
   final Map item;
@@ -52,7 +52,6 @@ class BulletinItemMain extends StatelessWidget {
     return Card(
           child: BulletinEventItem(
           bulletinItem: bulletinItem,
-          showDivider: true,
           onTap: () async {
             _navigateTobulletinDetailItem(context, bulletinItem);
           },
@@ -72,8 +71,7 @@ class BulletinItemMain extends StatelessWidget {
     );
   }
 
-  Future<void> _navigateTobulletinDetailItem(
-      BuildContext context, BulletinItemData bulletinItem) async {
+  Future<void> _navigateTobulletinDetailItem(BuildContext context, BulletinItemData bulletinItem) async {
     await Navigator.of(context).push(MaterialPageRoute(
         fullscreenDialog: true,
         builder: (context) => BulletinDetailItem(bulletinItem)));

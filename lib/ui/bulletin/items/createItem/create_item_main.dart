@@ -5,12 +5,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:silkeborgbeachvolley/helpers/image_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletinItemCreator_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_creator_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestorage.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_fields_create_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_fields_create_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_news_item_pictures.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_pictures.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_choose_type.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_event_fields.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_text_field.dart';
@@ -273,7 +273,6 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
         _imageFiles.remove(image);
       });
     }
-    ;
 
     try {
       image.imageFile.delete();

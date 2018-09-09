@@ -1,16 +1,12 @@
-import 'dart:io';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:isolate';
+import 'package:http/http.dart' as http;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-// import 'package:multiple_image_picker/multiple_image_picker.dart';
-import 'package:silkeborgbeachvolley/helpers/user_info_firebase_class.dart';
-import 'package:silkeborgbeachvolley/ui/testers/test2.dart';
 import 'package:uuid/uuid.dart';
-import 'dart:math';
-import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
 
 final FirebaseStorage storage = FirebaseStorage.instance;
 final Firestore firestore = Firestore.instance;
@@ -22,145 +18,116 @@ class TestWidget extends StatefulWidget {
 }
 
 class _TestWidgetState extends State<TestWidget> {
-  List<File> _imageFiles = [];
-
+  
   @override
   Widget build(BuildContext context) {
-    // Size size = MediaQuery.of(context).size;
-    // print("BUILD Width: ${size.width} / Height: ${size.height}");
-  
     return Scaffold(
       appBar: AppBar(),
-      body: ListView(
+      body: Column(
         children: <Widget>[
-          GestureDetector(
-            onLongPress: () {
-              // _delete(file);
-            },
-            child: Image.file(null),
-          ),
           RaisedButton(
-            onPressed: () async {
-              String link2;
-              print(link2);
-              File image = await ImagePicker.pickImage(source: ImageSource.gallery);
-              File file = await Test2.processNewsImage(image);
-              _imageFiles.add(file);
-              
-              //Vi skal lave det sådan at hvis man sletter et billede inden man opretter nyheden så skal den fjernes
-
-              // print("************LINK $link");
-              // if (image != null) {
-              //   Uri downloadLink = await Test2.resizeImageTo1200(image);
-              //   print(downloadLink);
-              //   if (downloadLink != null) {
-              //     setState(() {
-              //       _images.add(image);
-              //     });
-              //   }
-              // }
+            onPressed: () {
+              loadData();
             },
-            child: Text("Image file"),
-          ),
-          RaisedButton(
-            onPressed: () async {
-              File image = await ImagePicker.pickImage(source: ImageSource.camera);
-              if (image != null) {
-                setState(() {
-                  _imageFiles.add(image);
-                });
-              }
-            },
-            child: Text("Image camera"),
-          ),
-          ListView.builder(
-            itemCount: _imageFiles.length,
-            shrinkWrap: true,
-            itemBuilder: (BuildContext context, int position) {
-              
-              return Image.file(_imageFiles[position], height: 100.0, width: 300.0,);
-            },
+            child: Text("Knap1"),
           )
         ],
       )
     );
   }
+
+/*
+1. loadData is call
+2. a thread is created
+3. Static dataLoader is calls with a communication port. 
+4. dataLoader opens a communication port back to loadData. 
+5. dataLoader tells loadData the port i listens to (sendPort).
+6. dataLoader waits for messages to receive.
+7. LoadData calls sendReceive with it's listen port and data
+
+ */
+  loadData() async {
+    //VI opretter en port vi kan modtage data på. 
+    ReceivePort receivePort = ReceivePort();
+    //Vi opretter tråden og fortæller hviklen funcktion der skal køre i tråden og hvad
+    //vores modtager port er
+    await Isolate.spawn(dataLoader, receivePort.sendPort);
+
+    // The 'echo' isolate sends its SendPort as the first message
+
+    //Vi siger til tråden at når den er klar så send os hvad trådens modtager port er
+    SendPort sendPort = await receivePort.first;
+
+    //VI kalder en metode sendReceive med hvad vores tråds port er. og noget data
+    List msg = await sendReceive(sendPort, "https://jsonplaceholder.typicode.com/posts");
+
+    print(msg.length);
+  }
+
+   static dataLoader(SendPort sendPort) async {
+    // Open the ReceivePort for incoming messages.
+    ReceivePort port = ReceivePort();
+
+    // Notify any other isolates what port this isolate listens to.
+    sendPort.send(port.sendPort); // Vi fortæller loadData hvilken port vi bruger.
+
+    await for (var msg in port) { //Venter på at vi får data ind fra sendReceive
+      String data = msg[0]; // Modtaget fra sendReceiver
+      SendPort replyTo = msg[1];  // Modtaget fra sendReceiver. 
+                                  //Fortæller os hvilken port vi kan sende data tilbage til.
+
+      //Udfører arbejdet
+      String dataURL = data; 
+      http.Response response = await http.get(dataURL);
+      // Lots of JSON to parse
+      replyTo.send(json.decode(response.body)); // Vi sender det bearbejde data tilbage til sendReceive
+    }
+  }
+
+  //Modtager fra loadData hvilken port vi skal bruge for at snakke med tråden
+  Future sendReceive(SendPort port, msg) { 
+    //Vi opretter en modtager port.
+    ReceivePort response = ReceivePort();
+    //Vi sender en besked til Tråden med data og hvilken port den kan sende data tilbage til.
+    port.send([msg, response.sendPort]);
+    //Vi modtager data fra Tråden
+    return response.first; 
+  }
 }
 
 
-// CustomScrollView(
-//         slivers: <Widget>[
-//           SliverList(
-//             delegate: SliverChildListDelegate(<Widget>[
-//               Text("TEST"),
-//               Text("TEST"),
-//               Text("TEST"),
-//               Text("TEST"),
-//               Text("TEST"),
-//               Text("TEST"),
-//               Text("TEST"),
-//               Text("TEST"),
-//               Text("TEST"),
-//               Text("TEST"),
-//               Text("TEST"),
-//               Text("TEST"),
-//               Text("TEST"),
-//               Text("TEST"),
-//               Text("TEST"),
-//               Text("TEST"),
-//             ]),
-//           ),
-//           SliverList(
-//                 delegate: SliverChildListDelegate(<Widget> [
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3"),
-//                   Text("Test2"),
-//                   Text("Test3")
-//                 ]),
-//               )
-//         ],
-//       )
+/*
+import 'dart:io';
+import 'dart:isolate';
+import 'package:image/image.dart';
+
+class DecodeParam {
+  final File file;
+  final SendPort sendPort;
+  DecodeParam(this.file, this.sendPort);
+}
+
+void decode(DecodeParam param) {
+  // Read an image from file (webp in this case).
+  // decodeImage will identify the format of the image and use the appropriate
+  // decoder.
+  Image image = decodeImage(param.file.readAsBytesSync());
+  // Resize the image to a 120x? thumbnail (maintaining the aspect ratio).
+  Image thumbnail = gaussianBlur(copyResize(image, 120), 5);
+  param.sendPort.send(thumbnail);
+}
+
+// Decode and process an image file in a separate thread (isolate) to avoid
+// stalling the main UI thread.
+void main() async {
+  ReceivePort receivePort = new ReceivePort();
+
+  await Isolate.spawn(decode,
+      new DecodeParam(new File('test.webp'), receivePort.sendPort));
+
+  // Get the processed image from the isolate.
+  Image image = await receivePort.first;
+
+  new File('thumbnail.png').writeAsBytesSync(encodePng(image));
+}
+ */

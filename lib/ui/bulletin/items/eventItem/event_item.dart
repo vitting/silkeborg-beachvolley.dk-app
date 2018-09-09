@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_event_item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/bulletin_item_datetime_numberofcomments.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/item_datetime_numberofcomments.dart';
 
 class BulletinEventItem extends StatelessWidget {
   final BulletinEventItemData bulletinItem;
@@ -10,7 +10,6 @@ class BulletinEventItem extends StatelessWidget {
   final Function onLongPress;
   final int maxLines;
   final TextOverflow overflow;
-  final bool showDivider;
   final int numberOfComments;
   
   BulletinEventItem(
@@ -19,8 +18,7 @@ class BulletinEventItem extends StatelessWidget {
       this.onLongPress,
       this.maxLines = 3,
       this.overflow = TextOverflow.ellipsis,
-      this.numberOfComments = -1,
-      this.showDivider = true});
+      this.numberOfComments = -1});
 
   @override
   Widget build(BuildContext context) {
@@ -112,10 +110,6 @@ class BulletinEventItem extends StatelessWidget {
         onTap: onTap,
       ),
     ];
-
-    if (showDivider) {
-      widgets.add(Divider());
-    }
 
     return ListBody(children: widgets);
   }

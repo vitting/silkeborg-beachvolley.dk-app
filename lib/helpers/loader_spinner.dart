@@ -6,7 +6,7 @@ class LoaderSpinner extends StatelessWidget {
     return Center(
       child: Image.asset(
         "assets/images/loader-bar.gif",
-        height: 10.0
+        height: 8.0
       ),
     );
   }
