@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data_class.dart';
 
 class BulletinItemDateTimeNumberOfComments extends StatelessWidget {
   final BulletinItemData bulletinItem;
+
   final int numberOfComments;
-  BulletinItemDateTimeNumberOfComments({this.bulletinItem, this.numberOfComments = -1});
+  final int numberOfPlayersCommitted;
+  BulletinItemDateTimeNumberOfComments(
+      {this.bulletinItem,
+      this.numberOfComments = 0,
+      this.numberOfPlayersCommitted = -1});
 
   @override
   Widget build(BuildContext context) {
+    print(bulletinItem is BulletinEventItemData);
     return Padding(
       padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
       child: Row(
@@ -25,13 +33,33 @@ class BulletinItemDateTimeNumberOfComments extends StatelessWidget {
             size: 12.0,
           ),
           Padding(
-              padding: const EdgeInsetsDirectional.only(start: 5.0),
+              padding: const EdgeInsetsDirectional.only(start: 5.0, end: 20.0),
               child: Text(
-                numberOfComments >= 0 ? numberOfComments.toString() : bulletinItem.numberOfcomments.toString(),
+                numberOfComments.toString(),
                 style: TextStyle(fontSize: 12.0),
-              ))
+              )),
+          _showPlayerCount()
         ],
       ),
     );
+  }
+
+  Widget _showPlayerCount() {
+    return numberOfPlayersCommitted == -1
+        ? Container()
+        : Row(
+            children: <Widget>[
+              Icon(
+                FontAwesomeIcons.volleyballBall,
+                size: 12.0,
+              ),
+              Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 5.0),
+                  child: Text(
+                    numberOfPlayersCommitted.toString(),
+                    style: TextStyle(fontSize: 12.0),
+                  ))
+            ],
+          );
   }
 }

@@ -18,7 +18,7 @@ class BulletinNewsItem extends StatelessWidget {
       this.onLongPress,
       this.maxLines = 3,
       this.overflow = TextOverflow.ellipsis,
-      this.numberOfComments = -1});
+      this.numberOfComments = 0});
 
   @override
   Widget build(BuildContext context) {

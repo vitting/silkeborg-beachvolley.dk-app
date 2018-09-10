@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/ui/testers/test2.dart';
 import 'package:uuid/uuid.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -18,7 +19,17 @@ class TestWidget extends StatefulWidget {
 }
 
 class _TestWidgetState extends State<TestWidget> {
-  
+  @override
+    void initState() {
+      // TODO: implement initState
+      super.initState();
+
+    }
+
+  _tempValue(int value) {
+    print("Value Changed $value");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,10 +37,28 @@ class _TestWidgetState extends State<TestWidget> {
       body: Column(
         children: <Widget>[
           RaisedButton(
-            onPressed: () {
-              loadData();
+            onPressed: () async {
+              // Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Test2Widget(_tempValue)));
+              // loadData();
+              try {
+                await firestore.collection("bulletins").document("c70790ee-05d8-4773-983e-cc568ed54bbb").updateData({
+                  "players": {
+                    "wrwrewer": FieldValue.delete()
+                  }
+                });
+                
+              } catch (e) {
+                print(e);
+              }
+              
             },
             child: Text("Knap1"),
+          ),
+          RaisedButton(
+            onPressed: () {
+              print(FieldValue.serverTimestamp().value);
+            },
+            child: Text("Knap2"),
           )
         ],
       )

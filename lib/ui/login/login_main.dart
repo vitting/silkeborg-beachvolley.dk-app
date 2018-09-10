@@ -119,8 +119,6 @@ class _LoginState extends State<Login> {
 
   Future<void> _finalSignInTasks(BuildContext context, FirebaseUser user, String loginProvider) async {
     await UserFirestore.setUserInfo(user);
-    await UserAuth.setLocalUserInfo(user);
-    await UserAuth.setLoginProvider("facebook");
     Navigator.pushNamedAndRemoveUntil(
         context, "/", ((Route<dynamic> route) => false));
   }

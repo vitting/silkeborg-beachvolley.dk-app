@@ -7,7 +7,7 @@ class BulletinCommentItem {
   String authorId;
   String authorName;
   String authorPhotoUrl;
-
+  
   BulletinCommentItem(
       {this.id = "",
       this.body = "",
@@ -21,7 +21,7 @@ class BulletinCommentItem {
       "id": id,
       "body": body,
       "creationDate": creationDate,
-      "author": {"id": authorId, "name": authorName, "photoUrl": authorPhotoUrl}
+      "author": {"id": authorId, "name": authorName, "photoUrl": authorPhotoUrl},
     };
   }
 
@@ -37,7 +37,8 @@ class BulletinCommentItem {
             item["author"]["name"] == null ? "" : item["author"]["name"],
         authorPhotoUrl: item["author"]["photoUrl"] == null
             ? ""
-            : item["author"]["photoUrl"]);
+            : item["author"]["photoUrl"]
+        );
   }
 
   String get creationDateFormatted =>

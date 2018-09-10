@@ -1,7 +1,6 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/helpers/local_user_info_class.dart';
-import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/detailItem/detail_item_main.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data_class.dart';
@@ -10,6 +9,7 @@ import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data_c
 import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item.dart';
+import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
 class BulletinItemMain extends StatelessWidget {
   final Map item;
@@ -78,9 +78,9 @@ class BulletinItemMain extends StatelessWidget {
   }
 
   Future<void> _bulletinItemOnLongPress(BuildContext context, String authorId) async {
-    LocalUserInfo localUserInfo = await UserAuth.getLoclUserInfo();
-    print("${localUserInfo.id} / $authorId");
-    if (localUserInfo.id == authorId) _bulletinItemPopupMenu(context);
+    FirebaseUser userInfo = Home.loggedInUser;
+    print("${userInfo.uid} / $authorId");
+    if (userInfo.uid == authorId) _bulletinItemPopupMenu(context);
   }
 
   _bulletinItemPopupMenu(BuildContext context) {

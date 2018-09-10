@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import "package:shared_preferences/shared_preferences.dart";
-import 'package:silkeborgbeachvolley/helpers/local_user_info_class.dart';
 
 class UserAuth {
   static FirebaseAuth _firebaseAuth;
@@ -100,44 +99,5 @@ class UserAuth {
       print(e);
       return false;
     }
-  }
-
-  static Future<String> getLoginProvider() async {
-    final SharedPreferences _prefs = await sharedPrefs;
-    return _prefs.getString("login_provider");
-  }
-
-  static Future<bool> setLoginProvider(String providerName) async {
-    final SharedPreferences _prefs = await sharedPrefs;
-    return await _prefs.setString("login_provider", providerName);
-  }
-
-  static Future<void> setLocalUserInfo(FirebaseUser user) async {
-    final SharedPreferences _prefs = await sharedPrefs;
-    String _name;
-    String _photoUrl;
-    String _id;
-    String _email;
-
-    if (user != null) {
-      _name = user.displayName;
-      _photoUrl = user.photoUrl;
-      _id = user.uid;
-      _email = user.email;
-    }
-
-    await _prefs.setString("name", _name);
-    await _prefs.setString("photo_url", _photoUrl);
-    await _prefs.setString("user_id", _id);
-    await _prefs.setString("email", _email);
-  }
-
-  static Future<LocalUserInfo> getLoclUserInfo() async {
-    final SharedPreferences _prefs = await sharedPrefs;
-    final _id = _prefs.getString("user_id");
-    final _name = _prefs.getString("name");
-    final _photoUrl = _prefs.getString("photo_url");
-    final _email = _prefs.getString("email");
-    return LocalUserInfo(_id, _name, _photoUrl, _email);
   }
 }

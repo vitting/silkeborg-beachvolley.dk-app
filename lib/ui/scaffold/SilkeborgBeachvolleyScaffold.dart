@@ -1,9 +1,8 @@
 import "package:flutter/material.dart";
 import "package:cached_network_image/cached_network_image.dart";
-import 'package:silkeborgbeachvolley/helpers/local_user_info_class.dart';
-import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_stepper_main.dart';
+import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
 class SilkeborgBeachvolleyScaffold extends StatefulWidget {
   final String title;
@@ -32,17 +31,17 @@ class _SilkeborgBeachvolleyScaffoldState
   @override
   void initState() {
     super.initState();
-    _getUserInfo();
+    _setUserInfo();
   }
 
-  void _getUserInfo() async {
-    LocalUserInfo userInfo = await UserAuth.getLoclUserInfo();
-
-    setState(() {
-      _photoUrl = userInfo.photoUrl;
-      _email = userInfo.email;
-      _name = userInfo.name;
-    });
+  void _setUserInfo() {
+    if (Home.loggedInUser != null) {
+      setState(() {
+        _photoUrl = Home.loggedInUser.photoUrl;
+        _email = Home.loggedInUser.email;
+        _name = Home.loggedInUser.displayName;
+      });
+    }
   }
 
   @override
@@ -66,14 +65,12 @@ class _SilkeborgBeachvolleyScaffoldState
             accountEmail: Text(_email),
             accountName: Text(_name),
             currentAccountPicture: CircleAvatar(
-              backgroundImage: _photoUrl == null
-                  ? null
-                  : CachedNetworkImageProvider(_photoUrl)
-            )),
+                backgroundImage: _photoUrl == null
+                    ? null
+                    : CachedNetworkImageProvider(_photoUrl))),
         ListTile(
           leading: Icon(Icons.album),
-          title: Text(
-            "Indmeldelse"),
+          title: Text("Indmeldelse"),
           onTap: () {
             Navigator.of(context).popAndPushNamed(EnrollmentStepper.routeName);
           },

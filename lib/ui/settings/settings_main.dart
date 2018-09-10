@@ -31,12 +31,9 @@ class Settings extends StatelessWidget {
   }
 
   Future<Widget> _logoutButton(BuildContext context) async {
-    String loginProvider = await UserAuth.getLoginProvider();
-
     return RaisedButton(
       onPressed: () async {
-        bool value = loginProvider == "google" ? await UserAuth.signOutWithGoogle() : await UserAuth.signOutWithFacebook();
-        UserAuth.setLoginProvider(null);
+        bool value = await UserAuth.signOutWithFacebook();
         Navigator.pop(context, value);
       },
       child: Row(

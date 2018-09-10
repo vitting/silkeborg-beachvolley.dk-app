@@ -1,10 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/helpers/local_user_info_class.dart';
-import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
+import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:uuid/uuid.dart';
 
 class BulletinItemCreator {
@@ -16,15 +16,15 @@ class BulletinItemCreator {
       TimeOfDay eventStartTime,
       TimeOfDay eventEndTime, String eventLocation, String eventTitle, List<String> images}) async {
     Uuid _uuid = new Uuid();
-    LocalUserInfo _localuserInfo = await UserAuth.getLoclUserInfo();
-
+    FirebaseUser _user = Home.loggedInUser;
+    
     switch (type) {
       case BulletinType.news:
         return BulletinNewsItemData(
             type: type,
-            authorId: _localuserInfo.id,
-            authorName: _localuserInfo.name,
-            authorPhotoUrl: _localuserInfo.photoUrl,
+            authorId: _user.uid,
+            authorName: _user.displayName,
+            authorPhotoUrl: _user.photoUrl,
             id: _uuid.v4(),
             body: body,
             creationDate: DateTime.now(),
@@ -49,9 +49,9 @@ class BulletinItemCreator {
         eventEndTime.minute);
         return BulletinEventItemData(
             type: type,
-            authorId: _localuserInfo.id,
-            authorName: _localuserInfo.name,
-            authorPhotoUrl: _localuserInfo.photoUrl,
+            authorId: _user.uid,
+            authorName: _user.displayName,
+            authorPhotoUrl: _user.photoUrl,
             id: _uuid.v4(),
             body: body,
             creationDate: DateTime.now(),
@@ -68,9 +68,9 @@ class BulletinItemCreator {
       case BulletinType.play:
         return BulletinPlayItemData(
             type: type,
-            authorId: _localuserInfo.id,
-            authorName: _localuserInfo.name,
-            authorPhotoUrl: _localuserInfo.photoUrl,
+            authorId: _user.uid,
+            authorName: _user.displayName,
+            authorPhotoUrl: _user.photoUrl,
             id: _uuid.v4(),
             body: body,
             creationDate: DateTime.now(),
