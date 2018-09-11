@@ -44,14 +44,14 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
   }
 
   _initPlayerCommit() async {
-    if (Home.loggedInUser.uid == _bulletinItem.authorId)
-      _showCommitButtons = true;
-    _numberOfPlayersCommitted =
-        (_bulletinItem as BulletinPlayItemData).numberOfPlayersCommitted;
+    bool playerCommmited =
+        await (_bulletinItem as BulletinPlayItemData).isCommitted();
 
-    setState(() async {
-      _isPlayerCommitted =
-          await (_bulletinItem as BulletinPlayItemData).isCommitted();
+    setState(() {
+      _showCommitButtons = true;
+      _numberOfPlayersCommitted =
+          (_bulletinItem as BulletinPlayItemData).numberOfPlayersCommitted;
+      _isPlayerCommitted = playerCommmited;
     });
   }
 
@@ -131,13 +131,15 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
     return item;
   }
 
-  _onPressedplayerCommit(PlayerCommitStatus status) {
+  _onPressedplayerCommit(PlayerCommitStatus status) async {
     bool state = false;
     if (status == PlayerCommitStatus.commit) {
       (_bulletinItem as BulletinPlayItemData).setPlayerAsCommitted();
+      _numberOfPlayersCommitted++;
       state = true;
     } else {
       (_bulletinItem as BulletinPlayItemData).setPlayerAsUnCommitted();
+      _numberOfPlayersCommitted--;
     }
 
     setState(() {

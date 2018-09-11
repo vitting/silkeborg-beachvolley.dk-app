@@ -77,16 +77,20 @@ class BulletinFirestore {
     });
   }
 
-  static Stream<QuerySnapshot> getPlayersCommittedAsStream(String bulletinId) {
+  static Future<QuerySnapshot> getPlayersCommitted(String bulletinId)  async {
     return firestoreInstance
         .collection(_bulletinPlayersCommittedCollectionName)
         .where("bulletinId", isEqualTo: bulletinId)
-        .snapshots();
+        .getDocuments();
   }
 
   static Future<bool> checkIfPlayerIsCommited(String bulletinId, String userId) async {
     QuerySnapshot snapshot = await firestoreInstance.collection(_bulletinPlayersCommittedCollectionName).where("bulletinId", isEqualTo: bulletinId).where("userId", isEqualTo: userId).getDocuments();
     if (snapshot.documents.length != 0) return true;
     return false;
+  }
+
+  static Future<DocumentSnapshot> getBulletinItem(String bulletinId) async {
+    return await firestoreInstance.collection(_bulletinCollectionName).document(bulletinId).get();
   }
 }

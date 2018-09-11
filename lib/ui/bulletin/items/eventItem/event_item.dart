@@ -93,14 +93,14 @@ class BulletinEventItem extends StatelessWidget {
               child: Text(bulletinItem.body,
                   maxLines: maxLines, overflow: overflow),
             ),
-            BulletinItemDateTimeNumberOfComments(bulletinItem: bulletinItem, numberOfComments: numberOfComments)
+            DateTimeNumberOfCommentsAndPlayers(bulletinItem: bulletinItem, numberOfComments: numberOfComments)
           ],
         ),
         leading: bulletinItem.eventImage.isNotEmpty ? Container(
-          width: 50.0,
-          height: 50.0,
+          width: 70.0,
+          height: 70.0,
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
+            shape: BoxShape.rectangle,
             image: DecorationImage(
               image: CachedNetworkImageProvider(bulletinItem.eventImage),
               fit: BoxFit.fill

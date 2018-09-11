@@ -5,6 +5,7 @@ import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/player_committed_class.dart';
+import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
 class BulletinPlayItemData extends BulletinItemData {
   int numberOfPlayersCommitted;
@@ -28,20 +29,33 @@ class BulletinPlayItemData extends BulletinItemData {
             authorPhotoUrl: authorPhotoUrl,
             numberOfcomments: numberOfcomments);
 
-  Stream<QuerySnapshot> getPlayersCommittedAsStream() {
-    return BulletinFirestore.getPlayersCommittedAsStream(id); 
+  Future<int> getUpdatedNumberOfPlayerCommittedCount() async {
+    DocumentSnapshot snapshot = await BulletinFirestore.getBulletinItem(id);
+    if (snapshot.exists) {
+      numberOfPlayersCommitted = snapshot.data["numberOfPlayersCommitted"];
+    }
+
+    return numberOfPlayersCommitted;
+  }
+
+  Future<List<PlayerCommitted>> getPlayersCommitted() async {
+    QuerySnapshot data = await BulletinFirestore.getPlayersCommitted(id);
+    
+    return data.documents.map<PlayerCommitted>((DocumentSnapshot doc) {
+        return PlayerCommitted.fromMap(doc.data);
+      }).toList();
   }
 
   Future<bool> isCommitted() async {
-    return await BulletinFirestore.checkIfPlayerIsCommited(id, authorId);
+    return await BulletinFirestore.checkIfPlayerIsCommited(id, Home.loggedInUser.uid);
   }
 
   void setPlayerAsCommitted() async {
     PlayerCommitted playerCommitted = PlayerCommitted(
       bulletinId: id,
-      name: authorName,
-      photoUrl: authorPhotoUrl,
-      userId: authorId
+      name: Home.loggedInUser.displayName,
+      photoUrl: Home.loggedInUser.photoUrl,
+      userId: Home.loggedInUser.uid
     );
 
     await BulletinFirestore.savePlayerCommitted(playerCommitted);
@@ -51,7 +65,14 @@ class BulletinPlayItemData extends BulletinItemData {
     await BulletinFirestore.deletePlayerCommitted(id, authorId);
   }
 
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = super.toMap();
+    map.addAll({"numberOfPlayersCommitted": numberOfPlayersCommitted});
+    return map;
+  }
+
   static BulletinPlayItemData fromMap(Map<String, dynamic> item) {
+    print(item["numberOfPlayersCommitted"]);
     return new BulletinPlayItemData(
         id: item["id"] == null ? "" : item["id"],
         type: item["type"] == null ? "" : item["type"],
@@ -64,6 +85,8 @@ class BulletinPlayItemData extends BulletinItemData {
         body: item["body"] == null ? "" : item["body"],
         creationDate: item["creationDate"] == null ? "" : item["creationDate"],
         numberOfcomments:
-            item["numberOfcomments"] == null ? 0 : item["numberOfcomments"]);
+            item["numberOfcomments"] == null ? 0 : item["numberOfcomments"],
+        numberOfPlayersCommitted: item["numberOfPlayersCommitted"] == null ? 0 : item["numberOfPlayersCommitted"]
+            );
   }
 }

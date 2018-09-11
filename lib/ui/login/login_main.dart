@@ -29,11 +29,18 @@ class _LoginState extends State<Login> {
 
   Widget _main(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30.0),
+      padding: EdgeInsets.only(left: 20.0, right: 20.0),
+      // margin: EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(bottom: 45.0), 
+            child: Text("Velkommen til silkeborg beachvolley og en masse andet tekst og sikkert også en indmeldelses formular.", textAlign: TextAlign.center, style: TextStyle(
+              fontSize: 15.0
+            ),),
+          ),
           // RaisedButton(
           //   onPressed: () async {
           //     setState(() {
@@ -75,15 +82,15 @@ class _LoginState extends State<Login> {
               children: <Widget>[
                 Image.asset(
                   "assets/images/flogo-HexRBG-Wht-100.png",
-                  height: 50.0
+                  height: 40.0
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
+                  padding: const EdgeInsets.only(left: 20.0),
                   child: Text(
                     "Log ind med Facebook",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 25.0
+                      fontSize: 20.0
                     ),
                   ),
                 )

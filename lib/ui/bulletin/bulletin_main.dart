@@ -29,14 +29,15 @@ class _BulletinState extends State<Bulletin> {
     );
   }
 
-Widget _scaffoldFloatingActionButton(BuildContext context) {
-  return FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          _gotoCreateNewsDialog(context);
-        },
-      );
-}
+  
+  Widget _scaffoldFloatingActionButton(BuildContext context) {
+    return FloatingActionButton(
+      child: Icon(Icons.add),
+      onPressed: () {
+        _gotoCreateNewsDialog(context);
+      },
+    );
+  }
 
   Widget _scaffoldBottomNavigationBar() {
     return BottomNavigationBar(
@@ -73,8 +74,7 @@ Widget _scaffoldFloatingActionButton(BuildContext context) {
       stream: BulletinFirestore.getBulletinsByTypeAsStream(type),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting ||
-            !snapshot.hasData)
-          return LoaderSpinner();
+            !snapshot.hasData) return LoaderSpinner();
 
         return ListView.builder(
           itemCount: snapshot.data.documents.length,
@@ -88,11 +88,10 @@ Widget _scaffoldFloatingActionButton(BuildContext context) {
   }
 
   Future<void> _gotoCreateNewsDialog(BuildContext context) async {
-    await Navigator.of(context)
-        .push(new MaterialPageRoute<BulletinItemData>(
-            builder: (BuildContext context) {
-              return new CreateBulletinItem();
-            },
-            fullscreenDialog: true));
+    await Navigator.of(context).push(new MaterialPageRoute<BulletinItemData>(
+        builder: (BuildContext context) {
+          return new CreateBulletinItem();
+        },
+        fullscreenDialog: true));
   }
 }

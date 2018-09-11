@@ -51,7 +51,7 @@ class BulletinNewsItem extends StatelessWidget {
               images: bulletinItem.images,
               type: BulletinImageType.network,
             ),
-            BulletinItemDateTimeNumberOfComments(
+            DateTimeNumberOfCommentsAndPlayers(
                 bulletinItem: bulletinItem, numberOfComments: numberOfComments)
           ],
         ),

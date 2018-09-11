@@ -37,6 +37,7 @@ class BulletinItemMain extends StatelessWidget {
   Widget _bulletinNewsItem(
       BuildContext context, BulletinNewsItemData bulletinItem) {
     return Card(
+      margin: EdgeInsets.all(5.0),
       child: BulletinNewsItem(
         bulletinItem: bulletinItem,
         onTap: () async {
@@ -50,6 +51,7 @@ class BulletinItemMain extends StatelessWidget {
   Widget _bulletinEventItem(
       BuildContext context, BulletinEventItemData bulletinItem) {
     return Card(
+          margin: EdgeInsets.all(5.0),
           child: BulletinEventItem(
           bulletinItem: bulletinItem,
           onTap: () async {
@@ -62,6 +64,7 @@ class BulletinItemMain extends StatelessWidget {
   Widget _bulletinPlayItem(
       BuildContext context, BulletinPlayItemData bulletinItem) {
     return Card(
+          margin: EdgeInsets.all(5.0),
           child: BulletinPlayItem(
           bulletinItem: bulletinItem,
           onTap: () async {
