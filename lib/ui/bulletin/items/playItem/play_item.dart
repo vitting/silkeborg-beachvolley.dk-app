@@ -8,19 +8,14 @@ import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/player_committed
 
 enum PlayerCommitStatus { commit, uncommit }
 
-
 //CHRISTIAN: Maybe rewrite to statefull and remove commit features from detail item to save setstate and update comments.
-class BulletinPlayItem extends StatelessWidget {
+class BulletinPlayItem extends StatefulWidget {
   final BulletinPlayItemData bulletinItem;
   final Function onTap;
   final Function onLongPress;
   final int maxLines;
   final TextOverflow overflow;
-  final int numberOfComments;
-  final int numberOfPlayersCommitted;
   final bool showCommitButtons;
-  final bool isPlayerCommitted;
-  final ValueChanged<PlayerCommitStatus> onPressedPlayerCommit;
 
   BulletinPlayItem(
       {this.bulletinItem,
@@ -28,27 +23,46 @@ class BulletinPlayItem extends StatelessWidget {
       this.onLongPress,
       this.maxLines = 3,
       this.overflow = TextOverflow.ellipsis,
-      this.numberOfComments = 0,
-      this.showCommitButtons = false,
-      this.isPlayerCommitted = false,
-      this.numberOfPlayersCommitted = 0,
-      this.onPressedPlayerCommit});
+      this.showCommitButtons = false});
+
+  @override
+  BulletinPlayItemState createState() {
+    return new BulletinPlayItemState();
+  }
+}
+
+class BulletinPlayItemState extends State<BulletinPlayItem> {
+  bool _isPlayerCommitted = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initPlayerCommit();
+  }
+
+  _initPlayerCommit() async {
+    bool playerCommmited = await widget.bulletinItem.isCommitted();
+
+    setState(() {
+      _isPlayerCommitted = playerCommmited;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = [
       ListTile(
-        onLongPress: onLongPress,
+        onLongPress: widget.onLongPress,
         title: Padding(
           padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
           child: Row(
             children: <Widget>[
               CircleAvatar(
-                  backgroundImage:
-                      CachedNetworkImageProvider(bulletinItem.authorPhotoUrl)),
+                  backgroundImage: CachedNetworkImageProvider(
+                      widget.bulletinItem.authorPhotoUrl)),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
-                child: Text(bulletinItem.authorName),
+                child: Text(widget.bulletinItem.authorName),
               )
             ],
           ),
@@ -58,21 +72,21 @@ class BulletinPlayItem extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 5.0),
-              child: Text(bulletinItem.body,
-                  maxLines: maxLines, overflow: overflow),
+              child: Text(widget.bulletinItem.body,
+                  maxLines: widget.maxLines, overflow: widget.overflow),
             ),
             DateTimeNumberOfCommentsAndPlayers(
-                bulletinItem: bulletinItem,
-                numberOfComments: numberOfComments,
-                numberOfPlayersCommitted: numberOfPlayersCommitted,
-                onTapPlayerCount: () {
-                  _showPlayersCommittedDialog(context);                
-                },
-                ),
+              bulletinItem: widget.bulletinItem,
+              numberOfPlayersCommitted:
+                  widget.bulletinItem.numberOfPlayersCommitted,
+              onTapPlayerCount: () {
+                _showPlayersCommittedDialog(context);
+              },
+            ),
           ],
         ),
         trailing: _showPlayerCommittedButton(),
-        onTap: onTap,
+        onTap: widget.onTap,
       )
     ];
 
@@ -80,7 +94,8 @@ class BulletinPlayItem extends StatelessWidget {
   }
 
   Future<List> _buildPlayersCommittedDialogItems() async {
-    List<PlayerCommitted> data = await bulletinItem.getPlayersCommitted();
+    List<PlayerCommitted> data =
+        await widget.bulletinItem.getPlayersCommitted();
     return data.map((PlayerCommitted player) {
       return ListTile(
         title: Text(player.name),
@@ -95,43 +110,57 @@ class BulletinPlayItem extends StatelessWidget {
     List widgets = await _buildPlayersCommittedDialogItems();
 
     await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          title: Text("Spillere"),           
-          children: widgets
-        );
-      }
-    );
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(title: Text("Spillere"), children: widgets);
+        });
+  }
+
+  _onPressedPlayerCommit(PlayerCommitStatus status) async {
+    bool state = false;
+    if (status == PlayerCommitStatus.commit) {
+      widget.bulletinItem.setPlayerAsCommitted();
+      // _numberOfPlayersCommitted++;
+      state = true;
+    } else {
+      widget.bulletinItem.setPlayerAsUnCommitted();
+      // _numberOfPlayersCommitted--;
+    }
+
+    setState(() {
+      _isPlayerCommitted = state;
+    });
   }
 
   Widget _showPlayerCommittedButton() {
-    if (showCommitButtons) {
-      if (!isPlayerCommitted) {
-        return Tooltip(
-          message: "Ja jeg vil gerne spille",
-          child: IconButton(
+    if (!_isPlayerCommitted && widget.showCommitButtons) {
+      return Tooltip(
+        message: "Ja jeg vil gerne spille",
+        child: IconButton(
             icon: Icon(Icons.check_circle),
             color: Colors.greenAccent,
             iconSize: 40.0,
             onPressed: () {
-              onPressedPlayerCommit(PlayerCommitStatus.commit);
+              _onPressedPlayerCommit(PlayerCommitStatus.commit);
+              widget.bulletinItem.numberOfPlayersCommitted++;
             }),
-        );
-      } else {
-        return Tooltip(
-          message: "Fjern at jeg gerne vil spille",
-          child: IconButton(
+      );
+    }
+
+    if (_isPlayerCommitted && widget.showCommitButtons) {
+      return Tooltip(
+        message: "Fjern at jeg gerne vil spille",
+        child: IconButton(
             icon: Icon(Icons.remove_circle),
             color: Colors.blueAccent,
             iconSize: 40.0,
             onPressed: () {
-              onPressedPlayerCommit(PlayerCommitStatus.uncommit);
+              _onPressedPlayerCommit(PlayerCommitStatus.uncommit);
+              widget.bulletinItem.numberOfPlayersCommitted--;
             }),
-        );
-      }
-    } else {
-      return null;
+      );
     }
+
+    return null;
   }
 }

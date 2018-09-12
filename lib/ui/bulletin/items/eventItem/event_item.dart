@@ -10,15 +10,13 @@ class BulletinEventItem extends StatelessWidget {
   final Function onLongPress;
   final int maxLines;
   final TextOverflow overflow;
-  final int numberOfComments;
   
   BulletinEventItem(
       {this.bulletinItem,
       this.onTap,
       this.onLongPress,
       this.maxLines = 3,
-      this.overflow = TextOverflow.ellipsis,
-      this.numberOfComments = 0});
+      this.overflow = TextOverflow.ellipsis});
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +91,7 @@ class BulletinEventItem extends StatelessWidget {
               child: Text(bulletinItem.body,
                   maxLines: maxLines, overflow: overflow),
             ),
-            DateTimeNumberOfCommentsAndPlayers(bulletinItem: bulletinItem, numberOfComments: numberOfComments)
+            DateTimeNumberOfCommentsAndPlayers(bulletinItem: bulletinItem)
           ],
         ),
         leading: bulletinItem.eventImage.isNotEmpty ? Container(

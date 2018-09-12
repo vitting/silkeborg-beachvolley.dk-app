@@ -19,11 +19,16 @@ class TestWidget extends StatefulWidget {
 }
 
 class _TestWidgetState extends State<TestWidget> {
+  List<String> a = ["TEST"];
+  int counter = 0;
+  var y = StreamController<String>();      
+  
   @override
     void initState() {
+      
       // TODO: implement initState
       super.initState();
-
+      
     }
 
   _tempValue(int value) {
@@ -56,9 +61,38 @@ class _TestWidgetState extends State<TestWidget> {
           ),
           RaisedButton(
             onPressed: () {
-              print(FieldValue.serverTimestamp().value);
+              // print(FieldValue.serverTimestamp().value);
+                
+                
+              
+              a.add("HEET");
+
             },
             child: Text("Knap2"),
+          ),
+
+          RaisedButton(
+            onPressed: () {
+              // print(FieldValue.serverTimestamp().value);
+              
+
+              
+              y.add("test$counter");  
+                counter++;
+
+            },
+            child: Text("Knap2"),
+          ),
+          StreamBuilder(
+            stream: y.stream,
+            builder: (BuildContext context, AsyncSnapshot<String> a) {
+              print(a.hasData);
+              if (a.hasData) {
+                return Text(a.data);
+              }
+
+              return Container();
+            },
           )
         ],
       )

@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/item_main.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/create_item_main.dart';
@@ -28,7 +29,6 @@ class _BulletinState extends State<Bulletin> {
       bottomNavigationBar: _scaffoldBottomNavigationBar(),
     );
   }
-
   
   Widget _scaffoldFloatingActionButton(BuildContext context) {
     return FloatingActionButton(
@@ -66,21 +66,20 @@ class _BulletinState extends State<Bulletin> {
 
   Widget _main() {
     String type = "news";
-    if (_bottombarSelected == 0) type = "news";
-    if (_bottombarSelected == 1) type = "event";
-    if (_bottombarSelected == 2) type = "play";
+    if (_bottombarSelected == 0) type = BulletinType.news;
+    if (_bottombarSelected == 1) type = BulletinType.event;
+    if (_bottombarSelected == 2) type = BulletinType.play;
 
     return StreamBuilder(
       stream: BulletinFirestore.getBulletinsByTypeAsStream(type),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting ||
             !snapshot.hasData) return LoaderSpinner();
-
         return ListView.builder(
           itemCount: snapshot.data.documents.length,
           itemBuilder: (BuildContext context, int position) {
             DocumentSnapshot item = snapshot.data.documents[position];
-            return BulletinItemMain(item.data, type);
+            return BulletinItemMain(item.data);
           },
         );
       },

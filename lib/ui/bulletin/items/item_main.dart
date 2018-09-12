@@ -11,15 +11,15 @@ import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
+//CHRISTIAN: HVORFOR SENDER VI type med ind? Den har vi allerede i BulletinItem
 class BulletinItemMain extends StatelessWidget {
   final Map item;
-  final String type;
-  BulletinItemMain(this.item, this.type);
+  BulletinItemMain(this.item);
 
   @override
   Widget build(BuildContext context) {
     var bulletinItem;
-    switch (type) {
+    switch (item["type"]) {
       case "news":
         bulletinItem = _bulletinNewsItem(context, BulletinNewsItemData.fromMap(item));
         break;

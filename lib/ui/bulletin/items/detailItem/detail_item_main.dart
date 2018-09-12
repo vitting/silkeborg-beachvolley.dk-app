@@ -1,8 +1,8 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/detailItem/comment_item_class.dart';
@@ -11,7 +11,6 @@ import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
@@ -26,33 +25,9 @@ class BulletinDetailItem extends StatefulWidget {
 class _BulletinDetailItemState extends State<BulletinDetailItem> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ScrollController _listScrollController = ScrollController();
-  BulletinItemData _bulletinItem;
-  int _numberOfComments = 0;
-  int _numberOfPlayersCommitted = 0;
-  bool _showCommitButtons = false;
-  bool _isPlayerCommitted = false;
-
   @override
   void initState() {
     super.initState();
-    _bulletinItem = widget.bulletinItem;
-    _numberOfComments = _bulletinItem.numberOfcomments;
-
-    if (_bulletinItem.type == BulletinType.play) {
-      _initPlayerCommit();
-    }
-  }
-
-  _initPlayerCommit() async {
-    bool playerCommmited =
-        await (_bulletinItem as BulletinPlayItemData).isCommitted();
-
-    setState(() {
-      _showCommitButtons = true;
-      _numberOfPlayersCommitted =
-          (_bulletinItem as BulletinPlayItemData).numberOfPlayersCommitted;
-      _isPlayerCommitted = playerCommmited;
-    });
   }
 
   @override
@@ -78,13 +53,14 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
         _createBulletinMainItem(),
         _addComment(),
         StreamBuilder(
-          stream: BulletinFirestore.getAllBulletinComments(_bulletinItem.id),
+          stream: BulletinFirestore.getAllBulletinComments(widget.bulletinItem.id),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting ||
                 !snapshot.hasData)
-              return Center(child: Image.asset("assets/images/loader-bar.gif"));
-            _numberOfComments = snapshot.data.documents.length;
+              return LoaderSpinner();
+
+              widget.bulletinItem.numberOfcomments = snapshot.data.documents.length; 
             return Column(
                 children: snapshot.data.documents
                     .map<Widget>((DocumentSnapshot document) {
@@ -100,51 +76,28 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
 
   Widget _createBulletinMainItem() {
     var item;
-    switch (_bulletinItem.type) {
+    switch (widget.bulletinItem.type) {
       case BulletinType.news:
-        item = Card(
-            child: BulletinNewsItem(
-          bulletinItem: _bulletinItem,
-          numberOfComments: _numberOfComments,
-        ));
+        item =  BulletinNewsItem(
+          bulletinItem: widget.bulletinItem
+        );
         break;
       case BulletinType.event:
-        item = Card(
-            child: BulletinEventItem(
-          bulletinItem: _bulletinItem,
-          numberOfComments: _numberOfComments,
-        ));
+        item = BulletinEventItem(
+          bulletinItem: widget.bulletinItem
+        );
         break;
       case BulletinType.play:
-        item = Card(
-            child: BulletinPlayItem(
-          bulletinItem: _bulletinItem,
-          numberOfComments: _numberOfComments,
-          numberOfPlayersCommitted: _numberOfPlayersCommitted,
-          showCommitButtons: _showCommitButtons,
-          isPlayerCommitted: _isPlayerCommitted,
-          onPressedPlayerCommit: _onPressedplayerCommit,
-        ));
+        item = BulletinPlayItem(
+          bulletinItem: widget.bulletinItem,
+          showCommitButtons: true,
+        );
         break;
     }
 
-    return item;
-  }
-
-  _onPressedplayerCommit(PlayerCommitStatus status) async {
-    bool state = false;
-    if (status == PlayerCommitStatus.commit) {
-      (_bulletinItem as BulletinPlayItemData).setPlayerAsCommitted();
-      _numberOfPlayersCommitted++;
-      state = true;
-    } else {
-      (_bulletinItem as BulletinPlayItemData).setPlayerAsUnCommitted();
-      _numberOfPlayersCommitted--;
-    }
-
-    setState(() {
-      _isPlayerCommitted = state;
-    });
+    return Card(
+      child: item
+    );
   }
 
   Widget _addComment() {
@@ -214,7 +167,7 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
     item.authorName = _user.displayName;
     item.authorPhotoUrl = _user.photoUrl;
     item.creationDate = DateTime.now();
-    item.id = _bulletinItem.id;
+    item.id = widget.bulletinItem.id;
     await BulletinFirestore.saveCommentItem(item);
   }
 }

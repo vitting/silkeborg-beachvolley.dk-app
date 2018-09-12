@@ -4,13 +4,10 @@ import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
 
 class DateTimeNumberOfCommentsAndPlayers extends StatelessWidget {
   final BulletinItemData bulletinItem;
-
-  final int numberOfComments;
   final int numberOfPlayersCommitted;
   final Function onTapPlayerCount;
   DateTimeNumberOfCommentsAndPlayers(
       {this.bulletinItem,
-      this.numberOfComments = 0,
       this.numberOfPlayersCommitted = -1,
       this.onTapPlayerCount});
 
@@ -44,7 +41,7 @@ class DateTimeNumberOfCommentsAndPlayers extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 5.0),
                 child: Text(
-            numberOfComments.toString(),
+            bulletinItem.numberOfcomments.toString(),
             style: TextStyle(fontSize: 12.0),
           ),
               ),
