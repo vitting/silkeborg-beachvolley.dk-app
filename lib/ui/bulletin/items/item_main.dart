@@ -11,7 +11,6 @@ import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
-//CHRISTIAN: HVORFOR SENDER VI type med ind? Den har vi allerede i BulletinItem
 class BulletinItemMain extends StatelessWidget {
   final Map item;
   BulletinItemMain(this.item);

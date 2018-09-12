@@ -30,6 +30,7 @@ class _BulletinState extends State<Bulletin> {
     );
   }
   
+  //CHRISTIAN: Vi laver sådan en smart FAB SELV ud fra eksempel
   Widget _scaffoldFloatingActionButton(BuildContext context) {
     return FloatingActionButton(
       child: Icon(Icons.add),

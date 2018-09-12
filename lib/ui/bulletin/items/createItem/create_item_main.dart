@@ -6,10 +6,10 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:silkeborgbeachvolley/helpers/image_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_creator_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestorage.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_fields_create_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/create_image_helper_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_pictures.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_choose_type.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_event_fields.dart';
@@ -39,9 +39,13 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
   @override
   void dispose() {
     super.dispose();
+    _removeImagesFromCacheAndStorage();
+  }
+
+  _removeImagesFromCacheAndStorage() {
     if (_imageFiles.length > 0) {
       _imageFiles.forEach((ImageInfoData image) async {
-        await _deleteImageFromCacheAndStorage(image, false);
+        await ImageHelpers.deleteImageFromCacheAndStorage(image);
       });
     }
   }
@@ -207,39 +211,17 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
   void _selectPhoto(String mode) async {
     File imageFile = await ImagePicker.pickImage(
         source: mode == "gallery" ? ImageSource.gallery : ImageSource.camera);
-
-    ImageInfoData imageInfoData =
-        await ImageHelpers.processImage(imageFile, _getImageSize());
-
-    if (imageInfoData.imageFile != null) {
-      imageInfoData.imagesStoreageFolder = _getStorageFolder();
-      imageInfoData.linkFirebaseStorage =
-          await BulletinFireStorage.saveToFirebaseStorage(
-              imageInfoData.imageFile,
-              imageInfoData.filename,
-              imageInfoData.imagesStoreageFolder);
-
-      if (imageInfoData.linkFirebaseStorage.isNotEmpty) {
+    if (imageFile != null) {
+      ImageInfoData imageInfo = await ImageHelpers.saveImage(
+          imageFile,
+          CreateImageHelper.getImageSize(radioGroupValue),
+          CreateImageHelper.getStorageFolder(radioGroupValue));
+      if (imageInfo.linkFirebaseStorage.isNotEmpty) {
         setState(() {
-          _imageFiles.add(imageInfoData);
+          _imageFiles.add(imageInfo);
         });
       }
     }
-  }
-
-  int _getImageSize() {
-    int size = 0;
-    if (radioGroupValue == BulletinType.event) size = 90;
-    if (radioGroupValue == BulletinType.news) size = 1200;
-    return size;
-  }
-
-  String _getStorageFolder() {
-    String folder = "";
-    if (radioGroupValue == BulletinType.event) folder = "eventImages";
-    if (radioGroupValue == BulletinType.news) folder = "newsImages";
-
-    return folder;
   }
 
   void _removePhoto(ImageInfoData image) async {
@@ -256,7 +238,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
                   onTap: () {
                     Navigator.of(context).pop();
                     setState(() {
-                      _deleteImageFromCacheAndStorage(image, true);
+                      _deleteImage(image, true);
                     });
                   },
                 )
@@ -266,20 +248,13 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
         });
   }
 
-  _deleteImageFromCacheAndStorage(
-      ImageInfoData image, bool removeFromList) async {
+  _deleteImage(ImageInfoData image, bool removeFromList) async {
     if (removeFromList) {
       setState(() {
         _imageFiles.remove(image);
       });
     }
 
-    try {
-      image.imageFile.delete();
-      BulletinFireStorage.deleteFromFirebaseStorage(
-          image.filename, image.imagesStoreageFolder);
-    } catch (e) {
-      print("_removePhoto: $e");
-    }
+    ImageHelpers.deleteImageFromCacheAndStorage(image);
   }
 }

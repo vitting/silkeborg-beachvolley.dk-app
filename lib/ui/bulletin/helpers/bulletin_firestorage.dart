@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
 
 class BulletinFireStorage {
   static FirebaseStorage _firestorage;
@@ -13,21 +13,20 @@ class BulletinFireStorage {
     return _firestorage;
   }
 
-  static Future<String> saveToFirebaseStorage(
-      File file, String tempFilename, String imagesStoreageFolder) async {
+  static Future<ImageInfoData> saveImageToFirebaseStorage(ImageInfoData imageInfo) async {
     
     try {
       StorageUploadTask uploadTask = firestorageInstance
           .ref()
-          .child("$imagesStoreageFolder/$tempFilename")
-          .putFile(file);
+          .child("${imageInfo.imagesStoreageFolder}/${imageInfo.filename}")
+          .putFile(imageInfo.imageFile);
 
       final UploadTaskSnapshot snapshot = await uploadTask.future;
-
-      return snapshot.downloadUrl.toString();
+      imageInfo.linkFirebaseStorage = snapshot.downloadUrl.toString();
+      return imageInfo;
     } catch (e) {
       print("saveToFirebaseStorage error: $e");
-      return null;
+      return imageInfo;
     }
   }
 

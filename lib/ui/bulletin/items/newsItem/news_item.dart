@@ -5,10 +5,6 @@ import 'package:silkeborgbeachvolley/ui/bulletin/items/item_datetime_numberofcom
 import "package:cached_network_image/cached_network_image.dart";
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_pictures.dart';
 
-//CHRISTIAN: Vi skal nok lave news og play item om til Statefull widgets
-//I Detail opdatere vi count ved at sætte bulletinitem.numberofcomments
-//de bliver alligevel ikke reflectet tilbage
-
 class BulletinNewsItem extends StatelessWidget {
   final BulletinNewsItemData bulletinItem;
   final Function onTap;
