@@ -3,7 +3,6 @@ import "package:cached_network_image/cached_network_image.dart";
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_stepper_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
-import 'package:silkeborgbeachvolley/ui/testers/test3.dart';
 
 class SilkeborgBeachvolleyScaffold extends StatefulWidget {
   final String title;
@@ -80,7 +79,6 @@ class _SilkeborgBeachvolleyScaffoldState
           leading: Icon(Icons.album),
           title: Text("Ranglisten"),
           onTap: () {
-            // Navigator.of(context).popAndPushNamed(Enrollment.routeName);
             Navigator.pushNamedAndRemoveUntil(
                 context, Enrollment.routeName, ModalRoute.withName("/"));
           },
@@ -89,7 +87,6 @@ class _SilkeborgBeachvolleyScaffoldState
           leading: Icon(Icons.album),
           title: Text("Livescore"),
           onTap: () {
-            // Navigator.of(context).popAndPushNamed(Enrollment.routeName);
             Navigator.pushNamedAndRemoveUntil(
                 context, Enrollment.routeName, ModalRoute.withName("/"));
           },
@@ -98,7 +95,6 @@ class _SilkeborgBeachvolleyScaffoldState
           leading: Icon(Icons.album),
           title: Text("Stævnekalender"),
           onTap: () {
-            // Navigator.of(context).popAndPushNamed(Enrollment.routeName);
             Navigator.pushNamedAndRemoveUntil(
                 context, Enrollment.routeName, ModalRoute.withName("/"));
           },
@@ -107,7 +103,6 @@ class _SilkeborgBeachvolleyScaffoldState
           leading: Icon(Icons.album),
           title: Text("Nyheder fra beachvolley.dk"),
           onTap: () {
-            // Navigator.of(context).popAndPushNamed(Enrollment.routeName);
             Navigator.pushNamedAndRemoveUntil(
                 context, Enrollment.routeName, ModalRoute.withName("/"));
           },
@@ -124,7 +119,6 @@ class _SilkeborgBeachvolleyScaffoldState
           leading: Icon(Icons.album),
           title: Text("Indstillinger"),
           onTap: () {
-            // Navigator.of(context).popAndPushNamed(Enrollment.routeName);
             Navigator.pushNamedAndRemoveUntil(
                 context, Enrollment.routeName, ModalRoute.withName("/"));
           },
