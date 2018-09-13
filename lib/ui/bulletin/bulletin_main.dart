@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/bulletin_main_fab.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
@@ -29,13 +30,13 @@ class _BulletinState extends State<Bulletin> {
       bottomNavigationBar: _scaffoldBottomNavigationBar(),
     );
   }
-  
+
   //CHRISTIAN: Vi laver sådan en smart FAB SELV ud fra eksempel
+  //Et Scaffolds floatingActionButton property er bare et widget
   Widget _scaffoldFloatingActionButton(BuildContext context) {
-    return FloatingActionButton(
-      child: Icon(Icons.add),
-      onPressed: () {
-        _gotoCreateNewsDialog(context);
+    return BulletinMainFab(
+      onPressedValue: (BulletinType bulletinType) {
+        _gotoCreateNewsDialog(context, bulletinType);
       },
     );
   }
@@ -67,9 +68,9 @@ class _BulletinState extends State<Bulletin> {
 
   Widget _main() {
     String type = "news";
-    if (_bottombarSelected == 0) type = BulletinType.news;
-    if (_bottombarSelected == 1) type = BulletinType.event;
-    if (_bottombarSelected == 2) type = BulletinType.play;
+    if (_bottombarSelected == 0) type = BulletinTypeHelper.news;
+    if (_bottombarSelected == 1) type = BulletinTypeHelper.event;
+    if (_bottombarSelected == 2) type = BulletinTypeHelper.play;
 
     return StreamBuilder(
       stream: BulletinFirestore.getBulletinsByTypeAsStream(type),
@@ -87,10 +88,10 @@ class _BulletinState extends State<Bulletin> {
     );
   }
 
-  Future<void> _gotoCreateNewsDialog(BuildContext context) async {
+  Future<void> _gotoCreateNewsDialog(BuildContext context, BulletinType bulletinType) async {
     await Navigator.of(context).push(new MaterialPageRoute<BulletinItemData>(
         builder: (BuildContext context) {
-          return new CreateBulletinItem();
+          return new CreateBulletinItem(bulletinType);
         },
         fullscreenDialog: true));
   }

@@ -12,7 +12,7 @@ class BulletinPlayItemData extends BulletinItemData {
   
   BulletinPlayItemData(
       {String id = "",
-      String type = BulletinType.none,
+      BulletinType type = BulletinType.none,
       String body = "",
       DateTime creationDate,
       String authorId = "",
@@ -75,7 +75,7 @@ class BulletinPlayItemData extends BulletinItemData {
     print(item["numberOfPlayersCommitted"]);
     return new BulletinPlayItemData(
         id: item["id"] == null ? "" : item["id"],
-        type: item["type"] == null ? "" : item["type"],
+        type: BulletinTypeHelper.getBulletinTypeStringAsType(item["type"]),
         authorId: item["author"]["id"] == null ? "" : item["author"]["id"],
         authorName:
             item["author"]["name"] == null ? "" : item["author"]["name"],

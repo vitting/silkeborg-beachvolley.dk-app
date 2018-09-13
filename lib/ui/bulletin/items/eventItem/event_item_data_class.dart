@@ -13,7 +13,7 @@ class BulletinEventItemData extends BulletinItemData {
   
     BulletinEventItemData(
         {String id = "",
-        String type = BulletinType.none,
+        BulletinType type = BulletinType.none,
         String body = "",
         DateTime creationDate,
         String authorId = "",
@@ -53,7 +53,7 @@ class BulletinEventItemData extends BulletinItemData {
     static BulletinEventItemData fromMap(Map<String, dynamic> item) {
       return new BulletinEventItemData(
           id: item["id"] == null ? "" : item["id"],
-          type: item["type"] == null ? "" : item["type"],
+          type: BulletinTypeHelper.getBulletinTypeStringAsType(item["type"]),
           authorId: item["author"]["id"] == null ? "" : item["author"]["id"],
           authorName:
               item["author"]["name"] == null ? "" : item["author"]["name"],

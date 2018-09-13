@@ -4,8 +4,15 @@ class BulletinTextField extends StatelessWidget {
   final Function onPressedSave;
   final Function onPressedPhoto;
   final Function onSave;
+  final bool showPhotoButton;
 
-  const BulletinTextField({Key key, @required this.onPressedSave, @required this.onPressedPhoto, @required this.onSave}) : super(key: key);
+  const BulletinTextField(
+      {Key key,
+      @required this.onPressedSave,
+      @required this.onPressedPhoto,
+      @required this.onSave,
+      this.showPhotoButton = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,21 +23,26 @@ class BulletinTextField extends StatelessWidget {
       decoration: new InputDecoration(
           labelText: "Opslag",
           suffixIcon: Column(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.send),
-                onPressed: onPressedSave
-              ),
-              IconButton(
-                icon: Icon(Icons.add_a_photo),
-                onPressed: onPressedPhoto                    
-              )
-            ],
+            mainAxisSize: MainAxisSize.min,
+            children: _setButtons()
           )),
       validator: (String value) {
         if (value.isEmpty) return "Opslaget skal udfyldes";
       },
       onSaved: onSave,
     );
+  }
+
+  List<Widget> _setButtons() {
+    List<Widget> widgets = [
+      IconButton(icon: Icon(Icons.send), onPressed: onPressedSave)
+    ];
+
+    if (showPhotoButton) {
+      widgets.add(
+          IconButton(icon: Icon(Icons.add_a_photo), onPressed: onPressedPhoto));
+    }
+
+    return widgets;
   }
 }

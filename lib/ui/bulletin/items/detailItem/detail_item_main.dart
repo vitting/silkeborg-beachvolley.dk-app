@@ -53,7 +53,7 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
         _createBulletinMainItem(),
         _addComment(),
         StreamBuilder(
-          stream: BulletinFirestore.getAllBulletinComments(widget.bulletinItem.id),
+          stream: BulletinFirestore.getAllBulletinCommentsAsStream(widget.bulletinItem.id),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting ||
@@ -92,6 +92,8 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
           bulletinItem: widget.bulletinItem,
           showCommitButtons: true,
         );
+        break;
+      case BulletinType.none:
         break;
     }
 

@@ -3,11 +3,12 @@ import "package:cached_network_image/cached_network_image.dart";
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_stepper_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
+import 'package:silkeborgbeachvolley/ui/testers/test3.dart';
 
 class SilkeborgBeachvolleyScaffold extends StatefulWidget {
   final String title;
   final Widget body;
-  final FloatingActionButton floatingActionButton;
+  final Widget floatingActionButton;
   final BottomNavigationBar bottomNavigationBar;
   final List<Widget> actions;
   final bool showDrawer;

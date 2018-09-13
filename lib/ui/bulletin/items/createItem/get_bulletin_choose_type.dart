@@ -28,7 +28,7 @@ class BulletinChooseType extends StatelessWidget {
                 title: Text("Nyhed"),
                 secondary: Icon(FontAwesomeIcons.newspaper),
                 groupValue: radioGroupValue,
-                value: BulletinType.news,
+                value: BulletinTypeHelper.news,
                 onChanged: onChange,
               ),
               RadioListTile<String>(
@@ -36,7 +36,7 @@ class BulletinChooseType extends StatelessWidget {
                 title: Text("Begivenhed"),
                 secondary: Icon(FontAwesomeIcons.calendarTimes),
                 groupValue: radioGroupValue,
-                value: BulletinType.event,
+                value: BulletinTypeHelper.event,
                 onChanged: onChange,
               ),
               RadioListTile<String>(
@@ -44,7 +44,7 @@ class BulletinChooseType extends StatelessWidget {
                 title: Text("Spil"),
                 secondary: Icon(FontAwesomeIcons.volleyballBall),
                 groupValue: radioGroupValue,
-                value: BulletinType.play,
+                value: BulletinTypeHelper.play,
                 onChanged: onChange,
               )
             ],

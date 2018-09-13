@@ -3,7 +3,7 @@ import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart
 
 class BulletinItemData {
   String id;
-  String type;
+  BulletinType type;
   String body;
   DateTime creationDate;
   String authorId;
@@ -24,7 +24,7 @@ class BulletinItemData {
   Map<String, dynamic> toMap() {
     return {
       "id": id,
-      "type": type,
+      "type": BulletinTypeHelper.getBulletinTypeAsString(type),
       "body": body,
       "creationDate": creationDate == null ? DateTime.now() : creationDate,
       "author": {
@@ -42,7 +42,7 @@ class BulletinItemData {
   static BulletinItemData fromMap(Map<String, dynamic> item) {
     return new BulletinItemData(
         id: item["id"] == null ? "" : item["id"],
-        type: item["type"] == null ? "" : item["type"],
+        type: BulletinTypeHelper.getBulletinTypeStringAsType(item["type"]),
         authorId: item["author"]["id"] == null ? "" : item["author"]["id"],
         authorName:
             item["author"]["name"] == null ? "" : item["author"]["name"],

@@ -19,10 +19,11 @@ class BulletinFirestore {
     return _firestore;
   }
 
-  static Stream<QuerySnapshot> getAllBulletinComments(String commentsId) {
+  static Stream<QuerySnapshot> getAllBulletinCommentsAsStream(String commentsId) {
     return firestoreInstance
         .collection(_bulletinCommentsCollectionName)
         .where("id", isEqualTo: commentsId)
+        .orderBy("creationDate", descending: false)
         .snapshots();
   }
 
@@ -37,6 +38,7 @@ class BulletinFirestore {
     return firestoreInstance
         .collection(_bulletinCollectionName)
         .where("type", isEqualTo: type)
+        .orderBy("creationDate", descending: true)
         .snapshots();
   }
 

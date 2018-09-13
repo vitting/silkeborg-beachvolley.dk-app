@@ -9,7 +9,7 @@ import 'package:uuid/uuid.dart';
 
 class BulletinItemCreator {
   static dynamic createBulletinItem(
-      {@required String type,
+      {@required BulletinType type,
       @required String body,
       DateTime eventStartDate,
       DateTime eventEndDate,
@@ -31,7 +31,7 @@ class BulletinItemCreator {
             numberOfcomments: 0,
             images: images
             );
-        break;
+        
       case BulletinType.event:
         // We are combining date and time 
         DateTime start = DateTime(
@@ -64,7 +64,7 @@ class BulletinItemCreator {
             eventEndTime: end,
             eventImage: images.length == 0 ? "" : images[0]
             );
-        break;
+        
       case BulletinType.play:
         return BulletinPlayItemData(
             type: type,
@@ -75,7 +75,9 @@ class BulletinItemCreator {
             body: body,
             creationDate: DateTime.now(),
             numberOfcomments: 0);
-        break;
+        
+      case BulletinType.none: 
+        return null;
     }
   }
 }

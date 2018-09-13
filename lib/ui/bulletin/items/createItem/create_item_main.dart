@@ -11,16 +11,17 @@ import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_fields_create_clas
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/create_image_helper_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_pictures.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_choose_type.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_event_fields.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_text_field.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 enum EventDateTimeType { startDate, endDate, startTime, endTime }
 
-String radioGroupValue = BulletinType.news;
-
 class CreateBulletinItem extends StatefulWidget {
+  final BulletinType bulletinType;
+
+  CreateBulletinItem(this.bulletinType);
+
   @override
   _CreateBulletinItemState createState() => _CreateBulletinItemState();
 }
@@ -36,6 +37,14 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
   final ItemFieldsCreate itemFieldsValue = ItemFieldsCreate();
   List<ImageInfoData> _imageFiles = [];
   bool _saving = false;
+
+@override
+  void initState() {
+    super.initState();
+
+    itemFieldsValue.type = widget.bulletinType;
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -53,26 +62,17 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-        title: "Silkeborg Beachvolley",
+        title: "Opret nyhed",
         body: ModalProgressHUD(
             opacity: 0.5, child: _main(), inAsyncCall: _saving));
   }
 
   Widget _main() {
     List<Widget> widgets = [
-      BulletinChooseType(
-        onChange: (value) {
-          setState(() {
-            itemFieldsValue.type = value;
-            radioGroupValue = value;
-          });
-        },
-        radioGroupValue: radioGroupValue,
-      ),
       _createBulletinItemForm(context),
     ];
 
-    if (radioGroupValue == BulletinType.news)
+    if (widget.bulletinType == BulletinType.news)
       widgets.add(BulletinNewsItemPictures(
         useSquareOnOddImageCount: true,
         imageInfoData: _imageFiles,
@@ -100,8 +100,8 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
 
   List<Widget> _fieldsToShowInForm(BuildContext context) {
     List<Widget> widgets = [];
-
-    if (radioGroupValue == BulletinType.event) {
+    if (widget.bulletinType == BulletinType.event) {
+      
       widgets.add(_eventFields());
       widgets.add(_textField());
     } else {
@@ -132,8 +132,9 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
   Widget _textField() {
     return BulletinTextField(
         onPressedSave: _textFieldOnpressedSave,
-        onPressedPhoto: radioGroupValue == BulletinType.news ? _addPhoto : null,
-        onSave: _textFieldOnSave);
+        onPressedPhoto: widget.bulletinType == BulletinType.news ? _addPhoto : null,
+        onSave: _textFieldOnSave,
+        showPhotoButton: widget.bulletinType == BulletinType.news);
   }
 
   _textFieldOnSave(String value) {
@@ -150,7 +151,6 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
       });
       await _saveBulletinItem();
       setState(() {
-        radioGroupValue = BulletinType.news;
         _imageFiles.clear();
         _saving = false;
       });
@@ -214,8 +214,8 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
     if (imageFile != null) {
       ImageInfoData imageInfo = await ImageHelpers.saveImage(
           imageFile,
-          CreateImageHelper.getImageSize(radioGroupValue),
-          CreateImageHelper.getStorageFolder(radioGroupValue));
+          CreateImageHelper.getImageSize(widget.bulletinType),
+          CreateImageHelper.getStorageFolder(widget.bulletinType));
       if (imageInfo.linkFirebaseStorage.isNotEmpty) {
         setState(() {
           _imageFiles.add(imageInfo);
