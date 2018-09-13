@@ -30,7 +30,6 @@ class _LoginState extends State<Login> {
   Widget _main(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(left: 20.0, right: 20.0),
-      // margin: EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,30 +40,6 @@ class _LoginState extends State<Login> {
               fontSize: 15.0
             ),),
           ),
-          // RaisedButton(
-          //   onPressed: () async {
-          //     setState(() {
-          //       _saving = true;                
-          //     });
-          //     await _signInWithGoogle(context);
-          //     setState(() {
-          //       _saving = false;                
-          //     });
-          //   },
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //     children: <Widget>[
-          //       Icon(Icons.extension),
-          //       Padding(
-          //         padding: const EdgeInsets.only(left: 10.0),
-          //         child: Text("Log ind med Google"),
-          //       )
-          //     ],
-          //   ),
-          // ),
-          // SizedBox(
-          //   height: 10.0,
-          // ),
           RaisedButton(
             color: Color(0xFF4267B2),
             padding: EdgeInsets.all(10.0),
@@ -101,17 +76,6 @@ class _LoginState extends State<Login> {
       ),
     );
   }
-
-  // Future<void> _signInWithGoogle(BuildContext context) async {
-  //   setState(() {
-  //     _saving = true;                
-  //   });
-  //   final FirebaseUser user = await UserAuth.signInWithGoogle();
-  //   if (user != null) _finalSignInTasks(context, user, "google");
-  //   setState(() {
-  //     _saving = false;                
-  //   });
-  // }
 
   Future<void> _signInWithFacebook(BuildContext context) async {
     setState(() {
