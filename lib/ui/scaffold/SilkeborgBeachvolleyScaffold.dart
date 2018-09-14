@@ -3,6 +3,7 @@ import "package:cached_network_image/cached_network_image.dart";
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_stepper_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/ranking_main.dart';
 
 class SilkeborgBeachvolleyScaffold extends StatefulWidget {
   final String title;
@@ -79,8 +80,7 @@ class _SilkeborgBeachvolleyScaffoldState
           leading: Icon(Icons.album),
           title: Text("Ranglisten"),
           onTap: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, Enrollment.routeName, ModalRoute.withName("/"));
+            Navigator.of(context).popAndPushNamed(Ranking.routeName);
           },
         ),
         ListTile(
