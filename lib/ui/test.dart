@@ -43,15 +43,19 @@ class _TestWidgetState extends State<TestWidget> {
         children: <Widget>[
           RaisedButton(
             onPressed: () async {
-              // Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Test2Widget(_tempValue)));
-              // loadData();
               try {
-                await firestore.collection("bulletins").document("c70790ee-05d8-4773-983e-cc568ed54bbb").updateData({
-                  "players": {
-                    "wrwrewer": FieldValue.delete()
-                  }
-                });
-                
+                firestore.collection("test").document("TdawcioMCYdrBdSJ9rID").setData(
+                  {
+                    "date": FieldValue.serverTimestamp(),
+                    "stat": {
+                      "nuomberOfFaces": 22,
+                      "id": "adasdad"
+                    }
+                  },
+                  merge: true
+                );
+                // QuerySnapshot snapshot = await firestore.collection("test").where("stat.id", isEqualTo: "asdf").getDocuments();
+                // print(snapshot.documents.length);
               } catch (e) {
                 print(e);
               }

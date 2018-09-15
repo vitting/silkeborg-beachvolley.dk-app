@@ -13,8 +13,8 @@ class SilkeborgBeachvolleyScaffold extends StatefulWidget {
   final List<Widget> actions;
   final bool showDrawer;
   SilkeborgBeachvolleyScaffold(
-      {this.title,
-      this.body,
+      {@required this.title,
+      @required this.body,
       this.floatingActionButton,
       this.bottomNavigationBar,
       this.showDrawer = false,

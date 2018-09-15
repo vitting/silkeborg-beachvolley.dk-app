@@ -99,6 +99,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  faker:
+    dependency: "direct main"
+    description:
+      name: faker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   firebase_auth:
     dependency: "direct main"
     description:

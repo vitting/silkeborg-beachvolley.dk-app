@@ -31,7 +31,6 @@ class RankingItemState extends State<RankingItem>
     _initAnimation();
   }
 
-//CHRISTIAN: Vi skal måske kun vise animationen et par gange. Ser ud til at være ressource krævende
   void _initAnimation() {
     if (widget.showAnimation) {
       _controller = AnimationController(

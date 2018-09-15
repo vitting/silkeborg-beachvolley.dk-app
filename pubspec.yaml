@@ -21,6 +21,7 @@ dependencies:
   cached_network_image: ^0.4.2
   transparent_image: ^0.1.0
   rxdart: ^0.18.1
+  faker: ^1.0.0
   flutter:
     sdk: flutter
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_sharedpref.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/createMatch/ranking_create_match_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/ranking_firsttime_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/ranking_item.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/silkeborgBeachvolleyScaffold.dart';
@@ -32,7 +33,10 @@ class _RankingState extends State<Ranking> {
       floatingActionButton: FloatingActionButton(
         tooltip: "Registere kamp",
         onPressed: () {
-          RankingSharedPref.setIsItFirsttime(true);
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => RankingCreateMatch(),
+            fullscreenDialog: true
+          ));
         },
         child: Icon(Icons.add),
       ),
