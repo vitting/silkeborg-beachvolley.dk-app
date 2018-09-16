@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_sharedpref.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/ranking_create_match_main.dart';
@@ -49,13 +52,36 @@ class _RankingState extends State<Ranking> {
           onRefresh: () {},
           child: ListView(
             children: <Widget>[
+              Row(
+                children: <Widget>[
+          //         RaisedButton(
+          //   onPressed: () {
+          //     RankingSharedPref.removeIsItFirstTime();
+          //   },
+          //   child: Text("ResetIsFirstTime"),
+          // ),
+          // RaisedButton(
+          //   onPressed: () {
+          //     RankingFirestore.createFakePlayers(20);
+          //   },
+          //   child: Text("Generate Players"),
+          // ),
+          // RaisedButton(
+          //   onPressed: () async {
+          //     DocumentSnapshot refence = await RankingFirestore.getMatch("-LMY7qCKWev5IfhxHU_h");
+          //     print(RankingMatchData.fromMap(refence.data));
+          //   },
+          //   child: Text("Get Match"),
+          // )
+                ],
+              ),
               RankingItem(
                 player: RankingPlayerData(
                     name: "Christian Nicolaisen",
-                    numberOfPlayedMatches: 22,
+                    numberOfPlayedMatches: RankingPlayerDataStats(total: 22, won: 11, lost: 11),
                     photoUrl:
                         "https://graph.facebook.com/127462958207239/picture",
-                    points: 234,
+                    points: RankingPlayerDataStats(total: 222, won: 212, lost: 10),
                     sex: "male",
                     userId: "bpxa64leuva3kh8FA7EzQbDBIfr1"),
                 onTap: () {
@@ -67,10 +93,10 @@ class _RankingState extends State<Ranking> {
               RankingItem(
                 player: RankingPlayerData(
                     name: "Christian Nicolaisen",
-                    numberOfPlayedMatches: 22,
+                    numberOfPlayedMatches: RankingPlayerDataStats(total: 22, won: 11, lost: 11),
                     photoUrl:
                         "https://graph.facebook.com/127462958207239/picture",
-                    points: 234,
+                    points: RankingPlayerDataStats(total: 222, won: 212, lost: 10),
                     sex: "male",
                     userId: "bpxa64leuva3kh8FA7EzQbDBIfr1"),
                 onTap: () {
@@ -82,10 +108,10 @@ class _RankingState extends State<Ranking> {
               RankingItem(
                 player: RankingPlayerData(
                     name: "Christian Nicolaisen",
-                    numberOfPlayedMatches: 22,
+                    numberOfPlayedMatches: RankingPlayerDataStats(total: 22, won: 11, lost: 11),
                     photoUrl:
                         "https://graph.facebook.com/127462958207239/picture",
-                    points: 234,
+                    points: RankingPlayerDataStats(total: 222, won: 212, lost: 10),
                     sex: "male",
                     userId: "bpxa64leuva3kh8FA7EzQbDBIfr1"),
                 onTap: () {
@@ -97,10 +123,10 @@ class _RankingState extends State<Ranking> {
               RankingItem(
                 player: RankingPlayerData(
                     name: "Christian Nicolaisen",
-                    numberOfPlayedMatches: 22,
+                    numberOfPlayedMatches: RankingPlayerDataStats(total: 22, won: 11, lost: 11),
                     photoUrl:
                         "https://graph.facebook.com/127462958207239/picture",
-                    points: 234,
+                    points: RankingPlayerDataStats(total: 222, won: 212, lost: 10),
                     sex: "male",
                     userId: "bpxa64leuva3kh8FA7EzQbDBIfr1"),
                 onTap: () {
@@ -133,6 +159,4 @@ class _RankingState extends State<Ranking> {
       }
     );
   }
-
-  
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_sharedpref.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class Settings extends StatelessWidget {
@@ -34,6 +35,7 @@ class Settings extends StatelessWidget {
     return RaisedButton(
       onPressed: () async {
         bool value = await UserAuth.signOutWithFacebook();
+        await RankingSharedPref.removeIsItFirstTime();
         Navigator.pop(context, value);
       },
       child: Row(

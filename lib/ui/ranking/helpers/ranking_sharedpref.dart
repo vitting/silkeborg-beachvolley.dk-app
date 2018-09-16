@@ -6,6 +6,7 @@ import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 
 class RankingSharedPref {
+  static const String _isItFirstTimeKey = "ranking_firsttime";
   static SharedPreferences _sharedPref;
 
 static Future<SharedPreferences> get sharedPrefInstance async {
@@ -18,17 +19,21 @@ static Future<SharedPreferences> get sharedPrefInstance async {
 
   static Future<bool> isItfirstTime() async {
     SharedPreferences shared = await sharedPrefInstance;
-    bool value = shared.getBool("ranking_firsttime");
+    bool value = shared.getBool(_isItFirstTimeKey);
     if (value == null) {
       DocumentSnapshot snapshot = await RankingFirestore.getPlayer(Home.loggedInUser.uid);
       value = !snapshot.exists;
-      shared.setBool("ranking_firsttime", value);
+      shared.setBool(_isItFirstTimeKey, value);
     }
 
     return value;
   }
 
   static Future<void> setIsItFirsttime(bool isItFirstTime) async {
-    await sharedPrefInstance..setBool("ranking_firsttime", isItFirstTime);
+    await sharedPrefInstance..setBool(_isItFirstTimeKey, isItFirstTime);
+  }
+
+  static Future<void> removeIsItFirstTime() async {
+    await sharedPrefInstance..remove(_isItFirstTimeKey);
   }
 }

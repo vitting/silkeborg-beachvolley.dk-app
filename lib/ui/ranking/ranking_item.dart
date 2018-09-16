@@ -107,7 +107,7 @@ class RankingItemState extends State<RankingItem>
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
-            "${widget.player.points}",
+            "${widget.player.points.total}",
             style: TextStyle(color: Colors.white),
           )
         ],
