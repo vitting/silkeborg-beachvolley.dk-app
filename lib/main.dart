@@ -4,11 +4,11 @@ import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/bulletin_main.dart';
 import 'package:silkeborgbeachvolley/ui/login/login_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/ranking_main.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_main.dart';
 import 'package:silkeborgbeachvolley/ui/scoreboard/scoreboard_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/settings_main.dart';
-import 'package:silkeborgbeachvolley/ui/testers/test3.dart';
-import 'package:silkeborgbeachvolley/ui/test.dart';
+// import 'package:silkeborgbeachvolley/ui/testers/test3.dart';
+// import 'package:silkeborgbeachvolley/ui/test.dart';
 
 void main() {
 
