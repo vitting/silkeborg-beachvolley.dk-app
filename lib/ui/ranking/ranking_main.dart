@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data.dart';
@@ -37,9 +38,8 @@ class _RankingState extends State<Ranking> {
         tooltip: "Registere kamp",
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => RankingCreateMatch(),
-            fullscreenDialog: true
-          ));
+              builder: (BuildContext context) => RankingCreateMatch(),
+              fullscreenDialog: true));  
         },
         child: Icon(Icons.add),
       ),
@@ -52,89 +52,31 @@ class _RankingState extends State<Ranking> {
           onRefresh: () {},
           child: ListView(
             children: <Widget>[
-              Row(
-                children: <Widget>[
-          //         RaisedButton(
-          //   onPressed: () {
-          //     RankingSharedPref.removeIsItFirstTime();
-          //   },
-          //   child: Text("ResetIsFirstTime"),
-          // ),
-          // RaisedButton(
-          //   onPressed: () {
-          //     RankingFirestore.createFakePlayers(20);
-          //   },
-          //   child: Text("Generate Players"),
-          // ),
-          // RaisedButton(
-          //   onPressed: () async {
-          //     DocumentSnapshot refence = await RankingFirestore.getMatch("-LMY7qCKWev5IfhxHU_h");
-          //     print(RankingMatchData.fromMap(refence.data));
-          //   },
-          //   child: Text("Get Match"),
-          // )
-                ],
-              ),
-              RankingItem(
-                player: RankingPlayerData(
-                    name: "Christian Nicolaisen",
-                    numberOfPlayedMatches: RankingPlayerDataStats(total: 22, won: 11, lost: 11),
-                    photoUrl:
-                        "https://graph.facebook.com/127462958207239/picture",
-                    points: RankingPlayerDataStats(total: 222, won: 212, lost: 10),
-                    sex: "male",
-                    userId: "bpxa64leuva3kh8FA7EzQbDBIfr1"),
-                onTap: () {
-                  print("Tab");
+              StreamBuilder(
+                stream: RankingFirestore.getRanking(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting ||
+                      !snapshot.hasData) return LoaderSpinner();
+                  int counter = -1;
+                  return Column(
+                    children: snapshot.data.documents
+                        .map<Widget>((DocumentSnapshot doc) {
+                          RankingPlayerData player = RankingPlayerData.fromMap(doc.data);
+                          counter++;
+                          
+                      return RankingItem(
+                        player: player,
+                        showAnimation: counter == 0,
+                        position: counter,
+                        onTap: () {
+                          print("Tab");
+                        },
+                      );
+                    }).toList(),
+                  );
                 },
-                position: 0,
-                showAnimation: true,
               ),
-              RankingItem(
-                player: RankingPlayerData(
-                    name: "Christian Nicolaisen",
-                    numberOfPlayedMatches: RankingPlayerDataStats(total: 22, won: 11, lost: 11),
-                    photoUrl:
-                        "https://graph.facebook.com/127462958207239/picture",
-                    points: RankingPlayerDataStats(total: 222, won: 212, lost: 10),
-                    sex: "male",
-                    userId: "bpxa64leuva3kh8FA7EzQbDBIfr1"),
-                onTap: () {
-                  print("Tab");
-                },
-                position: 1,
-                showAnimation: false,
-              ),
-              RankingItem(
-                player: RankingPlayerData(
-                    name: "Christian Nicolaisen",
-                    numberOfPlayedMatches: RankingPlayerDataStats(total: 22, won: 11, lost: 11),
-                    photoUrl:
-                        "https://graph.facebook.com/127462958207239/picture",
-                    points: RankingPlayerDataStats(total: 222, won: 212, lost: 10),
-                    sex: "male",
-                    userId: "bpxa64leuva3kh8FA7EzQbDBIfr1"),
-                onTap: () {
-                  print("Tab");
-                },
-                position: 2,
-                showAnimation: false,
-              ),
-              RankingItem(
-                player: RankingPlayerData(
-                    name: "Christian Nicolaisen",
-                    numberOfPlayedMatches: RankingPlayerDataStats(total: 22, won: 11, lost: 11),
-                    photoUrl:
-                        "https://graph.facebook.com/127462958207239/picture",
-                    points: RankingPlayerDataStats(total: 222, won: 212, lost: 10),
-                    sex: "male",
-                    userId: "bpxa64leuva3kh8FA7EzQbDBIfr1"),
-                onTap: () {
-                  print("Tab");
-                },
-                position: 3,
-                showAnimation: false,
-              )
             ],
           )),
     );
@@ -142,21 +84,20 @@ class _RankingState extends State<Ranking> {
 
   _showFirstTimeSetup() async {
     await showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          children: <Widget>[
-            RankingFirstTime(
-              onPressedValue: (bool value) {
-                if (value) {
-                  RankingSharedPref.setIsItFirsttime(false);
-                }
-              },
-            )          
-          ],
-        );
-      }
-    );
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            children: <Widget>[
+              RankingFirstTime(
+                onPressedValue: (bool value) {
+                  if (value) {
+                    RankingSharedPref.setIsItFirsttime(false);
+                  }
+                },
+              )
+            ],
+          );
+        });
   }
 }

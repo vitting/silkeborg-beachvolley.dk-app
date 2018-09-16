@@ -34,7 +34,7 @@ class RankingItemState extends State<RankingItem>
   void _initAnimation() {
     if (widget.showAnimation) {
       _controller = AnimationController(
-          duration: const Duration(milliseconds: 4000), vsync: this);
+          duration: const Duration(milliseconds: 1000), vsync: this);
       _animation = Tween(begin: 0.0, end: 360.0).animate(_controller)
         ..addListener(() {
           setState(() {});

@@ -17,6 +17,9 @@ class RankingFirestore {
 
     return _firestore;
   }
+  static Stream<QuerySnapshot> getRanking() {
+    return firestoreInstance.collection(_collectionNamePlayer).orderBy("points.total", descending: true).orderBy("numberOfPlayedMatches.total", descending: true).snapshots();
+  }
 
   static Future<DocumentSnapshot> getMatch(String matchId) async {
     return firestoreInstance.collection(_collectionNameMatch).document(matchId).get();

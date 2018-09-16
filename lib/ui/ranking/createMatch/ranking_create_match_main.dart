@@ -17,12 +17,14 @@ class RankingCreateMatch extends StatefulWidget {
 }
 
 class _RankingCreateMatchState extends State<RankingCreateMatch> {
+  static final Color _okColor = Colors.blueAccent;
+  static final Color _errorColor = Colors.redAccent;
   DateTime _matchDate;
-  Color _matchDateColor = Colors.blueAccent;
-  Color _winner1Color = Colors.blueAccent;
-  Color _winner2Color = Colors.blueAccent;
-  Color _loser1Color = Colors.blueAccent;
-  Color _loser2Color = Colors.blueAccent;
+  Color _matchDateColor = _okColor;
+  Color _winner1Color = _okColor;
+  Color _winner2Color = _okColor;
+  Color _loser1Color = _okColor;
+  Color _loser2Color = _okColor;
   RankingPlayerData _winner1Item;
   RankingPlayerData _winner2Item;
   RankingPlayerData _loser1Item;
@@ -81,7 +83,11 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
               CreatePlayerChooseDate(
                 color: _matchDateColor,
                 datePicked: (DateTime datePicked) {
+                  setState(() {
                   _matchDate = datePicked;
+                  _matchDateColor = _okColor;                    
+                  });
+                  
                 },
               ),
               _saveButton(context)
@@ -228,23 +234,23 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
   bool _isMatchValid() {
     bool isValid = true;
     if (_winner1Item == null) {
-      _winner1Color = Colors.redAccent;
+      _winner1Color = _errorColor;
       isValid = false;
     }
     if (_winner2Item == null) {
-      _winner2Color = Colors.redAccent;
+      _winner2Color = _errorColor;
       isValid = false;
     }
     if (_loser1Item == null) {
-      _loser1Color = Colors.redAccent;
+      _loser1Color = _errorColor;
       isValid = false;
     }
     if (_loser2Item == null) {
-      _loser2Color = Colors.redAccent;
+      _loser2Color = _errorColor;
       isValid = false;
     }
     if (_matchDate == null) {
-      _matchDateColor = Colors.redAccent;
+      _matchDateColor = _errorColor;
       isValid = false;
     }
 
