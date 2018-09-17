@@ -105,7 +105,10 @@ class BulletinNewsItemPictures extends StatelessWidget {
               onLongpressImageSelected(image);
           },
           child: CachedNetworkImage(
-            placeholder: LoaderSpinner(),
+            placeholder: LoaderSpinner(
+              width: width,
+              height: height,
+            ),
             errorWidget: Image.memory(kTransparentImage),
             imageUrl: image,
             fit: BoxFit.cover,
@@ -148,7 +151,10 @@ class BulletinNewsItemPictures extends StatelessWidget {
                 onLongpressImageSelected(image1);
             },
             child: CachedNetworkImage(
-              placeholder: LoaderSpinner(),
+              placeholder: LoaderSpinner(
+                width: width,
+                height: height
+              ),
               errorWidget: Image.memory(kTransparentImage),
               imageUrl: image1,
               width: width - 1,
@@ -165,7 +171,10 @@ class BulletinNewsItemPictures extends StatelessWidget {
                 onLongpressImageSelected(image2);
             },
             child: CachedNetworkImage(
-              placeholder: LoaderSpinner(),
+              placeholder: LoaderSpinner(
+                width: width,
+                height: height,
+              ),
               errorWidget: Image.memory(kTransparentImage),
               imageUrl: image2,
               width: width,

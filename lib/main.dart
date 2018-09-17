@@ -27,7 +27,6 @@ void main() {
     },
     routes: <String, WidgetBuilder>{ 
       "/": (BuildContext context) => Home(),
-      // "/": (BuildContext context) => FancyFab(),
       // "/": (BuildContext context) => TestWidget(),
       Enrollment.routeName: (BuildContext context) => Enrollment(),
       EnrollmentStepper.routeName: (BuildContext context) => EnrollmentStepper(), 

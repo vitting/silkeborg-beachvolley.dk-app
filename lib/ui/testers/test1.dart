@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
-class Test2Widget extends StatelessWidget {
-    final ValueChanged<int> changed;
-
-  const Test2Widget({Key key, this.changed}) : super(key: key);
+class Test1Widget extends StatelessWidget {
+  final ValueChanged<int> changed;
+  Test1Widget(this.changed);
 
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: "test2",
+      title: "test1",
       body: Container(
       child: RaisedButton(
         onPressed: () {
-          changed(1);
+          changed(0);
         },
-        child: Text("Test2"),
+        child: Text("Test1"),
       ),
     ),
     );

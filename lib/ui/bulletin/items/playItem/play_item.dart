@@ -33,7 +33,8 @@ class BulletinPlayItem extends StatefulWidget {
 
 class BulletinPlayItemState extends State<BulletinPlayItem> {
   bool _isPlayerCommitted = false;
-
+  double _opacityLevel = 0.0;
+  
   @override
   void initState() {
     super.initState();
@@ -45,6 +46,7 @@ class BulletinPlayItemState extends State<BulletinPlayItem> {
 
     setState(() {
       _isPlayerCommitted = playerCommmited;
+      _opacityLevel = 1.0;
     });
   }
 
@@ -133,34 +135,40 @@ class BulletinPlayItemState extends State<BulletinPlayItem> {
   }
 
   Widget _showPlayerCommittedButton() {
+    Widget widgets;
     if (!_isPlayerCommitted && widget.showCommitButtons) {
-      return Tooltip(
-        message: "Ja jeg vil gerne spille",
-        child: IconButton(
-            icon: Icon(Icons.check_circle),
-            color: Colors.greenAccent,
-            iconSize: 40.0,
-            onPressed: () {
-              _onPressedPlayerCommit(PlayerCommitStatus.commit);
-              widget.bulletinItem.numberOfPlayersCommitted++;
-            }),
-      );
+      widgets = Tooltip(
+          message: "Ja jeg vil gerne spille",
+          child: AnimatedOpacity(
+            duration: Duration(milliseconds: 500),
+            opacity: _opacityLevel,
+            child: IconButton(
+                icon: Icon(Icons.check_circle),
+                color: Colors.greenAccent,
+                iconSize: 40.0,
+                onPressed: () {
+                  _onPressedPlayerCommit(PlayerCommitStatus.commit);
+                  widget.bulletinItem.numberOfPlayersCommitted++;
+                }),
+          ));
     }
 
     if (_isPlayerCommitted && widget.showCommitButtons) {
-      return Tooltip(
-        message: "Fjern at jeg gerne vil spille",
-        child: IconButton(
-            icon: Icon(Icons.remove_circle),
-            color: Colors.blueAccent,
-            iconSize: 40.0,
-            onPressed: () {
-              _onPressedPlayerCommit(PlayerCommitStatus.uncommit);
-              widget.bulletinItem.numberOfPlayersCommitted--;
-            }),
-      );
+      widgets = Tooltip(
+          message: "Fjern at jeg gerne vil spille",
+          child: AnimatedOpacity(
+              duration: Duration(milliseconds: 500),
+              opacity: _opacityLevel,
+              child: IconButton(
+                  icon: Icon(Icons.remove_circle),
+                  color: Colors.blueAccent,
+                  iconSize: 40.0,
+                  onPressed: () {
+                    _onPressedPlayerCommit(PlayerCommitStatus.uncommit);
+                    widget.bulletinItem.numberOfPlayersCommitted--;
+                  })));
     }
 
-    return null;
+    return widgets;
   }
 }

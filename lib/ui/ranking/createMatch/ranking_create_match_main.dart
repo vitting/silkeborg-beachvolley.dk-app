@@ -96,16 +96,21 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
         }));
   }
 
+
+//CHRISTIAN: Vi skal lave det sådan at man kan sætte set score, men det skal være optional
   Widget _saveButton(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        FlatButton.icon(
-          label: Text("Gem kampen"),
-          icon: Icon(FontAwesomeIcons.volleyballBall),
-          onPressed: () {
-            _saveMatch(context);
-          },
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20.0),
+          child: FlatButton.icon(
+            label: Text("Gem kampen"),
+            icon: Icon(FontAwesomeIcons.volleyballBall),
+            onPressed: () {
+              _saveMatch(context);
+            },
+          ),
         )
       ],
     );

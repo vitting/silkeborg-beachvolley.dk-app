@@ -3,6 +3,7 @@ import 'package:silkeborgbeachvolley/ui/bulletin/helpers/image_type.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/item_datetime_numberofcomments.dart';
 import "package:cached_network_image/cached_network_image.dart";
+import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_image_viewer.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_pictures.dart';
 
 class BulletinNewsItem extends StatelessWidget {
@@ -49,6 +50,12 @@ class BulletinNewsItem extends StatelessWidget {
             BulletinNewsItemPictures(
               images: bulletinItem.images,
               type: BulletinImageType.network,
+              onLongpressImageSelected: (String image) {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => NewsItemImageViewer(image),
+                  fullscreenDialog: true
+                ));
+              },
             ),
             DateTimeNumberOfCommentsAndPlayers(
                 bulletinItem: bulletinItem)
