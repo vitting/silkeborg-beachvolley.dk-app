@@ -4,6 +4,7 @@ import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_stepper_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_main.dart';
+import 'package:silkeborgbeachvolley/ui/settings/settings_main.dart';
 
 class SilkeborgBeachvolleyScaffold extends StatefulWidget {
   final String title;
@@ -119,8 +120,7 @@ class _SilkeborgBeachvolleyScaffoldState
           leading: Icon(Icons.album),
           title: Text("Indstillinger"),
           onTap: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, Enrollment.routeName, ModalRoute.withName("/"));
+            Navigator.of(context).popAndPushNamed(Settings.routeName);
           },
         )
       ],

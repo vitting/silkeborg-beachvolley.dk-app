@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:charts_flutter/flutter.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_stat_row.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_stat_title.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data.dart';
@@ -31,6 +32,9 @@ class RankingDetailStat extends StatelessWidget {
                   total: player.numberOfPlayedMatches.total,
                   won: player.numberOfPlayedMatches.won,
                   lost: player.numberOfPlayedMatches.lost
+                ),
+                Container(
+                  
                 )
               ],
             )

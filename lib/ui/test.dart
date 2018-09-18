@@ -1,99 +1,77 @@
+import 'dart:async';
+import 'dart:collection';
+import 'dart:math' as math;
+import 'package:charts_flutter/flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
-import 'package:silkeborgbeachvolley/ui/testers/test1.dart';
-import 'package:silkeborgbeachvolley/ui/testers/test2.dart';
-import 'package:silkeborgbeachvolley/ui/testers/test3.dart';
+import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
+import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
+import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 
 class TestWidget extends StatefulWidget {
-  const TestWidget({Key key}) : super(key: key);
+  @override
+  TestWidgetState createState() {
+    return new TestWidgetState();
+  }
+}
+
+class TestWidgetState extends State<TestWidget> {
+  Future<List<Series<StatMatchOnWeek, String>>> _loadMatches() async {
+    SplayTreeMap<int, int> matchOnWeekNumber = SplayTreeMap<int, int>();
+    List<DocumentSnapshot> snapshots =
+        await RankingFirestore.getPlayerMatches("bpxa64leuva3kh8FA7EzQbDBIfr1");
+
+    snapshots.forEach((DocumentSnapshot snapshot) {
+      RankingMatchData match = RankingMatchData.fromMap(snapshot.data);
+      int weekNumber = DateTimeHelpers.weekInYear(match.matchDate);
+      matchOnWeekNumber.update(weekNumber, (int value) => ++value,
+          ifAbsent: () => 1);
+    });
+
+    List<StatMatchOnWeek> data = [];
+    matchOnWeekNumber.forEach((int key, int value) {
+      data.add(StatMatchOnWeek(key.toString(), value));
+    });
+
+    Series<StatMatchOnWeek, String> serie = Series<StatMatchOnWeek, String>(
+        data: data,
+        id: "weekstat",
+        domainFn: (StatMatchOnWeek week, _) => week.weeknumber,
+        measureFn: (StatMatchOnWeek week, _) => week.played,
+        colorFn: (_, __) => MaterialPalette.blue.shadeDefault);
+
+    return [serie];
+  }
 
   @override
-  _TestWidgetState createState() => new _TestWidgetState();
-}
-
-class _TestWidgetState extends State<TestWidget> {
-  CrossFadeState state = CrossFadeState.showFirst;
-@override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-        children: <Widget>[
-          AnimatedCrossFade(
-      firstChild: Text("TEST1"),
-      secondChild: Text("TEST2"),
-      crossFadeState: state,
-      duration: Duration(milliseconds: 600)
-    ),
-    RaisedButton(
-      onPressed: () {
-setState(() {
-    if (state == CrossFadeState.showFirst) {
-      state = CrossFadeState.showSecond;      
-    } else {
-      state = CrossFadeState.showFirst;      
-    }
-    
-        });
-      },
-      child: Text("Knap1"),
-    )
-        ],
+      child: FutureBuilder(
+        future: _loadMatches(),
+        builder: (BuildContext context,
+            AsyncSnapshot<List<Series<StatMatchOnWeek, String>>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting &&
+              !snapshot.hasData)
+            return Container();
+            
+            return Container(
+              child: BarChart(
+                snapshot.data,
+                animate: true,
+                
+              ),
+            );
+        },
       ),
     );
-
-
-
-    // return PageView(
-    //     controller: controller,
-    //     children: <Widget>[
-    //       Test1Widget(_changed),
-    //       Test2Widget(changed: _changed),
-    //       Test3Widget(_changed)
-    //     ],
-    //   );
-  }
-
-  _changed(int v) {
-//     if (v == 2) {
-// controller.previousPage(
-//       curve: Curves.elasticIn,
-//       duration: Duration(milliseconds: 500)
-//     );
-//     } else {
-//       controller.nextPage(
-//       curve: Curves.fastOutSlowIn,
-//       duration: Duration(milliseconds: 500)
-//     );
-//     }
-    
   }
 }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return PageView(
-  //       controller: controller,
-  //       children: <Widget>[
-  //         Test1Widget(_changed),
-  //         Test2Widget(changed: _changed),
-  //         Test3Widget(_changed)
-  //       ],
-  //     );
-  // }
+class StatMatchOnWeek {
+  final String weeknumber;
+  final int played;
 
-//   _changed(int v) {
-//     if (v == 2) {
-// controller.previousPage(
-//       curve: Curves.elasticIn,
-//       duration: Duration(milliseconds: 500)
-//     );
-//     } else {
-//       controller.nextPage(
-//       curve: Curves.fastOutSlowIn,
-//       duration: Duration(milliseconds: 500)
-//     );
-//     }
-    
-//   }
-// }
-
+  StatMatchOnWeek(this.weeknumber, this.played);
+}

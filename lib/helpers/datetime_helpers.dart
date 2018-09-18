@@ -16,6 +16,10 @@ Map<int, String> months = {
 };
 
 class DateTimeHelpers {
+  static int weekInYear(DateTime date) {
+    return int.parse(formatDate(date, [W]));
+  }
+
   static String ddmmyyyyHHnn(DateTime date) {
     return formatDate(date, [dd, "-", mm, "-", yyyy, "  ", HH, ":", nn]);
   }

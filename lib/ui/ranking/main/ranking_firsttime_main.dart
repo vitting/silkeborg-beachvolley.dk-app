@@ -12,12 +12,13 @@ class RankingFirstTime extends StatefulWidget {
 }
 
 class _RankingFirstTimeState extends State<RankingFirstTime> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   RankingPlayerData _rankingPlayerData = RankingPlayerData(
     userId: Home.loggedInUser.uid,
-    photoUrl: Home.loggedInUser.photoUrl
+    photoUrl: Home.loggedInUser.photoUrl,
+    name: Home.loggedInUser.displayName
   );
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,9 +38,9 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: CircleAvatar(
-                child: Icon(Icons.add_photo_alternate),
+                // child: Icon(Icons.add_photo_alternate),
                 radius: 30.0,
-                backgroundImage: CachedNetworkImageProvider(Home.loggedInUser.photoUrl),
+                backgroundImage: CachedNetworkImageProvider(_rankingPlayerData.photoUrl),
               ),
             ),
             Form(
@@ -47,7 +48,7 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
               child: Column(
                 children: <Widget>[
                   TextFormField(
-                    initialValue: Home.loggedInUser.displayName,
+                    initialValue: _rankingPlayerData.name,
                     onSaved: (String value) {
                       _rankingPlayerData.name = value.trim();
                     },

@@ -37,10 +37,10 @@ class RankingFirestore {
         .getDocuments();
     QuerySnapshot loser2 = await firestoreInstance
         .collection(_collectionNameMatch)
-        .where("loser1.id", isEqualTo: userId)
+        .where("loser2.id", isEqualTo: userId)
         .orderBy("matchDate")
         .getDocuments();
-
+  
     list.addAll(winner1.documents);
     list.addAll(winner2.documents);
     list.addAll(loser1.documents);

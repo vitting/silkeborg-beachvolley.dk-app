@@ -8,7 +8,7 @@ import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_main.dart';
 import 'package:silkeborgbeachvolley/ui/scoreboard/scoreboard_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/settings_main.dart';
 // import 'package:silkeborgbeachvolley/ui/testers/test3.dart';
-// import 'package:silkeborgbeachvolley/ui/test.dart';
+import 'package:silkeborgbeachvolley/ui/test.dart';
 
 void main() {
 
@@ -26,8 +26,8 @@ void main() {
       print("ROUTE: ${v.name}");
     },
     routes: <String, WidgetBuilder>{ 
-      "/": (BuildContext context) => Home(),
-      // "/": (BuildContext context) => TestWidget(),
+      // "/": (BuildContext context) => Home(),
+      "/": (BuildContext context) => TestWidget(),
       Enrollment.routeName: (BuildContext context) => Enrollment(),
       EnrollmentStepper.routeName: (BuildContext context) => EnrollmentStepper(), 
       ScoreBoard.routeName: (BuildContext context) => ScoreBoard(),
