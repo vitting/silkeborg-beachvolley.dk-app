@@ -26,8 +26,8 @@ void main() {
       print("ROUTE: ${v.name}");
     },
     routes: <String, WidgetBuilder>{ 
-      // "/": (BuildContext context) => Home(),
-      "/": (BuildContext context) => TestWidget(),
+      "/": (BuildContext context) => Home(),
+      // "/": (BuildContext context) => TestWidget(),
       Enrollment.routeName: (BuildContext context) => Enrollment(),
       EnrollmentStepper.routeName: (BuildContext context) => EnrollmentStepper(), 
       ScoreBoard.routeName: (BuildContext context) => ScoreBoard(),

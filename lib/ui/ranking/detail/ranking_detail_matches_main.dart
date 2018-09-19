@@ -28,9 +28,33 @@ class RankingDetailMatches extends StatelessWidget {
           constraints: BoxConstraints.expand(),
           child: ListView.builder(
             shrinkWrap: true,
-            itemCount: snapshot.data.length,
+            itemCount: snapshot.data.length + 1,
             itemBuilder: (BuildContext context, int position) {
-              RankingMatchData item = snapshot.data[position];
+              if (position == 0) return Card(
+                              child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 5.0),
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text("Vindere", textAlign: TextAlign.center, style: TextStyle(
+                              fontSize: 20.0
+                            )),
+                          ),
+                          Expanded(
+                            child: Text("Tabere", textAlign: TextAlign.center, style: TextStyle(
+                              fontSize: 20.0
+                            )),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+
+              RankingMatchData item = snapshot.data[position - 1];
               return Card(
                 child: Container(
                   padding: EdgeInsets.all(10.0),
@@ -46,26 +70,18 @@ class RankingDetailMatches extends StatelessWidget {
                           ),
                         ],
                       ),
-                      RankingMatchesRow(
-                        winnerId: item.winner1.id,
-                        loserId: item.loser1.id,
+                      RankingMatchesRow(//CHRISTIAN: Vi skal bare sende taberen og vinderen ind som hele objekter
+                        winner: item.winner1,
+                        loser: item.loser1,
                         userId: userId,
-                        winnerName: item.winner1.name,
-                        winnerPhotoUrl: item.winner1.photoUrl,
-                        loserName: item.loser1.name,
-                        loserPhotoUrl: item.loser1.photoUrl,
                       ),
                       SizedBox(
                         height: 5.0,
                       ),
                       RankingMatchesRow(
-                        winnerId: item.winner2.id,
-                        loserId: item.loser2.id,
+                        winner: item.winner2,
+                        loser: item.loser2,
                         userId: userId,
-                        winnerName: item.winner2.name,
-                        winnerPhotoUrl: item.winner2.photoUrl,
-                        loserName: item.loser2.name,
-                        loserPhotoUrl: item.loser2.photoUrl,
                       )
                     ],
                   ),
