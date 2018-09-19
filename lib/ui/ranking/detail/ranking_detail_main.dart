@@ -9,7 +9,6 @@ import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
-import 'package:dots_indicator/dots_indicator.dart';
 
 class RankingDetail extends StatefulWidget {
   final RankingPlayerData player;

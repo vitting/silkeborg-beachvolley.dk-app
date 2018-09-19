@@ -11,13 +11,14 @@ class BulletinNewsItemPictures extends StatelessWidget {
   final Function onLongpressImageSelected;
   final BulletinImageType type;
   final bool useSquareOnOddImageCount;
+  final bool showImageFullScreen;
 
   BulletinNewsItemPictures(
       {this.type,
       this.useSquareOnOddImageCount = false,
       this.images,
       this.imageInfoData,
-      this.onLongpressImageSelected});
+      this.onLongpressImageSelected, this.showImageFullScreen = false});
 
   @override
   Widget build(BuildContext context) {
@@ -100,10 +101,9 @@ class BulletinNewsItemPictures extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         GestureDetector(
-          onLongPress: () {
-            if (onLongpressImageSelected != null)
+          onLongPress: onLongpressImageSelected != null ? () {
               onLongpressImageSelected(image);
-          },
+          } : null,
           child: CachedNetworkImage(
             placeholder: LoaderSpinner(
               width: width,

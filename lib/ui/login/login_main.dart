@@ -4,7 +4,6 @@ import "package:flutter/material.dart";
 import 'package:silkeborgbeachvolley/helpers/user_firestore.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class Login extends StatefulWidget {
   static final routeName = "/login";
@@ -14,17 +13,14 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool isLoggedIn;
-  bool _saving = false;
+  // bool _saving = false;
   
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
         title: "Silkeborg Beachvolley", 
-        body: ModalProgressHUD(
-          child: _main(context),
-          inAsyncCall: _saving,
-          opacity: 0.5,
-        ));
+        body: _main(context)
+        );
   }
 
   Widget _main(BuildContext context) {
@@ -44,13 +40,7 @@ class _LoginState extends State<Login> {
             color: Color(0xFF4267B2),
             padding: EdgeInsets.all(10.0),
             onPressed: () async {
-              setState(() {
-                _saving = true;                
-              });
               await _signInWithFacebook(context);
-              setState(() {
-                _saving = false;                
-              });
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -78,19 +68,14 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> _signInWithFacebook(BuildContext context) async {
-    setState(() {
-      _saving = true;                
-    });
     final FirebaseUser user = await UserAuth.signInWithFacebook();
+    
     if (user != null) _finalSignInTasks(context, user, "facebook");
-    setState(() {
-      _saving = false;                
-    });
   }
 
   Future<void> _finalSignInTasks(BuildContext context, FirebaseUser user, String loginProvider) async {
     await UserFirestore.setUserInfo(user);
-    Navigator.pushNamedAndRemoveUntil(
-        context, "/", ((Route<dynamic> route) => false));
+    //CHRISTIAN: Lige nu giver den her en fejl når man logger ind.
+    Navigator.of(context).pushNamedAndRemoveUntil("/", ((Route<dynamic> route) => false));
   }
 }

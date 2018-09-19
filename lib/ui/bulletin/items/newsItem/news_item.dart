@@ -12,13 +12,14 @@ class BulletinNewsItem extends StatelessWidget {
   final Function onLongPress;
   final int maxLines;
   final TextOverflow overflow;
+  final bool showImageFullScreen;
   
   BulletinNewsItem(
       {this.bulletinItem,
       this.onTap,
       this.onLongPress,
       this.maxLines = 3,
-      this.overflow = TextOverflow.ellipsis});
+      this.overflow = TextOverflow.ellipsis, this.showImageFullScreen = false});
 
   @override
   Widget build(BuildContext context) {
@@ -50,12 +51,12 @@ class BulletinNewsItem extends StatelessWidget {
             BulletinNewsItemPictures(
               images: bulletinItem.images,
               type: BulletinImageType.network,
-              onLongpressImageSelected: (String image) {
+              onLongpressImageSelected: showImageFullScreen ? (String image) {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) => NewsItemImageViewer(image),
                   fullscreenDialog: true
                 ));
-              },
+              } : null,
             ),
             DateTimeNumberOfCommentsAndPlayers(
                 bulletinItem: bulletinItem)

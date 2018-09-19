@@ -79,7 +79,8 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
     switch (widget.bulletinItem.type) {
       case BulletinType.news:
         item =  BulletinNewsItem(
-          bulletinItem: widget.bulletinItem
+          bulletinItem: widget.bulletinItem,
+          showImageFullScreen: true,
         );
         break;
       case BulletinType.event:
