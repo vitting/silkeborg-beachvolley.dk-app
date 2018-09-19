@@ -6,6 +6,7 @@ import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_firestore.
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_class.dart';
 import 'package:validate/validate.dart';
 
+
 class Enrollment extends StatefulWidget {
   static final routeName = "/enrollment";
   Enrollment();
@@ -29,7 +30,9 @@ class _EnrollmentState extends State<Enrollment> {
   }
 
   Widget _main() {
-    return Form(
+    return ListView(
+      children: <Widget>[
+        Form(
         key: _formKey,
         child: Column(
           children: <Widget>[
@@ -41,7 +44,9 @@ class _EnrollmentState extends State<Enrollment> {
             _mobilenumberField(),
             _sendButton(context),
           ],
-        ));
+        ))
+      ],
+    );
   }
 
   //Datepicker dialog

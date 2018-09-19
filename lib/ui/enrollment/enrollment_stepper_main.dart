@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:silkeborgbeachvolley/helpers/dot_bottombar.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/silkeborgBeachvolleyScaffold.dart';
 
@@ -9,97 +11,76 @@ class EnrollmentStepper extends StatefulWidget {
 }
 
 class _EnrollmentStepperState extends State<EnrollmentStepper> {
-  int _currentStep = 0;
-  final int _lastStep = 2;
-  bool _formComplete = false;
-  bool _step0Active = true;
-  bool _step1Active = false;
-  bool _step2Active = false;
+  PageController _controller = PageController();
+  int _position = 0;
+
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
+      bottomNavigationBar: DotBottomBar(
+        showNavigationButtons: true,
+        numberOfDot: 3,
+        position: _position,
+        onPressed: _onNavigationButtonsPressed,
+      ),
       title: "Indmeldelse",
       body: Card(
-        child: Stepper(
-          onStepCancel: () {
-            _stepperOnCancel();
-          },
-          onStepContinue: () {
-            _stepperOnContinue();
-          },
-          type: StepperType.horizontal,
-          currentStep: _currentStep,
-          steps: <Step>[
-            Step(
-                isActive: _step0Active,
-                title: Text("Læs"),
-                // subtitle: Text("Subtitle1"),
-                content: Text("Text")
-            ),
-            Step(
-                isActive: _step1Active,
-                title: Text("Udfyld formular"),
-                // subtitle: Text("Subtitle1"),
-                content: Enrollment()
-            ),
-            Step(
-                isActive: _step2Active,
-                title: Text("Indbetaling"),
-                // subtitle: Text("Subtitle1"),
-                content: Text("Content"))
-          ],
-        ),
+        child: Container(
+          padding: EdgeInsets.all(10.0),
+                  child: PageView(
+            controller: _controller,
+            physics: NeverScrollableScrollPhysics(),
+            children: <Widget>[
+              _enrollmentReadme(),
+              Enrollment(),
+              _enrollmentPayment()
+            ],
+          ),
+        )
       ),
     );
   }
 
-  void _stepperOnContinue() {
-    if (_currentStep < _lastStep) {
-      setState(() {
-        _currentStep++;
-        switch (_currentStep) {
-          case 0:
-            _step0Active = true;
-            _step1Active = false;
-            _step2Active = false;
-            break;
-          case 1:
-            _step0Active = false;
-            _step1Active = true;
-            _step2Active = false;
-            break;
-          case 2:
-            _step0Active = false;
-            _step1Active = false;
-            _step2Active = true;
-            break;
-        }
-      });
-    }
+  Widget _enrollmentReadme() {
+    return Container(
+      child: ChoiceChip(
+        avatar: Icon(FontAwesomeIcons.solidCircle),
+        onSelected: (value) {},
+        clipBehavior: Clip.hardEdge,
+        selected: true,
+        label: Text("En masse tekst om indmeldelse i Silkeborg Beachvolley"),
+      )
+    );
   }
 
-  void _stepperOnCancel() {
-    if (_currentStep > 0) {
-      setState(() {
-        _currentStep--;
-        switch (_currentStep) {
-          case 0:
-            _step0Active = true;
-            _step1Active = false;
-            _step2Active = false;
-            break;
-          case 1:
-            _step0Active = false;
-            _step1Active = true;
-            _step2Active = false;
-            break;
-          case 2:
-            _step0Active = false;
-            _step1Active = false;
-            _step2Active = true;
-            break;
-        }
-      });
+  Widget _enrollmentPayment() {
+    return Text("En masse tekst om betaling i Silkeborg Beachvolley");
+  }
+
+  _onNavigationButtonsPressed(DotBottomBarButton buttonPressed) {
+    int position = _position;
+    Duration pageDuration = Duration(milliseconds: 400);
+    Curve pageCurve = Curves.easeIn;
+    if (buttonPressed == DotBottomBarButton.right) {
+      position++;
+
+      _controller.nextPage(
+        curve: pageCurve,
+        duration: pageDuration
+      );
+    } 
+
+    if (buttonPressed == DotBottomBarButton.left) {
+      position--;
+
+      _controller.previousPage(
+        curve: pageCurve,
+        duration: pageDuration
+      );
     }
+
+    setState(() {
+      _position = position;
+    });
   }
 }
