@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/image_param_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestorage.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data_class.dart';
 import 'package:uuid/uuid.dart';
 
 class ImageHelpers {
@@ -58,9 +59,8 @@ class ImageHelpers {
     await Isolate.spawn(ImageHelpers.processImageIsolate, imageParam);
 
     ImageInfoData imageInfo = await receivePort.first;
-    
+
     imageInfo.imagesStoreageFolder = storageFolder;
-    
     if (imageInfo.imageFile != null) {
       imageInfo =
           await BulletinFireStorage.saveImageToFirebaseStorage(imageInfo);
@@ -80,6 +80,22 @@ class ImageHelpers {
       print("_removePhoto: $e");
       return false;
     }
+  }
+
+  static Future<Null> deleteBulletinImages(
+      List<BulletinImageData> images) async {
+    try {
+      images.forEach((BulletinImageData image) async {
+        await image.delete();
+      });
+    } catch (e) {
+      print("ImageHelpers - deleteBulletinImages: $e");
+    }
+  }
+
+  static Future<Null> deleteBulletinImage(
+      BulletinImageData image) async {
+    BulletinFireStorage.deleteFromFirebaseStorage(image.name, image.folder);
   }
 
   static String createFilename(String fileExtension) {

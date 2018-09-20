@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/detailItem/comment_item_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/player_committed_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/player_committed_data_class.dart';
 
 class BulletinFirestore {
   static final _bulletinCollectionName = "bulletins";
@@ -34,6 +34,20 @@ class BulletinFirestore {
           .add(bulletinCommentItem.toMap());
   }
 
+  static Future<void> deleteComment(String id) async {
+    return await firestoreInstance.collection(_bulletinCommentsCollectionName).document(id).delete();
+  }
+
+  static Future<Null> deleteCommentsByBulletinId(String bulletinId) async {
+    QuerySnapshot snapshot = await firestoreInstance.collection(_bulletinCommentsCollectionName).where("id", isEqualTo: bulletinId).getDocuments();
+    WriteBatch batch = firestoreInstance.batch();
+    snapshot.documents.forEach((DocumentSnapshot snap) {
+      batch.delete(snap.reference);
+    });
+
+    return batch.commit();
+  }
+
   static Stream<QuerySnapshot> getBulletinsByTypeAsStream(String type) {
     return firestoreInstance
         .collection(_bulletinCollectionName)
@@ -50,6 +64,7 @@ class BulletinFirestore {
   }
 
   static Future<void> saveBulletinItem(BulletinItemData bulletinItem) async {
+    // print(bulletinItem.toMap());
     await firestoreInstance
           .collection(_bulletinCollectionName)
           .document(bulletinItem.id)
@@ -63,8 +78,12 @@ class BulletinFirestore {
           .updateData(bulletinItem.toMap());
   }
 
+  static Future<void> deleteBulletinItem(String id) async {
+    return await firestoreInstance.collection(_bulletinCollectionName).document(id).delete();
+  }
+
   static Future<void> savePlayerCommitted(
-      PlayerCommitted playerCommitted) async {
+      PlayerCommittedData playerCommitted) async {
     return await firestoreInstance
           .collection(_bulletinPlayersCommittedCollectionName)
           .add(playerCommitted.toMap());
@@ -77,6 +96,16 @@ class BulletinFirestore {
     snapshot.documents.forEach((DocumentSnapshot doc) {
       firestoreInstance.collection(_bulletinPlayersCommittedCollectionName).document(doc.documentID).delete();
     });
+  }
+
+  static Future<Null> deletePlayersCommittedByBulletinId(String bulletinId) async {
+    QuerySnapshot snapshot = await firestoreInstance.collection(_bulletinPlayersCommittedCollectionName).where("bulletinId", isEqualTo: bulletinId).getDocuments();
+    WriteBatch batch = firestoreInstance.batch();
+    snapshot.documents.forEach((DocumentSnapshot snap) {
+      batch.delete(snap.reference);
+    });
+
+    return batch.commit();
   }
 
   static Future<QuerySnapshot> getPlayersCommitted(String bulletinId)  async {

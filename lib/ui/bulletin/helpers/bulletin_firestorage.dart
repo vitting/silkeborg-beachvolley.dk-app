@@ -31,6 +31,7 @@ class BulletinFireStorage {
   }
 
   static Future<void> deleteFromFirebaseStorage(String filename, String imagesStoreageFolder) async {
-    await firestorageInstance.ref().child("$imagesStoreageFolder/$filename").delete();
+    print("$imagesStoreageFolder/$filename");
+    return await firestorageInstance.ref().child("$imagesStoreageFolder/$filename").delete();
   }
 }

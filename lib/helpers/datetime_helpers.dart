@@ -21,7 +21,13 @@ class DateTimeHelpers {
   }
 
   static String ddmmyyyyHHnn(DateTime date) {
-    return formatDate(date, [dd, "-", mm, "-", yyyy, "  ", HH, ":", nn]);
+    try {
+      return formatDate(date, [dd, "-", mm, "-", yyyy, "  ", HH, ":", nn]);  
+    } catch (e) {
+      print("DateTimeHelpers.ddmmyyyyHHnn : $e");
+      return "";
+    }
+    
   }
 
   static String ddmmyyyy(DateTime date) {

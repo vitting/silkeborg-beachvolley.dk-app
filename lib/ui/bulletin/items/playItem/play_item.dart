@@ -4,11 +4,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/item_datetime_numberofcomments.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/player_committed_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/player_committed_data_class.dart';
 
 enum PlayerCommitStatus { commit, uncommit }
 
-//CHRISTIAN: Maybe rewrite to statefull and remove commit features from detail item to save setstate and update comments.
 class BulletinPlayItem extends StatefulWidget {
   final BulletinPlayItemData bulletinItem;
   final Function onTap;
@@ -34,11 +33,11 @@ class BulletinPlayItem extends StatefulWidget {
 class BulletinPlayItemState extends State<BulletinPlayItem> {
   bool _isPlayerCommitted = false;
   double _opacityLevel = 0.0;
-  
+
   @override
   void initState() {
-    super.initState();
     _initPlayerCommit();
+    super.initState();
   }
 
   _initPlayerCommit() async {
@@ -96,9 +95,9 @@ class BulletinPlayItemState extends State<BulletinPlayItem> {
   }
 
   Future<List> _buildPlayersCommittedDialogItems() async {
-    List<PlayerCommitted> data =
+    List<PlayerCommittedData> data =
         await widget.bulletinItem.getPlayersCommitted();
-    return data.map((PlayerCommitted player) {
+    return data.map((PlayerCommittedData player) {
       return ListTile(
         title: Text(player.name),
         leading: CircleAvatar(
@@ -122,11 +121,9 @@ class BulletinPlayItemState extends State<BulletinPlayItem> {
     bool state = false;
     if (status == PlayerCommitStatus.commit) {
       widget.bulletinItem.setPlayerAsCommitted();
-      // _numberOfPlayersCommitted++;
       state = true;
     } else {
       widget.bulletinItem.setPlayerAsUnCommitted();
-      // _numberOfPlayersCommitted--;
     }
 
     setState(() {

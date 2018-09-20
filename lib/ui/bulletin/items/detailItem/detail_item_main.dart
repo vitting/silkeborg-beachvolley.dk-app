@@ -1,17 +1,14 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/detailItem/comment_item_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class BulletinDetailItem extends StatefulWidget {
@@ -53,7 +50,7 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
         _createBulletinMainItem(),
         _addComment(),
         StreamBuilder(
-          stream: BulletinFirestore.getAllBulletinCommentsAsStream(widget.bulletinItem.id),
+          stream: widget.bulletinItem.getCommentsAsStream(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting ||
@@ -104,7 +101,7 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
   }
 
   Widget _addComment() {
-    BulletinCommentItem bulletinCommentItem = new BulletinCommentItem();
+    BulletinCommentItem bulletinCommentItem = new BulletinCommentItem(id: widget.bulletinItem.id);
     return ListBody(
       children: <Widget>[
         Padding(
@@ -165,12 +162,6 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
   }
 
   Future<void> _saveBulletinCommentItem(BulletinCommentItem item) async {
-    FirebaseUser _user = Home.loggedInUser;
-    item.authorId = _user.uid;
-    item.authorName = _user.displayName;
-    item.authorPhotoUrl = _user.photoUrl;
-    item.creationDate = DateTime.now();
-    item.id = widget.bulletinItem.id;
-    await BulletinFirestore.saveCommentItem(item);
+    await item.save();
   }
 }

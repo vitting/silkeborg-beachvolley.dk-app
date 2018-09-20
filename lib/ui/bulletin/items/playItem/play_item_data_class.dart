@@ -1,24 +1,26 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/player_committed_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/player_committed_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
 class BulletinPlayItemData extends BulletinItemData {
   int numberOfPlayersCommitted;
-  
+
   BulletinPlayItemData(
-      {String id = "",
+      {String id,
       BulletinType type = BulletinType.none,
       String body = "",
-      DateTime creationDate,
-      String authorId = "",
-      String authorName = "",
-      String authorPhotoUrl = "",
-      int numberOfcomments = 0, this.numberOfPlayersCommitted = 0})
+      dynamic creationDate,
+      String authorId,
+      String authorName,
+      String authorPhotoUrl,
+      int numberOfcomments = 0,
+      this.numberOfPlayersCommitted = 0})
       : super(
             id: id,
             type: type,
@@ -38,31 +40,35 @@ class BulletinPlayItemData extends BulletinItemData {
     return numberOfPlayersCommitted;
   }
 
-  Future<List<PlayerCommitted>> getPlayersCommitted() async {
+  Future<List<PlayerCommittedData>> getPlayersCommitted() async {
     QuerySnapshot data = await BulletinFirestore.getPlayersCommitted(id);
-    
-    return data.documents.map<PlayerCommitted>((DocumentSnapshot doc) {
-        return PlayerCommitted.fromMap(doc.data);
-      }).toList();
+
+    return data.documents.map<PlayerCommittedData>((DocumentSnapshot doc) {
+      return PlayerCommittedData.fromMap(doc.data);
+    }).toList();
   }
 
   Future<bool> isCommitted() async {
-    return await BulletinFirestore.checkIfPlayerIsCommited(id, Home.loggedInUser.uid);
+    return await BulletinFirestore.checkIfPlayerIsCommited(
+        id, Home.loggedInUser.uid);
   }
 
-  void setPlayerAsCommitted() async {
-    PlayerCommitted playerCommitted = PlayerCommitted(
-      bulletinId: id,
-      name: Home.loggedInUser.displayName,
-      photoUrl: Home.loggedInUser.photoUrl,
-      userId: Home.loggedInUser.uid
-    );
+  Future<void> setPlayerAsCommitted() async {
+    PlayerCommittedData playerCommitted = PlayerCommittedData(
+        bulletinId: id,
+        name: Home.loggedInUser.displayName,
+        photoUrl: Home.loggedInUser.photoUrl,
+        userId: Home.loggedInUser.uid);
 
     await BulletinFirestore.savePlayerCommitted(playerCommitted);
   }
 
-  void setPlayerAsUnCommitted() async {
+  Future<void> setPlayerAsUnCommitted() async {
     await BulletinFirestore.deletePlayerCommitted(id, authorId);
+  }
+
+  Future<void> deletePlayersCommitted() async {
+    await BulletinFirestore.deletePlayersCommittedByBulletinId(id);
   }
 
   Map<String, dynamic> toMap() {
@@ -71,22 +77,38 @@ class BulletinPlayItemData extends BulletinItemData {
     return map;
   }
 
+  ///Deletes all images, comments and the play item.
+  Future<bool> delete() async {
+    try {
+      await deletePlayersCommitted();
+
+      return super.delete();
+    } catch (e) {
+      print("PlayItemData - delete() : $e");
+      return false;
+    }
+  }
+
+  Future<void> save() async {
+    id = id ?? UuidHelpers.generateUuid();
+    creationDate = creationDate ?? FieldValue.serverTimestamp();
+    authorId = authorId ?? Home.loggedInUser.uid;
+    authorName = authorName ?? Home.loggedInUser.displayName;
+    authorPhotoUrl = authorPhotoUrl ?? Home.loggedInUser.photoUrl;
+   return BulletinFirestore.saveBulletinItem(this);
+  }
+
   static BulletinPlayItemData fromMap(Map<String, dynamic> item) {
     print(item["numberOfPlayersCommitted"]);
     return new BulletinPlayItemData(
-        id: item["id"] == null ? "" : item["id"],
+        id: item["id"] ?? "",
         type: BulletinTypeHelper.getBulletinTypeStringAsType(item["type"]),
-        authorId: item["author"]["id"] == null ? "" : item["author"]["id"],
-        authorName:
-            item["author"]["name"] == null ? "" : item["author"]["name"],
-        authorPhotoUrl: item["author"]["photoUrl"] == null
-            ? ""
-            : item["author"]["photoUrl"],
-        body: item["body"] == null ? "" : item["body"],
-        creationDate: item["creationDate"] == null ? "" : item["creationDate"],
-        numberOfcomments:
-            item["numberOfcomments"] == null ? 0 : item["numberOfcomments"],
-        numberOfPlayersCommitted: item["numberOfPlayersCommitted"] == null ? 0 : item["numberOfPlayersCommitted"]
-            );
+        authorId: item["author"]["id"] ?? "",
+        authorName: item["author"]["name"] ?? "",
+        authorPhotoUrl: item["author"]["photoUrl"] ?? "",
+        body: item["body"] ?? "",
+        creationDate: item["creationDate"] ?? DateTime.now(),
+        numberOfcomments: item["numberOfcomments"] ?? 0,
+        numberOfPlayersCommitted: item["numberOfPlayersCommitted"] ?? 0);
   }
 }

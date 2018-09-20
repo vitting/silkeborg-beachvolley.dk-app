@@ -1,12 +1,12 @@
 import 'package:meta/meta.dart';
 
-class PlayerCommitted {
+class PlayerCommittedData {
   String bulletinId;
   String userId;
   String name;
   String photoUrl;
 
-  PlayerCommitted({@required this.bulletinId, @required this.name, @required this.photoUrl, @required this.userId});
+  PlayerCommittedData({@required this.bulletinId, @required this.name, @required this.photoUrl, @required this.userId});
 
   Map<String, dynamic> toMap() {
     return{
@@ -17,8 +17,8 @@ class PlayerCommitted {
     };
   }
 
-  static PlayerCommitted fromMap(Map<String, dynamic> item) {
-    return PlayerCommitted(
+  static PlayerCommittedData fromMap(Map<String, dynamic> item) {
+    return PlayerCommittedData(
       bulletinId: item["bulletinId"] == null ? "" : item["bulletinId"],
       name: item["name"] == null ? "" : item["name"],
       userId: item["userId"] == null ? "" : item["userId"],

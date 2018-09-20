@@ -5,14 +5,16 @@ import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:silkeborgbeachvolley/helpers/image_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_creator_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_fields_create_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/create_image_helper_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_helper_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_pictures.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_event_fields.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_text_field.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 enum EventDateTimeType { startDate, endDate, startTime, endTime }
@@ -146,20 +148,31 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
       _formKey.currentState.save();
       _formKey.currentState.reset();
 
-      setState(() {
-        _saving = true;
-      });
       await _saveBulletinItem();
-      setState(() {
-        _imageFiles.clear();
-        _saving = false;
-      });
       Navigator.of(context).pop();
     }
   }
 
   Future<void> _saveBulletinItem() async {
-    var item = await BulletinItemCreator.createBulletinItem(
+    if (itemFieldsValue.type == BulletinType.news) {
+      BulletinNewsItemData data = BulletinNewsItemData(
+        body: itemFieldsValue.body,
+        type: itemFieldsValue.type,
+        imageLinks: _imageFiles.map<String>((ImageInfoData data) {
+          return data.linkFirebaseStorage;
+        }).toList(),
+        images: _imageFiles.map<BulletinImageData>((ImageInfoData data) {
+          return BulletinImageData(name: data.filename, folder: data.imagesStoreageFolder);
+        }).toList()
+      );
+
+      _imageFiles.clear();
+      return data.save();
+      
+    }
+
+    if (itemFieldsValue.type == BulletinType.event) {
+      BulletinEventItemData data = BulletinEventItemData(
         body: itemFieldsValue.body,
         type: itemFieldsValue.type,
         eventTitle: itemFieldsValue.eventTitle,
@@ -168,11 +181,22 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
         eventEndDate: itemFieldsValue.eventEndDate,
         eventStartTime: itemFieldsValue.eventStartTime,
         eventEndTime: itemFieldsValue.eventEndTime,
-        images: _imageFiles.map<String>((ImageInfoData data) {
-          return data.linkFirebaseStorage;
-        }).toList());
+        eventImageLink: _imageFiles.length != 0 ? _imageFiles[0].linkFirebaseStorage : "",
+        eventImage: _imageFiles.length != 0 ? BulletinImageData(name: _imageFiles[0].filename, folder: _imageFiles[0].imagesStoreageFolder) : null
+      );
 
-    await BulletinFirestore.saveBulletinItem(item);
+      _imageFiles.clear();
+      return data.save();
+    }
+
+    if (itemFieldsValue.type == BulletinType.play) {
+      BulletinPlayItemData data = BulletinPlayItemData(
+        body: itemFieldsValue.body,
+        type: itemFieldsValue.type,
+      );
+
+      return data.save();
+    }
   }
 
   _addPhoto() async {
@@ -214,8 +238,8 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
     if (imageFile != null) {
       ImageInfoData imageInfo = await ImageHelpers.saveImage(
           imageFile,
-          CreateImageHelper.getImageSize(widget.bulletinType),
-          CreateImageHelper.getStorageFolder(widget.bulletinType));
+          BulletinImageHelper.getImageSize(widget.bulletinType),
+          BulletinImageHelper.getStorageFolder(widget.bulletinType));
       if (imageInfo.linkFirebaseStorage.isNotEmpty) {
         setState(() {
           _imageFiles.add(imageInfo);

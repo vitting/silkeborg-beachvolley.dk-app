@@ -47,8 +47,7 @@ class BulletinItemMain extends StatelessWidget {
         onTap: () async {
           _navigateTobulletinDetailItem(context, bulletinItem);
         },
-        onLongPress: () => _bulletinItemOnLongPress(
-            context, bulletinItem));
+        onLongPress: () => _bulletinItemOnLongPress(context, bulletinItem));
   }
 
   Widget _bulletinEventItem(
@@ -58,8 +57,7 @@ class BulletinItemMain extends StatelessWidget {
         onTap: () async {
           _navigateTobulletinDetailItem(context, bulletinItem);
         },
-        onLongPress: () => _bulletinItemOnLongPress(
-            context, bulletinItem));
+        onLongPress: () => _bulletinItemOnLongPress(context, bulletinItem));
   }
 
   Widget _bulletinPlayItem(
@@ -69,8 +67,7 @@ class BulletinItemMain extends StatelessWidget {
         onTap: () async {
           _navigateTobulletinDetailItem(context, bulletinItem);
         },
-        onLongPress: () => _bulletinItemOnLongPress(
-            context, bulletinItem));
+        onLongPress: () => _bulletinItemOnLongPress(context, bulletinItem));
   }
 
   Future<void> _navigateTobulletinDetailItem(
@@ -83,10 +80,12 @@ class BulletinItemMain extends StatelessWidget {
   void _bulletinItemOnLongPress(
       BuildContext context, BulletinItemData bulletinItem) {
     UserInfoData userInfo = Home.userInfo;
-    if (userInfo?.id == bulletinItem.authorId) _bulletinItemPopupMenu(context, bulletinItem);
+    if (userInfo?.id == bulletinItem.authorId)
+      _bulletinItemPopupMenu(context, bulletinItem);
   }
 
-  void _bulletinItemPopupMenu(BuildContext context, BulletinItemData bulletinItem) {
+  void _bulletinItemPopupMenu(
+      BuildContext context, BulletinItemData bulletinItem) {
     showModalBottomSheet<void>(
         context: context,
         builder: (BuildContext context) {
@@ -97,7 +96,6 @@ class BulletinItemMain extends StatelessWidget {
                 ListTile(
                   onTap: () {
                     Navigator.of(context).pop();
-                    _bulletinConfirmDialog(context, bulletinItem);
                   },
                   title: Text("Rediger"),
                   leading: Icon(Icons.edit),
@@ -106,6 +104,7 @@ class BulletinItemMain extends StatelessWidget {
                 ListTile(
                   onTap: () {
                     Navigator.of(context).pop();
+                    _bulletinConfirmDialog(context, bulletinItem);
                   },
                   title: Text("Slet"),
                   leading: Icon(Icons.delete),
@@ -116,8 +115,10 @@ class BulletinItemMain extends StatelessWidget {
         });
   }
 
-  void _bulletinConfirmDialog(BuildContext context, BulletinItemData bulletinItem) async {
-    ConfirmDialogOptions dialogOptions = _getConfimDialogOptions(bulletinItem.type);
+  void _bulletinConfirmDialog(
+      BuildContext context, BulletinItemData bulletinItem) async {
+    ConfirmDialogOptions dialogOptions =
+        _getConfimDialogOptions(bulletinItem.type);
     ConfirmDialogAction result = await showDialog<ConfirmDialogAction>(
         barrierDismissible: false,
         context: context,
@@ -143,8 +144,9 @@ class BulletinItemMain extends StatelessWidget {
           );
         });
 
-    //CHRISTIAN: Delete function... What to do :)
-    print(result);
+    if (result == ConfirmDialogAction.delete) {
+      _deleteBulletinItem(bulletinItem);
+    }
   }
 
   ConfirmDialogOptions _getConfimDialogOptions(BulletinType type) {
@@ -152,30 +154,38 @@ class BulletinItemMain extends StatelessWidget {
     switch (type) {
       case BulletinType.news:
         dialogOptions.title = Text("Slet nyhed");
-        dialogOptions.body.add(Text("Er du sikker på du vil slette din nyhed?"));
-        dialogOptions.body.add(Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: Text(
-              "Du skal være opmærksom på at alle billeder og kommentarer for nyheden også vil bliver slettet"),
-        ));
+        dialogOptions.body = [
+          Text("Er du sikker på du vil slette din nyhed?"),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Text(
+                "Du skal være opmærksom på at alle billeder og kommentarer for nyheden også vil bliver slettet"),
+          )
+        ];
+
         break;
       case BulletinType.event:
         dialogOptions.title = Text("Slet begivenhed");
-        dialogOptions.body.add(Text("Er du sikker på du vil slette din begivenhed?"));
-        dialogOptions.body.add(Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: Text(
-              "Du skal være opmærksom på at alle kommentarer for begivenheden også vil bliver slettet"),
-        ));
+        dialogOptions.body = [
+          Text("Er du sikker på du vil slette din begivenhed?"),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Text(
+                "Du skal være opmærksom på at alle kommentarer for begivenheden også vil bliver slettet"),
+          )
+        ];
+
         break;
       case BulletinType.play:
         dialogOptions.title = Text("Slet spil");
-        dialogOptions.body.add(Text("Er du sikker på du vil slette dit opslag om spil?"));
-        dialogOptions.body.add(Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: Text(
-              "Du skal være opmærksom på at alle kommentarer for opsalget også vil bliver slettet"),
-        ));
+        dialogOptions.body = [
+          Text("Er du sikker på du vil slette dit opslag om spil?"),
+          Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Text(
+                  "Du skal være opmærksom på at alle kommentarer for opsalget også vil bliver slettet"))
+        ];
+
         break;
       case BulletinType.none:
         break;
@@ -183,17 +193,32 @@ class BulletinItemMain extends StatelessWidget {
 
     return dialogOptions;
   }
+
+  void _deleteBulletinItem(BulletinItemData bulletinItem) {
+    if (bulletinItem.type == BulletinType.news) {
+      (bulletinItem as BulletinNewsItemData).delete();
+    }
+
+    if (bulletinItem.type == BulletinType.event) {
+      (bulletinItem as BulletinEventItemData).delete();
+      //CHRISTIAN: DER kan være noget her. Man er jo ikke tvunget til at sætte et image. Har vi et default?
+      //Vi skal også lige tænke på om et bulletinItem kan gemme sig selv? Lige nu laver vi et komplicert create
+      //CHRISTIAN: Vi har et problem når vi skal slette billeder. Vi har kun hele linket til filen gemt og ikke filnavnet
+      //Skal vi i news lave images om til imageLinks og så have en images med image name, image folder
+    }
+
+    if (bulletinItem.type == BulletinType.play) {
+      (bulletinItem as BulletinPlayItemData).delete();
+    }
+  }
 }
 
-enum ConfirmDialogAction {
-  delete,
-  cancel
-}
+enum ConfirmDialogAction { delete, cancel }
 
 class ConfirmDialogOptions {
   BulletinType type;
   Text title;
-  final List<Widget> body;
+  List<Widget> body;
 
   ConfirmDialogOptions({this.type, this.title, this.body});
 }

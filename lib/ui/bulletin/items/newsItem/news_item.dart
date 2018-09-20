@@ -49,7 +49,7 @@ class BulletinNewsItem extends StatelessWidget {
                   maxLines: maxLines, overflow: overflow),
             ),
             BulletinNewsItemPictures(
-              images: bulletinItem.images,
+              images: bulletinItem.imageLinks,
               type: BulletinImageType.network,
               onLongpressImageSelected: showImageFullScreen ? (String image) {
                 Navigator.of(context).push(MaterialPageRoute(
