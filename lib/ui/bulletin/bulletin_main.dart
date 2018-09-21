@@ -10,6 +10,7 @@ import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/item_main.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/create_item_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
+import 'package:silkeborgbeachvolley/ui/weather/weather_widget.dart';
 
 class Bulletin extends StatefulWidget {
   static final routeName = "/bulletin";
@@ -28,6 +29,9 @@ class _BulletinState extends State<Bulletin> {
       showDrawer: true,
       floatingActionButton: _scaffoldFloatingActionButton(context),
       bottomNavigationBar: _scaffoldBottomNavigationBar(),
+      actions: <Widget>[
+        Weather.withWind()
+      ],
     );
   }
 
