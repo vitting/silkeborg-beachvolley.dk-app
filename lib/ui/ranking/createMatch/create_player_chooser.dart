@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 
 enum PlayerChooserType {
   winner1,

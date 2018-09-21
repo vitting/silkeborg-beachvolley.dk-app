@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart';
+// import 'package:charts_flutter/flutter.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_stat_row.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_stat_title.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 
 class RankingDetailStat extends StatelessWidget {
   final RankingPlayerData player;

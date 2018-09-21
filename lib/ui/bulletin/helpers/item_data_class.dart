@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
+import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
 class BulletinItemData {
   String id;
@@ -14,7 +15,7 @@ class BulletinItemData {
   String authorName;
   String authorPhotoUrl;
   int numberOfcomments;
-  
+  List<dynamic> hiddenByUser;
   BulletinItemData(
       {this.id = "",
       this.type = BulletinType.none,
@@ -23,7 +24,8 @@ class BulletinItemData {
       this.authorId = "",
       this.authorName = "",
       this.authorPhotoUrl = "",
-      this.numberOfcomments = 0});
+      this.numberOfcomments = 0,
+      this.hiddenByUser});
 
   Map<String, dynamic> toMap() {
     return {
@@ -36,8 +38,14 @@ class BulletinItemData {
         "name": authorName,
         "photoUrl": authorPhotoUrl
       },
-      "numberOfcomments": numberOfcomments
+      "numberOfcomments": numberOfcomments,
+      "hiddenByUser": hiddenByUser ?? []
     };
+  }
+
+//CHRISTIAN: Dont work at the moment. Error in cloud_firestore package
+  Future<void> hide() {
+    return BulletinFirestore.addUserHidesBulletinItem(id, Home.userInfo.id);
   }
 
   ///Deletes all images, comments and the news item.
@@ -49,10 +57,10 @@ class BulletinItemData {
     } catch (e) {
       print("BulletinItemData - delete() : $e");
       return false;
-    }    
+    }
   }
 
- Future<Null> deleteComments() async {
+  Future<Null> deleteComments() async {
     await BulletinFirestore.deleteCommentsByBulletinId(id);
   }
 
@@ -62,13 +70,13 @@ class BulletinItemData {
 
   String get creationDateFormatted {
     if (creationDate is DateTime) {
-      return DateTimeHelpers.ddmmyyyyHHnn(creationDate);  
+      return DateTimeHelpers.ddmmyyyyHHnn(creationDate);
     }
 
     return "";
   }
-  
-  static BulletinItemData fromMap(Map<String, dynamic> item) {
+
+  factory BulletinItemData.fromMap(Map<String, dynamic> item) {
     return new BulletinItemData(
         id: item["id"] == null ? "" : item["id"],
         type: BulletinTypeHelper.getBulletinTypeStringAsType(item["type"]),
@@ -81,6 +89,7 @@ class BulletinItemData {
         body: item["body"] == null ? "" : item["body"],
         creationDate: item["creationDate"] == null ? "" : item["creationDate"],
         numberOfcomments:
-            item["numberOfcomments"] == null ? 0 : item["numberOfcomments"]);
+            item["numberOfcomments"] == null ? 0 : item["numberOfcomments"],
+        hiddenByUser: item["hiddenByUser"] ?? []);
   }
 }

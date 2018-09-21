@@ -20,6 +20,7 @@ class BulletinPlayItemData extends BulletinItemData {
       String authorName,
       String authorPhotoUrl,
       int numberOfcomments = 0,
+      List<dynamic> hiddenByUser,
       this.numberOfPlayersCommitted = 0})
       : super(
             id: id,
@@ -29,6 +30,7 @@ class BulletinPlayItemData extends BulletinItemData {
             authorId: authorId,
             authorName: authorName,
             authorPhotoUrl: authorPhotoUrl,
+            hiddenByUser: hiddenByUser,
             numberOfcomments: numberOfcomments);
 
   Future<int> getUpdatedNumberOfPlayerCommittedCount() async {
@@ -92,14 +94,13 @@ class BulletinPlayItemData extends BulletinItemData {
   Future<void> save() async {
     id = id ?? UuidHelpers.generateUuid();
     creationDate = creationDate ?? FieldValue.serverTimestamp();
-    authorId = authorId ?? Home.loggedInUser.uid;
-    authorName = authorName ?? Home.loggedInUser.displayName;
-    authorPhotoUrl = authorPhotoUrl ?? Home.loggedInUser.photoUrl;
+    authorId = Home.loggedInUser.uid;
+    authorName = Home.loggedInUser.displayName;
+    authorPhotoUrl = Home.loggedInUser.photoUrl;
    return BulletinFirestore.saveBulletinItem(this);
   }
 
-  static BulletinPlayItemData fromMap(Map<String, dynamic> item) {
-    print(item["numberOfPlayersCommitted"]);
+  factory BulletinPlayItemData.fromMap(Map<String, dynamic> item) {
     return new BulletinPlayItemData(
         id: item["id"] ?? "",
         type: BulletinTypeHelper.getBulletinTypeStringAsType(item["type"]),

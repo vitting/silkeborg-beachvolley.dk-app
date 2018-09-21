@@ -2,13 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/create_player_choose_date.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/create_player_chooser.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/create_player_chooser_row.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_player_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class RankingCreateMatch extends StatefulWidget {
@@ -33,8 +33,8 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
   List<RankingPlayerData> _listOfPlayers = [];
   @override
   void initState() {
-    super.initState();
     _getPlayersList();
+    super.initState();
   }
 
   _getPlayersList() async {
@@ -201,9 +201,7 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
   _saveMatch(BuildContext context) async {
     if (_isMatchValid()) {
       RankingMatchData match = RankingMatchData(
-          userId: Home.loggedInUser.uid,
           matchDate: _matchDate,
-          createdDate: FieldValue.serverTimestamp(),
           winner1: RankingMatchPlayerData(
               id: _winner1Item.userId,
               name: _winner1Item.name,
@@ -225,7 +223,7 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
               photoUrl: _loser2Item.photoUrl,
               points: 0));
 
-      await RankingFirestore.saveMatch(match);
+      await match.save();
       Navigator.of(context).pop();
     } else {
       setState(() {});

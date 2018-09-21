@@ -1,5 +1,6 @@
 enum BulletinImageType {
   file,
   local,
-  network
+  network, 
+  fileAndNetwork
 }

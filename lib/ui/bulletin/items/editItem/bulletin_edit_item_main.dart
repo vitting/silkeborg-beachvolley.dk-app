@@ -1,28 +1,33 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/image_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/build_build_item.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/image_type.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_fields_create_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/photo_functions.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_text_field.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_pictures.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_event_fields.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_text_field.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import '../../helpers/photo_functions.dart' as photoFunctions;
 
-class CreateBulletinItem extends StatefulWidget {
-  final BulletinType bulletinType;
-  
-  CreateBulletinItem(this.bulletinType);
+class EditBulletinItem extends StatefulWidget {
+  final BulletinItemData bulletinItem;
+
+  EditBulletinItem(this.bulletinItem);
 
   @override
-  _CreateBulletinItemState createState() => _CreateBulletinItemState();
+  _EditBulletinItemState createState() => _EditBulletinItemState();
 }
 
-class _CreateBulletinItemState extends State<CreateBulletinItem> {
+class _EditBulletinItemState extends State<EditBulletinItem> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _startDateController =
       new TextEditingController();
@@ -30,14 +35,26 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
   final TextEditingController _startTimeController =
       new TextEditingController();
   final TextEditingController _endTimeController = new TextEditingController();
-  final ItemFieldsCreate itemFieldsValue = ItemFieldsCreate();
+  ItemFieldsCreate itemFieldsValue;
   List<ImageInfoData> _imageFiles = [];
 
   @override
   void initState() {
     super.initState();
+    itemFieldsValue = ItemFieldsCreate.fromBulletinItem(widget.bulletinItem);
 
-    itemFieldsValue.type = widget.bulletinType;
+    if (itemFieldsValue.type == BulletinType.news) {
+      _imageFiles = (widget.bulletinItem as BulletinNewsItemData)
+          .images
+          .map<ImageInfoData>((BulletinImageData data) {
+        return ImageInfoData.fromBulletinImageData(data);
+      }).toList();
+    }
+
+    if (itemFieldsValue.type == BulletinType.event) {
+      _imageFiles.add(ImageInfoData.fromBulletinImageData(
+          (widget.bulletinItem as BulletinEventItemData).eventImage));
+    }
   }
 
   @override
@@ -48,15 +65,16 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
 
   String _getTitle(BulletinType type) {
     String title = "";
-    if (type == BulletinType.news) title = "Opret nyhed";
-    if (type == BulletinType.event) title = "Opret begivenhed";
-    if (type == BulletinType.play) title = "Opret spil";
+    if (type == BulletinType.news) title = "Rediger nyhed";
+    if (type == BulletinType.event) title = "Rediger begivenhed";
+    if (type == BulletinType.play) title = "Rediger spil";
     return title;
   }
 
   @override
   Widget build(BuildContext context) {
-    return SilkeborgBeachvolleyScaffold(title: _getTitle(widget.bulletinType), body: _main());
+    return SilkeborgBeachvolleyScaffold(
+        title: _getTitle(itemFieldsValue.type), body: _main());
   }
 
   Widget _main() {
@@ -64,9 +82,9 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
       _createBulletinItemForm(context),
     ];
 
-    if (widget.bulletinType == BulletinType.news)
+    if (itemFieldsValue.type == BulletinType.news)
       widgets.add(BulletinNewsItemPictures(
-        type: BulletinImageType.file,
+        type: BulletinImageType.network,
         useSquareOnOddImageCount: true,
         images: _imageFiles,
         onLongpressImageSelected: (image) {
@@ -93,7 +111,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
 
   List<Widget> _fieldsToShowInForm(BuildContext context) {
     List<Widget> widgets = [];
-    if (widget.bulletinType == BulletinType.event) {
+    if (itemFieldsValue.type == BulletinType.event) {
       widgets.add(_eventFields());
       widgets.add(_textField());
     } else {
@@ -104,6 +122,10 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
   }
 
   Widget _eventFields() {
+    _startDateController.text = DateTimeHelpers.ddmmyyyy(itemFieldsValue.eventStartDate);
+    _endDateController.text = DateTimeHelpers.ddmmyyyy(itemFieldsValue.eventEndDate);
+    _startTimeController.text = DateTimeHelpers.hhnn(itemFieldsValue.eventStartTime);
+    _endTimeController.text = DateTimeHelpers.hhnn(itemFieldsValue.eventEndTime);
     return BulletinEventFields(
       startDateController: _startDateController,
       endDateController: _endDateController,
@@ -123,6 +145,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
 
   Widget _textField() {
     return BulletinTextField(
+        initalValue: itemFieldsValue.body,
         onPressedSave: () async {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
@@ -133,11 +156,11 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
           }
         },
         onPressedPhoto:
-            widget.bulletinType == BulletinType.news ? _addPhoto : null,
+            itemFieldsValue.type == BulletinType.news ? _addPhoto : null,
         onSave: (String value) {
           itemFieldsValue.body = value;
         },
-        showPhotoButton: widget.bulletinType == BulletinType.news);
+        showPhotoButton: itemFieldsValue.type == BulletinType.news);
   }
 
   Future<void> _saveBulletinItem() async {
@@ -169,6 +192,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
     }
   }
 
+//CHRISTIAN: Hvis vi i edit fjerner billedet, men ikke gemmer, så skal billedet jo ikke fjernes!!!
   void _removePhoto(ImageInfoData image) async {
     PhotoAction action = await photoFunctions.removePhoto(context);
 

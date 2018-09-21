@@ -10,7 +10,6 @@ import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
 class BulletinNewsItemData extends BulletinItemData {
-  List<dynamic> imageLinks;
   List<BulletinImageData> images;
   BulletinNewsItemData(
       {String id,
@@ -21,7 +20,8 @@ class BulletinNewsItemData extends BulletinItemData {
       String authorName,
       String authorPhotoUrl,
       int numberOfcomments = 0,
-      this.imageLinks, this.images})
+      List<dynamic> hiddenByUser,
+      this.images})
       : super(
             id: id,
             type: type,
@@ -30,12 +30,13 @@ class BulletinNewsItemData extends BulletinItemData {
             authorId: authorId,
             authorName: authorName,
             authorPhotoUrl: authorPhotoUrl,
-            numberOfcomments: numberOfcomments);
+            numberOfcomments: numberOfcomments,
+            hiddenByUser: hiddenByUser
+            );
 
   @override
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = super.toMap();
-    map.addAll({"imageLinks": imageLinks ?? []});
     map.addAll({"images": images.map((BulletinImageData data) {
       return data.toMap();
     }).toList() ?? []});
@@ -57,15 +58,14 @@ class BulletinNewsItemData extends BulletinItemData {
   Future<void> save() async {
     id = id ?? UuidHelpers.generateUuid();
     creationDate = creationDate ?? FieldValue.serverTimestamp();
-    authorId = authorId ?? Home.loggedInUser.uid;
-    authorName = authorName ?? Home.loggedInUser.displayName;
-    authorPhotoUrl = authorPhotoUrl ?? Home.loggedInUser.photoUrl;
-    imageLinks = imageLinks ?? [];
+    authorId = Home.loggedInUser.uid;
+    authorName = Home.loggedInUser.displayName;
+    authorPhotoUrl = Home.loggedInUser.photoUrl;
     images = images ?? [];
    return BulletinFirestore.saveBulletinItem(this);
   }
 
-  static BulletinNewsItemData fromMap(Map<dynamic, dynamic> item) {
+  factory BulletinNewsItemData.fromMap(Map<dynamic, dynamic> item) {
     return new BulletinNewsItemData(
         id: item["id"] ?? "",
         type: BulletinTypeHelper.getBulletinTypeStringAsType(item["type"]),
@@ -75,7 +75,6 @@ class BulletinNewsItemData extends BulletinItemData {
         body: item["body"] ?? "",
         creationDate: item["creationDate"] ?? "",
         numberOfcomments: item["numberOfcomments"] ?? 0,
-        imageLinks: item["imageLinks"] ?? [],
         images: item["images"] == null ? [] : (item["images"] as List<dynamic>).map<BulletinImageData>((dynamic data) {
           return BulletinImageData.fromMap(data);
         }).toList()

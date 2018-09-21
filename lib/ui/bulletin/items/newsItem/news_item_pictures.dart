@@ -7,7 +7,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 class BulletinNewsItemPictures extends StatelessWidget {
   final List<dynamic> images;
-  final List<ImageInfoData> imageInfoData;
+  // final List<ImageInfoData> imageInfoData;
   final Function onLongpressImageSelected;
   final BulletinImageType type;
   final bool useSquareOnOddImageCount;
@@ -17,8 +17,9 @@ class BulletinNewsItemPictures extends StatelessWidget {
       {this.type,
       this.useSquareOnOddImageCount = false,
       this.images,
-      this.imageInfoData,
-      this.onLongpressImageSelected, this.showImageFullScreen = false});
+      // this.imageInfoData,
+      this.onLongpressImageSelected,
+      this.showImageFullScreen = false});
 
   @override
   Widget build(BuildContext context) {
@@ -37,58 +38,32 @@ class BulletinNewsItemPictures extends StatelessWidget {
   List<Widget> _generateImageMain(BoxConstraints constraints) {
     List<Widget> widgets = [];
     double halfParentWidth = (constraints.maxWidth / 2).floor().toDouble() - 1;
-    double fullParentWidth = useSquareOnOddImageCount ? halfParentWidth : constraints.maxWidth;
+    double fullParentWidth =
+        useSquareOnOddImageCount ? halfParentWidth : constraints.maxWidth;
 
-    if (images != null && type == BulletinImageType.network) {
+    if (images != null && images.length != 0) {
       switch (images.length) {
         case 1:
-          widgets.add(_generateImages1ColumnNetwork(
-              fullParentWidth, halfParentWidth, images[0]));
+          widgets.add(_generateImages1Column(
+              type, fullParentWidth, halfParentWidth, images[0]));
           break;
         case 2:
-          widgets.add(_generateImages2ColumnsNetwork(
-              halfParentWidth, halfParentWidth, images[0], images[1]));
+          widgets.add(_generateImages2Columns(
+              type, halfParentWidth, halfParentWidth, images[0], images[1]));
           break;
         case 3:
-          widgets.add(_generateImages2ColumnsNetwork(
-              halfParentWidth, halfParentWidth, images[0], images[1]));
+          widgets.add(_generateImages2Columns(
+              type, halfParentWidth, halfParentWidth, images[0], images[1]));
           widgets.add(SizedBox(height: 2.0));
-          widgets.add(_generateImages1ColumnNetwork(
-              fullParentWidth, halfParentWidth, images[2]));
+          widgets.add(_generateImages1Column(
+              type, fullParentWidth, halfParentWidth, images[2]));
           break;
         case 4:
-          widgets.add(_generateImages2ColumnsNetwork(
-              halfParentWidth, halfParentWidth, images[0], images[1]));
+          widgets.add(_generateImages2Columns(
+              type, halfParentWidth, halfParentWidth, images[0], images[1]));
           widgets.add(SizedBox(height: 2.0));
-          widgets.add(_generateImages2ColumnsNetwork(
-              halfParentWidth, halfParentWidth, images[2], images[3]));
-          break;
-      }
-    }
-
-    if (imageInfoData != null) {
-      switch (imageInfoData.length) {
-        case 1:
-          widgets.add(_generateImages1ColumnFile(
-              fullParentWidth, halfParentWidth, imageInfoData[0]));
-          break;
-        case 2:
-          widgets.add(_generateImages2ColumnsFile(halfParentWidth,
-              halfParentWidth, imageInfoData[0], imageInfoData[1]));
-          break;
-        case 3:
-          widgets.add(_generateImages2ColumnsFile(halfParentWidth,
-              halfParentWidth, imageInfoData[0], imageInfoData[1]));
-          widgets.add(SizedBox(height: 2.0));
-          widgets.add(_generateImages1ColumnFile(
-              fullParentWidth, halfParentWidth, imageInfoData[2]));
-          break;
-        case 4:
-          widgets.add(_generateImages2ColumnsFile(halfParentWidth,
-              halfParentWidth, imageInfoData[0], imageInfoData[1]));
-          widgets.add(SizedBox(height: 2.0));
-          widgets.add(_generateImages2ColumnsFile(halfParentWidth,
-              halfParentWidth, imageInfoData[2], imageInfoData[3]));
+          widgets.add(_generateImages2Columns(
+              type, halfParentWidth, halfParentWidth, images[2], images[3]));
           break;
       }
     }
@@ -96,132 +71,69 @@ class BulletinNewsItemPictures extends StatelessWidget {
     return widgets;
   }
 
-  Widget _generateImages1ColumnNetwork(double width, double height, String image) {
+  Widget _getImageWidgetType(
+      BulletinImageType type, double width, double height, dynamic image) {
+    Widget data = Container();
+    if (type == BulletinImageType.network) {
+      String link;
+      if (image is String) link = image;
+      if (image is ImageInfoData) link = image.linkFirebaseStorage;
+      data = CachedNetworkImage(
+        placeholder: LoaderSpinner(
+          width: width,
+          height: height,
+        ),
+        errorWidget: Image.memory(kTransparentImage),
+        imageUrl: link,
+        fit: BoxFit.cover,
+        width: width,
+        height: height,
+      );
+    }
+
+    if (type == BulletinImageType.file) {
+      data = Image(
+        width: width,
+        height: height,
+        fit: BoxFit.cover,
+        image: FileImage(image.imageFile),
+      );
+    }
+
+    return data;
+  }
+
+  Widget _generateImages1Column(
+      BulletinImageType type, double width, double height, dynamic image) {
     return Row(
       mainAxisSize: MainAxisSize.min,
+      children: <Widget>[_getImageContainer(type, width, height, image)],
+    );
+  }
+
+  Widget _generateImages2Columns(BulletinImageType type, double width,
+      double height, dynamic image1, dynamic image2) {
+    return Row(
       children: <Widget>[
-        GestureDetector(
-          onLongPress: onLongpressImageSelected != null ? () {
-              onLongpressImageSelected(image);
-          } : null,
-          child: CachedNetworkImage(
-            placeholder: LoaderSpinner(
-              width: width,
-              height: height,
-            ),
-            errorWidget: Image.memory(kTransparentImage),
-            imageUrl: image,
-            fit: BoxFit.cover,
-            width: width,
-            height: height,
-          )
+        Padding(
+            padding: const EdgeInsets.only(right: 1.0),
+            child: _getImageContainer(type, width, height, image1)),
+        Padding(
+          padding: const EdgeInsets.only(left: 1.0),
+          child: _getImageContainer(type, width, height, image2),
         )
       ],
     );
   }
 
-  Widget _generateImages1ColumnFile(
-      double width, double height, ImageInfoData image) {
-    return Row(
-      children: <Widget>[
-        GestureDetector(
-            onLongPress: () {
-              if (onLongpressImageSelected != null)
+  Widget _getImageContainer(
+      BulletinImageType type, double width, double height, dynamic image) {
+    return GestureDetector(
+        onLongPress: onLongpressImageSelected != null
+            ? () {
                 onLongpressImageSelected(image);
-            },
-            child: Image(
-              width: width,
-              height: height,
-              fit: BoxFit.cover,
-              image: FileImage(image.imageFile),
-            ))
-      ],
-    );
-  }
-
-  Widget _generateImages2ColumnsNetwork(
-      double width, double height, String image1, String image2) {
-    return Row(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(right: 1.0),
-          child: GestureDetector(
-            onLongPress: () {
-              if (onLongpressImageSelected != null)
-                onLongpressImageSelected(image1);
-            },
-            child: CachedNetworkImage(
-              placeholder: LoaderSpinner(
-                width: width,
-                height: height
-              ),
-              errorWidget: Image.memory(kTransparentImage),
-              imageUrl: image1,
-              width: width - 1,
-              height: height,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 1.0),
-          child: GestureDetector(
-            onLongPress: () {
-              if (onLongpressImageSelected != null)
-                onLongpressImageSelected(image2);
-            },
-            child: CachedNetworkImage(
-              placeholder: LoaderSpinner(
-                width: width,
-                height: height,
-              ),
-              errorWidget: Image.memory(kTransparentImage),
-              imageUrl: image2,
-              width: width,
-              height: height,
-              fit: BoxFit.cover,
-            ),
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget _generateImages2ColumnsFile(
-      double width, double height, ImageInfoData image1, ImageInfoData image2) {
-    return Row(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(right: 1.0),
-          child: GestureDetector(
-            onLongPress: () {
-              if (onLongpressImageSelected != null)
-                onLongpressImageSelected(image1);
-            },
-            child: Image(
-              width: width - 1,
-              height: height,
-              fit: BoxFit.cover,
-              image: FileImage(image1.imageFile),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 1.0),
-          child: GestureDetector(
-            onLongPress: () {
-              if (onLongpressImageSelected != null)
-                onLongpressImageSelected(image2);
-            },
-            child: Image(
-              width: width,
-              height: height,
-              fit: BoxFit.cover,
-              image: FileImage(image2.imageFile),
-            ),
-          ),
-        )
-      ],
-    );
+              }
+            : null,
+        child: _getImageWidgetType(type, width, height, image));
   }
 }

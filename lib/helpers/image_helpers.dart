@@ -72,7 +72,10 @@ class ImageHelpers {
   static Future<bool> deleteImageFromCacheAndStorage(
       ImageInfoData image) async {
     try {
-      image.imageFile.delete();
+      if (image.imageFile != null) {
+        image.imageFile.delete();
+      }
+      
       BulletinFireStorage.deleteFromFirebaseStorage(
           image.filename, image.imagesStoreageFolder);
       return true;

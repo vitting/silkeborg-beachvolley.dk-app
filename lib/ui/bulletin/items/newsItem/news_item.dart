@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/image_type.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/item_datetime_numberofcomments.dart';
@@ -49,7 +50,9 @@ class BulletinNewsItem extends StatelessWidget {
                   maxLines: maxLines, overflow: overflow),
             ),
             BulletinNewsItemPictures(
-              images: bulletinItem.imageLinks,
+              images: bulletinItem.images.map((BulletinImageData data) {
+                return data.link;
+              }).toList(),
               type: BulletinImageType.network,
               onLongpressImageSelected: showImageFullScreen ? (String image) {
                 Navigator.of(context).push(MaterialPageRoute(

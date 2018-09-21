@@ -15,6 +15,7 @@ class BulletinPlayItem extends StatefulWidget {
   final int maxLines;
   final TextOverflow overflow;
   final bool showCommitButtons;
+  final bool isDetailMode;
 
   BulletinPlayItem(
       {this.bulletinItem,
@@ -22,7 +23,8 @@ class BulletinPlayItem extends StatefulWidget {
       this.onLongPress,
       this.maxLines = 3,
       this.overflow = TextOverflow.ellipsis,
-      this.showCommitButtons = false});
+      this.showCommitButtons = false,
+      this.isDetailMode = false});
 
   @override
   BulletinPlayItemState createState() {
@@ -36,17 +38,19 @@ class BulletinPlayItemState extends State<BulletinPlayItem> {
 
   @override
   void initState() {
-    _initPlayerCommit();
     super.initState();
+    _initPlayerCommit();
   }
 
   _initPlayerCommit() async {
-    bool playerCommmited = await widget.bulletinItem.isCommitted();
+    if (widget.isDetailMode) {
+      bool playerCommmited = await widget.bulletinItem.isCommitted();
 
-    setState(() {
-      _isPlayerCommitted = playerCommmited;
-      _opacityLevel = 1.0;
-    });
+      setState(() {
+        _isPlayerCommitted = playerCommmited;
+        _opacityLevel = 1.0;
+      });
+    }
   }
 
   @override

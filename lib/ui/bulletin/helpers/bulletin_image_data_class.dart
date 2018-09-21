@@ -6,20 +6,23 @@ import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestorage.da
 class BulletinImageData {
   String name;
   String folder;
+  String link;
 
-  BulletinImageData({@required this.name, @required this.folder});
+  BulletinImageData({@required this.name, @required this.folder, @required this.link});
 
   Map<String, dynamic> toMap() {
     return {
       "name": name,
-      "folder": folder
+      "folder": folder,
+      "link": link
     };
   }
 
   static BulletinImageData fromMap(map) {
     return BulletinImageData(
       name: map["name"] ?? "",
-      folder: map["folder"] ?? ""
+      folder: map["folder"] ?? "",
+      link: map["link"] ?? ""
     );
   }
 

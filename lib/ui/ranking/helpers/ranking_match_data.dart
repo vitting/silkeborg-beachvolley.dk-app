@@ -1,31 +1,11 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
+import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_player_data_class.dart';
 
-class RankingMatchPlayerData {
-  String id;
-  String name;
-  String photoUrl;
-  int points;
-
-  RankingMatchPlayerData({@required this.id, @required this.name, @required this.photoUrl, @required this.points});
-
-  Map<String, dynamic> toMap() {
-    return {
-      "id": id,
-      "name": name,
-      "photoUrl": photoUrl,
-      "points": points
-    };
-  }
-
-  static RankingMatchPlayerData fromMap(Map<dynamic, dynamic> item) {
-    return RankingMatchPlayerData(
-      id: item["id"] == null ? "" : item["id"],
-      name: item["name"] == null ? "" : item["name"],
-      photoUrl: item["photoUrl"] == null ? "" : item["photoUrl"],
-      points: item["points"] == null ? 0 : item["points"]
-    );
-  }
-}
 /// createdDate is of type DateTime, but is marked as dynmic so it's possible to
 /// use it with Firestore FieldValue.serverTimestamp().
 class RankingMatchData {
@@ -37,7 +17,19 @@ class RankingMatchData {
   RankingMatchPlayerData loser1;
   RankingMatchPlayerData loser2;
 
-  RankingMatchData({@required this.userId, @required this.matchDate, @required this.winner1, @required this.winner2, @required this.loser1, @required this.loser2, this.createdDate});
+  RankingMatchData({this.userId, @required this.matchDate, @required this.winner1, @required this.winner2, @required this.loser1, @required this.loser2, this.createdDate});
+
+  Future<void> save() async {
+    userId = userId ?? Home.loggedInUser.uid;
+    createdDate = createdDate ?? FieldValue.serverTimestamp();
+
+    await RankingFirestore.saveMatch(this);
+  }
+
+  Future<void> delete() async {
+    //We don't save matchid
+    // await RankingFirestore.deleteMatch(id)
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -53,8 +45,8 @@ class RankingMatchData {
 
   static RankingMatchData fromMap(Map<String, dynamic> item) {
     return RankingMatchData(
-      userId: item["userId"] == null ? "" : item["userId"],
-      matchDate: item["matchDate"] == null ? DateTime.now() : item["matchDate"],
+      userId: item["userId"] ?? "",
+      matchDate: item["matchDate"] ?? DateTime.now(),
       winner1: RankingMatchPlayerData.fromMap(item["winner1"]),
       winner2: RankingMatchPlayerData.fromMap(item["winner2"]),
       loser1: RankingMatchPlayerData.fromMap(item["loser1"]),

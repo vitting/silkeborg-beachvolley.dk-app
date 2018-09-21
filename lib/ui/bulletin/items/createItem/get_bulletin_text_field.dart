@@ -5,13 +5,14 @@ class BulletinTextField extends StatelessWidget {
   final Function onPressedPhoto;
   final Function onSave;
   final bool showPhotoButton;
+  final String initalValue;
 
   const BulletinTextField(
       {Key key,
       @required this.onPressedSave,
       @required this.onPressedPhoto,
       @required this.onSave,
-      this.showPhotoButton = false})
+      this.showPhotoButton = false, this.initalValue = ""})
       : super(key: key);
 
   @override
@@ -20,6 +21,7 @@ class BulletinTextField extends StatelessWidget {
       keyboardType: TextInputType.text,
       maxLength: 500,
       maxLines: 6,
+      initialValue: initalValue,
       decoration: new InputDecoration(
           labelText: "Opslag",
           suffixIcon: Column(

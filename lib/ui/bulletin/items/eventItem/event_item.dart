@@ -94,13 +94,13 @@ class BulletinEventItem extends StatelessWidget {
             DateTimeNumberOfCommentsAndPlayers(bulletinItem: bulletinItem)
           ],
         ),
-        leading: bulletinItem.eventImageLink.isNotEmpty ? Container(
+        leading: bulletinItem.eventImage.link.isNotEmpty ? Container(
           width: 70.0,
           height: 70.0,
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             image: DecorationImage(
-              image: CachedNetworkImageProvider(bulletinItem.eventImageLink),
+              image: CachedNetworkImageProvider(bulletinItem.eventImage.link),
               fit: BoxFit.fill
             )
           )

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_matches_header.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_matches_row.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 
@@ -30,31 +31,11 @@ class RankingDetailMatches extends StatelessWidget {
             shrinkWrap: true,
             itemCount: snapshot.data.length + 1,
             itemBuilder: (BuildContext context, int position) {
-              if (position == 0) return Card(
-                              child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 5.0),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Text("Vindere", textAlign: TextAlign.center, style: TextStyle(
-                              fontSize: 20.0
-                            )),
-                          ),
-                          Expanded(
-                            child: Text("Tabere", textAlign: TextAlign.center, style: TextStyle(
-                              fontSize: 20.0
-                            )),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              );
+              if (position == 0) return RankingDetailMatchesHeader();
 
               RankingMatchData item = snapshot.data[position - 1];
+              //Vi skal lave en detail for match. Så man kan se hvilke point de fik
+              //Ellers så skal det stå i row'en, men hvordan laver vi det pænt
               return Card(
                 child: Container(
                   padding: EdgeInsets.all(10.0),
@@ -70,7 +51,7 @@ class RankingDetailMatches extends StatelessWidget {
                           ),
                         ],
                       ),
-                      RankingMatchesRow(//CHRISTIAN: Vi skal bare sende taberen og vinderen ind som hele objekter
+                      RankingMatchesRow(
                         winner: item.winner1,
                         loser: item.loser1,
                         userId: userId,

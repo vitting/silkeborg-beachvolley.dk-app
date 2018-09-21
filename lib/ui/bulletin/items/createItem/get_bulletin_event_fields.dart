@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/event_datetime_type_enum.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_fields_create_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/create_item_main.dart';
 
 class BulletinEventFields extends StatefulWidget {
   final TextEditingController startDateController;

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/detailItem/detail_item_main.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/editItem/bulletin_edit_item_main.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
@@ -95,7 +96,20 @@ class BulletinItemMain extends StatelessWidget {
               children: <Widget>[
                 ListTile(
                   onTap: () {
+                    bulletinItem.hide();
                     Navigator.of(context).pop();
+                  },
+                  title: Text("Skjul"),
+                  leading: Icon(Icons.visibility_off),
+                ),
+                Divider(),
+                ListTile(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).push(MaterialPageRoute(
+                      fullscreenDialog: true,
+                      builder: (BuildContext context) => EditBulletinItem(bulletinItem)
+                    ));
                   },
                   title: Text("Rediger"),
                   leading: Icon(Icons.edit),
@@ -201,10 +215,6 @@ class BulletinItemMain extends StatelessWidget {
 
     if (bulletinItem.type == BulletinType.event) {
       (bulletinItem as BulletinEventItemData).delete();
-      //CHRISTIAN: DER kan være noget her. Man er jo ikke tvunget til at sætte et image. Har vi et default?
-      //Vi skal også lige tænke på om et bulletinItem kan gemme sig selv? Lige nu laver vi et komplicert create
-      //CHRISTIAN: Vi har et problem når vi skal slette billeder. Vi har kun hele linket til filen gemt og ikke filnavnet
-      //Skal vi i news lave images om til imageLinks og så have en images med image name, image folder
     }
 
     if (bulletinItem.type == BulletinType.play) {

@@ -17,7 +17,6 @@ class BulletinEventItemData extends BulletinItemData {
   dynamic eventEndTime;
   String eventLocation;
   String eventTitle;
-  String eventImageLink;
   BulletinImageData eventImage;
 
   BulletinEventItemData(
@@ -29,13 +28,14 @@ class BulletinEventItemData extends BulletinItemData {
       String authorName,
       String authorPhotoUrl,
       int numberOfcomments = 0,
+      List<dynamic> hiddenByUser,
       this.eventStartDate,
       this.eventEndDate,
       this.eventEndTime,
       this.eventStartTime,
       this.eventLocation,
       this.eventTitle,
-      this.eventImageLink, this.eventImage})
+      this.eventImage})
       : super(
             id: id,
             type: type,
@@ -44,6 +44,7 @@ class BulletinEventItemData extends BulletinItemData {
             authorId: authorId,
             authorName: authorName,
             authorPhotoUrl: authorPhotoUrl,
+            hiddenByUser: hiddenByUser,
             numberOfcomments: numberOfcomments);
 
   @override
@@ -57,10 +58,10 @@ class BulletinEventItemData extends BulletinItemData {
         "endTime": eventEndTime,
         "location": eventLocation,
         "title": eventTitle,
-        "imageLink": eventImageLink,
         "image": {
           "name": eventImage?.name ?? "",
           "folder": eventImage?.folder ?? "",
+          "link": eventImage?.link ?? ""
         }
       }
     });
@@ -91,9 +92,9 @@ class BulletinEventItemData extends BulletinItemData {
   Future<void> save() {
      id = id ?? UuidHelpers.generateUuid();
     creationDate = creationDate ?? FieldValue.serverTimestamp();
-    authorId = authorId ?? Home.loggedInUser.uid;
-    authorName = authorName ?? Home.loggedInUser.displayName;
-    authorPhotoUrl = authorPhotoUrl ?? Home.loggedInUser.photoUrl;
+    authorId = Home.loggedInUser.uid;
+    authorName = Home.loggedInUser.displayName;
+    authorPhotoUrl = Home.loggedInUser.photoUrl;
     DateTime start = DateTime(eventStartDate.year, eventStartDate.month,
         eventStartDate.day, eventStartTime.hour, eventStartTime.minute);
 
@@ -107,7 +108,7 @@ class BulletinEventItemData extends BulletinItemData {
     return BulletinFirestore.saveBulletinItem(this);
   }
 
-  static BulletinEventItemData fromMap(Map<String, dynamic> item) {
+  factory BulletinEventItemData.fromMap(Map<String, dynamic> item) {
     return new BulletinEventItemData(
         id: item["id"] ?? "",
         type: BulletinTypeHelper.getBulletinTypeStringAsType(item["type"]),
@@ -123,7 +124,6 @@ class BulletinEventItemData extends BulletinItemData {
         eventEndTime: item["event"]["endTime"] ?? DateTime.now(),
         eventLocation: item["event"]["location"] ?? "",
         eventTitle: item["event"]["title"] ?? "",
-        eventImageLink: item["event"]["imageLink"] ?? "",
         eventImage: item["event"]["image"] == null ? null : BulletinImageData.fromMap(item["event"]["image"])
         );
   }

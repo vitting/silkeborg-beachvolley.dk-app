@@ -89,6 +89,7 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
         item = BulletinPlayItem(
           bulletinItem: widget.bulletinItem,
           showCommitButtons: true,
+          isDetailMode: true,
         );
         break;
       case BulletinType.none:
