@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/createMatch/choose_players_list.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/create_player_choose_date.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/create_player_chooser.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/create_player_chooser_row.dart';
@@ -37,6 +37,10 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
     super.initState();
   }
 
+///CHRISTIAN: Vi skal have gemt at en player er min favorit? Hvis vi på min player 
+/////gemmer et array med userid på favorits, så må vi kunne filtere det ind.
+///Og Man skal kunne fjerne favorit igen. Hvis ikke Fieldvalue.arrayRemove ikke virker så er vi på røven.
+///Vi laver det sådan at farvoritter står øvers i listen.
   _getPlayersList() async {
     QuerySnapshot snapshot = await RankingFirestore.getAllPlayers();
     if (snapshot.documents.length > 0) {
@@ -84,10 +88,9 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
                 color: _matchDateColor,
                 datePicked: (DateTime datePicked) {
                   setState(() {
-                  _matchDate = datePicked;
-                  _matchDateColor = _okColor;                    
+                    _matchDate = datePicked;
+                    _matchDateColor = _okColor;
                   });
-                  
                 },
               ),
               _saveButton(context)
@@ -96,8 +99,6 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
         }));
   }
 
-
-//CHRISTIAN: Vi skal lave det sådan at man kan sætte set score, men det skal være optional
   Widget _saveButton(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -117,47 +118,20 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
   }
 
   _showPlayers(BuildContext context, PlayerChooserType type) async {
-    List<Widget> widgets =
-        _listOfPlayers.map<ListTile>((RankingPlayerData player) {
-      return _generatePlayerListTile(player);
-    }).toList();
-
     RankingPlayerData player = await showDialog<RankingPlayerData>(
         context: context,
         builder: (BuildContext context) {
-          return SimpleDialog(
-              title: Text(_getDialogTitle(type)), children: widgets);
+          return ChoosePlayersList(
+            listOfPlayers: _listOfPlayers,
+            type: type,
+            winner1Item: _winner1Item,
+            winner2Item: _winner2Item,
+            loser1Item: _loser1Item,
+            loser2Item: _loser1Item,
+          );
         });
 
     _updateChoosenPlayerState(player, type);
-  }
-
-  Widget _generatePlayerListTile(RankingPlayerData player) {
-    return ListTile(
-      onTap: () {
-        if (!_isPlayerSelected(player))
-          Navigator.of(context).pop<RankingPlayerData>(player);
-      },
-      leading: CircleAvatar(
-        backgroundImage: CachedNetworkImageProvider(player.photoUrl),
-      ),
-      title: Text(player.name),
-      trailing: _setTrailingIcon(player),
-    );
-  }
-
-  bool _isPlayerSelected(RankingPlayerData player) {
-    if (_winner1Item?.userId == player.userId ||
-        _winner2Item?.userId == player.userId ||
-        _loser1Item?.userId == player.userId ||
-        _loser2Item?.userId == player.userId) return true;
-    return false;
-  }
-
-  Widget _setTrailingIcon(RankingPlayerData player) {
-    if (_isPlayerSelected(player))
-      return Icon(Icons.check_circle, color: Colors.greenAccent);
-    return null;
   }
 
   void _updateChoosenPlayerState(
@@ -190,14 +164,6 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
     }
   }
 
-  String _getDialogTitle(PlayerChooserType type) {
-    if (type == PlayerChooserType.winner1 || type == PlayerChooserType.winner2)
-      return "Vælg vinder";
-    if (type == PlayerChooserType.loser1 || type == PlayerChooserType.loser2)
-      return "Vælg taber";
-    return "";
-  }
-
   _saveMatch(BuildContext context) async {
     if (_isMatchValid()) {
       RankingMatchData match = RankingMatchData(
@@ -228,7 +194,8 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
     } else {
       setState(() {});
       Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text("Du skal udfylde de felter der er røde før de kan gemme kampen."),
+        content: Text(
+            "Du skal udfylde de felter der er røde før de kan gemme kampen."),
         duration: Duration(seconds: 3),
       ));
     }
