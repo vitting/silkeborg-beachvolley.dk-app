@@ -126,8 +126,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
         onPressedSave: () async {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
-            _formKey.currentState.reset();
-
+            
             await _saveBulletinItem();
             Navigator.of(context).pop();
           }

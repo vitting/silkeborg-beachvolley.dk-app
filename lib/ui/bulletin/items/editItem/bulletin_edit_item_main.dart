@@ -154,8 +154,7 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
         onPressedSave: () async {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
-            _formKey.currentState.reset();
-
+            
             await _saveBulletinItem();
             Navigator.of(context).pop();
           }
