@@ -37,6 +37,7 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
   final TextEditingController _endTimeController = new TextEditingController();
   ItemFieldsCreate itemFieldsValue;
   List<ImageInfoData> _imageFiles = [];
+  List<ImageInfoData> _imageFilesDelete = [];
 
   @override
   void initState() {
@@ -122,10 +123,14 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
   }
 
   Widget _eventFields() {
-    _startDateController.text = DateTimeHelpers.ddmmyyyy(itemFieldsValue.eventStartDate);
-    _endDateController.text = DateTimeHelpers.ddmmyyyy(itemFieldsValue.eventEndDate);
-    _startTimeController.text = DateTimeHelpers.hhnn(itemFieldsValue.eventStartTime);
-    _endTimeController.text = DateTimeHelpers.hhnn(itemFieldsValue.eventEndTime);
+    _startDateController.text =
+        DateTimeHelpers.ddmmyyyy(itemFieldsValue.eventStartDate);
+    _endDateController.text =
+        DateTimeHelpers.ddmmyyyy(itemFieldsValue.eventEndDate);
+    _startTimeController.text =
+        DateTimeHelpers.hhnn(itemFieldsValue.eventStartTime);
+    _endTimeController.text =
+        DateTimeHelpers.hhnn(itemFieldsValue.eventEndTime);
     return BulletinEventFields(
       startDateController: _startDateController,
       endDateController: _endDateController,
@@ -177,6 +182,8 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
       data = BuildBulletinItem.buildPlayItem(itemFieldsValue);
     }
 
+    await _removeExistingPhotosOnSave();
+    _imageFilesDelete.clear();
     _imageFiles.clear();
     return data.save();
   }
@@ -186,21 +193,41 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
         await photoFunctions.addPhoto(context, itemFieldsValue.type);
 
     if (imageInfo.linkFirebaseStorage.isNotEmpty) {
-      setState(() {
-        _imageFiles.add(imageInfo);
-      });
+      if (mounted) {
+        setState(() {
+          _imageFiles.add(imageInfo);
+        });
+      }
     }
   }
 
-//CHRISTIAN: Hvis vi i edit fjerner billedet, men ikke gemmer, så skal billedet jo ikke fjernes!!!
-  void _removePhoto(ImageInfoData image) async {
+  Future<void> _removePhoto(ImageInfoData image) async {
     PhotoAction action = await photoFunctions.removePhoto(context);
 
     if (action != null && action == PhotoAction.delete) {
+      if (image.state == ImageInfoState.exists) {
+        if (mounted) {
+          setState(() {
+            _imageFilesDelete.add(image);
+            _imageFiles.remove(image);
+          });
+        }
+
+        return;
+      }
+
       await ImageHelpers.deleteImageFromCacheAndStorage(image);
-      setState(() {
-        _imageFiles.remove(image);
-      });
+      if (mounted) {
+        setState(() {
+          _imageFiles.remove(image);
+        });
+      }
     }
+  }
+
+  Future<void> _removeExistingPhotosOnSave() async {
+    _imageFilesDelete.forEach((ImageInfoData image) async {
+      await ImageHelpers.deleteImageFromCacheAndStorage(image);
+    });
   }
 }

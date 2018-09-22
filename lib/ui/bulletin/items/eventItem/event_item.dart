@@ -40,7 +40,6 @@ class BulletinEventItem extends StatelessWidget {
                     child: Text(DateTimeHelpers.ddMMyyyy(
                         bulletinItem.eventStartDate)),
                   ),
-                  
                   DateTimeHelpers.dateCompare(bulletinItem.eventStartDate, bulletinItem.eventEndDate) ? Container() :
                   Row(
                     children: <Widget>[

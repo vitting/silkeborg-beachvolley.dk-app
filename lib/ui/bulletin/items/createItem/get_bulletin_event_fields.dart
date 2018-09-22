@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/event_datetime_type_enum.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -19,7 +20,9 @@ class BulletinEventFields extends StatefulWidget {
       @required this.endDateController,
       @required this.startTimeController,
       @required this.endTimeController,
-      @required this.itemFieldsValue, @required this.onTapImage, @required this.eventImage});
+      @required this.itemFieldsValue,
+      @required this.onTapImage,
+      @required this.eventImage});
 
   @override
   _BulletinEvetFieldsState createState() => _BulletinEvetFieldsState();
@@ -28,9 +31,43 @@ class BulletinEventFields extends StatefulWidget {
 class _BulletinEvetFieldsState extends State<BulletinEventFields> {
   @override
   Widget build(BuildContext context) {
+    return _main();
+  }
+
+  Widget _main() {
     return Column(
       children: <Widget>[
-        Padding(
+        _getImageWidget(),
+        _getTitleTextFieldWidget(),
+        Row(
+          children: <Widget>[
+            Flexible(
+              child: _getDateTextFieldWidget(context, widget.startDateController, "Start dato", EventDateTimeType.startDate, "Udfyld Start dato")
+            ),
+            SizedBox(width: 20.0),
+            Flexible(
+              child: _getDateTextFieldWidget(context, widget.endDateController, "Slut dato", EventDateTimeType.endDate, "Udfyld Slut dato")
+            )
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Flexible(
+              child: _getTimeTextFieldWidget(context, widget.startTimeController, "Start tid", EventDateTimeType.startTime, "Udfyld Start tid")
+            ),
+            SizedBox(width: 20.0),
+            Flexible(
+              child: _getTimeTextFieldWidget(context, widget.endTimeController, "Slut tid", EventDateTimeType.endTime, "Udfyld Slut tid")
+            )
+          ],
+        ),
+        _getLocationTextField()
+      ],
+    );
+  }
+
+  Widget _getImageWidget() {
+    return Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: Column(
             children: <Widget>[
@@ -41,31 +78,31 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
                 child: Tooltip(
                   message: "Vælg et billede. Det er ikke påkrævet.",
                   child: Container(
-                width: 90.0,
-                height: 90.0,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 2.0
+                    width: 90.0,
+                    height: 90.0,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 2.0),
+                        color: Colors.grey,
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            fit: BoxFit.fill, image: _getImageProvider())),
+                    child: Icon(
+                      widget.eventImage == null
+                          ? Icons.add_a_photo
+                          : Icons.delete,
+                      color: Colors.white,
+                    ),
                   ),
-                  color: Colors.grey,
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: widget.eventImage == null ? MemoryImage(kTransparentImage) : FileImage(widget.eventImage.imageFile)
-                  )
-                ),
-                child: Icon(
-                  widget.eventImage == null ? Icons.add_a_photo : Icons.delete,
-                  color: Colors.white,
-                ),
-              ),
                 ),
               )
             ],
           ),
-        ),
-        TextFormField(
+        );
+  }
+
+  Widget _getTitleTextFieldWidget() {
+    return TextFormField(
+          initialValue: widget.itemFieldsValue.eventTitle,
           keyboardType: TextInputType.text,
           maxLength: 50,
           decoration: InputDecoration(labelText: "Titel"),
@@ -75,88 +112,48 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
           validator: (value) {
             if (value.isEmpty) return "Titel skal udfyldes";
           },
-        ),
-        Row(
-          children: <Widget>[
-            Flexible(
-              child: TextFormField(
+        );
+  }
+
+  Widget _getDateTextFieldWidget(BuildContext context, TextEditingController controller, String label, EventDateTimeType type, String validatorText) {
+    return TextFormField(
+        keyboardType: TextInputType.datetime,
+        textAlign: TextAlign.center,
+        controller: controller,
+        decoration: InputDecoration(
+            labelText: label,
+            suffixIcon: IconButton(
+              icon: Icon(Icons.calendar_today),
+              onPressed: () async {
+                _selectDate(context, type);
+              },
+            )),
+        validator: (value) {
+          if (value.isEmpty) return validatorText;
+        });
+  }
+
+  Widget _getTimeTextFieldWidget(BuildContext context, TextEditingController controller, String label, EventDateTimeType type, String validatorText) {
+    return TextFormField(
                   keyboardType: TextInputType.datetime,
                   textAlign: TextAlign.center,
-                  controller: widget.startDateController,
+                  controller: controller,
                   decoration: InputDecoration(
-                      labelText: "Start dato",
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.calendar_today),
-                        onPressed: () async {
-                          _selectDate(context, EventDateTimeType.startDate);
-                        },
-                      )),
-                  validator: (value) {
-                    if (value.isEmpty) return "Udfyld Start dato";
-                  }),
-            ),
-            SizedBox(width: 20.0),
-            Flexible(
-              child: TextFormField(
-                  keyboardType: TextInputType.datetime,
-                  textAlign: TextAlign.center,
-                  controller: widget.endDateController,
-                  decoration: InputDecoration(
-                      labelText: "Slut dato",
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.calendar_today),
-                        onPressed: () async {
-                          _selectDate(context, EventDateTimeType.endDate);
-                        },
-                      )),
-                  validator: (value) {
-                    if (value.isEmpty) return "Udfyld Slut dato";
-                  }),
-            )
-          ],
-        ),
-        Row(
-          children: <Widget>[
-            Flexible(
-              child: TextFormField(
-                  keyboardType: TextInputType.datetime,
-                  textAlign: TextAlign.center,
-                  controller: widget.startTimeController,
-                  decoration: InputDecoration(
-                      labelText: "Start tid",
+                      labelText: label,
                       suffixIcon: IconButton(
                         icon: Icon(Icons.access_time),
                         onPressed: () async {
-                          _selectTime(context, EventDateTimeType.startTime);
+                          _selectTime(context, type);
                         },
                       )),
                   validator: (value) {
-                    if (value.isEmpty) return "Udfyld Start tid";
-                  }),
-            ),
-            SizedBox(width: 20.0),
-            Flexible(
-              child: TextFormField(
-                keyboardType: TextInputType.datetime,
-                textAlign: TextAlign.center,
-                controller: widget.endTimeController,
-                decoration: InputDecoration(
-                    labelText: "Slut tid",
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.access_time),
-                      onPressed: () async {
-                        _selectTime(context, EventDateTimeType.endTime);
-                      },
-                    )),
-                validator: (value) {
-                  if (value.isEmpty) return "Udfyld Slut tid";
-                },
-                onSaved: (value) {},
-              ),
-            )
-          ],
-        ),
-        TextFormField(
+                    if (value.isEmpty) return validatorText;
+                  });
+  }
+
+  Widget _getLocationTextField() {
+    return TextFormField(
+          initialValue: widget.itemFieldsValue.eventLocation,
           keyboardType: TextInputType.text,
           maxLength: 100,
           decoration: InputDecoration(labelText: "Sted"),
@@ -166,9 +163,21 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
           validator: (value) {
             if (value.isEmpty) return "Sted skal udfyldes";
           },
-        )
-      ],
-    );
+        );
+  }
+
+  ImageProvider<dynamic> _getImageProvider() {
+    ImageProvider<dynamic> imageProvider = MemoryImage(kTransparentImage);
+    if (widget.eventImage != null) {
+      if (widget.eventImage.state == ImageInfoState.none &&
+          widget.eventImage.imageFile != null)
+        imageProvider = FileImage(widget.eventImage.imageFile);
+      if (widget.eventImage.state == ImageInfoState.exists &&
+          widget.eventImage.linkFirebaseStorage != null)
+        imageProvider =
+            CachedNetworkImageProvider(widget.eventImage.linkFirebaseStorage);
+    }
+    return imageProvider;
   }
 
   Future<Null> _selectDate(

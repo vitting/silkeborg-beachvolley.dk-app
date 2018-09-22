@@ -45,11 +45,12 @@ class BulletinPlayItemState extends State<BulletinPlayItem> {
   _initPlayerCommit() async {
     if (widget.isDetailMode) {
       bool playerCommmited = await widget.bulletinItem.isCommitted();
-
-      setState(() {
-        _isPlayerCommitted = playerCommmited;
-        _opacityLevel = 1.0;
-      });
+      if (mounted) {
+        setState(() {
+          _isPlayerCommitted = playerCommmited;
+          _opacityLevel = 1.0;
+        });
+      }
     }
   }
 
@@ -129,10 +130,12 @@ class BulletinPlayItemState extends State<BulletinPlayItem> {
     } else {
       widget.bulletinItem.setPlayerAsUnCommitted();
     }
-
-    setState(() {
-      _isPlayerCommitted = state;
-    });
+    
+    if (mounted) {
+      setState(() {
+        _isPlayerCommitted = state;
+      });
+    }
   }
 
   Widget _showPlayerCommittedButton() {

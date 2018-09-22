@@ -23,7 +23,7 @@ class ItemFieldsCreate {
 
   factory ItemFieldsCreate.fromBulletinItem(BulletinItemData item) {
     ItemFieldsCreate data;
-    if (item.type == BulletinType.news || item.type == BulletinType.play) {
+    if (item.type == BulletinType.news) {
       BulletinNewsItemData news = item as BulletinNewsItemData;
       data = ItemFieldsCreate(
         id: news.id,

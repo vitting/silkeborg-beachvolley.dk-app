@@ -1,4 +1,5 @@
 import 'package:date_format/date_format.dart';
+import 'package:flutter/material.dart';
 
 Map<int, String> months = {
   1: "Januar",
@@ -13,6 +14,21 @@ Map<int, String> months = {
   10: "Oktober",
   11: "November",
   12: "December"
+};
+
+Map<int, String> monthsShort = {
+  1: "jan.",
+  2: "feb.",
+  3: "mar.",
+  4: "apr.",
+  5: "maj",
+  6: "jun.",
+  7: "jul.",
+  8: "aug.",
+  9: "sept.",
+  10: "okt.",
+  11: "nov.",
+  12: "dec."
 };
 
 class DateTimeHelpers {
@@ -35,11 +51,18 @@ class DateTimeHelpers {
   }
 
   static String ddMMyyyy(DateTime date) {
-    return formatDate(date, [dd, ". ", months[date.month], " ", yyyy]);
+    return formatDate(date, [dd, ". ", monthsShort[date.month], " ", yyyy]);
   }
 
-  static String hhnn(DateTime date) {
-    return formatDate(date, [HH, ":", nn]);
+  static String hhnn(dynamic date) {
+    DateTime dateToFormat;
+    if (date is TimeOfDay) {
+      TimeOfDay tod = date;
+      dateToFormat = DateTime(2000, 1, 1, tod.hour, tod.minute);
+    } else {
+      dateToFormat = date;
+    }
+    return formatDate(dateToFormat, [HH, ":", nn]);
   }
 
   static bool dateCompare(DateTime date1, DateTime date2) {

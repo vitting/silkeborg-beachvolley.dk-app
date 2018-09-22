@@ -163,9 +163,11 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
         await photoFunctions.addPhoto(context, itemFieldsValue.type);
 
     if (imageInfo.linkFirebaseStorage.isNotEmpty) {
-      setState(() {
+      if (mounted) {
+        setState(() {
         _imageFiles.add(imageInfo);
       });
+      }
     }
   }
 
@@ -174,9 +176,11 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
 
     if (action != null && action == PhotoAction.delete) {
       await ImageHelpers.deleteImageFromCacheAndStorage(image);
-      setState(() {
+      if (mounted) {
+        setState(() {
         _imageFiles.remove(image);
       });
+      }
     }
   }
 }
