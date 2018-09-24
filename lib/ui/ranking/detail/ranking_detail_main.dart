@@ -36,6 +36,7 @@ class RankingDetailState extends State<RankingDetail> {
     _widgets = [
       RankingDetailStat(
         player: widget.player,
+        matches: _loadMatches(),
       ),
       RankingDetailMatches(matches: _loadMatches(), userId: widget.player.userId)
     ];
