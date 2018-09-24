@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 
 class RankingFirstTime extends StatefulWidget {
@@ -117,7 +116,7 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
   }
 
   void _savePlayer() async {
-    await RankingFirestore.savePlayer(_rankingPlayerData); 
+    await _rankingPlayerData.save(); 
     Navigator.of(context).pop();
   }
 }

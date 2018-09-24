@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_stats_data_class.dart';
 
 class RankingPlayerData {
@@ -7,8 +10,9 @@ class RankingPlayerData {
   String sex;
   RankingPlayerStatsData points;
   RankingPlayerStatsData numberOfPlayedMatches;
+  List<dynamic> playerFavorites;
   
-  RankingPlayerData({this.name, this.numberOfPlayedMatches, this.photoUrl, this.points, this.sex, this.userId});
+  RankingPlayerData({this.name, this.numberOfPlayedMatches, this.photoUrl, this.points, this.sex, this.userId, this.playerFavorites});
 
   Map<String, dynamic> toMap() {
     return {
@@ -17,18 +21,28 @@ class RankingPlayerData {
       "photoUrl": photoUrl,
       "sex": sex,
       "points": points == null ? RankingPlayerStatsData().toMap() : points.toMap(),
-      "numberOfPlayedMatches": numberOfPlayedMatches == null ? RankingPlayerStatsData().toMap() : numberOfPlayedMatches.toMap()
+      "numberOfPlayedMatches": numberOfPlayedMatches == null ? RankingPlayerStatsData().toMap() : numberOfPlayedMatches.toMap(),
+      "playerFavorites": playerFavorites ?? []
     };
   }
+
+  Future<void> save() async {
+    return RankingFirestore.savePlayer(this);
+  }
+
+  void delete() {
+    throw Exception("Delete is not implementet");
+  }
   
-  static RankingPlayerData fromMap(Map<String, dynamic> doc) {
+  factory RankingPlayerData.fromMap(Map<String, dynamic> doc) {
     return RankingPlayerData(
       name: doc["name"] ?? "",
       userId: doc["userId"] ?? "",
       photoUrl: doc["photoUrl"] ?? "",
       sex: doc["sex"] ?? "",
       points: doc["points"] == null ? RankingPlayerStatsData() : RankingPlayerStatsData.fromMap(doc["points"]),
-      numberOfPlayedMatches: doc["numberOfPlayedMatches"] == null ? RankingPlayerStatsData() : RankingPlayerStatsData.fromMap(doc["numberOfPlayedMatches"]) 
+      numberOfPlayedMatches: doc["numberOfPlayedMatches"] == null ? RankingPlayerStatsData() : RankingPlayerStatsData.fromMap(doc["numberOfPlayedMatches"]), 
+      playerFavorites: doc["playerFavorites"] ?? []
     );
   }
 }

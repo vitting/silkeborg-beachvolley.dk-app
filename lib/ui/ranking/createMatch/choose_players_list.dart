@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/choose_players_list_row.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/create_player_chooser.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 
 class ChoosePlayersList extends StatefulWidget {
@@ -10,19 +12,49 @@ class ChoosePlayersList extends StatefulWidget {
   final RankingPlayerData loser2Item;
   final PlayerChooserType type;
   final List<RankingPlayerData> listOfPlayers;
-  const ChoosePlayersList({Key key, @required this.listOfPlayers, @required this.type, @required this.winner1Item, @required this.winner2Item, @required this.loser1Item, @required this.loser2Item}) : super(key: key);
+  final List<RankingPlayerData> listOfFavoritePlayers;
+  const ChoosePlayersList(
+      {Key key,
+      @required this.listOfPlayers,
+      @required this.type,
+      @required this.winner1Item,
+      @required this.winner2Item,
+      @required this.loser1Item,
+      @required this.loser2Item,
+      @required this.listOfFavoritePlayers})
+      : super(key: key);
   @override
   _ChoosePlayersListState createState() => _ChoosePlayersListState();
 }
 
 class _ChoosePlayersListState extends State<ChoosePlayersList> {
+  List<Widget> _playerListWidgets = [];
+  List<Widget> _playerFavoriteListWidgets = [];
+
+  @override
+  void initState() {
+    _generatePlayerWidgets();
+    super.initState();
+  }
+
+  _generatePlayerWidgets() {
+    setState(() {
+      _playerFavoriteListWidgets = _generatePlayerFavoritesList();
+      _playerListWidgets = _generatePlayerList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
         title: Text(_getDialogTitle(widget.type)),
         children: <Widget>[
           ListBody(
-            children: _generatePlayerList(),
+            children: _playerFavoriteListWidgets,
+          ),
+          Divider(),
+          ListBody(
+            children: _playerListWidgets,
           )
         ]);
   }
@@ -35,22 +67,57 @@ class _ChoosePlayersListState extends State<ChoosePlayersList> {
     return false;
   }
 
-  List<Widget> _generatePlayerList() {
-    return  widget.listOfPlayers.map<Widget>((RankingPlayerData player) {
-      return _generatePlayerListTile(player);
+  List<Widget> _generatePlayerFavoritesList() {
+    List<Widget> favorites =
+        widget.listOfFavoritePlayers.map<Widget>((RankingPlayerData player) {
+      return _generatePlayerListTile(player, true);
     }).toList();
+
+    return favorites;
   }
 
-  Widget _generatePlayerListTile(RankingPlayerData player) {
+  List<Widget> _generatePlayerList() {
+    List<Widget> players =
+        widget.listOfPlayers.map<Widget>((RankingPlayerData player) {
+      return _generatePlayerListTile(player, false);
+    }).toList();
+
+    return players;
+  }
+
+  Widget _generatePlayerListTile(RankingPlayerData player, bool favorite) {
     return ChoosePlayerListRow(
-      isPlayerSelected: _isPlayerSelected(player),
-      photoUrl: player.photoUrl,
-      playerName: player.name,
-      onTap: (_) {
-        if (!_isPlayerSelected(player))
-          Navigator.of(context).pop<RankingPlayerData>(player);
-      },
-    );
+        isFavorite: favorite,
+        isPlayerSelected: _isPlayerSelected(player),
+        player: player,
+        onTap: (_) {
+          if (!_isPlayerSelected(player))
+            Navigator.of(context).pop<RankingPlayerData>(player);
+        },
+        onLongPress: (bool isFavoerite) {
+          if (isFavoerite) {
+            RankingFirestore.removePlayerAsFavorite(
+                Home.loggedInUser.uid, player.userId);
+            widget.listOfFavoritePlayers.remove(player);
+
+            widget.listOfPlayers.add(player);
+            widget.listOfPlayers
+                .sort((RankingPlayerData item1, RankingPlayerData item2) {
+              return item1.name.compareTo(item2.name);
+            });
+          } else {
+            RankingFirestore.addPlayerAsFavorite(
+                Home.loggedInUser.uid, player.userId);
+            widget.listOfPlayers.remove(player);
+
+            widget.listOfFavoritePlayers.add(player);
+            widget.listOfFavoritePlayers
+                .sort((RankingPlayerData item1, RankingPlayerData item2) {
+              return item1.name.compareTo(item2.name);
+            });
+          }
+          _generatePlayerWidgets();
+        });
   }
 
   String _getDialogTitle(PlayerChooserType type) {

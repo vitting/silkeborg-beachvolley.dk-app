@@ -103,6 +103,18 @@ class RankingFirestore {
         .setData(player.toMap());
   }
 
+  static Future<void> addPlayerAsFavorite(String userId, String favoritePlayerId) {
+    return firestoreInstance.collection(_collectionNamePlayer).document(userId).updateData({
+      "playerFavorites": FieldValue.arrayUnion(favoritePlayerId)
+    });
+  }
+
+  static Future<void> removePlayerAsFavorite(String userId, String favoritePlayerId) {
+    return firestoreInstance.collection(_collectionNamePlayer).document(userId).updateData({
+      "playerFavorites": FieldValue.arrayRemove(favoritePlayerId)
+    });
+  }
+
 //CHRISTIAN: Only for testing
   static createFakePlayers(int numberToCreate) async {
     Faker faker = Faker();

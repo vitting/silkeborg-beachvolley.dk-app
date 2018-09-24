@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/choose_players_list.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/create_player_choose_date.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/create_player_chooser.dart';
@@ -30,23 +31,52 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
   RankingPlayerData _loser1Item;
   RankingPlayerData _loser2Item;
   String _noPlayerChoosenText = "Ingen spiller valgt";
+  RankingPlayerData _loggedInPlayer;
   List<RankingPlayerData> _listOfPlayers = [];
+  List<RankingPlayerData> _listOfFavoritePlayers = [];
   @override
   void initState() {
-    _getPlayersList();
+    _getPlayers();
     super.initState();
   }
 
-///CHRISTIAN: Vi skal have gemt at en player er min favorit? Hvis vi på min player 
-/////gemmer et array med userid på favorits, så må vi kunne filtere det ind.
-///Og Man skal kunne fjerne favorit igen. Hvis ikke Fieldvalue.arrayRemove ikke virker så er vi på røven.
-///Vi laver det sådan at farvoritter står øvers i listen.
-  _getPlayersList() async {
+  void _getPlayers() async {
+    List<dynamic> playerFavorites = [];
+
+    DocumentSnapshot doc =
+        await RankingFirestore.getPlayer(Home.loggedInUser.uid);
     QuerySnapshot snapshot = await RankingFirestore.getAllPlayers();
+
+    if (doc.exists) {
+      _loggedInPlayer = RankingPlayerData.fromMap(doc.data);
+      playerFavorites = _loggedInPlayer.playerFavorites.toList();
+    }
+
     if (snapshot.documents.length > 0) {
-      _listOfPlayers = snapshot.documents.map((DocumentSnapshot doc) {
-        return RankingPlayerData.fromMap(doc.data);
-      }).toList();
+      for (DocumentSnapshot p in snapshot.documents) {
+        RankingPlayerData player = RankingPlayerData.fromMap(p.data);
+
+        ///We adding ourself to favorites
+        if (player.userId == _loggedInPlayer.userId) {
+          _listOfFavoritePlayers.add(player);
+          continue;
+        }
+
+        ///Adding loggin favoritusers to faveroites
+        bool found = false;
+        for (var favoriteId in playerFavorites) {
+          if (favoriteId == player.userId) {
+            _listOfFavoritePlayers.add(player);
+            playerFavorites.remove(favoriteId);
+            found = true;
+            break;
+          }
+        }
+
+        if (found) continue;
+
+        _listOfPlayers.add(player);
+      }
     }
   }
 
@@ -122,6 +152,7 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
         context: context,
         builder: (BuildContext context) {
           return ChoosePlayersList(
+            listOfFavoritePlayers: _listOfFavoritePlayers,
             listOfPlayers: _listOfPlayers,
             type: type,
             winner1Item: _winner1Item,
