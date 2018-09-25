@@ -42,8 +42,12 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
 
   @override
   void dispose() {
-    super.dispose();
     photoFunctions.removeImagesFromCacheAndStorage(_imageFiles);
+    _startDateController.dispose();
+    _endDateController.dispose();
+    _startTimeController.dispose();
+    _endTimeController.dispose();
+    super.dispose();
   }
 
   String _getTitle(BulletinType type) {

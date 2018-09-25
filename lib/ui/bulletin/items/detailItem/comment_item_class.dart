@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
-class BulletinCommentItem {
+class BulletinCommentItem implements BaseData {
   String id;
   String body;
   dynamic creationDate;
@@ -51,4 +52,9 @@ class BulletinCommentItem {
 
   String get creationDateFormatted =>
       DateTimeHelpers.ddmmyyyyHHnn(creationDate);
+
+  @override
+  Future<void> delete() {
+    return null;
+  }
 }

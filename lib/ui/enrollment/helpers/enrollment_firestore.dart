@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_class.dart';
+import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_data_class.dart';
 
 class EnrollmentFirestore {
   static final _collectionName = "members";

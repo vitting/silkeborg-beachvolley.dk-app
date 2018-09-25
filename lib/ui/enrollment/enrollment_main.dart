@@ -1,189 +1,191 @@
-import 'dart:async';
-import "package:flutter/material.dart";
-import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
-import 'package:silkeborgbeachvolley/helpers/system_helpers_class.dart';
-import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_firestore.dart';
-import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_class.dart';
-import 'package:validate/validate.dart';
-
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:silkeborgbeachvolley/helpers/dot_bottombar.dart';
+import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_form.dart';
+import 'package:silkeborgbeachvolley/ui/scaffold/silkeborgBeachvolleyScaffold.dart';
 
 class Enrollment extends StatefulWidget {
-  static final routeName = "/enrollment";
-  Enrollment();
+  static final routeName = "/enrollmentstepper";
   @override
-  _EnrollmentState createState() => _EnrollmentState();
+  _EnrollmentStepperState createState() => _EnrollmentStepperState();
 }
 
-class _EnrollmentState extends State<Enrollment> {
-  final _birtdateController = TextEditingController();
-  final _user = new EnrollmentUser(createdDate: DateTime.now());
-  final _formKey = GlobalKey<FormState>();
-  @override
-  void dispose() {
-    _birtdateController.dispose();
-    super.dispose();
-  }
+class _EnrollmentStepperState extends State<Enrollment> {
+  PageController _controller = PageController();
+  int _position = 0;
 
+  @override
+    void dispose() {
+      _controller.dispose();
+      super.dispose();
+    }
   @override
   Widget build(BuildContext context) {
-    return _main();
-  }
-
-  Widget _main() {
-    return ListView(
-      children: <Widget>[
-        Form(
-        key: _formKey,
-        child: Column(
+    return SilkeborgBeachvolleyScaffold(
+      bottomNavigationBar: DotBottomBar(
+          showNavigationButtons: false, numberOfDot: 3, position: _position),
+      title: "Indmeldelse",
+      body: Card(
+          child: Container(
+        padding: EdgeInsets.all(10.0),
+        child: PageView(
+          controller: _controller,
+          physics: NeverScrollableScrollPhysics(),
           children: <Widget>[
-            _nameField(),
-            _adressField(),
-            _postalcodeField(),
-            _birthdayField(),
-            _emailField(),
-            _mobilenumberField(),
-            _sendButton(context),
+            _enrollmentReadme(),
+            EnrollmentForm(
+              saved: _formSaved,
+            ),
+            _enrollmentPayment()
           ],
-        ))
-      ],
+        ),
+      )),
     );
   }
 
-  //Datepicker dialog
-  Future<Null> _selectDate(BuildContext context) async {
-    var picked = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(1940),
-        lastDate: DateTime(DateTime.now().year + 1),
-        initialDatePickerMode: DatePickerMode.year);
+  _formSaved(bool value) {
+    _controller.nextPage(
+        curve: Curves.easeIn, duration: Duration(milliseconds: 400));
 
-    if (picked != null && picked != DateTime.now()) {
-      _user.birthdate = picked;
+    if (mounted) {
       setState(() {
-        _birtdateController.text = DateTimeHelpers.ddmmyyyy(picked);
+        _position = 2;
       });
     }
   }
 
-  Widget _nameField() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: "Navn"),
-      validator: (String value) {
-        if (value.isEmpty) return "Indtast dit navn";
-      },
-      keyboardType: TextInputType.text,
-      maxLength: 30,
-      onSaved: (String value) {
-        _user.name = value.trim();
-      },
-    );
+  Widget _enrollmentReadme() {
+    return Container(
+        padding: EdgeInsets.only(top: 20.0),
+        child: ListView(
+          shrinkWrap: true,
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                _textEnrollment("Velkommen til indmeldelse i"),
+                _textEnrollment("Silkeborg Beachvolley"),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: Image.asset("assets/images/logo_dark_blue_250x250.png",
+                      width: 80.0),
+                ),
+                _textEnrollment(
+                    "Det koster kun 25 kr. pr. sæson at være medlem af Silkeborg Beachvolley"),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: _textEnrollment("Beløbet indbetales på MobilePay"),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset("assets/images/mobilepay_horisontal_blue.png",
+                          height: 50.0),
+                      _textEnrollment("18185")
+                    ],
+                  ),
+                ),
+                _textEnrollment(
+                    "Udfyld formularen på næste side for den du vil melde ind i Silkeborg Beachvolley"),
+                IconButton(
+                  padding: EdgeInsets.only(top: 40.0),
+                  color: Colors.blueAccent,
+                  icon: Icon(
+                    FontAwesomeIcons.arrowAltCircleRight,
+                    size: 45.0,
+                  ),
+                  onPressed: () {
+                    _controller.nextPage(
+                        curve: Curves.easeIn,
+                        duration: Duration(milliseconds: 400));
+
+                    if (mounted) {
+                      setState(() {
+                        _position = 1;
+                      });
+                    }
+                  },
+                )
+              ],
+            )
+          ],
+        ));
   }
 
-  Widget _adressField() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: "Addresse"),
-      validator: (String value) {
-        if (value.isEmpty) return "Indtast din addresse";
-      },
-      keyboardType: TextInputType.text,
-      maxLength: 50,
-      onSaved: (String value) {
-        _user.street = value.trim();
-      },
-    );
+  Widget _enrollmentPayment() {
+    String url =
+        "https://www.mobilepay.dk/erhverv/betalingslink/betalingslink-svar?phone=18185&amount=25&comment=Kontigent%20-%20";
+
+    return Container(
+        padding: EdgeInsets.only(top: 20.0),
+        child: ListView(
+          shrinkWrap: true,
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: _textEnrollment(
+                      "Tak for din indmeldese i Silkeborg Beachvolley"),
+                ),
+                Image.asset("assets/images/logo_dark_blue_250x250.png",
+                    width: 40.0),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: _textEnrollment("Færdiggøre din indmeldelse ved at"),
+                ),
+                _textEnrollment("overføre 25 kr. i MobilePay"),
+                _textEnrollment("til nummer: 18185"),
+                GestureDetector(
+                  onTap: () async {
+                    _launchUrl(url);
+                  },
+                  child: Image.asset(
+                      "assets/images/mobilepay_vertical_blue.png",
+                      height: 100.0),
+                ),
+                _textEnrollment("Du kan trykke på MobilePay logoet"),
+                _textEnrollment("for at åbne din MobilePay app"),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: _textEnrollment(
+                      "Gå til forsiden hvis der er flere du vil melde ind i Silkeborg Beachvolley"),
+                ),
+                IconButton(
+                  iconSize: 45.0,
+                  onPressed: () {
+                    _controller.animateToPage(0,
+                        curve: Curves.easeIn,
+                        duration: Duration(milliseconds: 400));
+                    if (mounted) {
+                      setState(() {
+                        _position = 0;
+                      });
+                    }
+                  },
+                  color: Colors.blueAccent,
+                  icon: Icon(FontAwesomeIcons.arrowAltCircleLeft),
+                )
+              ],
+            ),
+          ],
+        ));
   }
 
-  Widget _postalcodeField() {
-    return TextFormField(
-      decoration: InputDecoration(
-        labelText: "Postnummer",
-      ),
-      validator: (String value) {
-        if (value.isEmpty || int.tryParse(value.trim()) == null)
-          return "Indtast dit postnummer";
-      },
-      keyboardType: TextInputType.number,
-      maxLength: 4,
-      onSaved: (String value) {
-        _user.postalCode = int.parse(value.trim());
-      },
-    );
+  Text _textEnrollment(String text) {
+    return Text(text,
+        textAlign: TextAlign.center, style: TextStyle(fontSize: 20.0));
   }
 
-  Widget _birthdayField() {
-    return TextFormField(
-      decoration: InputDecoration(
-        labelText: "Fødselsdato",
-        hintText: "Tryk på knappen og bruger kalenderen",
-        suffixIcon: IconButton(
-            icon: Icon(Icons.calendar_today),
-            onPressed: () {
-              _selectDate(context);
-            }),
-      ),
-      controller: _birtdateController,
-      validator: (String value) {
-        if (value.isEmpty) return "Indtast fødselsdato";
-        if (!DateTimeHelpers.isVvalidDateFormat(value)) return "Indtast fødselsdato i formatet dd-mm-yyyy"; 
-      },
-      keyboardType: TextInputType.datetime,
-      maxLength: 10
-    );
-  }
-
-  Widget _emailField() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: "E-mail"),
-      validator: (String value) {
-        if (value.isEmpty) return "Indtast din e-mail addresse";
-        try {
-          Validate.isEmail(value.trim());
-        } catch (e) {
-          return "Indtast en gyldig e-mail addresse";
-        }
-      },
-      keyboardType: TextInputType.emailAddress,
-      maxLength: 50,
-      onSaved: (String value) {
-        _user.email = value.trim();
-      },
-    );
-  }
-
-  Widget _mobilenumberField() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: "Mobilnummer"),
-      validator: (String value) {
-        if (value.isEmpty || int.tryParse(value.trim()) == null)
-          return "Indtast dit mobilnummer";
-      },
-      keyboardType: TextInputType.phone,
-      maxLength: 8,
-      onSaved: (String value) {
-        _user.phone = int.parse(value.trim());
-      },
-    );
-  }
-
-  Widget _sendButton(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
-      child: RaisedButton(
-        onPressed: () {
-          if (_formKey.currentState.validate()) {
-            _formKey.currentState.save();
-            _formKey.currentState.reset();
-            _birtdateController.text = "";
-            EnrollmentFirestore.saveEnrollment(_user);
-            SystemHelpers.hideKeyboardWithNoFocus(context);
-            Scaffold.of(context).showSnackBar(SnackBar(
-              content: Text("Tak for din indmeldelse i Silkeborg Beachvolley. Fortsæt til info om indbetaling."),
-            ));
-          }
-        },
-        child: Text('Indsend formular'),
-      ),
-    );
+  void _launchUrl(String url) async {
+    print(url);
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      print("Could not launch url: $url");
+    }
   }
 }

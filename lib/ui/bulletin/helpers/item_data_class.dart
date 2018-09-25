@@ -43,7 +43,6 @@ class BulletinItemData {
     };
   }
 
-//CHRISTIAN: Dont work at the moment. Error in cloud_firestore package
   Future<void> hide() {
     return BulletinFirestore.addUserHidesBulletinItem(id, Home.userInfo.id);
   }

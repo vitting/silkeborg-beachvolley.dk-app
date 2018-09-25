@@ -1,9 +1,10 @@
 import 'dart:async';
 
+import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_stats_data_class.dart';
 
-class RankingPlayerData {
+class RankingPlayerData implements BaseData {
   String name;
   String userId;
   String photoUrl;
@@ -30,7 +31,7 @@ class RankingPlayerData {
     return RankingFirestore.savePlayer(this);
   }
 
-  void delete() {
+  Future<void> delete() {
     throw Exception("Delete is not implementet");
   }
   

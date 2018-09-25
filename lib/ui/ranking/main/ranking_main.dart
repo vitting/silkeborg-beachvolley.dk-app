@@ -45,16 +45,11 @@ class _RankingState extends State<Ranking> {
       ),
     );
   }
-//CHRISTIAN: Vi skal have firsttime over i settings
+
   Widget _main() {
     return Container(
         child: ListView(
       children: <Widget>[
-        RaisedButton(
-          onPressed: () {
-            _showFirstTimeSetup();
-          },
-        ),
         StreamBuilder(
           stream: RankingFirestore.getRanking(),
           builder:

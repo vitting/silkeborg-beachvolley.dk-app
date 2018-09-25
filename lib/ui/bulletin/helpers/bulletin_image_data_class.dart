@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:meta/meta.dart';
+import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestorage.dart';
 
-class BulletinImageData {
+class BulletinImageData implements BaseData {
   String name;
   String folder;
   String link;
@@ -28,5 +29,10 @@ class BulletinImageData {
 
   Future<void> delete() {
     return BulletinFireStorage.deleteFromFirebaseStorage(name, folder);
+  }
+
+  @override
+  Future<void> save() async {
+    // TODO: implement save
   }
 }

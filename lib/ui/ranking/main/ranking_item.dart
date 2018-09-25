@@ -39,7 +39,7 @@ class RankingItemState extends State<RankingItem>
         ..addListener(() {
           setState(() {});
         });
-        
+
       _controller.forward();
     }
   }
@@ -49,7 +49,7 @@ class RankingItemState extends State<RankingItem>
     if (widget.showAnimation) {
       _controller.dispose();
     }
-    
+
     super.dispose();
   }
 

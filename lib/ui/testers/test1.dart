@@ -9,47 +9,37 @@ class Test1Widget extends StatelessWidget {
       title: "test1",
       body: Container(
       child: RaisedButton(
-        onPressed: () {
-          Test2Main a = Test2Main("idSerewr", "namedfsdfsdf", 45, "streetdfsdfsdf");
-          Test1Main b = a;
-          b.save();
+        onPressed: () async {
+          List<String> a = ["asdas", "sfsdf", "dsfsdfs", "dfsdf", "rrtfwe"];
+
+          
+          a.any((String value) {
+            print("BEFORE: $value");
+            if (value == "sfsdf") return true;
+            print("AFTER: $value");
+            return false;
+          });
+
+
+          // Firestore.instance.collection("test").add({"id": "fsdfsdf", "list": ["sdfsfd", "abc", "cba"]});
+          // DocumentReference a = Firestore.instance.collection("test").document("-LN2JqhNl4U2_pjSYX51");
+          // a.updateData({
+          //   "list": ["ABCD", "DFG", "DDDD"]
+          // });
+
+          // DocumentReference a = Firestore.instance.collection("test").document("-LN2JqhNl4U2_pjSYX51");
+          // a.updateData({
+          //   "list": FieldValue.arrayRemove("DDDD")
+          // });
+          
+          // QuerySnapshot a = await Firestore.instance.collection("test").where("list", arrayContains: "abc").getDocuments();
+          // print(a.documents.length);
+          
+          
         },
         child: Text("Test1"),
       ),
     ),
     );
-  }
-}
-
-class Test1Main {
-  String id;
-  String name;
-
-  Test1Main(this.id, this.name);
-  
-  Map<String, dynamic> toMap() {
-    return {
-      "id": id,
-      "name": name
-    };
-  }
-
-  void save() {
-    Firestore.instance.collection("test").add(this.toMap());
-  }
-}
-
-class Test2Main extends Test1Main {
-  int age;
-  String street;
-  Test2Main(String id, String name, this.age, this.street) : super(id, name);
-  
-  Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = super.toMap();
-    map.addAll({
-      "age": age,
-      "street": street
-    });
-    return map;
   }
 }

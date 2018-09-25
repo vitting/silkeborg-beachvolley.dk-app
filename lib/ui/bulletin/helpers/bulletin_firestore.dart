@@ -98,7 +98,7 @@ class BulletinFirestore {
         .collection(_bulletinCollectionName)
         .document(bulletId)
         .updateData({
-      "hiddenByUser": FieldValue.arrayUnion([userId])
+      "hiddenByUser": FieldValue.arrayUnion(userId)
     });
   }
 

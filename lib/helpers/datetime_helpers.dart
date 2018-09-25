@@ -54,6 +54,10 @@ class DateTimeHelpers {
     return formatDate(date, [dd, ". ", monthsShort[date.month], " ", yyyy]);
   }
 
+  static String ddMM(DateTime date) {
+    return formatDate(date, [dd, ". ", monthsShort[date.month]]);
+  }
+
   static String hhnn(dynamic date) {
     DateTime dateToFormat;
     if (date is TimeOfDay) {

@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
+import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/user_firestore.dart';
 
-class UserInfoData {
+class UserInfoData implements BaseData {
   String id = "";
   String name = "";
   String email = "";
@@ -49,7 +50,7 @@ class UserInfoData {
 
   }
 
-  static UserInfoData fromMap (Map<String, dynamic> user) {
+  factory UserInfoData.fromMap (Map<String, dynamic> user) {
     return UserInfoData(
       id: user["id"] == null ? "" : user["id"],
       name: user["name"] == null ? "" : user["name"],
@@ -58,5 +59,15 @@ class UserInfoData {
       admin1: user["admin1"] == null ? false : user["admin1"],
       admin2: user["admin2"] == null ? false : user["admin2"]
     );
+  }
+
+  @override
+  Future<void> delete() async {
+    // TODO: implement delete
+  }
+
+  @override
+  Future<void> save() async {
+    // TODO: implement save
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:silkeborgbeachvolley/helpers/event_datetime_type_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/event_datetime_type_enum.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
@@ -46,7 +46,7 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
                     context,
                     widget.startDateController,
                     "Start dato",
-                    EventDateTimeType.startDate,
+                    DateTimeType.startDate,
                     "Udfyld Start dato")),
             SizedBox(width: 20.0),
             Flexible(
@@ -54,7 +54,7 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
                     context,
                     widget.endDateController,
                     "Slut dato",
-                    EventDateTimeType.endDate,
+                    DateTimeType.endDate,
                     "Udfyld Slut dato"))
           ],
         ),
@@ -65,7 +65,7 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
                     context,
                     widget.startTimeController,
                     "Start tid",
-                    EventDateTimeType.startTime,
+                    DateTimeType.startTime,
                     "Udfyld Start tid")),
             SizedBox(width: 20.0),
             Flexible(
@@ -73,7 +73,7 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
                     context,
                     widget.endTimeController,
                     "Slut tid",
-                    EventDateTimeType.endTime,
+                    DateTimeType.endTime,
                     "Udfyld Slut tid"))
           ],
         ),
@@ -133,7 +133,7 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
       BuildContext context,
       TextEditingController controller,
       String label,
-      EventDateTimeType type,
+      DateTimeType type,
       String validatorText) {
     return TextFormField(
         keyboardType: TextInputType.datetime,
@@ -156,7 +156,7 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
       BuildContext context,
       TextEditingController controller,
       String label,
-      EventDateTimeType type,
+      DateTimeType type,
       String validatorText) {
     return TextFormField(
         keyboardType: TextInputType.datetime,
@@ -210,26 +210,26 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
     return imageProvider;
   }
 
-  DateTime _setDate(EventDateTimeType eventDateTimeType) {
+  DateTime _setDate(DateTimeType eventDateTimeType) {
     DateTime date = DateTime.now();
     if (widget.itemFieldsValue.eventStartDate != null &&
-        eventDateTimeType == EventDateTimeType.startDate) {
+        eventDateTimeType == DateTimeType.startDate) {
       date = widget.itemFieldsValue.eventStartDate;
     }
 
     if (widget.itemFieldsValue.eventEndDate != null &&
-        eventDateTimeType == EventDateTimeType.endDate) {
+        eventDateTimeType == DateTimeType.endDate) {
       date = widget.itemFieldsValue.eventEndDate;
     }
 
     return date;
   }
 
-  TimeOfDay _setTime(EventDateTimeType eventDateTimeType) {
+  TimeOfDay _setTime(DateTimeType eventDateTimeType) {
     TimeOfDay day = TimeOfDay.now();
 
     if (widget.itemFieldsValue.eventStartTime != null &&
-        eventDateTimeType == EventDateTimeType.startTime) {
+        eventDateTimeType == DateTimeType.startTime) {
       if (widget.itemFieldsValue.eventStartTime is TimeOfDay)
         day = widget.itemFieldsValue.eventStartTime;
       if (widget.itemFieldsValue.eventStartTime is DateTime)
@@ -239,7 +239,7 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
     }
 
     if (widget.itemFieldsValue.eventEndTime != null &&
-        eventDateTimeType == EventDateTimeType.endTime) {
+        eventDateTimeType == DateTimeType.endTime) {
       if (widget.itemFieldsValue.eventEndTime is TimeOfDay)
         day = widget.itemFieldsValue.eventEndTime;
       if (widget.itemFieldsValue.eventEndTime is DateTime)
@@ -252,7 +252,7 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
   }
 
   Future<Null> _selectDate(
-      BuildContext context, EventDateTimeType eventDateTimeType) async {
+      BuildContext context, DateTimeType eventDateTimeType) async {
     DateTime picked = await showDatePicker(
         context: context,
         initialDate: _setDate(eventDateTimeType),
@@ -261,50 +261,54 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
         initialDatePickerMode: DatePickerMode.day);
 
     if (picked != null) {
-      setState(() {
-        String formattedDate = DateTimeHelpers.ddmmyyyy(picked);
-        switch (eventDateTimeType) {
-          case EventDateTimeType.startDate:
-            widget.startDateController.text = formattedDate;
-            widget.endDateController.text = formattedDate;
-            widget.itemFieldsValue.eventStartDate = picked;
-            widget.itemFieldsValue.eventEndDate = picked;
-            break;
-          case EventDateTimeType.endDate:
-            widget.endDateController.text = formattedDate;
-            widget.itemFieldsValue.eventEndDate = picked;
-            break;
-          default:
-            print(formattedDate);
-        }
-      });
+      if (mounted) {
+        setState(() {
+          String formattedDate = DateTimeHelpers.ddmmyyyy(picked);
+          switch (eventDateTimeType) {
+            case DateTimeType.startDate:
+              widget.startDateController.text = formattedDate;
+              widget.endDateController.text = formattedDate;
+              widget.itemFieldsValue.eventStartDate = picked;
+              widget.itemFieldsValue.eventEndDate = picked;
+              break;
+            case DateTimeType.endDate:
+              widget.endDateController.text = formattedDate;
+              widget.itemFieldsValue.eventEndDate = picked;
+              break;
+            default:
+              print(formattedDate);
+          }
+        });
+      }
     }
   }
 
   Future<Null> _selectTime(
-      BuildContext context, EventDateTimeType eventDateTimeType) async {
+      BuildContext context, DateTimeType eventDateTimeType) async {
     TimeOfDay picked = await showTimePicker(
         context: context, initialTime: _setTime(eventDateTimeType));
 
     if (picked != null) {
-      setState(() {
-        switch (eventDateTimeType) {
-          case EventDateTimeType.startTime:
-            widget.startTimeController.text = picked.format(context);
-            widget.endTimeController.text =
-                picked.replacing(hour: picked.hour + 2).format(context);
-            widget.itemFieldsValue.eventStartTime = picked;
-            widget.itemFieldsValue.eventEndTime =
-                picked.replacing(hour: picked.hour + 2);
-            break;
-          case EventDateTimeType.endTime:
-            widget.endTimeController.text = picked.format(context);
-            widget.itemFieldsValue.eventEndTime = picked;
-            break;
-          default:
-            print(picked);
-        }
-      });
+      if (mounted) {
+        setState(() {
+          switch (eventDateTimeType) {
+            case DateTimeType.startTime:
+              widget.startTimeController.text = picked.format(context);
+              widget.endTimeController.text =
+                  picked.replacing(hour: picked.hour + 2).format(context);
+              widget.itemFieldsValue.eventStartTime = picked;
+              widget.itemFieldsValue.eventEndTime =
+                  picked.replacing(hour: picked.hour + 2);
+              break;
+            case DateTimeType.endTime:
+              widget.endTimeController.text = picked.format(context);
+              widget.itemFieldsValue.eventEndTime = picked;
+              break;
+            default:
+              print(picked);
+          }
+        });
+      }
     }
   }
 }

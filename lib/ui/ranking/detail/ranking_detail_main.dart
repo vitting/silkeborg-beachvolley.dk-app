@@ -32,19 +32,25 @@ class RankingDetailState extends State<RankingDetail> {
     _initPages();
   }
 
+  @override
+    void dispose() {
+      _controller.dispose();
+      super.dispose();
+    }
+
   void _initPages() async {
     _widgets = [
       RankingDetailStat(
         player: widget.player,
         matches: _loadMatches(),
       ),
-      RankingDetailMatches(matches: _loadMatches(), userId: widget.player.userId)
+      RankingDetailMatches(
+          matches: _loadMatches(), userId: widget.player.userId)
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    
     return SilkeborgBeachvolleyScaffold(
         title: _title,
         bottomNavigationBar: DotBottomBar(
@@ -57,11 +63,10 @@ class RankingDetailState extends State<RankingDetail> {
           itemBuilder: (BuildContext context, int page) {
             return _widgets[page];
           },
-          onPageChanged: (int page) async {
-            _position = page;
-            _title = _getPageTitle(page);
+          onPageChanged: (int page) {
             setState(() {
-
+              _position = page;
+              _title = _getPageTitle(page);
             });
           },
         ));
@@ -76,14 +81,14 @@ class RankingDetailState extends State<RankingDetail> {
 
   Future<List<RankingMatchData>> _loadMatches() async {
     List<DocumentSnapshot> list =
-          await RankingFirestore.getPlayerMatches(widget.player.userId);
-      List<RankingMatchData> matches = list.map((DocumentSnapshot doc) {
-        return RankingMatchData.fromMap(doc.data);
-      }).toList();
+        await RankingFirestore.getPlayerMatches(widget.player.userId);
+    List<RankingMatchData> matches = list.map((DocumentSnapshot doc) {
+      return RankingMatchData.fromMap(doc.data);
+    }).toList();
 
-      matches.sort((RankingMatchData a, RankingMatchData b) =>
-          a.matchDate.compareTo(b.matchDate));
+    matches.sort((RankingMatchData a, RankingMatchData b) =>
+        a.matchDate.compareTo(b.matchDate));
 
-          return matches;
+    return matches;
   }
 }

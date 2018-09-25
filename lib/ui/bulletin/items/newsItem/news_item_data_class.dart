@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/image_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
@@ -9,7 +10,7 @@ import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
-class BulletinNewsItemData extends BulletinItemData {
+class BulletinNewsItemData extends BulletinItemData implements BaseData {
   List<BulletinImageData> images;
   BulletinNewsItemData(
       {String id,

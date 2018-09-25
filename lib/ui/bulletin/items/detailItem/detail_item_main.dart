@@ -27,6 +27,11 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
     super.initState();
   }
 
+@override
+  void dispose() {
+    _listScrollController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
