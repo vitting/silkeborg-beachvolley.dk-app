@@ -33,7 +33,7 @@ class RankingMatchesRow extends StatelessWidget {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                    child: _getName(name, id)
+                    child: _getName(name, id),
                   ),
                 )
               ],
