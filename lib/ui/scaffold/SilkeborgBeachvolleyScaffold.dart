@@ -1,10 +1,12 @@
 import "package:flutter/material.dart";
 import "package:cached_network_image/cached_network_image.dart";
+import 'package:silkeborgbeachvolley/helpers/confirm_action_enum.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/settings_main.dart';
 import 'package:silkeborgbeachvolley/ui/tournament_calendar/tournament_calendar_main.dart';
+import '../login/auth_functions.dart' as authFunctions;
 
 class SilkeborgBeachvolleyScaffold extends StatefulWidget {
   final String title;
@@ -38,11 +40,13 @@ class _SilkeborgBeachvolleyScaffoldState
 
   void _setUserInfo() {
     if (Home.loggedInUser != null) {
-      setState(() {
-        _photoUrl = Home.loggedInUser.photoUrl;
-        _email = Home.loggedInUser.email;
-        _name = Home.loggedInUser.displayName;
-      });
+      if (mounted) {
+        setState(() {
+          _photoUrl = Home.loggedInUser.photoUrl;
+          _email = Home.loggedInUser.email;
+          _name = Home.loggedInUser.displayName;
+        });
+      }
     }
   }
 
@@ -84,11 +88,7 @@ class _SilkeborgBeachvolleyScaffoldState
         },
       ),
       ListTile(
-        leading: Icon(Icons.album),
-        title: Text("Livescore"),
-        onTap: () {}
-          
-      ),
+          leading: Icon(Icons.album), title: Text("Livescore"), onTap: () {}),
       ListTile(
         leading: Icon(Icons.album),
         title: Text("Stævnekalender"),
@@ -99,16 +99,18 @@ class _SilkeborgBeachvolleyScaffoldState
       ListTile(
         leading: Icon(Icons.album),
         title: Text("Nyheder fra beachvolley.dk"),
-        onTap: () {
-          
-        },
+        onTap: () {},
       ),
       Divider(),
       ListTile(
         leading: Icon(Icons.album),
         title: Text("Log ud"),
-        onTap: () {
-          Navigator.of(context).pushNamed("/settings");
+        onTap: () async {
+          Navigator.of(context).pop();
+          ConfirmAction logoutAction = await authFunctions.logoutConfirm(context);
+          if (logoutAction == ConfirmAction.yes) {
+            await authFunctions.logout();
+          }
         },
       ),
       ListTile(

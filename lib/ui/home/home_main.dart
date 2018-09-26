@@ -24,9 +24,12 @@ class _HomeState extends State<Home> {
         _loadUserInfo(user.uid);
       }
 
-      setState(() {
+      if (mounted) {
+        setState(() {
         _isLoggedIn = user == null ? false : true;        
       });
+      }
+      
     });
   }
 

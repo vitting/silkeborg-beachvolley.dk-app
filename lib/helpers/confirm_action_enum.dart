@@ -1,0 +1,4 @@
+enum ConfirmAction {
+  yes,
+  no
+}

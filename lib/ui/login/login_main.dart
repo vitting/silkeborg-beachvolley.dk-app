@@ -1,9 +1,6 @@
-import 'dart:async';
-import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
-import 'package:silkeborgbeachvolley/helpers/user_firestore.dart';
-import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
+import 'auth_functions.dart' as authFunctions;
 
 class Login extends StatefulWidget {
   static final routeName = "/login";
@@ -40,7 +37,9 @@ class _LoginState extends State<Login> {
             color: Color(0xFF4267B2),
             padding: EdgeInsets.all(10.0),
             onPressed: () async {
-              await _signInWithFacebook(context);
+              // await _signInWithFacebook(context);
+              await authFunctions.signInWithFacebook();
+              Navigator.of(context).pushNamedAndRemoveUntil("/", ((Route<dynamic> route) => false));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -65,17 +64,5 @@ class _LoginState extends State<Login> {
         ],
       ),
     );
-  }
-
-  Future<void> _signInWithFacebook(BuildContext context) async {
-    final FirebaseUser user = await UserAuth.signInWithFacebook();
-    
-    if (user != null) _finalSignInTasks(context, user, "facebook");
-  }
-
-  Future<void> _finalSignInTasks(BuildContext context, FirebaseUser user, String loginProvider) async {
-    await UserFirestore.setUserInfo(user);
-    //CHRISTIAN: Lige nu giver den her en fejl når man logger ind.
-    Navigator.of(context).pushNamedAndRemoveUntil("/", ((Route<dynamic> route) => false));
   }
 }
