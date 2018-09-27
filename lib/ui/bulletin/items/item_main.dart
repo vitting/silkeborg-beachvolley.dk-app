@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/detailItem/detail_item_main.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/editItem/bulletin_edit_item_main.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
@@ -12,6 +10,7 @@ import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item.dart
 import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
+import './item_functions.dart' as itemFunctions;
 
 class BulletinItemMain extends StatelessWidget {
   final Map item;
@@ -41,8 +40,8 @@ class BulletinItemMain extends StatelessWidget {
     );
   }
 
-  Widget _bulletinNewsItem(
-      BuildContext context, BulletinNewsItemData bulletinItem) {
+  Widget _bulletinNewsItem(BuildContext context, BulletinNewsItemData bulletinItem) {
+    if (bulletinItem.hiddenByUser.contains(Home.loggedInUser.uid)) return null;
     return BulletinNewsItem(
         bulletinItem: bulletinItem,
         onTap: () async {
@@ -51,8 +50,8 @@ class BulletinItemMain extends StatelessWidget {
         onLongPress: () => _bulletinItemOnLongPress(context, bulletinItem));
   }
 
-  Widget _bulletinEventItem(
-      BuildContext context, BulletinEventItemData bulletinItem) {
+  Widget _bulletinEventItem(BuildContext context, BulletinEventItemData bulletinItem) {
+    if (bulletinItem.hiddenByUser.contains(Home.loggedInUser.uid)) return null;
     return BulletinEventItem(
         bulletinItem: bulletinItem,
         onTap: () async {
@@ -61,8 +60,8 @@ class BulletinItemMain extends StatelessWidget {
         onLongPress: () => _bulletinItemOnLongPress(context, bulletinItem));
   }
 
-  Widget _bulletinPlayItem(
-      BuildContext context, BulletinPlayItemData bulletinItem) {
+  Widget _bulletinPlayItem(BuildContext context, BulletinPlayItemData bulletinItem) {
+    if (bulletinItem.hiddenByUser.contains(Home.loggedInUser.uid)) return null;
     return BulletinPlayItem(
         bulletinItem: bulletinItem,
         onTap: () async {
@@ -82,153 +81,6 @@ class BulletinItemMain extends StatelessWidget {
       BuildContext context, BulletinItemData bulletinItem) {
     UserInfoData userInfo = Home.userInfo;
     if (userInfo?.id == bulletinItem.authorId)
-      _bulletinItemPopupMenu(context, bulletinItem);
+      itemFunctions.bulletinItemPopupMenu(context, bulletinItem);
   }
-
-  void _bulletinItemPopupMenu(
-      BuildContext context, BulletinItemData bulletinItem) {
-    showModalBottomSheet<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return Container(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                ListTile(
-                  onTap: () {
-                    bulletinItem.hide();
-                    Navigator.of(context).pop();
-                  },
-                  title: Text("Skjul"),
-                  leading: Icon(Icons.visibility_off),
-                ),
-                Divider(),
-                ListTile(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(
-                      fullscreenDialog: true,
-                      builder: (BuildContext context) => EditBulletinItem(bulletinItem)
-                    ));
-                  },
-                  title: Text("Rediger"),
-                  leading: Icon(Icons.edit),
-                ),
-                Divider(),
-                ListTile(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    _bulletinConfirmDialog(context, bulletinItem);
-                  },
-                  title: Text("Slet"),
-                  leading: Icon(Icons.delete),
-                )
-              ],
-            ),
-          );
-        });
-  }
-
-  void _bulletinConfirmDialog(
-      BuildContext context, BulletinItemData bulletinItem) async {
-    ConfirmDialogOptions dialogOptions =
-        _getConfimDialogOptions(bulletinItem.type);
-    ConfirmDialogAction result = await showDialog<ConfirmDialogAction>(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: dialogOptions.title,
-            content: SingleChildScrollView(
-                child: ListBody(
-              children: dialogOptions.body,
-            )),
-            actions: <Widget>[
-              FlatButton(
-                  child: Text("Anuller"),
-                  onPressed: () {
-                    Navigator.of(context).pop(ConfirmDialogAction.cancel);
-                  }),
-              FlatButton(
-                  child: Text("Slet"),
-                  onPressed: () {
-                    Navigator.of(context).pop(ConfirmDialogAction.delete);
-                  })
-            ],
-          );
-        });
-
-    if (result == ConfirmDialogAction.delete) {
-      _deleteBulletinItem(bulletinItem);
-    }
-  }
-
-  ConfirmDialogOptions _getConfimDialogOptions(BulletinType type) {
-    ConfirmDialogOptions dialogOptions = new ConfirmDialogOptions();
-    switch (type) {
-      case BulletinType.news:
-        dialogOptions.title = Text("Slet nyhed");
-        dialogOptions.body = [
-          Text("Er du sikker på du vil slette din nyhed?"),
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Text(
-                "Du skal være opmærksom på at alle billeder og kommentarer for nyheden også vil bliver slettet"),
-          )
-        ];
-
-        break;
-      case BulletinType.event:
-        dialogOptions.title = Text("Slet begivenhed");
-        dialogOptions.body = [
-          Text("Er du sikker på du vil slette din begivenhed?"),
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Text(
-                "Du skal være opmærksom på at alle kommentarer for begivenheden også vil bliver slettet"),
-          )
-        ];
-
-        break;
-      case BulletinType.play:
-        dialogOptions.title = Text("Slet spil");
-        dialogOptions.body = [
-          Text("Er du sikker på du vil slette dit opslag om spil?"),
-          Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Text(
-                  "Du skal være opmærksom på at alle kommentarer for opsalget også vil bliver slettet"))
-        ];
-
-        break;
-      case BulletinType.none:
-        break;
-    }
-
-    return dialogOptions;
-  }
-
-  void _deleteBulletinItem(BulletinItemData bulletinItem) {
-    if (bulletinItem.type == BulletinType.news) {
-      (bulletinItem as BulletinNewsItemData).delete();
-    }
-
-    if (bulletinItem.type == BulletinType.event) {
-      (bulletinItem as BulletinEventItemData).delete();
-    }
-
-    if (bulletinItem.type == BulletinType.play) {
-      (bulletinItem as BulletinPlayItemData).delete();
-    }
-  }
-}
-
-enum ConfirmDialogAction { delete, cancel }
-
-class ConfirmDialogOptions {
-  BulletinType type;
-  Text title;
-  List<Widget> body;
-
-  ConfirmDialogOptions({this.type, this.title, this.body});
 }

@@ -125,7 +125,8 @@ class BulletinEventItemData extends BulletinItemData implements BaseData {
         eventEndTime: item["event"]["endTime"] ?? DateTime.now(),
         eventLocation: item["event"]["location"] ?? "",
         eventTitle: item["event"]["title"] ?? "",
-        eventImage: item["event"]["image"] == null ? null : BulletinImageData.fromMap(item["event"]["image"])
+        eventImage: item["event"]["image"] == null ? null : BulletinImageData.fromMap(item["event"]["image"]),
+        hiddenByUser: item["hiddenByUser"] ?? []
         );
   }
 }

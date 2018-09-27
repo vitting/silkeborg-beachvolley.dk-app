@@ -46,8 +46,12 @@ class _HomeState extends State<Home> {
   }
 
   _loadUserInfo(String userId) async {
-    UserInfoData userInfoData = await UserInfoData.getStoredUserInfo(userId);
-    Home.userInfo = userInfoData;
+    UserInfoData userInfoData = await UserInfoData.get(userId);
+    if (mounted) {
+      setState(() {
+        Home.userInfo = userInfoData;              
+      });
+    }
   }
 
   @override

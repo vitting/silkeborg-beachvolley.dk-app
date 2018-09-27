@@ -91,7 +91,6 @@ class BulletinFirestore {
         .delete();
   }
 
-//CHRISTIAN: Dont work at the moment. Error in cloud_firestore package
   static Future<void> addUserHidesBulletinItem(
       String bulletId, String userId) async {
     return await firestoreInstance
@@ -99,6 +98,16 @@ class BulletinFirestore {
         .document(bulletId)
         .updateData({
       "hiddenByUser": FieldValue.arrayUnion(userId)
+    });
+  }
+
+    static Future<void> removeUserHidesBulletinItem(
+      String bulletId, String userId) async {
+    return await firestoreInstance
+        .collection(_bulletinCollectionName)
+        .document(bulletId)
+        .updateData({
+      "hiddenByUser": FieldValue.arrayRemove(userId)
     });
   }
 

@@ -111,6 +111,8 @@ class BulletinPlayItemData extends BulletinItemData implements BaseData {
         body: item["body"] ?? "",
         creationDate: item["creationDate"] ?? DateTime.now(),
         numberOfcomments: item["numberOfcomments"] ?? 0,
-        numberOfPlayersCommitted: item["numberOfPlayersCommitted"] ?? 0);
+        numberOfPlayersCommitted: item["numberOfPlayersCommitted"] ?? 0,
+        hiddenByUser: item["hiddenByUser"] ?? []
+    );
   }
 }

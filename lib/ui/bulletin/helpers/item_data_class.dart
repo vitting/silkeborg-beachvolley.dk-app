@@ -44,7 +44,11 @@ class BulletinItemData {
   }
 
   Future<void> hide() {
-    return BulletinFirestore.addUserHidesBulletinItem(id, Home.userInfo.id);
+    return BulletinFirestore.addUserHidesBulletinItem(id, Home.loggedInUser.uid);
+  }
+
+  Future<void> unhide() {
+    return BulletinFirestore.removeUserHidesBulletinItem(id, Home.loggedInUser.uid);
   }
 
   ///Deletes all images, comments and the news item.

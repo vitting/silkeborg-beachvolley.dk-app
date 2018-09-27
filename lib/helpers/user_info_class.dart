@@ -32,7 +32,7 @@ class UserInfoData implements BaseData {
     photoUrl = user.photoUrl;
   }
 
-  static Future<UserInfoData> getStoredUserInfo(String id) async {
+  static Future<UserInfoData> get(String id) async {
     DocumentSnapshot snapshot = await UserFirestore.getUserInfo(id);
     UserInfoData userInfoData;
     if (snapshot.exists)  userInfoData = UserInfoData.fromMap(snapshot.data);

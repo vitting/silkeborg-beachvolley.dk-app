@@ -78,7 +78,8 @@ class BulletinNewsItemData extends BulletinItemData implements BaseData {
         numberOfcomments: item["numberOfcomments"] ?? 0,
         images: item["images"] == null ? [] : (item["images"] as List<dynamic>).map<BulletinImageData>((dynamic data) {
           return BulletinImageData.fromMap(data);
-        }).toList()
+        }).toList(),
+        hiddenByUser: item["hiddenByUser"] ?? []
         );
   }
 }

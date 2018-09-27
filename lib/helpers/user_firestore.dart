@@ -20,7 +20,7 @@ class UserFirestore {
 
   static Future<void> setUserInfo(FirebaseUser user) async {
     UserInfoData userInfo;
-    UserInfoData storedUserInfo = await UserInfoData.getStoredUserInfo(user.uid);
+    UserInfoData storedUserInfo = await UserInfoData.get(user.uid);
     if (storedUserInfo != null) {
       userInfo = storedUserInfo..updateUserInfoFromFirebaseUser(user);
     } else {
