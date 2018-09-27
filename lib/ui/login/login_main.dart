@@ -37,7 +37,6 @@ class _LoginState extends State<Login> {
             color: Color(0xFF4267B2),
             padding: EdgeInsets.all(10.0),
             onPressed: () async {
-              // await _signInWithFacebook(context);
               await authFunctions.signInWithFacebook();
               Navigator.of(context).pushNamedAndRemoveUntil("/", ((Route<dynamic> route) => false));
             },

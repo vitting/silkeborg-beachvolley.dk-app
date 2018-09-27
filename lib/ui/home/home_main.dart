@@ -4,6 +4,7 @@ import 'package:silkeborgbeachvolley/helpers/user_info_class.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/bulletin_main.dart';
 import 'package:silkeborgbeachvolley/ui/login/login_main.dart';
+import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data_class.dart';
 
 class Home extends StatefulWidget {
   static FirebaseUser loggedInUser;
@@ -22,6 +23,7 @@ class _HomeState extends State<Home> {
       
       if (user != null) {
         _loadUserInfo(user.uid);
+        _initSettings(user.uid);
       }
 
       if (mounted) {
@@ -33,8 +35,18 @@ class _HomeState extends State<Home> {
     });
   }
 
-  _loadUserInfo(String id) async {
-    UserInfoData userInfoData = await UserInfoData.getStoredUserInfo(id);
+  void _initSettings(String userId) async {
+    SettingsData settings = await SettingsData.get(userId);
+    if (settings == null) {
+      settings = SettingsData(
+        rankingName: Home.loggedInUser.displayName
+      );
+      settings.save();
+    }
+  }
+
+  _loadUserInfo(String userId) async {
+    UserInfoData userInfoData = await UserInfoData.getStoredUserInfo(userId);
     Home.userInfo = userInfoData;
   }
 

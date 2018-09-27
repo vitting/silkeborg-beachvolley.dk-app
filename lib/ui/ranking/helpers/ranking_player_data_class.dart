@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_stats_data_class.dart';
@@ -33,6 +34,16 @@ class RankingPlayerData implements BaseData {
 
   Future<void> delete() {
     throw Exception("Delete is not implementet");
+  }
+
+  static Future<RankingPlayerData> get(String userId) async {
+    RankingPlayerData data;
+    DocumentSnapshot snapshot = await RankingFirestore.getPlayer(userId);
+    if (snapshot.exists) {
+      data = RankingPlayerData.fromMap(snapshot.data);
+    }
+
+    return data;
   }
   
   factory RankingPlayerData.fromMap(Map<String, dynamic> doc) {

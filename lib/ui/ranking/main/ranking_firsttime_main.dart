@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data_class.dart';
 
 class RankingFirstTime extends StatefulWidget {
   final ValueChanged<bool> onPressedValue;
@@ -116,6 +117,12 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
   }
 
   void _savePlayer() async {
+    SettingsData settings = await SettingsData.get(_rankingPlayerData.userId);
+    if (settings != null) {
+      settings.rankingName = _rankingPlayerData.name;
+      settings.sex = _rankingPlayerData.sex;
+      settings.save();
+    }
     await _rankingPlayerData.save(); 
     Navigator.of(context).pop();
   }
