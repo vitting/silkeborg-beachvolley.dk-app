@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart' show CalendarCarousel;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
@@ -16,21 +16,44 @@ class TournamentCalendar extends StatefulWidget {
 }
 
 class _TournamentCalendarState extends State<TournamentCalendar> {
+  List<TournamentData> _tournaments = [];
   bool _isAdmin = false;
-
+  int _bottomNavBarCurrentIndex = 0;
   @override
   void initState() {
-    super.initState();
+    //CHRISTIAN: Load tournaments and make matchdates list for calendar
+    // _loadTournaments();
     if (Home.userInfo != null && Home.userInfo.admin1) {
       _isAdmin = true;
     }
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
       title: "Turnerings kalender",
-      body: _main(),
+      body: _bottomNavBarCurrentIndex == 0 ? _listView() : _calendarView(),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (int index) {
+          if (mounted) {
+            setState(() {
+              _bottomNavBarCurrentIndex = index;                          
+            });
+          }
+        },
+        currentIndex: _bottomNavBarCurrentIndex,
+        items: <BottomNavigationBarItem> [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            title: Text("Liste")
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today),
+            title: Text("Kalender")
+          )
+        ],
+      ), 
       floatingActionButton: _floatingActionButton(),
     );
   }
@@ -40,7 +63,7 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
     if (_isAdmin) {
       button = FloatingActionButton(
         onPressed: () async {
-          await _showCreateDialog(null);
+          await _showCreateDialog(null, "Opret turnering");
         },
         child: Icon(Icons.add),
       );
@@ -49,7 +72,7 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
     return button;
   }
 
-  Widget _main() {
+  Widget _listView() {
     return Card(
       child: FutureBuilder(
         future: TournamentData.getTournaments(),
@@ -64,6 +87,7 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
               TournamentData item = snapshot.data[position];
               return Card(
                 child: ListTile(
+                  contentPadding: EdgeInsets.all(10.0),
                   onLongPress: () async {
                     await _onLongPress(item);
                   },
@@ -92,11 +116,37 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
     );
   }
 
-  Future<void> _showCreateDialog(TournamentData item) async {
+  Widget _calendarView() {
+    return Card(
+      child: Container(
+        child: CalendarCarousel(
+          weekDays: ["Søn", "Man", "Tirs", "Ons", "Tors", "Fre", "Lør"],
+          markedDates: [DateTime(2018, 9, 27), DateTime(2018, 9, 25), DateTime(2018, 9, 27)],
+          markedDateWidget: Container(
+            child: Opacity(
+                opacity: 0.5,
+                child: Container(
+                   decoration: BoxDecoration(
+                     shape: BoxShape.circle,
+                     color: Colors.purple
+                   ),
+              )
+              )
+          ),
+          selectedDateTime: DateTime.now(),
+          onDayPressed: (DateTime date) {
+
+          },
+        ),
+      ),
+    );
+  }
+
+  Future<void> _showCreateDialog(TournamentData item, String title) async {
     TournamentData data = await Navigator.of(context).push<TournamentData>(
         MaterialPageRoute(
             fullscreenDialog: true,
-            builder: (BuildContext context) => CreateTournamentItem(tournament: item)));
+            builder: (BuildContext context) => CreateTournamentItem(tournament: item, title: title)));
 
     if (data != null) {
       await data.save();
@@ -105,7 +155,7 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
 
   Future<void> _onLongPress(TournamentData item) async {
     if (_isAdmin) {
-      await _showCreateDialog(item);
+      await _showCreateDialog(item, "Redigere turnering");
     }
   }
 

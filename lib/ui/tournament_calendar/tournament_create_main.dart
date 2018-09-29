@@ -9,8 +9,9 @@ import 'package:validate/validate.dart';
 
 class CreateTournamentItem extends StatefulWidget {
   final TournamentData tournament;
+  final String title;
 
-  const CreateTournamentItem({Key key, this.tournament}) : super(key: key);
+  const CreateTournamentItem({Key key, this.tournament, this.title}) : super(key: key);
   @override
   _CreateTournamentItemState createState() => _CreateTournamentItemState();
 }
@@ -46,7 +47,7 @@ class _CreateTournamentItemState extends State<CreateTournamentItem> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: "Opret turnering",
+      title: widget.title,
       body: _main(),
     );
   }
@@ -135,14 +136,19 @@ class _CreateTournamentItemState extends State<CreateTournamentItem> {
                 ],
               ),
             ),
-            RaisedButton(
-              child: Text("Gem"),
-              onPressed: () {
-                if (_formState.currentState.validate()) {
-                  _formState.currentState.save();
-                  Navigator.of(context).pop<TournamentData>(_data);
-                }
-              },
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: FlatButton.icon(
+                textColor: Colors.blue[700],
+                icon: Icon(Icons.send),
+                label: Text("Gem turnering"),
+                onPressed: () {
+                  if (_formState.currentState.validate()) {
+                    _formState.currentState.save();
+                    Navigator.of(context).pop<TournamentData>(_data);
+                  }
+                },
+              ),
             )
           ],
         ),
