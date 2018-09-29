@@ -30,11 +30,9 @@ class RankingDetailMatches extends StatelessWidget {
           constraints: BoxConstraints.expand(),
           child: ListView.builder(
             shrinkWrap: true,
-            itemCount: snapshot.data.length + 1,
+            itemCount: snapshot.data.length,
             itemBuilder: (BuildContext context, int position) {
-              if (position == 0) return RankingDetailMatchesHeader();
-
-              RankingMatchData item = snapshot.data[position - 1];
+              RankingMatchData item = snapshot.data[position];
               return Card(
                 child: Container(
                   padding: EdgeInsets.all(10.0),
@@ -54,6 +52,7 @@ class RankingDetailMatches extends StatelessWidget {
                           )
                         ],
                       ),
+                      RankingDetailMatchesHeader(),
                       RankingMatchesRow(
                         winner: item.winner1,
                         loser: item.loser1,

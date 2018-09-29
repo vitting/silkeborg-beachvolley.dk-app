@@ -1,7 +1,6 @@
 import 'dart:async';
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers_class.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_data_class.dart';
@@ -19,7 +18,6 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
   final _birtdateController = TextEditingController();
   final _user = new EnrollmentUserData();
   final _formKey = GlobalKey<FormState>();
-  
   @override
   void dispose() {
     _birtdateController.dispose();
@@ -180,20 +178,7 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
             _formKey.currentState.reset();
             _birtdateController.text = "";
             SystemHelpers.hideKeyboardWithNoFocus(context);
-            
             await _user.save();
-            
-            Scaffold.of(context).showSnackBar(SnackBar(
-              content: Row(
-                children: <Widget>[
-                  Text("Tak for din indmeldelse i Silkeborg Beachvolley"),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: Icon(FontAwesomeIcons.thumbsUp, color: Colors.white,),
-                  )
-                ],
-              ),
-            ));
             widget.saved(true);
           }
         },

@@ -4,6 +4,7 @@ import 'dart:collection';
 import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
+import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 
 class RankingDetailChart extends StatefulWidget {
@@ -26,8 +27,8 @@ class _RankingDetailChartState extends State<RankingDetailChart> {
         future: _loadMatches(),
         builder: (BuildContext context,
             AsyncSnapshot<List<Series<StatMatchOnWeek, String>>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting &&
-              !snapshot.hasData) return Container();
+          if (snapshot.connectionState == ConnectionState.waiting && !snapshot.hasData) return LoaderSpinner();
+          if (snapshot.connectionState == ConnectionState.done && !snapshot.hasData) return Container();
           if (snapshot.hasData && snapshot.data != null) {
             return Column(
               children: <Widget>[

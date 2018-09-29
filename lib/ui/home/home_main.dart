@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/loader_spinner_overlay_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_class.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/bulletin_main.dart';
@@ -15,12 +16,17 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool _isLoggedIn = false;
+  bool _loading = false;
   @override
   void initState() {
     super.initState();
     UserAuth.firebaseAuth.onAuthStateChanged.listen((user) {
       Home.loggedInUser = user;
-      
+      if (mounted) {
+        setState(() {
+          _loading = true;          
+        });
+      }
       if (user != null) {
         _loadUserInfo(user.uid);
         _initSettings(user.uid);
@@ -28,6 +34,7 @@ class _HomeState extends State<Home> {
 
       if (mounted) {
         setState(() {
+        _loading = false;
         _isLoggedIn = user == null ? false : true;        
       });
       }
@@ -56,6 +63,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return _isLoggedIn ? Bulletin() : Login();
+    return LoaderSpinnerOverlay(
+      show: _loading,
+      child: _isLoggedIn ? Bulletin() : Login());
   }
 }

@@ -11,7 +11,6 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool isLoggedIn;
-  // bool _saving = false;
   
   @override
   Widget build(BuildContext context) {
@@ -38,27 +37,17 @@ class _LoginState extends State<Login> {
       ),
       padding: EdgeInsets.only(left: 30.0, right: 30.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(top: 70.0, bottom: 5.0), 
-            child: Text("Velkommen til", textAlign: TextAlign.center, style: TextStyle(
+            child: Text("Velkommen til Silkeborg Beachvolley", textAlign: TextAlign.center, style: TextStyle(
               color: Colors.white,
               fontSize: 20.0
-            ),),
+            )),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 25.0), 
-            child: Text("Silkeborg Beachvolley", textAlign: TextAlign.center, style: TextStyle(
-              color: Colors.white,
-              fontSize: 20.0
-            ),),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 30.0),
-            child: Image.asset("assets/images/logo_white_250x250.png", width: 150.0, height: 150.0),
-          ),
-          
+          Image.asset("assets/images/logo_white_250x250.png", width: 100.0, height: 100.0),
           RaisedButton(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0)
@@ -89,7 +78,8 @@ class _LoginState extends State<Login> {
               ],
             ),
           ),
-          Text("Det med småt", style: TextStyle(color: Colors.white)),
+          Text("Det med småt - Du skal logge ind med din Facebook konto for at kunne bruge denne app. Vi beder ikke om nogen specille tilladelser fra Facebook da vi kun skal bruge dit navn og profil billede. Dvs. vi kan ikke slå noget op på vegne af dig eller har adgang til dine billeder og venner.", style: TextStyle(color: Colors.white, fontSize: 12.0), textAlign: TextAlign.center),
+          Text("Hvis du kun vil bruge denne app til at melde dig ind i Silkeborg Beachvolley så tryk herunder.", style: TextStyle(color: Colors.white, fontSize: 12.0), textAlign: TextAlign.center),
           FlatButton.icon(
             onPressed: () {
               Navigator.of(context).pushNamed(Enrollment.routeName);

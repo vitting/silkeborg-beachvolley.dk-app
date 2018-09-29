@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:silkeborgbeachvolley/helpers/loader_spinner_overlay_widget.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/choose_players_list.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/create_player_choose_date.dart';
@@ -34,6 +34,8 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
   RankingPlayerData _loggedInPlayer;
   List<RankingPlayerData> _listOfPlayers = [];
   List<RankingPlayerData> _listOfFavoritePlayers = [];
+  bool _saving = false;
+
   @override
   void initState() {
     _getPlayers();
@@ -84,49 +86,53 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
         title: "Registere kamp",
-        body: Builder(builder: (BuildContext context) {
-          return Card(
-              child: ListView(
-            children: <Widget>[
-              CreatePlayerChooserRow(
-                chooser1Color: _winner1Color,
-                chooser2Color: _winner2Color,
-                chooser1Type: PlayerChooserType.winner1,
-                chooser2Type: PlayerChooserType.winner2,
-                player1Item: _winner1Item,
-                player2Item: _winner2Item,
-                noChoosenText: _noPlayerChoosenText,
-                title: "Vindere",
-                chooserOnTap: (PlayerChooserType type) {
-                  _showPlayers(context, type);
-                },
-              ),
-              CreatePlayerChooserRow(
-                chooser1Color: _loser1Color,
-                chooser2Color: _loser2Color,
-                chooser1Type: PlayerChooserType.loser1,
-                chooser2Type: PlayerChooserType.loser2,
-                player1Item: _loser1Item,
-                player2Item: _loser2Item,
-                noChoosenText: _noPlayerChoosenText,
-                title: "Tabere",
-                chooserOnTap: (PlayerChooserType type) {
-                  _showPlayers(context, type);
-                },
-              ),
-              CreatePlayerChooseDate(
-                color: _matchDateColor,
-                datePicked: (DateTime datePicked) {
-                  setState(() {
-                    _matchDate = datePicked;
-                    _matchDateColor = _okColor;
-                  });
-                },
-              ),
-              _saveButton(context)
-            ],
-          ));
-        }));
+        body: LoaderSpinnerOverlay(
+                  show: _saving,
+                  text: "Gemmer kampen...",
+                  child: Builder(builder: (BuildContext context) {
+            return Card(
+                child: ListView(
+              children: <Widget>[
+                CreatePlayerChooserRow(
+                  chooser1Color: _winner1Color,
+                  chooser2Color: _winner2Color,
+                  chooser1Type: PlayerChooserType.winner1,
+                  chooser2Type: PlayerChooserType.winner2,
+                  player1Item: _winner1Item,
+                  player2Item: _winner2Item,
+                  noChoosenText: _noPlayerChoosenText,
+                  title: "Vindere",
+                  chooserOnTap: (PlayerChooserType type) {
+                    _showPlayers(context, type);
+                  },
+                ),
+                CreatePlayerChooserRow(
+                  chooser1Color: _loser1Color,
+                  chooser2Color: _loser2Color,
+                  chooser1Type: PlayerChooserType.loser1,
+                  chooser2Type: PlayerChooserType.loser2,
+                  player1Item: _loser1Item,
+                  player2Item: _loser2Item,
+                  noChoosenText: _noPlayerChoosenText,
+                  title: "Tabere",
+                  chooserOnTap: (PlayerChooserType type) {
+                    _showPlayers(context, type);
+                  },
+                ),
+                CreatePlayerChooseDate(
+                  color: _matchDateColor,
+                  datePicked: (DateTime datePicked) {
+                    setState(() {
+                      _matchDate = datePicked;
+                      _matchDateColor = _okColor;
+                    });
+                  },
+                ),
+                _saveButton(context)
+              ],
+            ));
+          }),
+        ));
   }
 
   Widget _saveButton(BuildContext context) {
@@ -136,8 +142,9 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0),
           child: FlatButton.icon(
+            textColor: Colors.blueAccent,
             label: Text("Gem kampen"),
-            icon: Icon(FontAwesomeIcons.volleyballBall),
+            icon: Icon(Icons.send),
             onPressed: () {
               _saveMatch(context);
             },
@@ -158,7 +165,7 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
             winner1Item: _winner1Item,
             winner2Item: _winner2Item,
             loser1Item: _loser1Item,
-            loser2Item: _loser1Item,
+            loser2Item: _loser2Item,
           );
         });
 
@@ -219,8 +226,17 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
               name: _loser2Item.name,
               photoUrl: _loser2Item.photoUrl,
               points: 0));
-
+      if (mounted) {
+        setState(() {
+          _saving = true;                  
+        });
+      }
       await match.save();
+      if (mounted) {
+        setState(() {
+          _saving = false;                  
+        });
+      }
       Navigator.of(context).pop();
     } else {
       setState(() {});

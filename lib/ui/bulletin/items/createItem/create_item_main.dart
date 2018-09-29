@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/image_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
+import 'package:silkeborgbeachvolley/helpers/loader_spinner_overlay_widget.dart';
+import 'package:silkeborgbeachvolley/helpers/system_helpers_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/build_build_item.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/image_type.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_fields_create_class.dart';
@@ -32,7 +34,8 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
   final TextEditingController _endTimeController = new TextEditingController();
   final ItemFieldsCreate itemFieldsValue = ItemFieldsCreate();
   List<ImageInfoData> _imageFiles = [];
-
+  bool _saving = false;
+  bool _loadingImage = false;
   @override
   void initState() {
     super.initState();
@@ -60,7 +63,14 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
 
   @override
   Widget build(BuildContext context) {
-    return SilkeborgBeachvolleyScaffold(title: _getTitle(widget.bulletinType), body: _main());
+    return SilkeborgBeachvolleyScaffold(
+      title: _getTitle(widget.bulletinType), 
+      body: LoaderSpinnerOverlay(
+        show: _saving,
+        child: _main(),
+        text: "Gemmer opslag...",
+      )
+    );
   }
 
   Widget _main() {
@@ -69,7 +79,12 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
     ];
 
     if (widget.bulletinType == BulletinType.news)
-      widgets.add(BulletinNewsItemPictures(
+      widgets.add(
+        LoaderSpinnerOverlay(
+          show: _loadingImage,
+          showModalBarrier: false,
+          text: "Behandler billedet...",
+          child: BulletinNewsItemPictures(
         type: BulletinImageType.file,
         useSquareOnOddImageCount: true,
         images: _imageFiles,
@@ -78,7 +93,9 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
             _removePhoto(image);
           }
         },
-      ));
+      ),
+        )
+      );
 
     return Card(
       child: ListView(
@@ -129,9 +146,20 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
     return BulletinTextField(
         onPressedSave: () async {
           if (_formKey.currentState.validate()) {
+            SystemHelpers.hideKeyboardWithFocus();
             _formKey.currentState.save();
-            
+            if (mounted) {
+              setState(() {
+                _saving = true;                              
+              });
+            }
             await _saveBulletinItem();
+            if (mounted) {
+              setState(() {
+                _saving = false;                              
+              });
+            }
+
             Navigator.of(context).pop();
           }
         },
@@ -162,28 +190,52 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
   }
 
   void _addPhoto() async {
+    if (mounted) {
+      setState(() {
+        _loadingImage = true;
+      });
+    }
     ImageInfoData imageInfo =
         await photoFunctions.addPhoto(context, itemFieldsValue.type);
 
-    if (imageInfo.linkFirebaseStorage.isNotEmpty) {
+    if (imageInfo != null && imageInfo.linkFirebaseStorage.isNotEmpty) {
       if (mounted) {
         setState(() {
+          _loadingImage = false;
         _imageFiles.add(imageInfo);
       });
       }
+    } else {
+      if (mounted) {
+      setState(() {
+        _loadingImage = false;
+      });
+    }
     }
   }
 
   void _removePhoto(ImageInfoData image) async {
+    if (mounted) {
+      setState(() {
+        _loadingImage = true;              
+      });
+    }
     PhotoAction action = await photoFunctions.removePhoto(context);
 
     if (action != null && action == PhotoAction.delete) {
       await ImageHelpers.deleteImageFromCacheAndStorage(image);
       if (mounted) {
         setState(() {
+        _loadingImage = false;
         _imageFiles.remove(image);
       });
       }
+    } else {
+      if (mounted) {
+      setState(() {
+        _loadingImage = false;              
+      });
+    }
     }
   }
 }
