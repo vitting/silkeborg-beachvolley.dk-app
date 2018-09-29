@@ -45,7 +45,7 @@ class _HomeState extends State<Home> {
     }
   }
 
-  _loadUserInfo(String userId) async {
+  void _loadUserInfo(String userId) async {
     UserInfoData userInfoData = await UserInfoData.get(userId);
     if (mounted) {
       setState(() {

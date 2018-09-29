@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'auth_functions.dart' as authFunctions;
 
@@ -15,25 +16,53 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-        title: "Silkeborg Beachvolley", 
+      showAppBar: false,
         body: _main(context)
         );
   }
 
   Widget _main(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 20.0, right: 20.0),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+           begin: Alignment.topLeft,
+            end: Alignment.bottomRight, 
+            stops: [0.1, 0.5, 0.7, 0.9],
+            colors: [
+              Colors.blue[300],
+              Colors.blue[500],
+              Colors.blue[700],
+              Colors.blue[900],
+            ],
+        )
+      ),
+      padding: EdgeInsets.only(left: 30.0, right: 30.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(bottom: 45.0), 
-            child: Text("Velkommen til silkeborg beachvolley og en masse andet tekst og sikkert også en indmeldelses formular.", textAlign: TextAlign.center, style: TextStyle(
-              fontSize: 15.0
+            padding: const EdgeInsets.only(top: 70.0, bottom: 5.0), 
+            child: Text("Velkommen til", textAlign: TextAlign.center, style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.0
             ),),
           ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 25.0), 
+            child: Text("Silkeborg Beachvolley", textAlign: TextAlign.center, style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.0
+            ),),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 30.0),
+            child: Image.asset("assets/images/logo_white_250x250.png", width: 150.0, height: 150.0),
+          ),
+          
           RaisedButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0)
+            ),
             color: Color(0xFF4267B2),
             padding: EdgeInsets.all(10.0),
             onPressed: () async {
@@ -48,7 +77,7 @@ class _LoginState extends State<Login> {
                   height: 40.0
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
+                  padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
                     "Log ind med Facebook",
                     style: TextStyle(
@@ -56,10 +85,18 @@ class _LoginState extends State<Login> {
                       fontSize: 20.0
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
+          Text("Det med småt", style: TextStyle(color: Colors.white)),
+          FlatButton.icon(
+            onPressed: () {
+              Navigator.of(context).pushNamed(Enrollment.routeName);
+            },
+            label: Text("Indmeldelse i Silkeborg Beachvolley", style: TextStyle(color: Colors.white),),
+            icon: Icon(Icons.people, color: Colors.white,),
+          )
         ],
       ),
     );

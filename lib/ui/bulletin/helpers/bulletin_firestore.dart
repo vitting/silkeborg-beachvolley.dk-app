@@ -63,13 +63,6 @@ class BulletinFirestore {
         .snapshots();
   }
 
-  static Stream<QuerySnapshot> getAllBulletinsAsStream() {
-    return firestoreInstance
-        .collection(_bulletinCollectionName)
-        .where("type", isEqualTo: "news")
-        .snapshots();
-  }
-
   static Future<void> saveBulletinItem(BulletinItemData bulletinItem) async {
     await firestoreInstance
         .collection(_bulletinCollectionName)

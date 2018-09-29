@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers_class.dart';
-import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_data_class.dart';
 import 'package:validate/validate.dart';
 
@@ -18,7 +17,7 @@ class EnrollmentForm extends StatefulWidget {
 
 class _EnrollmentFormState extends State<EnrollmentForm> {
   final _birtdateController = TextEditingController();
-  final _user = new EnrollmentUser(createdDate: DateTime.now());
+  final _user = new EnrollmentUserData();
   final _formKey = GlobalKey<FormState>();
   
   @override
@@ -45,7 +44,7 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
             _birthdayField(),
             _emailField(),
             _mobilenumberField(),
-            _sendButton(context),
+            _saveButton(context),
           ],
         ))
       ],
@@ -169,19 +168,21 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
     );
   }
 
-  Widget _sendButton(BuildContext context) {
+  Widget _saveButton(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 30.0),
       child: FlatButton.icon(
         textColor: Colors.blue,
         icon: Icon(Icons.send, color: Colors.blue),
-        onPressed: () {
+        onPressed: () async {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
             _formKey.currentState.reset();
             _birtdateController.text = "";
-            EnrollmentFirestore.saveEnrollment(_user);
             SystemHelpers.hideKeyboardWithNoFocus(context);
+            
+            await _user.save();
+            
             Scaffold.of(context).showSnackBar(SnackBar(
               content: Row(
                 children: <Widget>[

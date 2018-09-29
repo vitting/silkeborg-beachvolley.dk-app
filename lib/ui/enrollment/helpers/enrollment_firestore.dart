@@ -15,7 +15,19 @@ class EnrollmentFirestore {
     return _firestore;
   }
 
-  static Future<Null> saveEnrollment(EnrollmentUser user) async {
-    return await firestoreInstance.collection(_collectionName).add(user.toMap());  
+  static Future<void> saveEnrollment(EnrollmentUserData user) {
+    return firestoreInstance.collection(_collectionName).document(user.id).setData(user.toMap()); 
+  }
+
+  static Future<void> deleteEnrollment(String id) {
+    return firestoreInstance.collection(_collectionName).document(id).delete();
+  }
+
+  static Future<DocumentSnapshot> getEnrollment(String id) {
+    return firestoreInstance.collection(_collectionName).document(id).get();
+  }
+
+  static Future<QuerySnapshot> getAllEnrollments() {
+    return firestoreInstance.collection(_collectionName).orderBy("name").getDocuments();
   }
 }
