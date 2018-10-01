@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
-import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
 import 'package:silkeborgbeachvolley/helpers/searchbar_widget.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_detail_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_data_class.dart';
@@ -18,7 +15,7 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
   static String routeName = "admin_enrollment";
   List<EnrollmentUserData> _data = [];
   List<EnrollmentUserData> _dataCache = [];
-  
+
   @override
   void initState() {
     _loadData();
@@ -33,36 +30,35 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
       });
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
       title: "Medlemmer",
-      body: ListView(
-        children: <Widget>[
-          SearchBar(
-            searchValue: _search,
-          ),
-          _enrollmentList()
-        ],
-      ),
+      body: _enrollmentList(),
     );
   }
 
   Widget _enrollmentList() {
     return Container(
       child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: _data.length,
+        shrinkWrap: false,
+        itemCount: _data.length + 1,
         itemBuilder: (BuildContext context, int position) {
-          EnrollmentUserData item = _data[position];
+          if (position == 0) {
+            return SearchBar(
+              searchValue: _search,
+            );
+          }
+
+          EnrollmentUserData item = _data[position - 1];
           return GestureDetector(
             child: _row(item),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                fullscreenDialog: true,
-                builder: (BuildContext context) => EnrollmentDetail(enrollment: item)
-              ));
+                  fullscreenDialog: true,
+                  builder: (BuildContext context) =>
+                      EnrollmentDetail(enrollment: item)));
             },
           );
         },
@@ -88,7 +84,9 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
               children: <Widget>[Text(item.street)],
             ),
             Row(
-              children: <Widget>[Text(item.postalCode.toString())],
+              children: <Widget>[
+                Text("${item.postalCode.toString()} ${item.city}")
+              ],
             ),
           ],
         ),

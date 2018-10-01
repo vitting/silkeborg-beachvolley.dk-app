@@ -17,12 +17,13 @@ class EnrollmentUserData {
   String name;
   String street;
   int postalCode;
+  String city;
   DateTime birthdate;
   String email;
   int phone;
   List<EnrollmentPaymentData> payment;
 
-  EnrollmentUserData({this.addedByUserId, this.id, this.creationDate, this.name, this.street, this.postalCode, this.birthdate, this.email, this.phone, this.payment});
+  EnrollmentUserData({this.addedByUserId, this.id, this.creationDate, this.name, this.street, this.postalCode, this.city, this.birthdate, this.email, this.phone, this.payment});
 
   Map<String, dynamic> toMap() {
     return {
@@ -32,6 +33,7 @@ class EnrollmentUserData {
       "name": name,
       "street": street,
       "postalCode": postalCode,
+      "city": city,
       "birthday": birthdate,
       "email": email,
       "phone": phone,
@@ -105,6 +107,7 @@ class EnrollmentUserData {
       name: item["name"] ?? "",
       street: item["street"] ?? "",
       postalCode: item["postalCode"] ?? 0,
+      city: item["city"] ?? "",
       birthdate: item["birthday"] ?? DateTime.now(),
       email: item["email"] ?? "",
       phone: item["phone"] ?? 0,

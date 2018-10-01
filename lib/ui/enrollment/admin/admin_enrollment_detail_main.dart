@@ -28,7 +28,7 @@ class EnrollmentDetail extends StatelessWidget {
                             enrollment.creationDate)),
                     _row(Icons.person, enrollment.name),
                     _row(Icons.location_city,
-                        "${enrollment.street}, ${enrollment.postalCode}"),
+                        "${enrollment.street}\n${enrollment.postalCode} ${enrollment.city}"),
                     _row(Icons.email, enrollment.email),
                     _row(Icons.phone, enrollment.phone.toString()),
                     _row(Icons.cake,

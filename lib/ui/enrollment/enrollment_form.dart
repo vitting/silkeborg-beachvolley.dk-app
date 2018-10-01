@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
+import 'package:silkeborgbeachvolley/helpers/postcal_codes_data.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers_class.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollmentExists.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_data_class.dart';
@@ -19,11 +20,24 @@ class EnrollmentForm extends StatefulWidget {
 
 class _EnrollmentFormState extends State<EnrollmentForm> {
   final _birtdateController = TextEditingController();
+  final _postalCodeController = TextEditingController();
+  final _cityController = TextEditingController();
   final _user = new EnrollmentUserData();
   final _formKey = GlobalKey<FormState>();
+  bool _isPostalCodeValid = false;
+
+  
+  @override
+    void initState() {
+      _postalCodeController.addListener(_getCity);
+      super.initState();
+    }
+
   @override
   void dispose() {
     _birtdateController.dispose();
+    _postalCodeController.dispose();
+    _cityController.dispose();
     super.dispose();
   }
 
@@ -42,6 +56,7 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
                 _nameField(),
                 _adressField(),
                 _postalcodeField(),
+                _city(),
                 _birthdayField(),
                 _emailField(),
                 _mobilenumberField(),
@@ -51,6 +66,17 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
       ],
     );
   }
+
+  Future<void> _getCity() async {
+  _isPostalCodeValid = false;
+  if (_postalCodeController.text.length == 4)  { 
+    int postalCode = int.tryParse(_postalCodeController.text);
+    if (postalCode != null) {
+      _cityController.text = await PostalCode.getCity(postalCode);
+      _isPostalCodeValid = true;
+    }
+  }
+}
 
   //Datepicker dialog
   Future<Null> _selectDate(BuildContext context) async {
@@ -99,12 +125,13 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
 
   Widget _postalcodeField() {
     return TextFormField(
+      controller: _postalCodeController,
       decoration: InputDecoration(
         labelText: "Postnummer",
       ),
       validator: (String value) {
-        if (value.isEmpty || int.tryParse(value.trim()) == null)
-          return "Indtast dit postnummer";
+        if (value.isEmpty || int.tryParse(value.trim()) == null) return "Indtast dit postnummer";
+        if (!_isPostalCodeValid) return "Det indtastede postnummer existere ikke";
       },
       keyboardType: TextInputType.number,
       inputFormatters: [LengthLimitingTextInputFormatter(4)],
@@ -113,6 +140,19 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
       },
     );
   }
+
+  Widget _city() {
+    return TextFormField( 
+      enabled: false,
+      controller: _cityController,
+      decoration: InputDecoration(
+        labelText: "By",
+      ),
+      onSaved: (String value) {
+        _user.city = value;
+      }
+  );
+}
 
   Widget _birthdayField() {
     return TextFormField(

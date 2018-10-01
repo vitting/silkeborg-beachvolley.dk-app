@@ -46,7 +46,7 @@ class EnrollmentMadeByUserState extends State<EnrollmentMadeByUser> {
                             _row(Icons.person, item.name, "Navn"),
                             _row(
                                 Icons.location_city,
-                                "${item.street}, ${item.postalCode}",
+                                "${item.street}\n${item.postalCode} ${item.city}",
                                 "Adresse"),
                             _row(Icons.email, item.email, "E-mail"),
                             _row(Icons.phone, item.phone.toString(),

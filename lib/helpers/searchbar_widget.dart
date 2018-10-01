@@ -77,7 +77,11 @@ class _SearchBarState extends State<SearchBar> {
             ),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(16.0)),
-            hintText: "Søg"),
+            hintText: "Søg",
+            hintStyle: TextStyle(
+              color: Colors.white
+            )
+          ),
       ),
     );
   }
