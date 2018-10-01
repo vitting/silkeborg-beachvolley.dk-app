@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart' show CalendarCarousel;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
@@ -18,42 +17,29 @@ class TournamentCalendar extends StatefulWidget {
 class _TournamentCalendarState extends State<TournamentCalendar> {
   List<TournamentData> _tournaments = [];
   bool _isAdmin = false;
-  int _bottomNavBarCurrentIndex = 0;
   @override
   void initState() {
-    //CHRISTIAN: Load tournaments and make matchdates list for calendar
-    // _loadTournaments();
+    _loadTournaments();
     if (Home.userInfo != null && Home.userInfo.admin1) {
       _isAdmin = true;
     }
     super.initState();
   }
 
+  _loadTournaments() async {
+    List<TournamentData> data = await TournamentData.getTournaments();
+    if (mounted) {
+      setState(() {
+        _tournaments = data;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
       title: "Turnerings kalender",
-      body: _bottomNavBarCurrentIndex == 0 ? _listView() : _calendarView(),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (int index) {
-          if (mounted) {
-            setState(() {
-              _bottomNavBarCurrentIndex = index;                          
-            });
-          }
-        },
-        currentIndex: _bottomNavBarCurrentIndex,
-        items: <BottomNavigationBarItem> [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            title: Text("Liste")
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            title: Text("Kalender")
-          )
-        ],
-      ), 
+      body: _listView(),
       floatingActionButton: _floatingActionButton(),
     );
   }
@@ -74,79 +60,56 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
 
   Widget _listView() {
     return Card(
-      child: FutureBuilder(
-        future: TournamentData.getTournaments(),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<TournamentData>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting ||
-              !snapshot.hasData) return Container();
-
-          return ListView.builder(
-            itemCount: snapshot.data.length,
-            itemBuilder: (BuildContext context, int position) {
-              TournamentData item = snapshot.data[position];
-              return Card(
-                child: ListTile(
-                  contentPadding: EdgeInsets.all(10.0),
-                  onLongPress: () async {
-                    await _onLongPress(item);
-                  },
-                  leading: Image.asset("assets/images/beachball_50x50.png",
-                      width: 30.0, height: 30.0),
-                  title: Text(item.title),
-                  subtitle: Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
+        child: ListView.builder(
+      itemCount: _tournaments.length,
+      itemBuilder: (BuildContext context, int position) {
+        TournamentData item = _tournaments[position];
+        return Card(
+          child: ListTile(
+            contentPadding:
+                EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
+            onLongPress: () async {
+              await _onLongPress(item);
+            },
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: Container(
+                    padding: EdgeInsets.all(4.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4.0),
+                        color: Colors.blue),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: _getDate(item),
                     ),
                   ),
-                  trailing: IconButton(
-                    tooltip: "Åben i browser",
-                    icon: Icon(FontAwesomeIcons.externalLinkAlt, size: 20.0),
-                    onPressed: () {
-                       _launchUrl(item.link);
-                    },
-                  ),
                 ),
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _calendarView() {
-    return Card(
-      child: Container(
-        child: CalendarCarousel(
-          weekDays: ["Søn", "Man", "Tirs", "Ons", "Tors", "Fre", "Lør"],
-          markedDates: [DateTime(2018, 9, 27), DateTime(2018, 9, 25), DateTime(2018, 9, 27)],
-          markedDateWidget: Container(
-            child: Opacity(
-                opacity: 0.5,
-                child: Container(
-                   decoration: BoxDecoration(
-                     shape: BoxShape.circle,
-                     color: Colors.purple
-                   ),
-              )
-              )
+                Text(item.title),
+              ],
+            ),
+            trailing: IconButton(
+              tooltip: "Åben i browser",
+              icon: Icon(FontAwesomeIcons.externalLinkAlt,
+                  size: 20.0, color: Colors.blue),
+              onPressed: () {
+                _launchUrl(item.link);
+              },
+            ),
           ),
-          selectedDateTime: DateTime.now(),
-          onDayPressed: (DateTime date) {
-
-          },
-        ),
-      ),
-    );
+        );
+      },
+    ));
   }
 
   Future<void> _showCreateDialog(TournamentData item, String title) async {
     TournamentData data = await Navigator.of(context).push<TournamentData>(
         MaterialPageRoute(
             fullscreenDialog: true,
-            builder: (BuildContext context) => CreateTournamentItem(tournament: item, title: title)));
+            builder: (BuildContext context) =>
+                CreateTournamentItem(tournament: item, title: title)));
 
     if (data != null) {
       await data.save();
@@ -166,9 +129,13 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
         child: Icon(
           Icons.calendar_today,
           size: 15.0,
+          color: Colors.white,
         ),
       ),
-      Text(item.startDateFormatted)
+      Text(
+        item.startDateFormatted,
+        style: TextStyle(color: Colors.white),
+      )
     ];
 
     if (!DateTimeHelpers.dateCompare(item.startDate, item.endDate)) {

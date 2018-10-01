@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/chip_header.dart';
 
 class RankingDetailStatRow extends StatelessWidget {
   final int total;
@@ -17,10 +18,7 @@ class RankingDetailStatRow extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(bottom: 10.0),
-            child: Text(
-              title,
-              style: TextStyle(fontSize: 20.0),
-            ),
+            child: ChipHeader(title),
           ),
           Row(
             children: <Widget>[

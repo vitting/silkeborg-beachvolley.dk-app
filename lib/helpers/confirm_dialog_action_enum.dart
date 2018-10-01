@@ -1,0 +1,1 @@
+enum ConfirmDialogAction { delete, cancel, ok, yes, no, none }

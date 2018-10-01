@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
+import 'package:silkeborgbeachvolley/helpers/loader_spinner_overlay_widget.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class TestWidget extends StatefulWidget {
@@ -11,20 +13,17 @@ class _TestWidgetState extends State<TestWidget> {
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
       title: "test",
-      body: Stack(
-      children: <Widget>[
-        Opacity(
-          opacity: 0.4,
-          child: ModalBarrier(
-            color: Colors.grey,
-            dismissible: false,
+      body: LoaderSpinnerOverlay(
+        show: true,
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Text("noget"),
+              Text("noget2")
+            ],
           ),
         ),
-        Center(
-          child: Image.asset("assets/images/beachball_fade_64x64.gif"),
-        )
-      ],
-    ),
+      ),
     );
   }
 }

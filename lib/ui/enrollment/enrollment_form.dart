@@ -1,11 +1,14 @@
 import 'dart:async';
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
+import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers_class.dart';
+import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollmentExists.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:validate/validate.dart';
-
+import "../../helpers/confirm_dialog_functions.dart" as confirmDialogFunctions;
 
 class EnrollmentForm extends StatefulWidget {
   final ValueChanged<bool> saved;
@@ -33,18 +36,18 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
     return ListView(
       children: <Widget>[
         Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget>[
-            _nameField(),
-            _adressField(),
-            _postalcodeField(),
-            _birthdayField(),
-            _emailField(),
-            _mobilenumberField(),
-            _saveButton(context),
-          ],
-        ))
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                _nameField(),
+                _adressField(),
+                _postalcodeField(),
+                _birthdayField(),
+                _emailField(),
+                _mobilenumberField(),
+                _saveButton(context),
+              ],
+            ))
       ],
     );
   }
@@ -125,7 +128,8 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
       controller: _birtdateController,
       validator: (String value) {
         if (value.isEmpty) return "Indtast fødselsdato";
-        if (!DateTimeHelpers.isVvalidDateFormat(value)) return "Indtast fødselsdato i formatet dd-mm-yyyy"; 
+        if (!DateTimeHelpers.isVvalidDateFormat(value))
+          return "Indtast fødselsdato i formatet dd-mm-yyyy";
       },
       keyboardType: TextInputType.datetime,
       inputFormatters: [LengthLimitingTextInputFormatter(10)],
@@ -175,15 +179,59 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
         onPressed: () async {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
-            _formKey.currentState.reset();
-            _birtdateController.text = "";
-            SystemHelpers.hideKeyboardWithNoFocus(context);
-            await _user.save();
-            widget.saved(true);
+            if (await _checkIfMemberExistsAndSave(context)) {
+              _formKey.currentState.reset();
+              _birtdateController.text = "";
+              SystemHelpers.hideKeyboardWithNoFocus(context);
+              await _user.save();
+              widget.saved(true);
+            }
           }
         },
         label: Text('Indsend formular'),
       ),
     );
+  }
+
+  Future<bool> _checkIfMemberExistsAndSave(BuildContext context) async {
+    bool value = true;
+    if (Home.loggedInUser != null) {
+      EnrollmentExists enrollmentExists = await _user.checkIfValuesExists();
+
+      if (enrollmentExists.emailExists || enrollmentExists.phoneExists) {
+        ConfirmDialogAction result = await confirmDialogFunctions.confirmDialog(
+            context,
+            title: Text("Info"),
+            actionLeft: ConfirmDialogAction.no,
+            actionRight: ConfirmDialogAction.yes,
+            body: <Widget>[
+              _getDialogText(enrollmentExists),
+              Text("Vil du fortsætte med at oprette medlemmet?")
+            ]);
+
+        result == ConfirmDialogAction.yes ? value = true : value = false;
+      }
+    }
+
+    return value;
+  }
+
+  Text _getDialogText(EnrollmentExists enrollmentExists) {
+    String text =
+        "Der er allerede oprettet [MEMBERCOUNT] [MEMBEREMAIL][MEMEBERAND][MEMBERPHONE].";
+    text = enrollmentExists.emailCount > 1 || enrollmentExists.phoneCount > 1
+        ? text.replaceFirst("[MEMBERCOUNT]", "flere medlemmer")
+        : text.replaceFirst("[MEMBERCOUNT]", "et medlem");
+    text = enrollmentExists.emailExists
+        ? text.replaceFirst("[MEMBEREMAIL]", "under den angivne e-mail adresse")
+        : text.replaceFirst("[MEMBEREMAIL]", "");
+    text = enrollmentExists.emailExists && enrollmentExists.phoneExists
+        ? text.replaceFirst("[MEMEBERAND]", " og ")
+        : text.replaceFirst("[MEMEBERAND]", "");
+    text = enrollmentExists.phoneExists
+        ? text.replaceFirst("[MEMBERPHONE]", " under det angivne mobilnummer")
+        : text.replaceFirst("[MEMBERPHONE]", "");
+
+    return Text(text);
   }
 }

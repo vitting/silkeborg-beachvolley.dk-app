@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:silkeborgbeachvolley/helpers/chip_header.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data_class.dart';
@@ -54,20 +55,31 @@ class SettingsState extends State<Settings> {
       child: ListView(
         children: <Widget>[
           Card(
-            child: _showWeather(),
-          ),
-          Card(
             child: Container(
-              padding: EdgeInsets.only(
-                  left: 10.0, right: 10.0, top: 10.0, bottom: 20.0),
-              child: _rankingName(),
+              padding: EdgeInsets.all(15.0),
+                          child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  ChipHeader("Vejret"),
+                  _showWeather(),
+                ],
+              ),
             ),
           ),
           Card(
             child: Container(
-              padding: EdgeInsets.only(
-                  left: 10.0, right: 20.0, top: 10.0, bottom: 10.0),
-              child: _sex(),
+              padding: EdgeInsets.all(15.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  ChipHeader("Ranglisten"),
+                  _rankingName(),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15.0),
+                    child: _sex(),
+                  )
+                ],
+              ),
             ),
           )
         ],

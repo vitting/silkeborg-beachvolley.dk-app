@@ -35,12 +35,20 @@ class _SearchBarState extends State<SearchBar> {
             }
           }
         },
+        cursorColor: Colors.white,
         controller: _searchController,
+        style: TextStyle(
+          color: Colors.white
+        ),
         decoration: InputDecoration(
+
+          fillColor: Colors.blueAccent,
+          filled: true,
             suffixIcon: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 IconButton(
+                  color: Colors.white,
                   icon: Icon(Icons.close),
                   onPressed: _showSearchClearButton
                       ? () {
@@ -57,6 +65,7 @@ class _SearchBarState extends State<SearchBar> {
                       : null,
                 ),
                 IconButton(
+                  color: Colors.white,
                   icon: Icon(Icons.search),
                   onPressed: _showSearchButton
                       ? () {

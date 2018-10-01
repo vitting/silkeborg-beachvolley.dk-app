@@ -5,6 +5,7 @@ import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/user_firestore.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_class.dart';
 import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
+import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollmentExists.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_payment_data.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
@@ -55,6 +56,10 @@ class EnrollmentUserData {
     return name;
   }
 
+  Future<EnrollmentExists> checkIfValuesExists() {
+    return EnrollmentFirestore.checkIfExists(email, phone);
+  }
+
   Future<void> save() {
     id = id ?? UuidHelpers.generateUuid();
     addedByUserId = Home.loggedInUser?.uid;
@@ -80,6 +85,13 @@ class EnrollmentUserData {
 
   static Future<List<EnrollmentUserData>> getAll() async {
     QuerySnapshot snapshot = await EnrollmentFirestore.getAllEnrollments();
+    return snapshot.documents.map<EnrollmentUserData>((DocumentSnapshot doc) {
+      return EnrollmentUserData.fromMap(doc.data);
+    }).toList();
+  }
+
+  static Future<List<EnrollmentUserData>> getAllAddedByUser() async {
+    QuerySnapshot snapshot = await EnrollmentFirestore.getAllEnrollmentsAddedByUserId(Home.loggedInUser.uid);
     return snapshot.documents.map<EnrollmentUserData>((DocumentSnapshot doc) {
       return EnrollmentUserData.fromMap(doc.data);
     }).toList();

@@ -62,7 +62,7 @@ class EnrollmentDetail extends StatelessWidget {
           Icon(
             icon,
             size: 18.0,
-            color: Colors.grey[800],
+            color: Colors.blue[700],
           ),
           Expanded(
             child: Padding(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_made_by_user.dart';
+import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:silkeborgbeachvolley/helpers/dot_bottombar.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_form.dart';
@@ -23,6 +25,9 @@ class _EnrollmentStepperState extends State<Enrollment> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
+      actions: <Widget>[
+        _actionMenu(context)
+      ],
       bottomNavigationBar: DotBottomBar(
           showNavigationButtons: false, numberOfDot: 3, position: _position),
       title: "Indmeldelse",
@@ -42,6 +47,33 @@ class _EnrollmentStepperState extends State<Enrollment> {
         ),
       )),
     );
+  }
+
+  Widget _actionMenu(BuildContext context) {
+    Widget menu;
+    
+    if (Home.loggedInUser != null) {
+      menu = PopupMenuButton<int>(
+        onSelected: (int value) {
+          if (value == 0) Navigator.of(context).push(MaterialPageRoute(
+            fullscreenDialog: true,
+            builder: (BuildContext context) => EnrollmentMadeByUser()
+          ));
+        },
+        initialValue: 0,
+        icon: Icon(Icons.more_vert),
+        itemBuilder: (BuildContext context) {
+          return [
+            PopupMenuItem(
+              value: 0,
+              child: Text("Vis mine indmeldelser"),
+            )
+          ];
+        },
+      );
+    }
+    
+    return menu;
   }
 
   _formSaved(bool value) {
@@ -167,7 +199,7 @@ class _EnrollmentStepperState extends State<Enrollment> {
                     }
                   },
                   color: Colors.blueAccent,
-                  icon: Icon(FontAwesomeIcons.arrowAltCircleLeft),
+                  icon: Icon(FontAwesomeIcons.home),
                 )
               ],
             ),

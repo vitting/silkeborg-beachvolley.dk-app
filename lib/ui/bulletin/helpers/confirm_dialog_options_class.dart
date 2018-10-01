@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 
-enum ConfirmDialogAction { delete, cancel }
-
 class ConfirmDialogOptions {
   BulletinType type;
   Text title;
