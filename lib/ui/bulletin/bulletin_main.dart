@@ -2,9 +2,13 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:silkeborgbeachvolley/helpers/firebase_functions_call.dart';
+import 'package:silkeborgbeachvolley/helpers/icon_counter_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/bulletin_main_fab.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_items_count_data.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_sharedpref.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/item_main.dart';
@@ -22,6 +26,28 @@ class Bulletin extends StatefulWidget {
 
 class _BulletinState extends State<Bulletin> {
   int _bottombarSelected = 0;
+  int _newsCount = 0;
+  int _eventCount = 0;
+  int _playCount = 0;
+
+  @override
+    void initState() {
+      _loadBulletinItemsCount();    
+      super.initState();
+    }
+
+  _loadBulletinItemsCount() async {
+    BulletinItemsCount bulletinItemsCount = await FirebaseFunctions.getBulletinsItemCount();
+    if (mounted) {
+      setState(() {
+        _newsCount = bulletinItemsCount.newsCount;
+        _eventCount = bulletinItemsCount.eventCount;
+        _playCount = bulletinItemsCount.playCount;          
+      });
+    }
+
+    BulletinSharedPref.setLastCheckedDateInMilliSeconds(DateTime.now().millisecondsSinceEpoch);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +60,11 @@ class _BulletinState extends State<Bulletin> {
       actions: <Widget>[
         FutureBuilder(
           future: SettingsData.get(Home.loggedInUser.uid),
-          builder: (BuildContext context, AsyncSnapshot<SettingsData> snapshot) {
-            if (snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data.showWeather) return Weather.withWind();
+          builder:
+              (BuildContext context, AsyncSnapshot<SettingsData> snapshot) {
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData &&
+                snapshot.data.showWeather) return Weather.withWind();
             return Container();
           },
         )
@@ -62,15 +91,24 @@ class _BulletinState extends State<Bulletin> {
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           title: Text("Nyheder"),
-          icon: Icon(FontAwesomeIcons.newspaper),
+          icon: IconCounter(
+            icon: FontAwesomeIcons.newspaper,
+            counter: _newsCount,
+          )
         ),
         BottomNavigationBarItem(
           title: Text("Begivenheder"),
-          icon: Icon(FontAwesomeIcons.calendarAlt),
+          icon: IconCounter(
+            icon: FontAwesomeIcons.calendarAlt,
+            counter: _eventCount,
+          ),
         ),
         BottomNavigationBarItem(
           title: Text("Spil"),
-          icon: Icon(FontAwesomeIcons.volleyballBall),
+          icon: IconCounter(
+            icon: FontAwesomeIcons.volleyballBall,
+            counter: _playCount
+          ),
         )
       ],
     );
@@ -98,7 +136,8 @@ class _BulletinState extends State<Bulletin> {
     );
   }
 
-  Future<void> _gotoCreateNewsDialog(BuildContext context, BulletinType bulletinType) async {
+  Future<void> _gotoCreateNewsDialog(
+      BuildContext context, BulletinType bulletinType) async {
     await Navigator.of(context).push(new MaterialPageRoute<BulletinItemData>(
         builder: (BuildContext context) {
           return new CreateBulletinItem(bulletinType);

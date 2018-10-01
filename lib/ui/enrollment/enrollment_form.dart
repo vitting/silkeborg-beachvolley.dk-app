@@ -26,12 +26,11 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
   final _formKey = GlobalKey<FormState>();
   bool _isPostalCodeValid = false;
 
-  
   @override
-    void initState() {
-      _postalCodeController.addListener(_getCity);
-      super.initState();
-    }
+  void initState() {
+    _postalCodeController.addListener(_getCity);
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -68,15 +67,15 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
   }
 
   Future<void> _getCity() async {
-  _isPostalCodeValid = false;
-  if (_postalCodeController.text.length == 4)  { 
-    int postalCode = int.tryParse(_postalCodeController.text);
-    if (postalCode != null) {
-      _cityController.text = await PostalCode.getCity(postalCode);
-      _isPostalCodeValid = true;
+    _isPostalCodeValid = false;
+    if (_postalCodeController.text.length == 4) {
+      int postalCode = int.tryParse(_postalCodeController.text);
+      if (postalCode != null) {
+        _cityController.text = await PostalCode.getCity(postalCode);
+        _isPostalCodeValid = true;
+      }
     }
   }
-}
 
   //Datepicker dialog
   Future<Null> _selectDate(BuildContext context) async {
@@ -130,8 +129,10 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
         labelText: "Postnummer",
       ),
       validator: (String value) {
-        if (value.isEmpty || int.tryParse(value.trim()) == null) return "Indtast dit postnummer";
-        if (!_isPostalCodeValid) return "Det indtastede postnummer existere ikke";
+        if (value.isEmpty || int.tryParse(value.trim()) == null)
+          return "Indtast dit postnummer";
+        if (!_isPostalCodeValid)
+          return "Det indtastede postnummer existere ikke";
       },
       keyboardType: TextInputType.number,
       inputFormatters: [LengthLimitingTextInputFormatter(4)],
@@ -142,17 +143,16 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
   }
 
   Widget _city() {
-    return TextFormField( 
-      enabled: false,
-      controller: _cityController,
-      decoration: InputDecoration(
-        labelText: "By",
-      ),
-      onSaved: (String value) {
-        _user.city = value;
-      }
-  );
-}
+    return TextFormField(
+        enabled: false,
+        controller: _cityController,
+        decoration: InputDecoration(
+          labelText: "By",
+        ),
+        onSaved: (String value) {
+          _user.city = value;
+        });
+  }
 
   Widget _birthdayField() {
     return TextFormField(

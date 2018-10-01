@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
+import 'package:silkeborgbeachvolley/helpers/list_item_card_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
@@ -59,49 +60,48 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
   }
 
   Widget _listView() {
-    return Card(
-        child: ListView.builder(
+    return ListView.builder(
       itemCount: _tournaments.length,
       itemBuilder: (BuildContext context, int position) {
-        TournamentData item = _tournaments[position];
-        return Card(
-          child: ListTile(
-            contentPadding:
-                EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
-            onLongPress: () async {
-              await _onLongPress(item);
-            },
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: Container(
-                    padding: EdgeInsets.all(4.0),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4.0),
-                        color: Colors.blue),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: _getDate(item),
-                    ),
-                  ),
+    TournamentData item = _tournaments[position];
+    return ListItemCard(
+      child: ListTile(
+        contentPadding:
+            EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
+        onLongPress: () async {
+          await _onLongPress(item);
+        },
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: Container(
+                padding: EdgeInsets.all(4.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0),
+                    color: Colors.blue),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: _getDate(item),
                 ),
-                Text(item.title),
-              ],
+              ),
             ),
-            trailing: IconButton(
-              tooltip: "Åben i browser",
-              icon: Icon(FontAwesomeIcons.externalLinkAlt,
-                  size: 20.0, color: Colors.blue),
-              onPressed: () {
-                _launchUrl(item.link);
-              },
-            ),
-          ),
-        );
+            Text(item.title),
+          ],
+        ),
+        trailing: IconButton(
+          tooltip: "Åben i browser",
+          icon: Icon(FontAwesomeIcons.externalLinkAlt,
+              size: 20.0, color: Colors.blue),
+          onPressed: () {
+            _launchUrl(item.link);
+          },
+        ),
+      ),
+    );
       },
-    ));
+    );
   }
 
   Future<void> _showCreateDialog(TournamentData item, String title) async {

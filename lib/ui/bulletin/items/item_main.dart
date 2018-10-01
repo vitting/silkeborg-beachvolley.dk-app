@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/list_item_card_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/detailItem/detail_item_main.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data_class.dart';
@@ -34,8 +35,7 @@ class BulletinItemMain extends StatelessWidget {
         break;
     }
 
-    return Card(
-      margin: EdgeInsets.all(5.0),
+    return ListItemCard(
       child: bulletinItem,
     );
   }

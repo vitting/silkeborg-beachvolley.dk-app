@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/list_item_card_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
@@ -66,7 +67,8 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
             return Column(
                 children: snapshot.data.documents
                     .map<Widget>((DocumentSnapshot document) {
-              return Card(
+              return ListItemCard(
+                
                 child: _commentField(document.data),
               );
             }).toList());

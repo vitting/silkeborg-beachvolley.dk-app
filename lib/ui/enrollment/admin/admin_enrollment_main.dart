@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
+import 'package:silkeborgbeachvolley/helpers/list_item_card_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/searchbar_widget.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_detail_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_data_class.dart';
@@ -67,29 +68,26 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
   }
 
   Widget _row(EnrollmentUserData item) {
-    return Card(
-      child: Container(
-        padding: EdgeInsets.all(10.0),
-        child: Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Text(DateTimeHelpers.ddmmyyyyHHnn(item.creationDate))
-              ],
-            ),
-            Row(
-              children: <Widget>[Text(item.name)],
-            ),
-            Row(
-              children: <Widget>[Text(item.street)],
-            ),
-            Row(
-              children: <Widget>[
-                Text("${item.postalCode.toString()} ${item.city}")
-              ],
-            ),
-          ],
-        ),
+    return ListItemCard(
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Text(DateTimeHelpers.ddmmyyyyHHnn(item.creationDate))
+            ],
+          ),
+          Row(
+            children: <Widget>[Text(item.name)],
+          ),
+          Row(
+            children: <Widget>[Text(item.street)],
+          ),
+          Row(
+            children: <Widget>[
+              Text("${item.postalCode.toString()} ${item.city}")
+            ],
+          ),
+        ],
       ),
     );
   }

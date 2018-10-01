@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/chip_header.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
+import 'package:silkeborgbeachvolley/helpers/list_item_card_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
@@ -24,18 +25,22 @@ class EnrollmentMadeByUserState extends State<EnrollmentMadeByUser> {
             if (snapshot.connectionState == ConnectionState.waiting &&
                 !snapshot.hasData) return LoaderSpinner();
 
-            if (snapshot.data.length == 0) return Card(
-              child: Center(
-                child: ChipHeader("Der blev ikke fundet nogen indmeldelser!", fontSize: 15.0,),
-              ),
-            );
+            if (snapshot.data.length == 0)
+              return Card(
+                child: Center(
+                  child: ChipHeader(
+                    "Der blev ikke fundet nogen indmeldelser!",
+                    fontSize: 15.0,
+                  ),
+                ),
+              );
 
             return Container(
               child: ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int position) {
                     EnrollmentUserData item = snapshot.data[position];
-                    return Card(
+                    return ListItemCard(
                       child: ListTile(
                         title: ListBody(
                           children: <Widget>[
