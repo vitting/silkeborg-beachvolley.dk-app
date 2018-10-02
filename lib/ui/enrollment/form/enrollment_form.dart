@@ -1,15 +1,12 @@
 import 'dart:async';
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
-import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/postcal_codes_data.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers_class.dart';
-import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollmentExists.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:validate/validate.dart';
-import "../../../helpers/confirm_dialog_functions.dart" as confirmDialogFunctions;
+import './enrollment_form_functions.dart' as formFunctions;
 
 class EnrollmentForm extends StatefulWidget {
   final ValueChanged<bool> saved;
@@ -18,7 +15,7 @@ class EnrollmentForm extends StatefulWidget {
   @override
   _EnrollmentFormState createState() => _EnrollmentFormState();
 }
-//CHRISTIAN: Refactor form
+
 class _EnrollmentFormState extends State<EnrollmentForm> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _adressController = TextEditingController();
@@ -36,7 +33,7 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
   void initState() {
     _postalCodeController.addListener(_getCity);
 
-    /// Form is in Edit item mode
+    /// Form is in Edit current item mode
     if (widget.item != null) {
       _checkIfMemberExists = false;
       _saveButtonText = "Opdater";
@@ -88,38 +85,6 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
             ))
       ],
     );
-  }
-
-  Future<void> _getCity() async {
-    _isPostalCodeValid = false;
-    if (_postalCodeController.text.length == 4) {
-      int postalCode = int.tryParse(_postalCodeController.text);
-      if (postalCode != null) {
-        _cityController.text = await PostalCode.getCity(postalCode);
-        _isPostalCodeValid = true;
-      }
-    }
-  }
-
-  //Datepicker dialog
-  Future<Null> _selectDate(BuildContext context, {DateTime date}) async {
-    DateTime calendarDate = DateTime.now();
-
-    if (date != null) calendarDate = date;
-
-    DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: calendarDate,
-        firstDate: DateTime(1940),
-        lastDate: DateTime(DateTime.now().year + 1),
-        initialDatePickerMode: DatePickerMode.year);
-
-    if (picked != null && picked != DateTime.now()) {
-      _user.birthdate = picked;
-      setState(() {
-        _birtdateController.text = DateTimeHelpers.ddmmyyyy(picked);
-      });
-    }
   }
 
   Widget _nameField() {
@@ -253,7 +218,8 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
             _formKey.currentState.save();
 
             if (_checkIfMemberExists &&
-                !await _checkIfMemberExistsAndSave(context)) return;
+                !await formFunctions.checkIfMemberExistsAndSave(context, _user))
+              return;
 
             SystemHelpers.hideKeyboardWithNoFocus(context);
 
@@ -271,45 +237,26 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
     );
   }
 
-  Future<bool> _checkIfMemberExistsAndSave(BuildContext context) async {
-    bool value = true;
-    if (Home.loggedInUser != null) {
-      EnrollmentExists enrollmentExists = await _user.checkIfValuesExists();
-
-      if (enrollmentExists.emailExists || enrollmentExists.phoneExists) {
-        ConfirmDialogAction result = await confirmDialogFunctions.confirmDialog(
-            context,
-            title: Text("Info"),
-            actionLeft: ConfirmDialogAction.no,
-            actionRight: ConfirmDialogAction.yes,
-            body: <Widget>[
-              _getDialogText(enrollmentExists),
-              Text("Vil du fortsætte med at oprette medlemmet?")
-            ]);
-
-        result == ConfirmDialogAction.yes ? value = true : value = false;
+  Future<void> _getCity() async {
+    _isPostalCodeValid = false;
+    if (_postalCodeController.text.length == 4) {
+      int postalCode = int.tryParse(_postalCodeController.text);
+      if (postalCode != null) {
+        _cityController.text = await PostalCode.getCity(postalCode);
+        _isPostalCodeValid = true;
       }
     }
-
-    return value;
   }
 
-  Text _getDialogText(EnrollmentExists enrollmentExists) {
-    String text =
-        "Der er allerede oprettet [MEMBERCOUNT] [MEMBEREMAIL][MEMEBERAND][MEMBERPHONE].";
-    text = enrollmentExists.emailCount > 1 || enrollmentExists.phoneCount > 1
-        ? text.replaceFirst("[MEMBERCOUNT]", "flere medlemmer")
-        : text.replaceFirst("[MEMBERCOUNT]", "et medlem");
-    text = enrollmentExists.emailExists
-        ? text.replaceFirst("[MEMBEREMAIL]", "under den angivne e-mail adresse")
-        : text.replaceFirst("[MEMBEREMAIL]", "");
-    text = enrollmentExists.emailExists && enrollmentExists.phoneExists
-        ? text.replaceFirst("[MEMEBERAND]", " og ")
-        : text.replaceFirst("[MEMEBERAND]", "");
-    text = enrollmentExists.phoneExists
-        ? text.replaceFirst("[MEMBERPHONE]", " under det angivne mobilnummer")
-        : text.replaceFirst("[MEMBERPHONE]", "");
+  //Datepicker dialog
+  Future<Null> _selectDate(BuildContext context, {DateTime date}) async {
+    DateTime picked = await formFunctions.selectDate(context, date);
 
-    return Text(text);
+    if (picked != null && picked != DateTime.now()) {
+      _user.birthdate = picked;
+      setState(() {
+        _birtdateController.text = DateTimeHelpers.ddmmyyyy(picked);
+      });
+    }
   }
 }
