@@ -3,6 +3,7 @@ import 'package:silkeborgbeachvolley/helpers/chip_header.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/list_item_card_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
+import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_edit_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
@@ -36,35 +37,47 @@ class EnrollmentMadeByUserState extends State<EnrollmentMadeByUser> {
               );
 
             return Container(
-              child: ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int position) {
-                    EnrollmentUserData item = snapshot.data[position];
-                    return ListItemCard(
-                      child: ListTile(
-                        title: ListBody(
-                          children: <Widget>[
-                            _row(
-                                Icons.calendar_today,
-                                DateTimeHelpers.ddmmyyyyHHnn(item.creationDate),
-                                "Oprettelses dato"),
-                            _row(Icons.person, item.name, "Navn"),
-                            _row(
-                                Icons.location_city,
-                                "${item.street}\n${item.postalCode} ${item.city}",
-                                "Adresse"),
-                            _row(Icons.email, item.email, "E-mail"),
-                            _row(Icons.phone, item.phone.toString(),
-                                "Telefonnummer"),
-                            _row(
-                                Icons.cake,
-                                DateTimeHelpers.ddmmyyyy(item.birthdate),
-                                "Fødselsdato"),
-                          ],
+              child: Scrollbar(
+                              child: ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int position) {
+                      EnrollmentUserData item = snapshot.data[position];
+                      return ListItemCard(
+                        child: ListTile(
+                          trailing: IconButton(
+                            icon: Icon(Icons.edit),
+                            color: Colors.blueAccent,
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                fullscreenDialog: true,
+                                builder: (BuildContext context) => EnrollmentEdit(item)
+                              ));
+                            },
+                          ),
+                          title: ListBody(
+                            children: <Widget>[
+                              _row(
+                                  Icons.calendar_today,
+                                  DateTimeHelpers.ddmmyyyyHHnn(item.creationDate),
+                                  "Oprettelses dato"),
+                              _row(Icons.person, item.name, "Navn"),
+                              _row(
+                                  Icons.location_city,
+                                  "${item.street}\n${item.postalCode} ${item.city}",
+                                  "Adresse"),
+                              _row(Icons.email, item.email, "E-mail"),
+                              _row(Icons.phone, item.phone.toString(),
+                                  "Telefonnummer"),
+                              _row(
+                                  Icons.cake,
+                                  DateTimeHelpers.ddmmyyyy(item.birthdate),
+                                  "Fødselsdato"),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  }),
+                      );
+                    }),
+              ),
             );
           },
         ));

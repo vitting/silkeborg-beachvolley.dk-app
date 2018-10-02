@@ -31,22 +31,28 @@ class _BulletinState extends State<Bulletin> {
   int _playCount = 0;
 
   @override
-    void initState() {
-      _loadBulletinItemsCount();    
-      super.initState();
-    }
+  void initState() {
+    _loadBulletinItemsCount();
+    super.initState();
+  }
 
   _loadBulletinItemsCount() async {
-    BulletinItemsCount bulletinItemsCount = await FirebaseFunctions.getBulletinsItemCount();
+    int dateInMilliSeconds =
+        await BulletinSharedPref.getLastCheckedDateInMilliSeconds();
+    BulletinItemsCount bulletinItemsCount =
+        await FirebaseFunctions.getBulletinsItemCount(dateInMilliSeconds);
+    print(
+        "News: ${bulletinItemsCount.newsCount} / Events: ${bulletinItemsCount.eventCount} / Plays: ${bulletinItemsCount.playCount}");
     if (mounted) {
       setState(() {
         _newsCount = bulletinItemsCount.newsCount;
         _eventCount = bulletinItemsCount.eventCount;
-        _playCount = bulletinItemsCount.playCount;          
+        _playCount = bulletinItemsCount.playCount;
       });
     }
 
-    BulletinSharedPref.setLastCheckedDateInMilliSeconds(DateTime.now().millisecondsSinceEpoch);
+    BulletinSharedPref.setLastCheckedDateInMilliSeconds(
+        DateTime.now().millisecondsSinceEpoch);
   }
 
   @override
@@ -90,12 +96,11 @@ class _BulletinState extends State<Bulletin> {
       },
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          title: Text("Nyheder"),
-          icon: IconCounter(
-            icon: FontAwesomeIcons.newspaper,
-            counter: _newsCount,
-          )
-        ),
+            title: Text("Nyheder"),
+            icon: IconCounter(
+              icon: FontAwesomeIcons.newspaper,
+              counter: _newsCount,
+            )),
         BottomNavigationBarItem(
           title: Text("Begivenheder"),
           icon: IconCounter(
@@ -106,9 +111,7 @@ class _BulletinState extends State<Bulletin> {
         BottomNavigationBarItem(
           title: Text("Spil"),
           icon: IconCounter(
-            icon: FontAwesomeIcons.volleyballBall,
-            counter: _playCount
-          ),
+              icon: FontAwesomeIcons.volleyballBall, counter: _playCount),
         )
       ],
     );
@@ -125,12 +128,14 @@ class _BulletinState extends State<Bulletin> {
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting ||
             !snapshot.hasData) return LoaderSpinner();
-        return ListView.builder(
-          itemCount: snapshot.data.documents.length,
-          itemBuilder: (BuildContext context, int position) {
-            DocumentSnapshot item = snapshot.data.documents[position];
-            return BulletinItemMain(item.data);
-          },
+        return Scrollbar(
+          child: ListView.builder(
+            itemCount: snapshot.data.documents.length,
+            itemBuilder: (BuildContext context, int position) {
+              DocumentSnapshot item = snapshot.data.documents[position];
+              return BulletinItemMain(item.data);
+            },
+          ),
         );
       },
     );

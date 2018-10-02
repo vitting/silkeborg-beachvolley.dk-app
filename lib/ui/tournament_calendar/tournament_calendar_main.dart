@@ -60,47 +60,49 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
   }
 
   Widget _listView() {
-    return ListView.builder(
-      itemCount: _tournaments.length,
-      itemBuilder: (BuildContext context, int position) {
-    TournamentData item = _tournaments[position];
-    return ListItemCard(
-      child: ListTile(
-        contentPadding:
-            EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
-        onLongPress: () async {
-          await _onLongPress(item);
-        },
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: Container(
-                padding: EdgeInsets.all(4.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4.0),
-                    color: Colors.blue),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: _getDate(item),
-                ),
+    return Scrollbar(
+      child: ListView.builder(
+        itemCount: _tournaments.length,
+        itemBuilder: (BuildContext context, int position) {
+          TournamentData item = _tournaments[position];
+          return ListItemCard(
+            child: ListTile(
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
+              onLongPress: () async {
+                await _onLongPress(item);
+              },
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Container(
+                      padding: EdgeInsets.all(4.0),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4.0),
+                          color: Colors.blue),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: _getDate(item),
+                      ),
+                    ),
+                  ),
+                  Text(item.title),
+                ],
+              ),
+              trailing: IconButton(
+                tooltip: "Åben i browser",
+                icon: Icon(FontAwesomeIcons.externalLinkAlt,
+                    size: 20.0, color: Colors.blue),
+                onPressed: () {
+                  _launchUrl(item.link);
+                },
               ),
             ),
-            Text(item.title),
-          ],
-        ),
-        trailing: IconButton(
-          tooltip: "Åben i browser",
-          icon: Icon(FontAwesomeIcons.externalLinkAlt,
-              size: 20.0, color: Colors.blue),
-          onPressed: () {
-            _launchUrl(item.link);
-          },
-        ),
+          );
+        },
       ),
-    );
-      },
     );
   }
 

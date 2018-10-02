@@ -3,6 +3,7 @@ import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/list_item_card_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/searchbar_widget.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_detail_main.dart';
+import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_edit_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
@@ -36,57 +37,52 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
       title: "Medlemmer",
-      body: _enrollmentList(),
+      body: _main(),
     );
   }
 
-  Widget _enrollmentList() {
+  Widget _main() {
     return Container(
-      child: ListView.builder(
-        shrinkWrap: false,
-        itemCount: _data.length + 1,
-        itemBuilder: (BuildContext context, int position) {
-          if (position == 0) {
-            return SearchBar(
-              searchValue: _search,
-            );
-          }
+      child: Scrollbar(
+        child: ListView.builder(
+          shrinkWrap: false,
+          itemCount: _data.length + 1,
+          itemBuilder: (BuildContext context, int position) {
+            if (position == 0) {
+              return SearchBar(
+                searchValue: _search,
+              );
+            }
 
-          EnrollmentUserData item = _data[position - 1];
-          return GestureDetector(
-            child: _row(item),
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  fullscreenDialog: true,
-                  builder: (BuildContext context) =>
-                      EnrollmentDetail(enrollment: item)));
-            },
-          );
-        },
+            EnrollmentUserData item = _data[position - 1];
+            return GestureDetector(
+              child: _row(item),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    fullscreenDialog: true,
+                    builder: (BuildContext context) =>
+                        EnrollmentDetail(enrollment: item)));
+              },
+              onLongPress: () {
+                _popupMenu(context, item);
+              },
+            );
+          },
+        ),
       ),
     );
   }
 
   Widget _row(EnrollmentUserData item) {
     return ListItemCard(
+      padding: EdgeInsets.all(10.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Text(DateTimeHelpers.ddmmyyyyHHnn(item.creationDate))
-            ],
-          ),
-          Row(
-            children: <Widget>[Text(item.name)],
-          ),
-          Row(
-            children: <Widget>[Text(item.street)],
-          ),
-          Row(
-            children: <Widget>[
-              Text("${item.postalCode.toString()} ${item.city}")
-            ],
-          ),
+          Text(DateTimeHelpers.ddmmyyyyHHnn(item.creationDate)),
+          Text(item.name, style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(item.street),
+          Text("${item.postalCode.toString()} ${item.city}")
         ],
       ),
     );
@@ -108,4 +104,48 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
       });
     }
   }
+
+  void _popupMenu(BuildContext context, EnrollmentUserData item) async {
+    EnrollmentPopMenuAction result = await showModalBottomSheet<EnrollmentPopMenuAction>(
+      context: context,
+      builder: (BuildContext contextModal) {
+        return Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: Text("Rediger"),
+                leading: Icon(Icons.edit),
+                onTap: () {
+                  Navigator.of(contextModal).pop(EnrollmentPopMenuAction.edit);
+                },
+              ),
+              // ListTile(
+              //   title: Text("Slet"),
+              //   leading: Icon(Icons.delete),
+              //   onTap: () {
+              //     Navigator.of(contextModal).pop(EnrollmentPopMenuAction.delete);
+              //   },
+              // )
+            ],
+          ),
+        );
+      }
+    );
+
+    switch (result) {
+      case EnrollmentPopMenuAction.edit:
+        Navigator.of(context).push(MaterialPageRoute(
+          fullscreenDialog: true,
+          builder: (BuildContext context) => EnrollmentEdit(item)
+        ));
+        break;
+      default:
+    }
+  }
+}
+
+enum EnrollmentPopMenuAction {
+  edit,
+  delete
 }

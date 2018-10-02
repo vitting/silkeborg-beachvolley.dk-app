@@ -1,14 +1,11 @@
 import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_items_count_data.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_sharedpref.dart';
 
 class FirebaseFunctions {
-  static Future<BulletinItemsCount> getBulletinsItemCount() async {
+  static Future<BulletinItemsCount> getBulletinsItemCount(int dateInMilliSeconds) async {
     BulletinItemsCount bulletinItemsCount = BulletinItemsCount();
-    int dateInMilliSeconds =
-        await BulletinSharedPref.getLastCheckedDateInMilliSeconds();
-
+    
     if (dateInMilliSeconds != null && dateInMilliSeconds != 0) {
       try {
         final dynamic response = await CloudFunctions.instance.call(

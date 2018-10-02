@@ -40,7 +40,7 @@ void bulletinItemPopupMenu(
               Divider(),
               ListTile(
                 onTap: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(contextModal).pop();
                   Navigator.of(context).push(MaterialPageRoute(
                       fullscreenDialog: true,
                       builder: (BuildContext context) =>
@@ -52,7 +52,7 @@ void bulletinItemPopupMenu(
               Divider(),
               ListTile(
                 onTap: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(contextModal).pop();
                   bulletinConfirmDialog(context, bulletinItem);
                 },
                 title: Text("Slet"),

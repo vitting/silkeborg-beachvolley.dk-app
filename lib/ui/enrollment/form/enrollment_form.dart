@@ -9,34 +9,58 @@ import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollmentExists.dart
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:validate/validate.dart';
-import "../../helpers/confirm_dialog_functions.dart" as confirmDialogFunctions;
+import "../../../helpers/confirm_dialog_functions.dart" as confirmDialogFunctions;
 
 class EnrollmentForm extends StatefulWidget {
   final ValueChanged<bool> saved;
-  EnrollmentForm({@required this.saved});
+  final EnrollmentUserData item;
+  EnrollmentForm({@required this.saved, this.item});
   @override
   _EnrollmentFormState createState() => _EnrollmentFormState();
 }
-
+//CHRISTIAN: Refactor form
 class _EnrollmentFormState extends State<EnrollmentForm> {
-  final _birtdateController = TextEditingController();
-  final _postalCodeController = TextEditingController();
-  final _cityController = TextEditingController();
-  final _user = new EnrollmentUserData();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _adressController = TextEditingController();
+  final TextEditingController _birtdateController = TextEditingController();
+  final TextEditingController _postalCodeController = TextEditingController();
+  final TextEditingController _cityController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _mobilenumberController = TextEditingController();
+  EnrollmentUserData _user = new EnrollmentUserData();
   final _formKey = GlobalKey<FormState>();
   bool _isPostalCodeValid = false;
-
+  bool _checkIfMemberExists = true;
+  String _saveButtonText = "Indsend formular";
   @override
   void initState() {
     _postalCodeController.addListener(_getCity);
+
+    /// Form is in Edit item mode
+    if (widget.item != null) {
+      _checkIfMemberExists = false;
+      _saveButtonText = "Opdater";
+      _user = widget.item;
+      _nameController.text = _user.name;
+      _adressController.text = _user.street;
+      _postalCodeController.text = _user.postalCode.toString();
+      _emailController.text = _user.email;
+      _mobilenumberController.text = _user.phone.toString();
+      _birtdateController.text = DateTimeHelpers.ddmmyyyy(_user.birthdate);
+    }
+
     super.initState();
   }
 
   @override
   void dispose() {
+    _nameController.dispose();
+    _adressController.dispose();
     _birtdateController.dispose();
     _postalCodeController.dispose();
     _cityController.dispose();
+    _emailController.dispose();
+    _mobilenumberController.dispose();
     super.dispose();
   }
 
@@ -78,10 +102,14 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
   }
 
   //Datepicker dialog
-  Future<Null> _selectDate(BuildContext context) async {
-    var picked = await showDatePicker(
+  Future<Null> _selectDate(BuildContext context, {DateTime date}) async {
+    DateTime calendarDate = DateTime.now();
+
+    if (date != null) calendarDate = date;
+
+    DateTime picked = await showDatePicker(
         context: context,
-        initialDate: DateTime.now(),
+        initialDate: calendarDate,
         firstDate: DateTime(1940),
         lastDate: DateTime(DateTime.now().year + 1),
         initialDatePickerMode: DatePickerMode.year);
@@ -96,6 +124,7 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
 
   Widget _nameField() {
     return TextFormField(
+      controller: _nameController,
       decoration: InputDecoration(labelText: "Navn"),
       validator: (String value) {
         if (value.isEmpty) return "Indtast dit navn";
@@ -110,6 +139,7 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
 
   Widget _adressField() {
     return TextFormField(
+      controller: _adressController,
       decoration: InputDecoration(labelText: "Addresse"),
       validator: (String value) {
         if (value.isEmpty) return "Indtast din addresse";
@@ -161,8 +191,8 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
         hintText: "Tryk på knappen og bruger kalenderen",
         suffixIcon: IconButton(
             icon: Icon(Icons.calendar_today),
-            onPressed: () {
-              _selectDate(context);
+            onPressed: () async {
+              _selectDate(context, date: _user.birthdate);
             }),
       ),
       controller: _birtdateController,
@@ -178,6 +208,7 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
 
   Widget _emailField() {
     return TextFormField(
+      controller: _emailController,
       decoration: InputDecoration(labelText: "E-mail"),
       validator: (String value) {
         if (value.isEmpty) return "Indtast din e-mail addresse";
@@ -197,6 +228,7 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
 
   Widget _mobilenumberField() {
     return TextFormField(
+      controller: _mobilenumberController,
       decoration: InputDecoration(labelText: "Mobilnummer"),
       validator: (String value) {
         if (value.isEmpty || int.tryParse(value.trim()) == null)
@@ -219,16 +251,22 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
         onPressed: () async {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
-            if (await _checkIfMemberExistsAndSave(context)) {
-              _formKey.currentState.reset();
-              _birtdateController.text = "";
-              SystemHelpers.hideKeyboardWithNoFocus(context);
-              await _user.save();
+
+            if (_checkIfMemberExists &&
+                !await _checkIfMemberExistsAndSave(context)) return;
+
+            SystemHelpers.hideKeyboardWithNoFocus(context);
+
+            await _user.save();
+
+            if (widget.saved != null) {
               widget.saved(true);
+            } else {
+              Navigator.of(context).pop();
             }
           }
         },
-        label: Text('Indsend formular'),
+        label: Text(_saveButtonText),
       ),
     );
   }
