@@ -59,7 +59,7 @@ class EnrollmentUserData {
     };
   }
 
-  void refresh() async {
+  Future<void> refresh() async {
     DocumentSnapshot snapshot = await EnrollmentFirestore.getEnrollment(id);
     if (snapshot.exists) {
       Map<String, dynamic> item = snapshot.data;
@@ -87,8 +87,23 @@ class EnrollmentUserData {
     }
   }
 
+  List<EnrollmentPaymentData> get paymentSorted {
+    payment.sort((EnrollmentPaymentData data1, EnrollmentPaymentData data2) {
+      return data2.year.compareTo(data1.year);
+    });
+
+    return  payment;
+  }
+
   void addPayment(int year, {String comment = ""}) {
     payment.add(EnrollmentPaymentData(year: year, comment: comment));
+  }
+
+  bool paymentExists(int year) {
+    return payment.any((EnrollmentPaymentData data) {
+      if (data.year == year) return true;
+      return false;
+    });
   }
 
   int get age => DateTimeHelpers.getAge(birthdate);
