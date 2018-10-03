@@ -1,19 +1,28 @@
+import 'package:meta/meta.dart';
+import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
+
 class EnrollmentPaymentData {
-  DateTime date;
+  dynamic createdDate;
   String approvedUserId;
-  EnrollmentPaymentData({this.approvedUserId = "", this.date});
+  final int year;
+  String comment;
+  EnrollmentPaymentData({@required this.year, this.comment = "", this.createdDate, this.approvedUserId});
 
   Map<String, dynamic> toMap() {
     return {
-      "date": date ?? DateTime.now(),
-      "approvedUserId": approvedUserId
+      "createdDate": createdDate ?? DateTime.now(),
+      "approvedUserId": approvedUserId ?? Home.loggedInUser.uid,
+      "year": year,
+      "comment": comment
     };
   }
 
   factory EnrollmentPaymentData.formMap(Map<String, dynamic> item) {
     return EnrollmentPaymentData(
-      date: item["date"],
-      approvedUserId: item["approvedUserId"]
+      createdDate: item["createdDate"],
+      approvedUserId: item["approvedUserId"],
+      year: item["year"],
+      comment: item["comment"] ?? ""
     );
   }
 }

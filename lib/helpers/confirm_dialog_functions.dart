@@ -62,6 +62,9 @@ Text _getButtonText(ConfirmDialogAction action) {
     case ConfirmDialogAction.ok:
       value = "Ok";
       break;
+    case ConfirmDialogAction.save:
+      value = "Gem";
+      break;
     default:
       value = "";
   }

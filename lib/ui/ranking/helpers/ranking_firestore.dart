@@ -105,13 +105,13 @@ class RankingFirestore {
 
   static Future<void> addPlayerAsFavorite(String userId, String favoritePlayerId) {
     return firestoreInstance.collection(_collectionNamePlayer).document(userId).updateData({
-      "playerFavorites": FieldValue.arrayUnion(favoritePlayerId)
+      "playerFavorites": FieldValue.arrayUnion([favoritePlayerId])
     });
   }
 
   static Future<void> removePlayerAsFavorite(String userId, String favoritePlayerId) {
     return firestoreInstance.collection(_collectionNamePlayer).document(userId).updateData({
-      "playerFavorites": FieldValue.arrayRemove(favoritePlayerId)
+      "playerFavorites": FieldValue.arrayRemove([favoritePlayerId])
     });
   }
 

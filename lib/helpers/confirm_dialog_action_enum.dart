@@ -1,1 +1,1 @@
-enum ConfirmDialogAction { delete, cancel, ok, yes, no, none }
+enum ConfirmDialogAction { delete, cancel, ok, yes, no, none, save }

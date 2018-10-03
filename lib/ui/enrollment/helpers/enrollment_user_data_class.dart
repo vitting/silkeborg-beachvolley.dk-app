@@ -21,9 +21,22 @@ class EnrollmentUserData {
   DateTime birthdate;
   String email;
   int phone;
+  String comment;
   List<EnrollmentPaymentData> payment;
 
-  EnrollmentUserData({this.addedByUserId, this.id, this.creationDate, this.name, this.street, this.postalCode, this.city, this.birthdate, this.email, this.phone, this.payment});
+  EnrollmentUserData(
+      {this.addedByUserId,
+      this.id,
+      this.creationDate,
+      this.name,
+      this.street,
+      this.postalCode,
+      this.city,
+      this.birthdate,
+      this.email,
+      this.phone,
+      this.payment,
+      this.comment = ""});
 
   Map<String, dynamic> toMap() {
     return {
@@ -37,10 +50,45 @@ class EnrollmentUserData {
       "birthday": birthdate,
       "email": email,
       "phone": phone,
-      "payment": payment == null ? [] : payment.map<Map<String, dynamic>>((EnrollmentPaymentData data) {
-        return data.toMap();
-      }).toList()
+      "comment": comment,
+      "payment": payment == null
+          ? []
+          : payment.map<Map<String, dynamic>>((EnrollmentPaymentData data) {
+              return data.toMap();
+            }).toList()
     };
+  }
+
+  void refresh() async {
+    DocumentSnapshot snapshot = await EnrollmentFirestore.getEnrollment(id);
+    if (snapshot.exists) {
+      Map<String, dynamic> item = snapshot.data;
+      id = item["id"];
+      addedByUserId = item["addedByUserId"];
+      creationDate = item["creationDate"];
+      name = item["name"];
+      street = item["street"];
+      postalCode = item["postalCode"];
+      city = item["city"];
+      birthdate = item["birthday"];
+      email = item["email"];
+      phone = item["phone"];
+      comment = item["comment"] ?? "";
+      payment = item["payment"] == null
+          ? []
+          : (item["payment"] as List<dynamic>)
+              .map<EnrollmentPaymentData>((dynamic value) {
+              return EnrollmentPaymentData(
+                  approvedUserId: value["approvedUserId"],
+                  createdDate: value["createdDate"],
+                  year: value["year"],
+                  comment: value["comment"] ?? "");
+            }).toList();
+    }
+  }
+
+  void addPayment(int year, {String comment = ""}) {
+    payment.add(EnrollmentPaymentData(year: year, comment: comment));
   }
 
   int get age => DateTimeHelpers.getAge(birthdate);
@@ -48,13 +96,14 @@ class EnrollmentUserData {
   Future<String> get addedByUserName async {
     String name = "Ikke tilføjet af en bruger";
     if (addedByUserId.isNotEmpty) {
-      DocumentSnapshot snapshot = await UserFirestore.getUserInfo(addedByUserId);
+      DocumentSnapshot snapshot =
+          await UserFirestore.getUserInfo(addedByUserId);
       if (snapshot.exists) {
         UserInfoData userInfoData = UserInfoData.fromMap(snapshot.data);
         name = userInfoData.name;
       }
     }
-      
+
     return name;
   }
 
@@ -67,6 +116,7 @@ class EnrollmentUserData {
     addedByUserId = Home.loggedInUser?.uid;
     creationDate = creationDate ?? FieldValue.serverTimestamp();
     payment = payment ?? [];
+    comment = comment ?? "";
     return EnrollmentFirestore.saveEnrollment(this);
   }
 
@@ -93,7 +143,9 @@ class EnrollmentUserData {
   }
 
   static Future<List<EnrollmentUserData>> getAllAddedByUser() async {
-    QuerySnapshot snapshot = await EnrollmentFirestore.getAllEnrollmentsAddedByUserId(Home.loggedInUser.uid);
+    QuerySnapshot snapshot =
+        await EnrollmentFirestore.getAllEnrollmentsAddedByUserId(
+            Home.loggedInUser.uid);
     return snapshot.documents.map<EnrollmentUserData>((DocumentSnapshot doc) {
       return EnrollmentUserData.fromMap(doc.data);
     }).toList();
@@ -101,22 +153,26 @@ class EnrollmentUserData {
 
   factory EnrollmentUserData.fromMap(Map<String, dynamic> item) {
     return EnrollmentUserData(
-      id: item["id"] ?? "",
-      addedByUserId: item["addedByUserId"],
-      creationDate: item["CreatedDate"] ?? DateTime.now(),
-      name: item["name"] ?? "",
-      street: item["street"] ?? "",
-      postalCode: item["postalCode"] ?? 0,
-      city: item["city"] ?? "",
-      birthdate: item["birthday"] ?? DateTime.now(),
-      email: item["email"] ?? "",
-      phone: item["phone"] ?? 0,
-      payment: item["payment"] == null ? [] : (item["payment"] as List<dynamic>).map<EnrollmentPaymentData>((dynamic value) {
-        return EnrollmentPaymentData(
-          approvedUserId: value["approvedUserId"],
-          date: value["date"]
-        );
-      }).toList()
-    );
+        id: item["id"] ?? "",
+        addedByUserId: item["addedByUserId"],
+        creationDate: item["creationDate"] ?? DateTime.now(),
+        name: item["name"] ?? "",
+        street: item["street"] ?? "",
+        postalCode: item["postalCode"] ?? 0,
+        city: item["city"] ?? "",
+        birthdate: item["birthday"] ?? DateTime.now(),
+        email: item["email"] ?? "",
+        phone: item["phone"] ?? 0,
+        comment: item["comment"] ?? "",
+        payment: item["payment"] == null
+            ? []
+            : (item["payment"] as List<dynamic>)
+                .map<EnrollmentPaymentData>((dynamic value) {
+                return EnrollmentPaymentData(
+                    approvedUserId: value["approvedUserId"],
+                    createdDate: value["createdDate"],
+                    year: value["year"],
+                    comment: value["comment"] ?? "");
+              }).toList());
   }
 }
