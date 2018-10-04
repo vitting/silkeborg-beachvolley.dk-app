@@ -6,10 +6,10 @@ import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_payment_da
 import "../../../helpers/confirm_dialog_functions.dart" as confirmActions;
 
 Future<String> editComment(
-    BuildContext context, EnrollmentPaymentData item) async {
+    BuildContext context, String text) async {
   String comment;
   TextEditingController _commentController =
-      TextEditingController(text: item.comment);
+      TextEditingController(text: text);
   ConfirmDialogAction result = await confirmActions.confirmDialog(context,
       title: Text("Kommentar"),
       barrierDismissible: false,
@@ -18,7 +18,7 @@ Future<String> editComment(
         Container(
           child: TextField(
             controller: _commentController,
-            maxLength: 1000,
+            maxLength: 500,
             maxLines: 4,
             decoration: InputDecoration(
                 labelText: "Kommentar",

@@ -36,13 +36,26 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
               ],
             ),
             ListTile(
-              trailing: IconButton(
+              trailing: Column(
+                children: <Widget>[
+                  IconButton(
                 tooltip: "Slet betaling",
                 color: Colors.deepOrange,
                 icon: Icon(Icons.delete),
                 onPressed: () {
                   onPressedDeletePayment(payment);
                 },
+              ),
+              IconButton(
+                tooltip: "Rediger kommentar",
+                color: Colors.deepOrange,
+                icon: Icon(Icons.comment),
+                iconSize: 20.0,
+                onPressed: () {
+                  onLongPressEditComment(payment);
+                },
+              )
+                ],
               ),
               title: ListBody(
                 children: <Widget>[
@@ -56,17 +69,12 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
                       text: payment.approvedUserId,
                       tooltip: "Id på den person der har godkendt betalingen",
                     ),
-                  GestureDetector(
-                    child: AdminEnrollmentDetailRow(
-                      icon: Icons.comment,
-                      text: payment.comment.isEmpty
-                            ? "Ingen kommentar"
-                            : payment.comment,
-                      tooltip: "Kommentar fra administrator",
-                    ),
-                    onLongPress: () {
-                      onLongPressEditComment(payment);
-                    },
+                  AdminEnrollmentDetailRow(
+                    icon: Icons.comment,
+                    text: payment.comment.isEmpty
+                          ? "Ingen kommentar"
+                          : payment.comment,
+                    tooltip: "Kommentar fra administrator",
                   )
                 ],
               ),
