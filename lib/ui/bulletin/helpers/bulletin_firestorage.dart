@@ -20,9 +20,10 @@ class BulletinFireStorage {
           .ref()
           .child("${imageInfo.imagesStoreageFolder}/${imageInfo.filename}")
           .putFile(imageInfo.imageFile);
-
-      final UploadTaskSnapshot snapshot = await uploadTask.future;
-      imageInfo.linkFirebaseStorage = snapshot.downloadUrl.toString();
+      
+      final StorageTaskSnapshot snapshot = await uploadTask.onComplete;
+      String downloadUrl = await snapshot.ref.getDownloadURL();
+      imageInfo.linkFirebaseStorage = downloadUrl;
       return imageInfo;
     } catch (e) {
       print("saveToFirebaseStorage error: $e");
