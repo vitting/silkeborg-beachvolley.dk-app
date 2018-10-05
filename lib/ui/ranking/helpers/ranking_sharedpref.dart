@@ -29,11 +29,13 @@ static Future<SharedPreferences> get sharedPrefInstance async {
     return value;
   }
 
-  static Future<void> setIsItFirsttime(bool isItFirstTime) async {
-    await sharedPrefInstance..setBool(_isItFirstTimeKey, isItFirstTime);
+  static Future<bool> setIsItFirsttime(bool isItFirstTime) async {
+    SharedPreferences shared = await sharedPrefInstance;
+    return shared.setBool(_isItFirstTimeKey, isItFirstTime);
   }
 
-  static Future<void> removeIsItFirstTime() async {
-    await sharedPrefInstance..remove(_isItFirstTimeKey);
+  static Future<bool> removeIsItFirstTime() async {
+    SharedPreferences shared = await sharedPrefInstance;
+    return shared.remove(_isItFirstTimeKey);
   }
 }
