@@ -19,13 +19,14 @@ class Ranking extends StatefulWidget {
 class _RankingState extends State<Ranking> {
   @override
   void initState() {
-    _checkIfPlayerExists();
     super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _checkIfPlayerExists(context));
   }
 
-  void _checkIfPlayerExists() async {
+  void _checkIfPlayerExists(BuildContext context) async {
     if (await RankingSharedPref.isItfirstTime()) {
-      _showFirstTimeSetup();
+      _showFirstTimeSetup(context);
     }
   }
 
@@ -49,8 +50,13 @@ class _RankingState extends State<Ranking> {
   Widget _main() {
     return Container(
         child: Scrollbar(
-                  child: ListView(
-      children: <Widget>[
+      child: ListView(
+        children: <Widget>[
+          RaisedButton(
+            onPressed: () async {
+              await RankingSharedPref.removeIsItFirstTime();
+            },
+          ),
           StreamBuilder(
             stream: RankingFirestore.getRanking(),
             builder:
@@ -61,7 +67,8 @@ class _RankingState extends State<Ranking> {
               return Column(
                 children:
                     snapshot.data.documents.map<Widget>((DocumentSnapshot doc) {
-                  RankingPlayerData player = RankingPlayerData.fromMap(doc.data);
+                  RankingPlayerData player =
+                      RankingPlayerData.fromMap(doc.data);
                   counter++;
 
                   return RankingItem(
@@ -81,12 +88,12 @@ class _RankingState extends State<Ranking> {
               );
             },
           ),
-      ],
-    ),
-        ));
+        ],
+      ),
+    ));
   }
 
-  _showFirstTimeSetup() async {
+  _showFirstTimeSetup(BuildContext context) async {
     await showDialog<void>(
         context: context,
         barrierDismissible: false,
@@ -94,9 +101,9 @@ class _RankingState extends State<Ranking> {
           return SimpleDialog(
             children: <Widget>[
               RankingFirstTime(
-                onPressedValue: (bool value) {
+                onPressedValue: (bool value) async {
                   if (value) {
-                    RankingSharedPref.setIsItFirsttime(false);
+                    await RankingSharedPref.setIsItFirsttime(false);
                   }
                 },
               )
