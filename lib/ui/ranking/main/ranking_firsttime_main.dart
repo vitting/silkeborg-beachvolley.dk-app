@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data_class.dart';
@@ -22,23 +23,18 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(15.0),
+        padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
                 child: Column(
           children: <Widget>[
-            Text("Velkommen til Ranglisten for Silkeborg Beachvolley."),
+            Text("Velkommen til Ranglisten", textAlign: TextAlign.center, style: TextStyle(fontSize: 20.0)),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: Text(
-                  "Før du kan gå i gang med at registere dine kampe skal vi lige vide et par ting om dig."),
+                  "Før du kan gå i gang med at registere dine kampe skal vi lige vide et par ting om dig. Du kan altid senere ændre dine oplysninger i indstillinger.", textAlign: TextAlign.center,),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text("Du kan altid senere ændre dine oplysninger i indstillinger."),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: CircleAvatar(
-                // child: Icon(Icons.add_photo_alternate),
                 radius: 30.0,
                 backgroundImage: CachedNetworkImageProvider(_rankingPlayerData.photoUrl),
               ),
@@ -55,7 +51,7 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
                     validator: (String value) {
                       if (value.isEmpty) return "Du skal udfylde dit rangliste navn";
                     },
-                    maxLength: 50,
+                    inputFormatters: [LengthLimitingTextInputFormatter(50)],
                     decoration: InputDecoration(labelText: "Dit rangliste navn"),
                   ),
                   Padding(
@@ -72,7 +68,9 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            Text("Kvinde"),
+                            Row(
+                              children: <Widget>[
+                                Text("Kvinde"),
                             Radio(
                               onChanged: (String value) {
                                 setState(() {
@@ -82,7 +80,11 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
                               groupValue: state.value,
                               value: "female",
                             ),
-                            Text("Mand"),
+                              ],
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Text("Mand"),
                             Radio(
                               onChanged: (String value) {
                                 setState(() {
@@ -92,6 +94,8 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
                               groupValue: state.value,
                               value: "male",
                             )
+                              ],
+                            )
                           ],
                         );
                       },
@@ -100,7 +104,8 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
                 ],
               ),
             ),
-            RaisedButton.icon(
+            FlatButton.icon(
+              textColor: Colors.deepOrange[700],
               onPressed: () {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
@@ -108,7 +113,7 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
                   widget.onPressedValue(true);
                 }
               },
-              label: Text("Opret mig"),
+              label: Text("Gem min profil"),
               icon: Icon(Icons.check_circle),
             )
           ],

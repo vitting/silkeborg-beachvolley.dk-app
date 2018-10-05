@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/list_item_card_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -49,6 +48,7 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
     Widget button;
     if (_isAdmin) {
       button = FloatingActionButton(
+        backgroundColor: Colors.deepOrange[700],
         onPressed: () async {
           await _showCreateDialog(null, "Opret turnering");
         },
@@ -91,14 +91,13 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
                   Text(item.title),
                 ],
               ),
-              trailing: IconButton(
-                tooltip: "Åben i browser",
-                icon: Icon(FontAwesomeIcons.externalLinkAlt,
-                    size: 20.0, color: Colors.blue),
-                onPressed: () {
-                  _launchUrl(item.link);
-                },
-              ),
+              subtitle: IconButton(
+                color: Colors.deepOrange[700],
+                    icon: Icon(Icons.launch),
+                    onPressed: () {
+                      _launchUrl(item.link);
+                    },
+                  ),
             ),
           );
         },

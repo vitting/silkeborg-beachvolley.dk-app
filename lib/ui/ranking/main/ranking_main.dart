@@ -36,6 +36,7 @@ class _RankingState extends State<Ranking> {
       title: "Ranglisten",
       body: _main(),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepOrange[700],
         tooltip: "Registere kamp",
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
@@ -52,11 +53,11 @@ class _RankingState extends State<Ranking> {
         child: Scrollbar(
       child: ListView(
         children: <Widget>[
-          RaisedButton(
-            onPressed: () async {
-              await RankingSharedPref.removeIsItFirstTime();
-            },
-          ),
+          // RaisedButton(
+          //   onPressed: () async {
+          //     await RankingSharedPref.removeIsItFirstTime();
+          //   },
+          // ),
           StreamBuilder(
             stream: RankingFirestore.getRanking(),
             builder:

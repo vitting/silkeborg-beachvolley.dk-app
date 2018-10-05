@@ -50,7 +50,7 @@ class RankingDetailMatches extends StatelessWidget {
                               await rankingDetailFunctions.showMatchInfo(
                                   context, item, userId);
                             },
-                            color: Colors.blueAccent,
+                            color: Colors.deepOrange[700],
                             icon: Icon(Icons.info_outline),
                           )
                         ],

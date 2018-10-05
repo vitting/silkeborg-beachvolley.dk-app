@@ -155,6 +155,7 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
         labelText: "Fødselsdato",
         hintText: "Tryk på knappen og bruger kalenderen",
         suffixIcon: IconButton(
+          color: Colors.deepOrange[700],
             icon: Icon(Icons.calendar_today),
             onPressed: () async {
               _selectDate(context, date: _user.birthdate);
@@ -211,8 +212,8 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
     return Padding(
       padding: const EdgeInsets.only(top: 30.0),
       child: FlatButton.icon(
-        textColor: Colors.blue,
-        icon: Icon(Icons.send, color: Colors.blue),
+        textColor: Colors.deepOrange[700],
+        icon: Icon(Icons.check_circle),
         onPressed: () async {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();

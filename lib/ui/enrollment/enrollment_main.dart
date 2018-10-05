@@ -123,7 +123,7 @@ class _EnrollmentStepperState extends State<Enrollment> {
                     "Udfyld formularen på næste side for den du vil melde ind i Silkeborg Beachvolley"),
                 IconButton(
                   padding: EdgeInsets.only(top: 40.0),
-                  color: Colors.blueAccent,
+                  color: Colors.deepOrange[700],
                   icon: Icon(
                     FontAwesomeIcons.arrowAltCircleRight,
                     size: 45.0,
@@ -198,7 +198,7 @@ class _EnrollmentStepperState extends State<Enrollment> {
                       });
                     }
                   },
-                  color: Colors.blueAccent,
+                  color: Colors.deepOrange[700],
                   icon: Icon(FontAwesomeIcons.home),
                 )
               ],

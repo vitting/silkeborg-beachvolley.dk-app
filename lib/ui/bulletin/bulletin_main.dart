@@ -88,33 +88,34 @@ class _BulletinState extends State<Bulletin> {
 
   Widget _scaffoldBottomNavigationBar() {
     return BottomNavigationBar(
-      currentIndex: _bottombarSelected,
-      onTap: (int value) {
-        setState(() {
-          _bottombarSelected = value;
-        });
-      },
-      items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-            title: Text("Nyheder"),
-            icon: IconCounter(
-              icon: FontAwesomeIcons.newspaper,
-              counter: _newsCount,
-            )),
-        BottomNavigationBarItem(
-          title: Text("Begivenheder"),
-          icon: IconCounter(
-            icon: FontAwesomeIcons.calendarAlt,
-            counter: _eventCount,
-          ),
-        ),
-        BottomNavigationBarItem(
-          title: Text("Spil"),
-          icon: IconCounter(
-              icon: FontAwesomeIcons.volleyballBall, counter: _playCount),
-        )
-      ],
-    );
+      type: BottomNavigationBarType.fixed,
+        currentIndex: _bottombarSelected,
+        onTap: (int value) {
+    setState(() {
+      _bottombarSelected = value;
+    });
+        },
+        items: <BottomNavigationBarItem>[
+    BottomNavigationBarItem(
+        title: Text("Nyheder"),
+        icon: IconCounter(
+          icon: FontAwesomeIcons.newspaper,
+          counter: _newsCount,
+        )),
+    BottomNavigationBarItem(
+      title: Text("Begivenheder"),
+      icon: IconCounter(
+        icon: FontAwesomeIcons.calendarAlt,
+        counter: _eventCount,
+      ),
+    ),
+    BottomNavigationBarItem(
+      title: Text("Spil"),
+      icon: IconCounter(
+          icon: FontAwesomeIcons.volleyballBall, counter: _playCount),
+    )
+        ],
+      );
   }
 
   Widget _main() {

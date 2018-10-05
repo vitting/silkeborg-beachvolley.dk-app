@@ -142,9 +142,9 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0),
           child: FlatButton.icon(
-            textColor: Colors.blueAccent,
-            label: Text("Gem kampen"),
-            icon: Icon(Icons.send),
+            textColor: Colors.deepOrange[700],
+            label: Text("Registere kampen"),
+            icon: Icon(Icons.check_circle),
             onPressed: () {
               _saveMatch(context);
             },

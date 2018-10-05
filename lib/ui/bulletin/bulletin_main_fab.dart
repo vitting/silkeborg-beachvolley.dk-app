@@ -28,8 +28,8 @@ class _BulletinMainFabState extends State<BulletinMainFab>
             setState(() {});
           });
     _buttonColor = ColorTween(
-      begin: Colors.blue,
-      end: Colors.red,
+      begin: Colors.deepOrange[700],
+      end: Colors.deepOrange[200],
     ).animate(CurvedAnimation(
       parent: _animationController,
       curve: Interval(
@@ -61,6 +61,7 @@ class _BulletinMainFabState extends State<BulletinMainFab>
   Widget _news() {
     return Container(
       child: FloatingActionButton(
+        backgroundColor: Colors.deepOrange[700],
         heroTag: null,
         onPressed: () {
           _close();
@@ -75,6 +76,7 @@ class _BulletinMainFabState extends State<BulletinMainFab>
   Widget _event() {
     return Container(
       child: FloatingActionButton(
+        backgroundColor: Colors.deepOrange[700],
         heroTag: null,
         onPressed: () {
           _close();
@@ -89,6 +91,7 @@ class _BulletinMainFabState extends State<BulletinMainFab>
   Widget _play() {
     return Container(
       child: FloatingActionButton(
+        backgroundColor: Colors.deepOrange[700],
         heroTag: null,
         onPressed: () {
           _close();

@@ -28,7 +28,7 @@ class RankingDetailStat extends StatelessWidget {
                   photoUrl: player.photoUrl,
                 ),
                 RankingDetailStatRow(
-                    title: "Point",
+                    title: "Points",
                     total: player.points.total,
                     won: player.points.won,
                     lost: player.points.lost),
