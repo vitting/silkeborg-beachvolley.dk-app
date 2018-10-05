@@ -120,6 +120,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
+  dart_config:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: c5727795659e886a7db8b39a14e2c8987280fe1f
+      url: "https://github.com/MarkOSullivan94/dart_config.git"
+    source: git
+    version: "0.5.0"
   date_format:
     dependency: "direct main"
     description:
@@ -188,6 +197,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
+  flutter_launcher_icons:
+    dependency: "direct dev"
+    description:
+      name: flutter_launcher_icons
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -612,5 +628,5 @@ packages:
     source: hosted
     version: "2.1.15"
 sdks:
-  dart: ">=2.0.0 <3.0.0"
+  dart: ">=2.0.0 <=2.1.0-dev.3.1.flutter-760a9690c2"
   flutter: ">=0.5.6 <2.0.0"
