@@ -19,12 +19,6 @@ void main() {
       // primaryColor: Colors.yellow
     ),
     initialRoute: "/",
-    onUnknownRoute: (RouteSettings v) {
-      print("ROUTE: ${v.name}");
-    },
-    onGenerateRoute: (RouteSettings v) {
-      print("ROUTE: ${v.name}");
-    },
     routes: <String, WidgetBuilder>{ 
       "/": (BuildContext context) => Home(),
       // "/": (BuildContext context) => TestWidget(),
