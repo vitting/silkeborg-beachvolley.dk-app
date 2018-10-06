@@ -29,7 +29,7 @@ class BuildBulletinItem {
       hiddenByUser: item.hiddenByUser,
       creationDate: item.creationDate,
       numberOfcomments: item.numberOfcomments,
-      numberOfPlayersCommitted: item.numberOfPlayersCommitted
+      numberOfCommits: item.numberOfCommits
     );
   }
 

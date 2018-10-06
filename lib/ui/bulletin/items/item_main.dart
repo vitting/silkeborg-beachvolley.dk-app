@@ -47,7 +47,7 @@ class BulletinItemMain extends StatelessWidget {
         onTap: () async {
           _navigateTobulletinDetailItem(context, bulletinItem);
         },
-        onLongPress: () => _bulletinItemOnLongPress(context, bulletinItem));
+        onPressed: () => _bulletinItemOnPressed(context, bulletinItem));
   }
 
   Widget _bulletinEventItem(BuildContext context, BulletinEventItemData bulletinItem) {
@@ -57,7 +57,7 @@ class BulletinItemMain extends StatelessWidget {
         onTap: () async {
           _navigateTobulletinDetailItem(context, bulletinItem);
         },
-        onLongPress: () => _bulletinItemOnLongPress(context, bulletinItem));
+        onPressed: () => _bulletinItemOnPressed(context, bulletinItem));
   }
 
   Widget _bulletinPlayItem(BuildContext context, BulletinPlayItemData bulletinItem) {
@@ -67,7 +67,7 @@ class BulletinItemMain extends StatelessWidget {
         onTap: () async {
           _navigateTobulletinDetailItem(context, bulletinItem);
         },
-        onLongPress: () => _bulletinItemOnLongPress(context, bulletinItem));
+        onPressed: () => _bulletinItemOnPressed(context, bulletinItem));
   }
 
   Future<void> _navigateTobulletinDetailItem(
@@ -77,7 +77,7 @@ class BulletinItemMain extends StatelessWidget {
         builder: (context) => BulletinDetailItem(bulletinItem)));
   }
 
-  void _bulletinItemOnLongPress(
+  void _bulletinItemOnPressed(
       BuildContext context, BulletinItemData bulletinItem) {
     UserInfoData userInfo = Home.userInfo;
     if (userInfo?.id == bulletinItem.authorId)

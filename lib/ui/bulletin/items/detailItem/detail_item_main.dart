@@ -22,36 +22,21 @@ class BulletinDetailItem extends StatefulWidget {
 
 class _BulletinDetailItemState extends State<BulletinDetailItem> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final ScrollController _listScrollController = ScrollController();
   @override
   void initState() {
     super.initState();
   }
 
-@override
-  void dispose() {
-    _listScrollController.dispose();
-    super.dispose();
-  }
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
       title: "Silkeborg Beachvolley",
-      body: _main(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _listScrollController.animateTo(0.0,
-              curve: Curves.fastOutSlowIn,
-              duration: Duration(milliseconds: 100));
-        },
-        child: Icon(Icons.arrow_upward),
-      ),
+      body: _main()
     );
   }
 
   Widget _main() {
     return ListView(
-      controller: _listScrollController,
       children: <Widget>[
         _createBulletinMainItem(),
         _addComment(),
@@ -84,18 +69,18 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
       case BulletinType.news:
         item =  BulletinNewsItem(
           bulletinItem: widget.bulletinItem,
-          showImageFullScreen: true,
+          isDetailMode: true,
         );
         break;
       case BulletinType.event:
         item = BulletinEventItem(
-          bulletinItem: widget.bulletinItem
+          bulletinItem: widget.bulletinItem,
+          isDetailMode: true,
         );
         break;
       case BulletinType.play:
         item = BulletinPlayItem(
           bulletinItem: widget.bulletinItem,
-          showCommitButtons: true,
           isDetailMode: true,
         );
         break;

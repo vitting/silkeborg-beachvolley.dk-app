@@ -1,29 +1,26 @@
-import 'dart:async';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_commit_button_widget.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_title_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/item_datetime_numberofcomments.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/player_committed_data_class.dart';
+import '../../helpers/bulletin_commit_functions.dart' as committedFunctions;
 
 enum PlayerCommitStatus { commit, uncommit }
 
 class BulletinPlayItem extends StatefulWidget {
   final BulletinPlayItemData bulletinItem;
   final Function onTap;
-  final Function onLongPress;
+  final Function onPressed;
   final int maxLines;
   final TextOverflow overflow;
-  final bool showCommitButtons;
   final bool isDetailMode;
 
   BulletinPlayItem(
       {this.bulletinItem,
       this.onTap,
-      this.onLongPress,
+      this.onPressed,
       this.maxLines = 3,
       this.overflow = TextOverflow.ellipsis,
-      this.showCommitButtons = false,
       this.isDetailMode = false});
 
   @override
@@ -33,22 +30,24 @@ class BulletinPlayItem extends StatefulWidget {
 }
 
 class BulletinPlayItemState extends State<BulletinPlayItem> {
-  bool _isPlayerCommitted = false;
-  double _opacityLevel = 0.0;
-
+  ButtonState _isCommitted;
+  
   @override
   void initState() {
     super.initState();
-    _initPlayerCommit();
+    _initCommitted();
   }
 
-  _initPlayerCommit() async {
+  _initCommitted() async {
     if (widget.isDetailMode) {
-      bool playerCommmited = await widget.bulletinItem.isCommitted();
+      bool commited = await widget.bulletinItem.isCommitted();
       if (mounted) {
         setState(() {
-          _isPlayerCommitted = playerCommmited;
-          _opacityLevel = 1.0;
+          if (commited) {
+            _isCommitted = ButtonState.remove;
+          } else {
+            _isCommitted = ButtonState.add;
+          }
         });
       }
     }
@@ -58,20 +57,12 @@ class BulletinPlayItemState extends State<BulletinPlayItem> {
   Widget build(BuildContext context) {
     List<Widget> widgets = [
       ListTile(
-        onLongPress: widget.onLongPress,
-        title: Padding(
-          padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-          child: Row(
-            children: <Widget>[
-              CircleAvatar(
-                  backgroundImage: CachedNetworkImageProvider(
-                      widget.bulletinItem.authorPhotoUrl)),
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: Text(widget.bulletinItem.authorName),
-              )
-            ],
-          ),
+        title: BulletinTitle(
+          name: widget.bulletinItem.authorName,
+          photoUrl: widget.bulletinItem.authorPhotoUrl,
+          onPressed: widget.onPressed,
+          isDetailMode: widget.isDetailMode,
+          showImage: true,
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,17 +72,22 @@ class BulletinPlayItemState extends State<BulletinPlayItem> {
               child: Text(widget.bulletinItem.body,
                   maxLines: widget.maxLines, overflow: widget.overflow),
             ),
-            DateTimeNumberOfCommentsAndPlayers(
+            DateTimeNumberOfCommentsAndCommits(
               bulletinItem: widget.bulletinItem,
-              numberOfPlayersCommitted:
-                  widget.bulletinItem.numberOfPlayersCommitted,
+              numberOfCommits:
+                  widget.bulletinItem.numberOfCommits,
               onTapPlayerCount: () {
-                _showPlayersCommittedDialog(context);
+                committedFunctions.showCommittedDialog(context, widget.bulletinItem);
               },
             ),
           ],
         ),
-        trailing: _showPlayerCommittedButton(),
+        trailing: widget.isDetailMode ? ConfirmButton(
+          buttonState: _isCommitted,
+          onPress: (ButtonState state) {
+            _onPressedCommit(state);
+          },
+        ) : null,
         onTap: widget.onTap,
       )
     ];
@@ -99,80 +95,22 @@ class BulletinPlayItemState extends State<BulletinPlayItem> {
     return ListBody(children: widgets);
   }
 
-  Future<List> _buildPlayersCommittedDialogItems() async {
-    List<PlayerCommittedData> data =
-        await widget.bulletinItem.getPlayersCommitted();
-    return data.map((PlayerCommittedData player) {
-      return ListTile(
-        title: Text(player.name),
-        leading: CircleAvatar(
-          backgroundImage: CachedNetworkImageProvider(player.photoUrl),
-        ),
-      );
-    }).toList();
-  }
-
-  _showPlayersCommittedDialog(BuildContext context) async {
-    List widgets = await _buildPlayersCommittedDialogItems();
-
-    await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return SimpleDialog(title: Text("Spillere"), children: widgets);
-        });
-  }
-
-  _onPressedPlayerCommit(PlayerCommitStatus status) async {
-    bool state = false;
-    if (status == PlayerCommitStatus.commit) {
-      widget.bulletinItem.setPlayerAsCommitted();
-      state = true;
+  _onPressedCommit(ButtonState state) async {
+    ButtonState newState;
+    if (state == ButtonState.add) {
+      widget.bulletinItem.setAsCommitted();
+      widget.bulletinItem.numberOfCommits++;
+      newState = ButtonState.remove;
     } else {
-      widget.bulletinItem.setPlayerAsUnCommitted();
+      widget.bulletinItem.setAsUnCommitted();
+      widget.bulletinItem.numberOfCommits--;
+      newState = ButtonState.add;
     }
     
     if (mounted) {
       setState(() {
-        _isPlayerCommitted = state;
+        _isCommitted = newState;
       });
     }
-  }
-
-  Widget _showPlayerCommittedButton() {
-    Widget widgets;
-    if (!_isPlayerCommitted && widget.showCommitButtons) {
-      widgets = Tooltip(
-          message: "Ja jeg vil gerne spille",
-          child: AnimatedOpacity(
-            duration: Duration(milliseconds: 500),
-            opacity: _opacityLevel,
-            child: IconButton(
-                icon: Icon(Icons.check_circle),
-                color: Colors.greenAccent,
-                iconSize: 40.0,
-                onPressed: () {
-                  _onPressedPlayerCommit(PlayerCommitStatus.commit);
-                  widget.bulletinItem.numberOfPlayersCommitted++;
-                }),
-          ));
-    }
-
-    if (_isPlayerCommitted && widget.showCommitButtons) {
-      widgets = Tooltip(
-          message: "Fjern at jeg gerne vil spille",
-          child: AnimatedOpacity(
-              duration: Duration(milliseconds: 500),
-              opacity: _opacityLevel,
-              child: IconButton(
-                  icon: Icon(Icons.remove_circle),
-                  color: Colors.blueAccent,
-                  iconSize: 40.0,
-                  onPressed: () {
-                    _onPressedPlayerCommit(PlayerCommitStatus.uncommit);
-                    widget.bulletinItem.numberOfPlayersCommitted--;
-                  })));
-    }
-
-    return widgets;
   }
 }

@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_committed_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/detailItem/comment_item_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/player_committed_data_class.dart';
 
 class BulletinFirestore {
   static final _bulletinCollectionName = "bulletins";
   static final _bulletinCommentsCollectionName = "bulletins_comments";
-  static final _bulletinPlayersCommittedCollectionName =
-      "bulletins_players_committed";
+  static final _bulletinCommittedCollectionName = "bulletins_commits";
   static Firestore _firestore;
 
   static Firestore get firestoreInstance {
@@ -55,10 +55,10 @@ class BulletinFirestore {
     return batch.commit();
   }
 
-  static Stream<QuerySnapshot> getBulletinsByTypeAsStream(String type) {
+  static Stream<QuerySnapshot> getBulletinsByTypeAsStream(BulletinType type) {
     return firestoreInstance
         .collection(_bulletinCollectionName)
-        .where("type", isEqualTo: type)
+        .where("type", isEqualTo: BulletinTypeHelper.getBulletinTypeAsString(type))
         .orderBy("creationDate", descending: true)
         .snapshots();
   }
@@ -104,33 +104,32 @@ class BulletinFirestore {
     });
   }
 
-  static Future<void> savePlayerCommitted(
-      PlayerCommittedData playerCommitted) async {
+  static Future<void> saveCommitted(
+      CommittedData playerCommitted) async {
     return await firestoreInstance
-        .collection(_bulletinPlayersCommittedCollectionName)
+        .collection(_bulletinCommittedCollectionName)
         .add(playerCommitted.toMap());
   }
 
-  static Future<void> deletePlayerCommitted(
-      String bulletinId, String userId) async {
+  static Future<void> deleteCommitted(String bulletinId, String userId) async {
     QuerySnapshot snapshot = await firestoreInstance
-        .collection(_bulletinPlayersCommittedCollectionName)
+        .collection(_bulletinCommittedCollectionName)
         .where("bulletinId", isEqualTo: bulletinId)
         .where("userId", isEqualTo: userId)
         .getDocuments();
 
     snapshot.documents.forEach((DocumentSnapshot doc) {
       firestoreInstance
-          .collection(_bulletinPlayersCommittedCollectionName)
+          .collection(_bulletinCommittedCollectionName)
           .document(doc.documentID)
           .delete();
     });
   }
 
-  static Future<Null> deletePlayersCommittedByBulletinId(
+  static Future<Null> deleteCommittedByBulletinId(
       String bulletinId) async {
     QuerySnapshot snapshot = await firestoreInstance
-        .collection(_bulletinPlayersCommittedCollectionName)
+        .collection(_bulletinCommittedCollectionName)
         .where("bulletinId", isEqualTo: bulletinId)
         .getDocuments();
     WriteBatch batch = firestoreInstance.batch();
@@ -141,17 +140,17 @@ class BulletinFirestore {
     return batch.commit();
   }
 
-  static Future<QuerySnapshot> getPlayersCommitted(String bulletinId) async {
+  static Future<QuerySnapshot> getCommitted(String bulletinId) async {
     return firestoreInstance
-        .collection(_bulletinPlayersCommittedCollectionName)
+        .collection(_bulletinCommittedCollectionName)
         .where("bulletinId", isEqualTo: bulletinId)
         .getDocuments();
   }
 
-  static Future<bool> checkIfPlayerIsCommited(
+  static Future<bool> checkIsCommited(
       String bulletinId, String userId) async {
     QuerySnapshot snapshot = await firestoreInstance
-        .collection(_bulletinPlayersCommittedCollectionName)
+        .collection(_bulletinCommittedCollectionName)
         .where("bulletinId", isEqualTo: bulletinId)
         .where("userId", isEqualTo: userId)
         .getDocuments();

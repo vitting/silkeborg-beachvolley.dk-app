@@ -5,6 +5,7 @@ import 'package:silkeborgbeachvolley/helpers/image_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/build_build_item.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_pictures_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/image_type.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_fields_create_class.dart';
@@ -13,7 +14,6 @@ import 'package:silkeborgbeachvolley/ui/bulletin/helpers/photo_functions.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_text_field.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_pictures.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_event_fields.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import '../../helpers/photo_functions.dart' as photoFunctions;
@@ -89,7 +89,7 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
     ];
 
     if (itemFieldsValue.type == BulletinType.news)
-      widgets.add(BulletinNewsItemPictures(
+      widgets.add(BulletinItemPictures(
         type: BulletinImageType.network,
         useSquareOnOddImageCount: true,
         images: _imageFiles,

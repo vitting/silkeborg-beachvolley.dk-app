@@ -77,38 +77,41 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
                     "Udfyld Slut tid"))
           ],
         ),
-        _getLocationTextField()
+        _getLocationTextField(),
       ],
     );
   }
 
   Widget _getImageWidget() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.only(bottom: 10.0),
       child: Column(
         children: <Widget>[
-          GestureDetector(
-            onTap: () {
-              widget.onTapImage(widget.eventImage);
-            },
-            child: Tooltip(
-              message: "Vælg et billede. Det er ikke påkrævet.",
-              child: Container(
-                width: 90.0,
-                height: 90.0,
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey, width: 2.0),
-                    color: Colors.grey,
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        fit: BoxFit.fill, image: _getImageProvider())),
-                child: Icon(
-                  widget.eventImage == null ? Icons.add_a_photo : Icons.delete,
-                  color: Colors.white,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: GestureDetector(
+              onTap: () {
+                widget.onTapImage(widget.eventImage);
+              },
+              child: Tooltip(
+                message: "Tilføj et billede. Det er ikke påkrævet.",
+                child: Container(
+                  width: 200.0,
+                  height: 100.0,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 2.0),
+                      color: Colors.grey,
+                      image: DecorationImage(
+                          fit: BoxFit.cover, image: _getImageProvider())),
+                  child: Icon(
+                    widget.eventImage == null ? Icons.add_a_photo : Icons.delete,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
-          )
+          ),
+          Text("Plakat billede. Ikke påkrævet")
         ],
       ),
     );

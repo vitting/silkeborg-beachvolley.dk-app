@@ -10,7 +10,7 @@ class ItemFieldsCreate {
   BulletinType type;
   String body;
   int numberOfcomments;
-  int numberOfPlayersCommitted;
+  int numberOfCommits;
   List<String> hiddenByUser;
   DateTime eventStartDate;
   DateTime eventEndDate;
@@ -19,7 +19,7 @@ class ItemFieldsCreate {
   String eventLocation;
   String eventTitle;
 
-  ItemFieldsCreate({this.id, this.creationDate, this.type, this.body = "", this.eventEndDate, this.eventEndTime, this.eventLocation  ="", this.eventStartDate, this.eventStartTime, this.eventTitle = "", this.hiddenByUser, this.numberOfcomments = 0, this.numberOfPlayersCommitted = 0});
+  ItemFieldsCreate({this.id, this.creationDate, this.type, this.body = "", this.eventEndDate, this.eventEndTime, this.eventLocation  ="", this.eventStartDate, this.eventStartTime, this.eventTitle = "", this.hiddenByUser, this.numberOfcomments = 0, this.numberOfCommits = 0});
 
   factory ItemFieldsCreate.fromBulletinItem(BulletinItemData item) {
     ItemFieldsCreate data;
@@ -31,7 +31,7 @@ class ItemFieldsCreate {
         hiddenByUser: news.hiddenByUser,
         numberOfcomments: news.numberOfcomments,
         body: news.body, 
-        type: news.type
+        type: news.type,
       );
     }
 
@@ -44,7 +44,7 @@ class ItemFieldsCreate {
         numberOfcomments: play.numberOfcomments,
         body: play.body, 
         type: play.type,
-        numberOfPlayersCommitted: play.numberOfPlayersCommitted
+        numberOfCommits: play.numberOfCommits
       );
     }
 

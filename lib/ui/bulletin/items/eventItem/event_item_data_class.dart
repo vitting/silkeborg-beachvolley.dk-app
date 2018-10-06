@@ -29,6 +29,7 @@ class BulletinEventItemData extends BulletinItemData implements BaseData {
       String authorName,
       String authorPhotoUrl,
       int numberOfcomments = 0,
+      int numberOfCommits = 0,
       List<dynamic> hiddenByUser,
       this.eventStartDate,
       this.eventEndDate,
@@ -46,6 +47,7 @@ class BulletinEventItemData extends BulletinItemData implements BaseData {
             authorName: authorName,
             authorPhotoUrl: authorPhotoUrl,
             hiddenByUser: hiddenByUser,
+            numberOfCommits: numberOfCommits,
             numberOfcomments: numberOfcomments);
 
   @override
@@ -119,6 +121,7 @@ class BulletinEventItemData extends BulletinItemData implements BaseData {
         body: item["body"] ?? "",
         creationDate: item["creationDate"] ?? DateTime.now(),
         numberOfcomments: item["numberOfcomments"] ?? 0,
+        numberOfCommits: item["numberOfCommits"] ?? 0,
         eventStartDate: item["event"]["startDate"] ?? DateTime.now(),
         eventEndDate: item["event"]["endDate"] ?? DateTime.now(),
         eventStartTime: item["event"]["startTime"] ?? DateTime.now(),

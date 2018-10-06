@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
 
-class DateTimeNumberOfCommentsAndPlayers extends StatelessWidget {
+class DateTimeNumberOfCommentsAndCommits extends StatelessWidget {
   final BulletinItemData bulletinItem;
-  final int numberOfPlayersCommitted;
+  final int numberOfCommits;
   final Function onTapPlayerCount;
-  DateTimeNumberOfCommentsAndPlayers(
+  DateTimeNumberOfCommentsAndCommits(
       {this.bulletinItem,
-      this.numberOfPlayersCommitted = -1,
+      this.numberOfCommits = -1,
       this.onTapPlayerCount});
 
   @override
@@ -48,14 +48,14 @@ class DateTimeNumberOfCommentsAndPlayers extends StatelessWidget {
             ],
           ),
           
-          _showPlayerCount(context)
+          _showCounter(context)
         ],
       ),
     );
   }
 
-  Widget _showPlayerCount(BuildContext context) {
-    return numberOfPlayersCommitted == -1
+  Widget _showCounter(BuildContext context) {
+    return numberOfCommits == -1
         ? Container()
         : GestureDetector(
             onTap: onTapPlayerCount,
@@ -68,7 +68,7 @@ class DateTimeNumberOfCommentsAndPlayers extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0),
                   child: Text(
-                        numberOfPlayersCommitted.toString(),
+                        numberOfCommits.toString(),
                         style: TextStyle(fontSize: 12.0),
                       ),
                 )

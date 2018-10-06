@@ -6,12 +6,9 @@ import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/player_committed_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
 class BulletinPlayItemData extends BulletinItemData implements BaseData {
-  int numberOfPlayersCommitted;
-
   BulletinPlayItemData(
       {String id,
       BulletinType type = BulletinType.none,
@@ -22,7 +19,7 @@ class BulletinPlayItemData extends BulletinItemData implements BaseData {
       String authorPhotoUrl,
       int numberOfcomments = 0,
       List<dynamic> hiddenByUser,
-      this.numberOfPlayersCommitted = 0})
+      int numberOfCommits = 0})
       : super(
             id: id,
             type: type,
@@ -32,58 +29,12 @@ class BulletinPlayItemData extends BulletinItemData implements BaseData {
             authorName: authorName,
             authorPhotoUrl: authorPhotoUrl,
             hiddenByUser: hiddenByUser,
-            numberOfcomments: numberOfcomments);
-
-  Future<int> getUpdatedNumberOfPlayerCommittedCount() async {
-    DocumentSnapshot snapshot = await BulletinFirestore.getBulletinItem(id);
-    if (snapshot.exists) {
-      numberOfPlayersCommitted = snapshot.data["numberOfPlayersCommitted"];
-    }
-
-    return numberOfPlayersCommitted;
-  }
-
-  Future<List<PlayerCommittedData>> getPlayersCommitted() async {
-    QuerySnapshot data = await BulletinFirestore.getPlayersCommitted(id);
-
-    return data.documents.map<PlayerCommittedData>((DocumentSnapshot doc) {
-      return PlayerCommittedData.fromMap(doc.data);
-    }).toList();
-  }
-
-  Future<bool> isCommitted() async {
-    return await BulletinFirestore.checkIfPlayerIsCommited(
-        id, Home.loggedInUser.uid);
-  }
-
-  Future<void> setPlayerAsCommitted() async {
-    PlayerCommittedData playerCommitted = PlayerCommittedData(
-        bulletinId: id,
-        name: Home.loggedInUser.displayName,
-        photoUrl: Home.loggedInUser.photoUrl,
-        userId: Home.loggedInUser.uid);
-
-    await BulletinFirestore.savePlayerCommitted(playerCommitted);
-  }
-
-  Future<void> setPlayerAsUnCommitted() async {
-    await BulletinFirestore.deletePlayerCommitted(id, authorId);
-  }
-
-  Future<void> deletePlayersCommitted() async {
-    await BulletinFirestore.deletePlayersCommittedByBulletinId(id);
-  }
-
-  Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = super.toMap();
-    map.addAll({"numberOfPlayersCommitted": numberOfPlayersCommitted});
-    return map;
-  }
+            numberOfcomments: numberOfcomments, numberOfCommits: numberOfCommits);
 
   ///Deletes all images, comments and the play item.
   Future<bool> delete() async {
     try {
-      await deletePlayersCommitted();
+      await deleteCommitted();
 
       return super.delete();
     } catch (e) {
@@ -111,7 +62,7 @@ class BulletinPlayItemData extends BulletinItemData implements BaseData {
         body: item["body"] ?? "",
         creationDate: item["creationDate"] ?? DateTime.now(),
         numberOfcomments: item["numberOfcomments"] ?? 0,
-        numberOfPlayersCommitted: item["numberOfPlayersCommitted"] ?? 0,
+        numberOfCommits: item["numberOfCommits"] ?? 0,
         hiddenByUser: item["hiddenByUser"] ?? []
     );
   }

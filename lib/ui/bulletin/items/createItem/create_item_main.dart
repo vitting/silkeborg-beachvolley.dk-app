@@ -5,11 +5,11 @@ import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/loader_spinner_overlay_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/build_build_item.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_pictures_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/image_type.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_fields_create_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/photo_functions.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_pictures.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_event_fields.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_text_field.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
@@ -84,7 +84,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
           show: _loadingImage,
           showModalBarrier: false,
           text: "Behandler billedet...",
-          child: BulletinNewsItemPictures(
+          child: BulletinItemPictures(
         type: BulletinImageType.file,
         useSquareOnOddImageCount: true,
         images: _imageFiles,

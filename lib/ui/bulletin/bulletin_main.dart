@@ -29,7 +29,7 @@ class _BulletinState extends State<Bulletin> {
   int _newsCount = 0;
   int _eventCount = 0;
   int _playCount = 0;
-
+  
   @override
   void initState() {
     _loadBulletinItemsCount();
@@ -41,8 +41,6 @@ class _BulletinState extends State<Bulletin> {
         await BulletinSharedPref.getLastCheckedDateInMilliSeconds();
     BulletinItemsCount bulletinItemsCount =
         await FirebaseFunctions.getBulletinsItemCount(dateInMilliSeconds);
-    print(
-        "News: ${bulletinItemsCount.newsCount} / Events: ${bulletinItemsCount.eventCount} / Plays: ${bulletinItemsCount.playCount}");
     if (mounted) {
       setState(() {
         _newsCount = bulletinItemsCount.newsCount;
@@ -58,7 +56,7 @@ class _BulletinState extends State<Bulletin> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: "Opslag",
+      title: _getTitle(_getSelectedType()),
       body: _main(),
       showDrawer: true,
       floatingActionButton: _scaffoldFloatingActionButton(context),
@@ -97,20 +95,20 @@ class _BulletinState extends State<Bulletin> {
         },
         items: <BottomNavigationBarItem>[
     BottomNavigationBarItem(
-        title: Text("Nyheder"),
+        title: Text(_getTitle(BulletinType.news)),
         icon: IconCounter(
           icon: FontAwesomeIcons.newspaper,
           counter: _newsCount,
         )),
     BottomNavigationBarItem(
-      title: Text("Begivenheder"),
+      title: Text(_getTitle(BulletinType.event)),
       icon: IconCounter(
         icon: FontAwesomeIcons.calendarAlt,
         counter: _eventCount,
       ),
     ),
     BottomNavigationBarItem(
-      title: Text("Spil"),
+      title: Text(_getTitle(BulletinType.play)),
       icon: IconCounter(
           icon: FontAwesomeIcons.volleyballBall, counter: _playCount),
     )
@@ -119,13 +117,8 @@ class _BulletinState extends State<Bulletin> {
   }
 
   Widget _main() {
-    String type = "news";
-    if (_bottombarSelected == 0) type = BulletinTypeHelper.news;
-    if (_bottombarSelected == 1) type = BulletinTypeHelper.event;
-    if (_bottombarSelected == 2) type = BulletinTypeHelper.play;
-
     return StreamBuilder(
-      stream: BulletinFirestore.getBulletinsByTypeAsStream(type),
+      stream: BulletinFirestore.getBulletinsByTypeAsStream(_getSelectedType()),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting ||
             !snapshot.hasData) return LoaderSpinner();
@@ -149,5 +142,22 @@ class _BulletinState extends State<Bulletin> {
           return new CreateBulletinItem(bulletinType);
         },
         fullscreenDialog: true));
+  }
+
+  BulletinType _getSelectedType() {
+    BulletinType type = BulletinType.news;
+    if (_bottombarSelected == 0) type = BulletinType.news;
+    if (_bottombarSelected == 1) type = BulletinType.event;
+    if (_bottombarSelected == 2) type = BulletinType.play;
+
+    return type;
+  }
+
+  String _getTitle(BulletinType type) {
+    String title;
+    if (type == BulletinType.news) title = "Nyheder";
+    if (type == BulletinType.event) title = "Begivenheder";
+    if (type == BulletinType.play) title = "Spil";
+  return title;
   }
 }

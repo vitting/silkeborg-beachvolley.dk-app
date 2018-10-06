@@ -1,45 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_image_viewer.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_pictures_widget.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_title_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/image_type.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/item_datetime_numberofcomments.dart';
-import "package:cached_network_image/cached_network_image.dart";
-import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_image_viewer.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_pictures.dart';
 
 class BulletinNewsItem extends StatelessWidget {
   final BulletinNewsItemData bulletinItem;
   final Function onTap;
-  final Function onLongPress;
+  final Function onPressed;
   final int maxLines;
   final TextOverflow overflow;
-  final bool showImageFullScreen;
-  
+  final bool isDetailMode;
+
   BulletinNewsItem(
       {this.bulletinItem,
       this.onTap,
-      this.onLongPress,
+      this.onPressed,
       this.maxLines = 3,
-      this.overflow = TextOverflow.ellipsis, this.showImageFullScreen = false});
+      this.overflow = TextOverflow.ellipsis,
+      this.isDetailMode = false});
 
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = [
-      ListTile(        
-        onLongPress: onLongPress,
-        title: Padding(
-          padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-          child: Row(
-            children: <Widget>[
-              CircleAvatar(
-                  backgroundImage:
-                      CachedNetworkImageProvider(bulletinItem.authorPhotoUrl)),
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: Text(bulletinItem.authorName),
-              )
-            ],
-          ),
+      ListTile(
+        title: BulletinTitle(
+          name: bulletinItem.authorName,
+          photoUrl: bulletinItem.authorPhotoUrl,
+          onPressed: onPressed,
+          isDetailMode: isDetailMode,
+          showImage: true,
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,20 +42,21 @@ class BulletinNewsItem extends StatelessWidget {
               child: Text(bulletinItem.body,
                   maxLines: maxLines, overflow: overflow),
             ),
-            BulletinNewsItemPictures(
+            BulletinItemPictures(
               images: bulletinItem.images.map((BulletinImageData data) {
                 return data.link;
               }).toList(),
               type: BulletinImageType.network,
-              onLongpressImageSelected: showImageFullScreen ? (String image) {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => NewsItemImageViewer(image),
-                  fullscreenDialog: true
-                ));
-              } : null,
+              onLongpressImageSelected: isDetailMode
+                  ? (String image) {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              BulletinItemImageViewer(image),
+                          fullscreenDialog: true));
+                    }
+                  : null,
             ),
-            DateTimeNumberOfCommentsAndPlayers(
-                bulletinItem: bulletinItem)
+            DateTimeNumberOfCommentsAndCommits(bulletinItem: bulletinItem)
           ],
         ),
         onTap: onTap,

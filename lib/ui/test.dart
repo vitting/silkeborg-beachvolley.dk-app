@@ -1,6 +1,6 @@
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class TestWidget extends StatefulWidget {
   @override
@@ -8,6 +8,35 @@ class TestWidget extends StatefulWidget {
 }
 
 class _TestWidgetState extends State<TestWidget> {
+  final FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
+
+  @override
+    void initState() {
+      super.initState();
+      _firebaseMessaging.requestNotificationPermissions(IosNotificationSettings(
+        alert: true,
+        badge: true,
+        sound: true
+      ));
+      _firebaseMessaging.configure(
+        ///OnLaunch er der ikke body og titel med. Bliver executed når appen er termineret
+        onLaunch: (Map<String, dynamic> message) {
+          print("ONLAUNCH: $message");
+        },
+        ///OnMessage er der body og titel med. Bliver executed når appen er aktiv
+        onMessage: (Map<String, dynamic> message) {
+          print("ONMESSAGE: $message");
+        },
+        ///OnResume er der ikke body og titel med. Bliver executed når appen er minimeret
+        onResume: (Map<String, dynamic> message) {
+          print("ONRESUME: $message");
+        }
+      );
+
+      _firebaseMessaging.getToken().then((String token) {
+        print(token);
+      });
+    }
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
@@ -17,24 +46,7 @@ class _TestWidgetState extends State<TestWidget> {
             children: <Widget>[
               RaisedButton(
                 onPressed: () async {
-                  DateTime date = DateTime(2018, 9, 26);
-                  try {
-                    final dynamic resp = await CloudFunctions.instance.call(
-                      functionName: 'getBulletinsCount',
-                      parameters: <String, dynamic>{
-                        'date': date.millisecondsSinceEpoch
-                      },
-                    );
-                    print(resp);
-                  } on CloudFunctionsException catch (e) {
-                    print('caught firebase functions exception');
-                    print(e.code);
-                    print(e.message);
-                    print(e.details);
-                  } catch (e) {
-                    print('caught generic exception');
-                    print(e);
-                  }
+                  
                 },
               )
             ],

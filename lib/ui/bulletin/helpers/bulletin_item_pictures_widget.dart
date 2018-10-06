@@ -5,7 +5,7 @@ import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/image_type.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-class BulletinNewsItemPictures extends StatelessWidget {
+class BulletinItemPictures extends StatelessWidget {
   final List<dynamic> images;
   // final List<ImageInfoData> imageInfoData;
   final Function onLongpressImageSelected;
@@ -13,7 +13,7 @@ class BulletinNewsItemPictures extends StatelessWidget {
   final bool useSquareOnOddImageCount;
   final bool showImageFullScreen;
 
-  BulletinNewsItemPictures(
+  BulletinItemPictures(
       {this.type,
       this.useSquareOnOddImageCount = false,
       this.images,
