@@ -93,7 +93,7 @@ class BulletinEventItemData extends BulletinItemData implements BaseData {
   }
 
   Future<void> save() {
-     id = id ?? UuidHelpers.generateUuid();
+    id = id ?? UuidHelpers.generateUuid();
     creationDate = creationDate ?? FieldValue.serverTimestamp();
     authorId = Home.loggedInUser.uid;
     authorName = Home.loggedInUser.displayName;
@@ -128,8 +128,9 @@ class BulletinEventItemData extends BulletinItemData implements BaseData {
         eventEndTime: item["event"]["endTime"] ?? DateTime.now(),
         eventLocation: item["event"]["location"] ?? "",
         eventTitle: item["event"]["title"] ?? "",
-        eventImage: item["event"]["image"] == null ? null : BulletinImageData.fromMap(item["event"]["image"]),
-        hiddenByUser: item["hiddenByUser"] ?? []
-        );
+        eventImage: item["event"]["image"] == null
+            ? null
+            : BulletinImageData.fromMap(item["event"]["image"]),
+        hiddenByUser: item["hiddenByUser"] ?? []);
   }
 }

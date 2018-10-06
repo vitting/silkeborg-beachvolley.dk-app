@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 class AdminEnrollmentDetailRow extends StatelessWidget {
   final IconData icon;
-  final String text; 
+  final String text;
   final String tooltip;
 
-  const AdminEnrollmentDetailRow({Key key, this.icon, this.text, this.tooltip}) : super(key: key);
+  const AdminEnrollmentDetailRow({Key key, this.icon, this.text, this.tooltip})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(

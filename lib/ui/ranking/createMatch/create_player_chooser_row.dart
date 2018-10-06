@@ -13,7 +13,18 @@ class CreatePlayerChooserRow extends StatelessWidget {
   final String title;
   final String noChoosenText;
 
-  const CreatePlayerChooserRow({Key key, this.player1Item, this.player2Item, this.chooser1Color, this.chooser2Color, this.chooser1Type, this.chooser2Type, this.chooserOnTap, this.title, this.noChoosenText}) : super(key: key);
+  const CreatePlayerChooserRow(
+      {Key key,
+      this.player1Item,
+      this.player2Item,
+      this.chooser1Color,
+      this.chooser2Color,
+      this.chooser1Type,
+      this.chooser2Type,
+      this.chooserOnTap,
+      this.title,
+      this.noChoosenText})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,8 +50,7 @@ class CreatePlayerChooserRow extends StatelessWidget {
                       ],
                     )),
                 Expanded(
-                    flex: 1,
-                    child: Text(title, textAlign: TextAlign.center)),
+                    flex: 1, child: Text(title, textAlign: TextAlign.center)),
                 Expanded(
                     flex: 2,
                     child: Row(

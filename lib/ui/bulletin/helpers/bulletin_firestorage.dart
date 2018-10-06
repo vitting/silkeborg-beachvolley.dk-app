@@ -13,14 +13,14 @@ class BulletinFireStorage {
     return _firestorage;
   }
 
-  static Future<ImageInfoData> saveImageToFirebaseStorage(ImageInfoData imageInfo) async {
-    
+  static Future<ImageInfoData> saveImageToFirebaseStorage(
+      ImageInfoData imageInfo) async {
     try {
       StorageUploadTask uploadTask = firestorageInstance
           .ref()
           .child("${imageInfo.imagesStoreageFolder}/${imageInfo.filename}")
           .putFile(imageInfo.imageFile);
-      
+
       final StorageTaskSnapshot snapshot = await uploadTask.onComplete;
       String downloadUrl = await snapshot.ref.getDownloadURL();
       imageInfo.linkFirebaseStorage = downloadUrl;
@@ -31,7 +31,11 @@ class BulletinFireStorage {
     }
   }
 
-  static Future<void> deleteFromFirebaseStorage(String filename, String imagesStoreageFolder) async {
-    return await firestorageInstance.ref().child("$imagesStoreageFolder/$filename").delete();
+  static Future<void> deleteFromFirebaseStorage(
+      String filename, String imagesStoreageFolder) async {
+    return await firestorageInstance
+        .ref()
+        .child("$imagesStoreageFolder/$filename")
+        .delete();
   }
 }

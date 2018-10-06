@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class LoaderSpinner extends StatelessWidget {
   final double width;
@@ -14,10 +15,11 @@ class LoaderSpinner extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image.asset(
-        "assets/images/loader-bar.gif",
-        height: 8.0
-      )
+          FadeInImage(
+            image: AssetImage("assets/images/loader-bar.gif"),
+            placeholder: MemoryImage(kTransparentImage),
+            height: 8.0,
+          )
         ],
       ),
     );

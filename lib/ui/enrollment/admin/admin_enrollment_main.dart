@@ -106,46 +106,36 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
   }
 
   void _popupMenu(BuildContext context, EnrollmentUserData item) async {
-    EnrollmentPopMenuAction result = await showModalBottomSheet<EnrollmentPopMenuAction>(
-      context: context,
-      builder: (BuildContext contextModal) {
-        return Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              ListTile(
-                title: Text("Rediger"),
-                leading: Icon(Icons.edit),
-                onTap: () {
-                  Navigator.of(contextModal).pop(EnrollmentPopMenuAction.edit);
-                },
-              ),
-              // ListTile(
-              //   title: Text("Slet"),
-              //   leading: Icon(Icons.delete),
-              //   onTap: () {
-              //     Navigator.of(contextModal).pop(EnrollmentPopMenuAction.delete);
-              //   },
-              // )
-            ],
-          ),
-        );
-      }
-    );
+    EnrollmentPopMenuAction result =
+        await showModalBottomSheet<EnrollmentPopMenuAction>(
+            context: context,
+            builder: (BuildContext contextModal) {
+              return Container(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    ListTile(
+                      title: Text("Rediger"),
+                      leading: Icon(Icons.edit),
+                      onTap: () {
+                        Navigator.of(contextModal)
+                            .pop(EnrollmentPopMenuAction.edit);
+                      },
+                    ),
+                  ],
+                ),
+              );
+            });
 
     switch (result) {
       case EnrollmentPopMenuAction.edit:
         Navigator.of(context).push(MaterialPageRoute(
-          fullscreenDialog: true,
-          builder: (BuildContext context) => EnrollmentEdit(item)
-        ));
+            fullscreenDialog: true,
+            builder: (BuildContext context) => EnrollmentEdit(item)));
         break;
       default:
     }
   }
 }
 
-enum EnrollmentPopMenuAction {
-  edit,
-  delete
-}
+enum EnrollmentPopMenuAction { edit, delete }

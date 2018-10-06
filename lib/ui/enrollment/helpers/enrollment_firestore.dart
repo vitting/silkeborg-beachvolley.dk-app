@@ -17,7 +17,10 @@ class EnrollmentFirestore {
   }
 
   static Future<void> saveEnrollment(EnrollmentUserData user) {
-    return firestoreInstance.collection(_collectionName).document(user.id).setData(user.toMap()); 
+    return firestoreInstance
+        .collection(_collectionName)
+        .document(user.id)
+        .setData(user.toMap());
   }
 
   static Future<void> deleteEnrollment(String id) {
@@ -29,16 +32,26 @@ class EnrollmentFirestore {
   }
 
   static Future<QuerySnapshot> getAllEnrollments() {
-    return firestoreInstance.collection(_collectionName).orderBy("name").getDocuments();
+    return firestoreInstance
+        .collection(_collectionName)
+        .orderBy("name")
+        .getDocuments();
   }
 
   static Future<QuerySnapshot> getAllEnrollmentsAddedByUserId(String id) {
-    return firestoreInstance.collection(_collectionName).where("addedByUserId", isEqualTo: id).orderBy("name").getDocuments();
+    return firestoreInstance
+        .collection(_collectionName)
+        .where("addedByUserId", isEqualTo: id)
+        .orderBy("name")
+        .getDocuments();
   }
 
   static Future<EnrollmentExistsResult> checkIfEmailExists(String email) async {
     EnrollmentExistsResult result = EnrollmentExistsResult();
-    QuerySnapshot snapshot = await firestoreInstance.collection(_collectionName).where("email", isEqualTo: email).getDocuments();
+    QuerySnapshot snapshot = await firestoreInstance
+        .collection(_collectionName)
+        .where("email", isEqualTo: email)
+        .getDocuments();
 
     if (snapshot.documents.isNotEmpty) {
       result.exists = true;
@@ -49,7 +62,10 @@ class EnrollmentFirestore {
 
   static Future<EnrollmentExistsResult> checkIfPhoneExists(int phone) async {
     EnrollmentExistsResult result = EnrollmentExistsResult();
-    QuerySnapshot snapshot = await firestoreInstance.collection(_collectionName).where("phone", isEqualTo: phone).getDocuments();
+    QuerySnapshot snapshot = await firestoreInstance
+        .collection(_collectionName)
+        .where("phone", isEqualTo: phone)
+        .getDocuments();
 
     if (snapshot.documents.isNotEmpty) {
       result.exists = true;
@@ -59,14 +75,15 @@ class EnrollmentFirestore {
   }
 
   static Future<EnrollmentExists> checkIfExists(String email, int phone) async {
-    EnrollmentExistsResult emailResult = await EnrollmentFirestore.checkIfEmailExists(email);
-    EnrollmentExistsResult phoneResult = await EnrollmentFirestore.checkIfPhoneExists(phone);
+    EnrollmentExistsResult emailResult =
+        await EnrollmentFirestore.checkIfEmailExists(email);
+    EnrollmentExistsResult phoneResult =
+        await EnrollmentFirestore.checkIfPhoneExists(phone);
     return EnrollmentExists(
-      emailExists: emailResult.exists,
-      emailCount: emailResult.count,
-      phoneExists: phoneResult.exists,
-      phoneCount: phoneResult.count
-    );
+        emailExists: emailResult.exists,
+        emailCount: emailResult.count,
+        phoneExists: phoneResult.exists,
+        phoneCount: phoneResult.count);
   }
 }
 

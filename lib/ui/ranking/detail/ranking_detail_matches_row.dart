@@ -7,7 +7,12 @@ class RankingMatchesRow extends StatelessWidget {
   final RankingMatchPlayerData loser;
   final String userId;
 
-  const RankingMatchesRow({Key key, @required this.winner, @required this.loser, @required this.userId}) : super(key: key);
+  const RankingMatchesRow(
+      {Key key,
+      @required this.winner,
+      @required this.loser,
+      @required this.userId})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -20,31 +25,30 @@ class RankingMatchesRow extends StatelessWidget {
 
   Widget _playerItem(String name, String photoUrl, String id) {
     return Flexible(
-          flex: 2,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5.0),
-            child: Row(
-              children: <Widget>[
-                CircleAvatar(
-                  radius: 15.0,
-                  backgroundImage:
-                      CachedNetworkImageProvider(photoUrl),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                    child: _getName(name, id),
-                  ),
-                )
-              ],
+      flex: 2,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5.0),
+        child: Row(
+          children: <Widget>[
+            CircleAvatar(
+              radius: 15.0,
+              backgroundImage: CachedNetworkImageProvider(photoUrl),
             ),
-          ),
-        );
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                child: _getName(name, id),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _getName(String name, String id) {
-    return Text(name, style: TextStyle(
-      fontWeight: userId == id ? FontWeight.bold : FontWeight.normal
-    ));
+    return Text(name,
+        style: TextStyle(
+            fontWeight: userId == id ? FontWeight.bold : FontWeight.normal));
   }
 }

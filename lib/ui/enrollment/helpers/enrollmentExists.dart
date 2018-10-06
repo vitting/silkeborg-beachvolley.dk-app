@@ -6,5 +6,9 @@ class EnrollmentExists {
   final bool phoneExists;
   final int phoneCount;
 
-  EnrollmentExists({@required this.emailExists, @required this.phoneExists, this.emailCount, this.phoneCount});
+  EnrollmentExists(
+      {@required this.emailExists,
+      @required this.phoneExists,
+      this.emailCount,
+      this.phoneCount});
 }

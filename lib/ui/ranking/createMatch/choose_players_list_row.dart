@@ -29,7 +29,7 @@ class ChoosePlayerListRowState extends State<ChoosePlayerListRow> {
   double _opacity = 0.0;
   double _opacityMin = 0.0;
   double _opacityMax = 0.8;
-  
+
   @override
   initState() {
     if (widget.isFavorite) {
@@ -37,7 +37,7 @@ class ChoosePlayerListRowState extends State<ChoosePlayerListRow> {
     } else {
       _opacity = _opacityMin;
     }
-    
+
     super.initState();
   }
 
@@ -66,9 +66,7 @@ class ChoosePlayerListRowState extends State<ChoosePlayerListRow> {
                   child: Opacity(
                     opacity: _opacity,
                     child: Icon(Icons.favorite, color: Colors.red),
-                  )
-
-              )
+                  ))
             ],
           )),
       title: Text(widget.player.name),

@@ -15,7 +15,8 @@ class SilkeborgBeachvolleyScaffold extends StatefulWidget {
       this.floatingActionButton,
       this.bottomNavigationBar,
       this.showDrawer = false,
-      this.actions = const [], this.showAppBar = true});
+      this.actions = const [],
+      this.showAppBar = true});
   @override
   _SilkeborgBeachvolleyScaffoldState createState() =>
       _SilkeborgBeachvolleyScaffoldState();
@@ -23,14 +24,15 @@ class SilkeborgBeachvolleyScaffold extends StatefulWidget {
 
 class _SilkeborgBeachvolleyScaffoldState
     extends State<SilkeborgBeachvolleyScaffold> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: widget.showAppBar ? AppBar(
-            title: Text(widget.title),
-            centerTitle: false,
-            actions: widget.actions) : null,
+        appBar: widget.showAppBar
+            ? AppBar(
+                title: Text(widget.title),
+                centerTitle: false,
+                actions: widget.actions)
+            : null,
         body: widget.body,
         floatingActionButton: widget.floatingActionButton,
         bottomNavigationBar: widget.bottomNavigationBar,

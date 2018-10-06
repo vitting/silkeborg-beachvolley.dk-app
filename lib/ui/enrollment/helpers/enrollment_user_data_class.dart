@@ -92,7 +92,7 @@ class EnrollmentUserData {
       return data2.year.compareTo(data1.year);
     });
 
-    return  payment;
+    return payment;
   }
 
   void addPayment(int year, {String comment = ""}) {
@@ -109,7 +109,7 @@ class EnrollmentUserData {
   int get age => DateTimeHelpers.getAge(birthdate);
 
   Future<String> get addedByUserName async {
-    String name = "Ikke tilføjet af en bruger";
+    String name = "Not added by a user";
     if (addedByUserId.isNotEmpty) {
       DocumentSnapshot snapshot =
           await UserFirestore.getUserInfo(addedByUserId);

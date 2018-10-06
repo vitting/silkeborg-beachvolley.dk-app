@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
       Home.loggedInUser = user;
       if (mounted) {
         setState(() {
-          _loading = true;          
+          _loading = true;
         });
       }
       if (user != null) {
@@ -34,20 +34,17 @@ class _HomeState extends State<Home> {
 
       if (mounted) {
         setState(() {
-        _loading = false;
-        _isLoggedIn = user == null ? false : true;        
-      });
+          _loading = false;
+          _isLoggedIn = user == null ? false : true;
+        });
       }
-      
     });
   }
 
   void _initSettings(String userId) async {
     SettingsData settings = await SettingsData.get(userId);
     if (settings == null) {
-      settings = SettingsData(
-        rankingName: Home.loggedInUser.displayName
-      );
+      settings = SettingsData(rankingName: Home.loggedInUser.displayName);
       settings.save();
     }
   }
@@ -56,7 +53,7 @@ class _HomeState extends State<Home> {
     UserInfoData userInfoData = await UserInfoData.get(userId);
     if (mounted) {
       setState(() {
-        Home.userInfo = userInfoData;              
+        Home.userInfo = userInfoData;
       });
     }
   }
@@ -64,7 +61,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return LoaderSpinnerOverlay(
-      show: _loading,
-      child: _isLoggedIn ? Bulletin() : Login());
+        show: _loading, child: _isLoggedIn ? Bulletin() : Login());
   }
 }

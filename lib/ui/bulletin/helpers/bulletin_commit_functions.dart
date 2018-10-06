@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_committed_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
 
-  showCommittedDialog(BuildContext context, BulletinItemData item, [String title = "Tilmeldt"]) async {
+  showCommittedDialog(BuildContext context, BulletinItemData item, [String title = "Tilmeldte"]) async {
     List widgets = await _buildCommittedDialogItems(item);
 
     await showDialog(

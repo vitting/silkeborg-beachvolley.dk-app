@@ -87,9 +87,9 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
     return SilkeborgBeachvolleyScaffold(
         title: "Registere kamp",
         body: LoaderSpinnerOverlay(
-                  show: _saving,
-                  text: "Gemmer kampen...",
-                  child: Builder(builder: (BuildContext context) {
+          show: _saving,
+          text: "Gemmer kampen...",
+          child: Builder(builder: (BuildContext context) {
             return Card(
                 child: ListView(
               children: <Widget>[
@@ -228,13 +228,13 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
               points: 0));
       if (mounted) {
         setState(() {
-          _saving = true;                  
+          _saving = true;
         });
       }
       await match.save();
       if (mounted) {
         setState(() {
-          _saving = false;                  
+          _saving = false;
         });
       }
       Navigator.of(context).pop();

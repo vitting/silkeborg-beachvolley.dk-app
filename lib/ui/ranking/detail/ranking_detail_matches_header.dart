@@ -24,7 +24,7 @@ class RankingDetailMatchesHeader extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 2.0),
                   color: Colors.blue[700],
-                                  child: Text(
+                  child: Text(
                     "Tabere",
                     style: TextStyle(color: Colors.white),
                     textAlign: TextAlign.center,

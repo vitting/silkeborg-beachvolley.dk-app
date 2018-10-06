@@ -14,7 +14,12 @@ class TournamentData implements BaseData {
   DateTime startDate;
   DateTime endDate;
 
-  TournamentData({this.id, @required this.title, @required this.link, @required this.startDate, @required this.endDate});
+  TournamentData(
+      {this.id,
+      @required this.title,
+      @required this.link,
+      @required this.startDate,
+      @required this.endDate});
 
   Map<String, dynamic> toMap() {
     return {
@@ -45,12 +50,11 @@ class TournamentData implements BaseData {
 
   factory TournamentData.formMap(Map<String, dynamic> item) {
     return TournamentData(
-      id: item["id"],
-      title: item["title"] ?? "",
-      link: item["link"] ?? "",
-      startDate: item["startDate"],
-      endDate: item["endDate"]
-    );
+        id: item["id"],
+        title: item["title"] ?? "",
+        link: item["link"] ?? "",
+        startDate: item["startDate"],
+        endDate: item["endDate"]);
   }
 
   static Future<List<TournamentData>> getTournaments() async {

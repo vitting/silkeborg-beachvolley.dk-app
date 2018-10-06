@@ -104,7 +104,9 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
                       image: DecorationImage(
                           fit: BoxFit.cover, image: _getImageProvider())),
                   child: Icon(
-                    widget.eventImage == null ? Icons.add_a_photo : Icons.delete,
+                    widget.eventImage == null
+                        ? Icons.add_a_photo
+                        : Icons.delete,
                     color: Colors.white,
                   ),
                 ),

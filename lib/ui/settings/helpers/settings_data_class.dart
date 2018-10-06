@@ -10,26 +10,23 @@ class SettingsData {
   String rankingName;
   String sex;
 
-  SettingsData({this.showWeather = true, this.rankingName = "", this.sex = "male"});
+  SettingsData(
+      {this.showWeather = true, this.rankingName = "", this.sex = "male"});
 
   Map<String, dynamic> toMap() {
-    return {
-      "showWeather": showWeather,
-      "rankingName": rankingName,
-      "sex": sex
-    };
+    return {"showWeather": showWeather, "rankingName": rankingName, "sex": sex};
   }
 
   factory SettingsData.fromMap(Map<String, dynamic> item) {
     return SettingsData(
-      showWeather: item["showWeather"] ?? true,
-      rankingName: item["rankingName"] ?? "",
-      sex: item["sex"] ?? ""
-    );
+        showWeather: item["showWeather"] ?? true,
+        rankingName: item["rankingName"] ?? "",
+        sex: item["sex"] ?? "");
   }
 
   Future<void> save() async {
-    RankingPlayerData data = await RankingPlayerData.get(UserAuth.loggedInUserId);
+    RankingPlayerData data =
+        await RankingPlayerData.get(UserAuth.loggedInUserId);
 
     if (data != null) {
       data.name = rankingName;

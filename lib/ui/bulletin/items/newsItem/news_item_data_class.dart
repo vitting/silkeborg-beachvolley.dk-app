@@ -32,15 +32,17 @@ class BulletinNewsItemData extends BulletinItemData implements BaseData {
             authorName: authorName,
             authorPhotoUrl: authorPhotoUrl,
             numberOfcomments: numberOfcomments,
-            hiddenByUser: hiddenByUser
-            );
+            hiddenByUser: hiddenByUser);
 
   @override
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = super.toMap();
-    map.addAll({"images": images.map((BulletinImageData data) {
-      return data.toMap();
-    }).toList() ?? []});
+    map.addAll({
+      "images": images.map((BulletinImageData data) {
+            return data.toMap();
+          }).toList() ??
+          []
+    });
     return map;
   }
 
@@ -63,7 +65,7 @@ class BulletinNewsItemData extends BulletinItemData implements BaseData {
     authorName = Home.loggedInUser.displayName;
     authorPhotoUrl = Home.loggedInUser.photoUrl;
     images = images ?? [];
-   return BulletinFirestore.saveBulletinItem(this);
+    return BulletinFirestore.saveBulletinItem(this);
   }
 
   factory BulletinNewsItemData.fromMap(Map<dynamic, dynamic> item) {
@@ -76,10 +78,12 @@ class BulletinNewsItemData extends BulletinItemData implements BaseData {
         body: item["body"] ?? "",
         creationDate: item["creationDate"] ?? "",
         numberOfcomments: item["numberOfcomments"] ?? 0,
-        images: item["images"] == null ? [] : (item["images"] as List<dynamic>).map<BulletinImageData>((dynamic data) {
-          return BulletinImageData.fromMap(data);
-        }).toList(),
-        hiddenByUser: item["hiddenByUser"] ?? []
-        );
+        images: item["images"] == null
+            ? []
+            : (item["images"] as List<dynamic>)
+                .map<BulletinImageData>((dynamic data) {
+                return BulletinImageData.fromMap(data);
+              }).toList(),
+        hiddenByUser: item["hiddenByUser"] ?? []);
   }
 }

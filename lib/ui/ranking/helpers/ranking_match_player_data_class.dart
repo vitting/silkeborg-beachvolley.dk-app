@@ -6,23 +6,21 @@ class RankingMatchPlayerData {
   String photoUrl;
   int points;
 
-  RankingMatchPlayerData({@required this.id, @required this.name, @required this.photoUrl, @required this.points});
+  RankingMatchPlayerData(
+      {@required this.id,
+      @required this.name,
+      @required this.photoUrl,
+      @required this.points});
 
   Map<String, dynamic> toMap() {
-    return {
-      "id": id,
-      "name": name,
-      "photoUrl": photoUrl,
-      "points": points
-    };
+    return {"id": id, "name": name, "photoUrl": photoUrl, "points": points};
   }
 
   static RankingMatchPlayerData fromMap(Map<dynamic, dynamic> item) {
     return RankingMatchPlayerData(
-      id: item["id"] == null ? "" : item["id"],
-      name: item["name"] == null ? "" : item["name"],
-      photoUrl: item["photoUrl"] == null ? "" : item["photoUrl"],
-      points: item["points"] == null ? 0 : item["points"]
-    );
+        id: item["id"] == null ? "" : item["id"],
+        name: item["name"] == null ? "" : item["name"],
+        photoUrl: item["photoUrl"] == null ? "" : item["photoUrl"],
+        points: item["points"] == null ? 0 : item["points"]);
   }
 }

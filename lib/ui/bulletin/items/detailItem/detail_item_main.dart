@@ -30,9 +30,7 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: "Silkeborg Beachvolley",
-      body: _main()
-    );
+        title: "Silkeborg Beachvolley", body: _main());
   }
 
   Widget _main() {
@@ -45,15 +43,14 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting ||
-                !snapshot.hasData)
-              return LoaderSpinner();
+                !snapshot.hasData) return LoaderSpinner();
 
-              widget.bulletinItem.numberOfcomments = snapshot.data.documents.length; 
+            widget.bulletinItem.numberOfcomments =
+                snapshot.data.documents.length;
             return Column(
                 children: snapshot.data.documents
                     .map<Widget>((DocumentSnapshot document) {
               return ListItemCard(
-                
                 child: _commentField(document.data),
               );
             }).toList());
@@ -67,7 +64,7 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
     var item;
     switch (widget.bulletinItem.type) {
       case BulletinType.news:
-        item =  BulletinNewsItem(
+        item = BulletinNewsItem(
           bulletinItem: widget.bulletinItem,
           isDetailMode: true,
         );
@@ -88,13 +85,12 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
         break;
     }
 
-    return Card(
-      child: item
-    );
+    return Card(child: item);
   }
 
   Widget _addComment() {
-    BulletinCommentItem bulletinCommentItem = new BulletinCommentItem(id: widget.bulletinItem.id);
+    BulletinCommentItem bulletinCommentItem =
+        new BulletinCommentItem(id: widget.bulletinItem.id);
     return ListBody(
       children: <Widget>[
         Padding(
@@ -106,7 +102,7 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
                 bulletinCommentItem.body = value;
               },
               validator: (String value) {
-                if (value.isEmpty) return "Skal ydfyldes";
+                if (value.isEmpty) return "Skal udfyldes";
               },
               decoration: InputDecoration(
                   labelText: "Skriv en kommentar",

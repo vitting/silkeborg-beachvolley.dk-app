@@ -16,7 +16,8 @@ class Weather extends StatelessWidget {
     return FutureBuilder(
       future: _load(),
       builder: (BuildContext context, AsyncSnapshot<WeatherData> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData) return Container();
+        if (snapshot.connectionState == ConnectionState.waiting ||
+            !snapshot.hasData) return Container();
         if (snapshot.hasData)
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -24,7 +25,9 @@ class Weather extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text("${snapshot.data.temperature}\u00b0"),
-                showWind ? Text(snapshot.data.wind, style: TextStyle(fontSize: 10.0)) : Container()
+                showWind
+                    ? Text(snapshot.data.wind, style: TextStyle(fontSize: 10.0))
+                    : Container()
               ],
             ),
           );
@@ -38,7 +41,8 @@ Future<WeatherData> _load() async {
   final http.Response response =
       await http.get("http://vejr.eu/api.php?location=Silkeborg&degree=C");
   if (response.statusCode == 200) {
-    Map<String, dynamic> bodyJson = json.decode(response.body.replaceFirst("<pre>", "").replaceAll("</pre>", ""));
+    Map<String, dynamic> bodyJson = json.decode(
+        response.body.replaceFirst("<pre>", "").replaceAll("</pre>", ""));
     data = WeatherData.fromJson(bodyJson);
   }
   return data;
@@ -54,10 +58,9 @@ class WeatherData {
 
   factory WeatherData.fromJson(Map<String, dynamic> json) {
     return WeatherData(
-      localtionName: json["LocationName"],
-      sky: json["CurrentData"]["skyText"],
-      temperature: json["CurrentData"]["temperature"],
-      wind: json["CurrentData"]["windText"]
-    );
+        localtionName: json["LocationName"],
+        sky: json["CurrentData"]["skyText"],
+        temperature: json["CurrentData"]["temperature"],
+        wind: json["CurrentData"]["windText"]);
   }
 }

@@ -9,7 +9,7 @@ class RankingSharedPref {
   static const String _isItFirstTimeKey = "ranking_firsttime";
   static SharedPreferences _sharedPref;
 
-static Future<SharedPreferences> get sharedPrefInstance async {
+  static Future<SharedPreferences> get sharedPrefInstance async {
     if (_sharedPref == null) {
       _sharedPref = await SharedPreferences.getInstance();
     }
@@ -21,7 +21,8 @@ static Future<SharedPreferences> get sharedPrefInstance async {
     SharedPreferences shared = await sharedPrefInstance;
     bool value = shared.getBool(_isItFirstTimeKey);
     if (value == null) {
-      DocumentSnapshot snapshot = await RankingFirestore.getPlayer(Home.loggedInUser.uid);
+      DocumentSnapshot snapshot =
+          await RankingFirestore.getPlayer(Home.loggedInUser.uid);
       value = !snapshot.exists;
       shared.setBool(_isItFirstTimeKey, value);
     }

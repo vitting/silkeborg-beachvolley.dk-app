@@ -13,8 +13,15 @@ class RankingPlayerData implements BaseData {
   RankingPlayerStatsData points;
   RankingPlayerStatsData numberOfPlayedMatches;
   List<dynamic> playerFavorites;
-  
-  RankingPlayerData({this.name, this.numberOfPlayedMatches, this.photoUrl, this.points, this.sex, this.userId, this.playerFavorites});
+
+  RankingPlayerData(
+      {this.name,
+      this.numberOfPlayedMatches,
+      this.photoUrl,
+      this.points,
+      this.sex,
+      this.userId,
+      this.playerFavorites});
 
   Map<String, dynamic> toMap() {
     return {
@@ -22,8 +29,11 @@ class RankingPlayerData implements BaseData {
       "userId": userId,
       "photoUrl": photoUrl,
       "sex": sex,
-      "points": points == null ? RankingPlayerStatsData().toMap() : points.toMap(),
-      "numberOfPlayedMatches": numberOfPlayedMatches == null ? RankingPlayerStatsData().toMap() : numberOfPlayedMatches.toMap(),
+      "points":
+          points == null ? RankingPlayerStatsData().toMap() : points.toMap(),
+      "numberOfPlayedMatches": numberOfPlayedMatches == null
+          ? RankingPlayerStatsData().toMap()
+          : numberOfPlayedMatches.toMap(),
       "playerFavorites": playerFavorites ?? []
     };
   }
@@ -45,16 +55,19 @@ class RankingPlayerData implements BaseData {
 
     return data;
   }
-  
+
   factory RankingPlayerData.fromMap(Map<String, dynamic> doc) {
     return RankingPlayerData(
-      name: doc["name"] ?? "",
-      userId: doc["userId"] ?? "",
-      photoUrl: doc["photoUrl"] ?? "",
-      sex: doc["sex"] ?? "",
-      points: doc["points"] == null ? RankingPlayerStatsData() : RankingPlayerStatsData.fromMap(doc["points"]),
-      numberOfPlayedMatches: doc["numberOfPlayedMatches"] == null ? RankingPlayerStatsData() : RankingPlayerStatsData.fromMap(doc["numberOfPlayedMatches"]), 
-      playerFavorites: doc["playerFavorites"] ?? []
-    );
+        name: doc["name"] ?? "",
+        userId: doc["userId"] ?? "",
+        photoUrl: doc["photoUrl"] ?? "",
+        sex: doc["sex"] ?? "",
+        points: doc["points"] == null
+            ? RankingPlayerStatsData()
+            : RankingPlayerStatsData.fromMap(doc["points"]),
+        numberOfPlayedMatches: doc["numberOfPlayedMatches"] == null
+            ? RankingPlayerStatsData()
+            : RankingPlayerStatsData.fromMap(doc["numberOfPlayedMatches"]),
+        playerFavorites: doc["playerFavorites"] ?? []);
   }
 }

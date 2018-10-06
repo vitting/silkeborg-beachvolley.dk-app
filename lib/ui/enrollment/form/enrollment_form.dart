@@ -155,7 +155,7 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
         labelText: "Fødselsdato",
         hintText: "Tryk på knappen og bruger kalenderen",
         suffixIcon: IconButton(
-          color: Colors.deepOrange[700],
+            color: Colors.deepOrange[700],
             icon: Icon(Icons.calendar_today),
             onPressed: () async {
               _selectDate(context, date: _user.birthdate);

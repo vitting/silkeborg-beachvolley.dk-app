@@ -29,7 +29,7 @@ class _BulletinState extends State<Bulletin> {
   int _newsCount = 0;
   int _eventCount = 0;
   int _playCount = 0;
-  
+
   @override
   void initState() {
     _loadBulletinItemsCount();
@@ -87,33 +87,33 @@ class _BulletinState extends State<Bulletin> {
   Widget _scaffoldBottomNavigationBar() {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-        currentIndex: _bottombarSelected,
-        onTap: (int value) {
-    setState(() {
-      _bottombarSelected = value;
-    });
-        },
-        items: <BottomNavigationBarItem>[
-    BottomNavigationBarItem(
-        title: Text(_getTitle(BulletinType.news)),
-        icon: IconCounter(
-          icon: FontAwesomeIcons.newspaper,
-          counter: _newsCount,
-        )),
-    BottomNavigationBarItem(
-      title: Text(_getTitle(BulletinType.event)),
-      icon: IconCounter(
-        icon: FontAwesomeIcons.calendarAlt,
-        counter: _eventCount,
-      ),
-    ),
-    BottomNavigationBarItem(
-      title: Text(_getTitle(BulletinType.play)),
-      icon: IconCounter(
-          icon: FontAwesomeIcons.volleyballBall, counter: _playCount),
-    )
-        ],
-      );
+      currentIndex: _bottombarSelected,
+      onTap: (int value) {
+        setState(() {
+          _bottombarSelected = value;
+        });
+      },
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+            title: Text(_getTitle(BulletinType.news)),
+            icon: IconCounter(
+              icon: FontAwesomeIcons.newspaper,
+              counter: _newsCount,
+            )),
+        BottomNavigationBarItem(
+          title: Text(_getTitle(BulletinType.event)),
+          icon: IconCounter(
+            icon: FontAwesomeIcons.calendarAlt,
+            counter: _eventCount,
+          ),
+        ),
+        BottomNavigationBarItem(
+          title: Text(_getTitle(BulletinType.play)),
+          icon: IconCounter(
+              icon: FontAwesomeIcons.volleyballBall, counter: _playCount),
+        )
+      ],
+    );
   }
 
   Widget _main() {
@@ -158,6 +158,6 @@ class _BulletinState extends State<Bulletin> {
     if (type == BulletinType.news) title = "Nyheder";
     if (type == BulletinType.event) title = "Begivenheder";
     if (type == BulletinType.play) title = "Spil";
-  return title;
+    return title;
   }
 }

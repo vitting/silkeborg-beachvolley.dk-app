@@ -16,7 +16,8 @@ class SilkeborgBeacvolleyScaffoldDrawer extends StatefulWidget {
   }
 }
 
-class SilkeborgBeacvolleyScaffoldDrawerState extends State<SilkeborgBeacvolleyScaffoldDrawer> {
+class SilkeborgBeacvolleyScaffoldDrawerState
+    extends State<SilkeborgBeacvolleyScaffoldDrawer> {
   String _photoUrl;
   String _email = "";
   String _name = "";
@@ -84,7 +85,8 @@ class SilkeborgBeacvolleyScaffoldDrawerState extends State<SilkeborgBeacvolleySc
         title: Text("Log ud"),
         onTap: () async {
           Navigator.of(context).pop();
-          ConfirmAction logoutAction = await authFunctions.logoutConfirm(context);
+          ConfirmAction logoutAction =
+              await authFunctions.logoutConfirm(context);
           if (logoutAction == ConfirmAction.yes) {
             await authFunctions.logout();
           }
@@ -98,7 +100,7 @@ class SilkeborgBeacvolleyScaffoldDrawerState extends State<SilkeborgBeacvolleySc
         },
       )
     ];
-    
+
     if (Home.userInfo != null && Home.userInfo.admin1) {
       widgets.add(ListTile(
         leading: Icon(Icons.album),

@@ -7,9 +7,7 @@ class DateTimeNumberOfCommentsAndCommits extends StatelessWidget {
   final int numberOfCommits;
   final Function onTapPlayerCount;
   DateTimeNumberOfCommentsAndCommits(
-      {this.bulletinItem,
-      this.numberOfCommits = -1,
-      this.onTapPlayerCount});
+      {this.bulletinItem, this.numberOfCommits = -1, this.onTapPlayerCount});
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +22,13 @@ class DateTimeNumberOfCommentsAndCommits extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 5.0),
                 child: Text(
-            bulletinItem.creationDateFormatted,
-            textAlign: TextAlign.start,
-            style: TextStyle(fontSize: 12.0),
-          ),
+                  bulletinItem.creationDateFormatted,
+                  textAlign: TextAlign.start,
+                  style: TextStyle(fontSize: 12.0),
+                ),
               )
             ],
           ),
-          
           Row(
             children: <Widget>[
               Icon(
@@ -41,13 +38,12 @@ class DateTimeNumberOfCommentsAndCommits extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 5.0),
                 child: Text(
-            bulletinItem.numberOfcomments.toString(),
-            style: TextStyle(fontSize: 12.0),
-          ),
+                  bulletinItem.numberOfcomments.toString(),
+                  style: TextStyle(fontSize: 12.0),
+                ),
               ),
             ],
           ),
-          
           _showCounter(context)
         ],
       ),
@@ -68,9 +64,9 @@ class DateTimeNumberOfCommentsAndCommits extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0),
                   child: Text(
-                        numberOfCommits.toString(),
-                        style: TextStyle(fontSize: 12.0),
-                      ),
+                    numberOfCommits.toString(),
+                    style: TextStyle(fontSize: 12.0),
+                  ),
                 )
               ],
             ),

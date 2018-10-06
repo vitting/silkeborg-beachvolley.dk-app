@@ -32,14 +32,14 @@ class SettingsState extends State<Settings> {
     if (mounted) {
       setState(() {
         _showWeatherState = _settingsData.showWeather;
-        if(_settingsData.rankingName.isNotEmpty) {
+        if (_settingsData.rankingName.isNotEmpty) {
           _rankingNameController.value =
-            TextEditingValue(text: _settingsData.rankingName);
+              TextEditingValue(text: _settingsData.rankingName);
         } else {
           _rankingNameController.value =
-            TextEditingValue(text: Home.loggedInUser.displayName);
+              TextEditingValue(text: Home.loggedInUser.displayName);
         }
-        
+
         _sexValue = _settingsData.sex;
       });
     }
@@ -57,7 +57,7 @@ class SettingsState extends State<Settings> {
           Card(
             child: Container(
               padding: EdgeInsets.all(15.0),
-                          child: Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   ChipHeader("Vejret"),

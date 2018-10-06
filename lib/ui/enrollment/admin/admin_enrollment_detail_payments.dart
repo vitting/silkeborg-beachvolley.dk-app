@@ -11,7 +11,12 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
   final ValueChanged<EnrollmentPaymentData> onLongPressEditComment;
   final ValueChanged<EnrollmentPaymentData> onPressedDeletePayment;
 
-  const AdminEnrollmentDetailPayments({Key key, this.enrollment, this.onLongPressEditComment, this.onPressedDeletePayment}) : super(key: key);
+  const AdminEnrollmentDetailPayments(
+      {Key key,
+      this.enrollment,
+      this.onLongPressEditComment,
+      this.onPressedDeletePayment})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = [
@@ -20,8 +25,8 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
           textAlign: TextAlign.center)
     ];
     if (enrollment.payment.isNotEmpty) {
-      widgets = enrollment.paymentSorted
-          .map<Widget>((EnrollmentPaymentData payment) {
+      widgets =
+          enrollment.paymentSorted.map<Widget>((EnrollmentPaymentData payment) {
         return Column(
           children: <Widget>[
             Row(
@@ -39,41 +44,41 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
               trailing: Column(
                 children: <Widget>[
                   IconButton(
-                tooltip: "Slet betaling",
-                color: Colors.deepOrange,
-                icon: Icon(Icons.delete),
-                onPressed: () {
-                  onPressedDeletePayment(payment);
-                },
-              ),
-              IconButton(
-                tooltip: "Rediger kommentar",
-                color: Colors.deepOrange,
-                icon: Icon(Icons.comment),
-                iconSize: 20.0,
-                onPressed: () {
-                  onLongPressEditComment(payment);
-                },
-              )
+                    tooltip: "Slet betaling",
+                    color: Colors.deepOrange,
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      onPressedDeletePayment(payment);
+                    },
+                  ),
+                  IconButton(
+                    tooltip: "Rediger kommentar",
+                    color: Colors.deepOrange,
+                    icon: Icon(Icons.comment),
+                    iconSize: 20.0,
+                    onPressed: () {
+                      onLongPressEditComment(payment);
+                    },
+                  )
                 ],
               ),
               title: ListBody(
                 children: <Widget>[
                   AdminEnrollmentDetailRow(
-                      icon: Icons.calendar_today,
-                      text: DateTimeHelpers.ddmmyyyyHHnn(payment.createdDate),
-                      tooltip: "Dato medlem er oprettet",
-                    ),
-                    AdminEnrollmentDetailRow(
-                      icon: FontAwesomeIcons.idCard,
-                      text: payment.approvedUserId,
-                      tooltip: "Id på den person der har godkendt betalingen",
-                    ),
+                    icon: Icons.calendar_today,
+                    text: DateTimeHelpers.ddmmyyyyHHnn(payment.createdDate),
+                    tooltip: "Dato medlem er oprettet",
+                  ),
+                  AdminEnrollmentDetailRow(
+                    icon: FontAwesomeIcons.idCard,
+                    text: payment.approvedUserId,
+                    tooltip: "Id på den person der har godkendt betalingen",
+                  ),
                   AdminEnrollmentDetailRow(
                     icon: Icons.comment,
                     text: payment.comment.isEmpty
-                          ? "Ingen kommentar"
-                          : payment.comment,
+                        ? "Ingen kommentar"
+                        : payment.comment,
                     tooltip: "Kommentar fra administrator",
                   )
                 ],

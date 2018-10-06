@@ -2,15 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 
-enum PlayerChooserType {
-  winner1,
-  winner2,
-  loser1,
-  loser2,
-  winner,
-  loser,
-  none
-}
+enum PlayerChooserType { winner1, winner2, loser1, loser2, winner, loser, none }
 
 class CreatePlayerChooser extends StatelessWidget {
   final ValueChanged<PlayerChooserType> onTapPlayer;
@@ -18,7 +10,13 @@ class CreatePlayerChooser extends StatelessWidget {
   final Color color;
   final PlayerChooserType type;
 
-  const CreatePlayerChooser({Key key, this.onTapPlayer, this.playerItem, this.color, this.type = PlayerChooserType.none}) : super(key: key);
+  const CreatePlayerChooser(
+      {Key key,
+      this.onTapPlayer,
+      this.playerItem,
+      this.color,
+      this.type = PlayerChooserType.none})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +26,9 @@ class CreatePlayerChooser extends StatelessWidget {
       },
       child: CircleAvatar(
         radius: 40.0,
-        backgroundImage: playerItem == null ? null : CachedNetworkImageProvider(playerItem.photoUrl),
+        backgroundImage: playerItem == null
+            ? null
+            : CachedNetworkImageProvider(playerItem.photoUrl),
         backgroundColor: color,
         child: Icon(Icons.add),
       ),

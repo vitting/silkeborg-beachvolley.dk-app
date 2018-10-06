@@ -22,7 +22,7 @@ Future<void> showMatchInfo(
                     style: TextStyle(fontSize: 15.0)),
               ),
               Padding(
-                 padding: const EdgeInsets.symmetric(vertical: 10.0),
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: _infoPlayerHeader("Vindere", Colors.blue),
               ),
               Padding(
@@ -48,8 +48,8 @@ Widget _infoPlayerHeader(String text, Color color) {
   return Row(
     children: <Widget>[
       Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 2.0),
+        child: Container(
+            padding: EdgeInsets.symmetric(vertical: 2.0),
             color: color,
             child: Text(text,
                 textAlign: TextAlign.center,
@@ -59,7 +59,8 @@ Widget _infoPlayerHeader(String text, Color color) {
   );
 }
 
-Widget _infoPlayerRow(RankingMatchPlayerData player, String userId, Color color) {
+Widget _infoPlayerRow(
+    RankingMatchPlayerData player, String userId, Color color) {
   FontWeight fontWeight = FontWeight.normal;
   if (player.id == userId) fontWeight = FontWeight.bold;
   return Row(

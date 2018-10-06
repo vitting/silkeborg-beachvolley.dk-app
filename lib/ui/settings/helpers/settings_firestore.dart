@@ -16,7 +16,10 @@ class SettingsFirestore {
   }
 
   static Future<void> saveSettings(SettingsData settings, String userId) {
-    return firestoreInstance.collection(_collectionName).document(userId).setData(settings.toMap());  
+    return firestoreInstance
+        .collection(_collectionName)
+        .document(userId)
+        .setData(settings.toMap());
   }
 
   static Future<DocumentSnapshot> getSettings(String userId) {

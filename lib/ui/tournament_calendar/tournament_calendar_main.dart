@@ -93,11 +93,11 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
               ),
               subtitle: IconButton(
                 color: Colors.deepOrange[700],
-                    icon: Icon(Icons.launch),
-                    onPressed: () {
-                      _launchUrl(item.link);
-                    },
-                  ),
+                icon: Icon(Icons.launch),
+                onPressed: () {
+                  _launchUrl(item.link);
+                },
+              ),
             ),
           );
         },

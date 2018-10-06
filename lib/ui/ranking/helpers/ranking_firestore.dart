@@ -103,14 +103,22 @@ class RankingFirestore {
         .setData(player.toMap());
   }
 
-  static Future<void> addPlayerAsFavorite(String userId, String favoritePlayerId) {
-    return firestoreInstance.collection(_collectionNamePlayer).document(userId).updateData({
+  static Future<void> addPlayerAsFavorite(
+      String userId, String favoritePlayerId) {
+    return firestoreInstance
+        .collection(_collectionNamePlayer)
+        .document(userId)
+        .updateData({
       "playerFavorites": FieldValue.arrayUnion([favoritePlayerId])
     });
   }
 
-  static Future<void> removePlayerAsFavorite(String userId, String favoritePlayerId) {
-    return firestoreInstance.collection(_collectionNamePlayer).document(userId).updateData({
+  static Future<void> removePlayerAsFavorite(
+      String userId, String favoritePlayerId) {
+    return firestoreInstance
+        .collection(_collectionNamePlayer)
+        .document(userId)
+        .updateData({
       "playerFavorites": FieldValue.arrayRemove([favoritePlayerId])
     });
   }
@@ -173,11 +181,11 @@ class RankingFirestore {
       winner2 = choosenPlayers[1];
       loser1 = choosenPlayers[2];
       loser2 = choosenPlayers[3];
-      
+
       int month = faker.randomGenerator.integer(10, min: 4);
       int day = faker.randomGenerator.integer(30, min: 1);
       DateTime matchDate = DateTime(2018, month, day);
-      
+
       RankingMatchData match = RankingMatchData(
           matchDate: matchDate,
           winner1: RankingMatchPlayerData(
@@ -199,10 +207,9 @@ class RankingFirestore {
               id: loser2.userId,
               name: loser2.name,
               photoUrl: loser2.photoUrl,
-              points: 0)
-      );
+              points: 0));
 
-    await match.save();
+      await match.save();
     }
   }
 }

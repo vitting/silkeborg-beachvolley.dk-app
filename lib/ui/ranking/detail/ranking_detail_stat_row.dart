@@ -42,10 +42,7 @@ class RankingDetailStatRow extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Column(
-                      children: <Widget>[
-                        Text("Vundet"),
-                        Text(won.toString())
-                      ],
+                      children: <Widget>[Text("Vundet"), Text(won.toString())],
                     )
                   ],
                 ),
@@ -56,10 +53,7 @@ class RankingDetailStatRow extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Column(
-                      children: <Widget>[
-                        Text("Tabt"),
-                        Text(lost.toString())
-                      ],
+                      children: <Widget>[Text("Tabt"), Text(lost.toString())],
                     )
                   ],
                 ),

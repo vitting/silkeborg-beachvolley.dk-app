@@ -27,8 +27,10 @@ class _RankingDetailChartState extends State<RankingDetailChart> {
         future: _loadMatches(),
         builder: (BuildContext context,
             AsyncSnapshot<List<Series<StatMatchOnWeek, String>>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting && !snapshot.hasData) return LoaderSpinner();
-          if (snapshot.connectionState == ConnectionState.done && !snapshot.hasData) return Container();
+          if (snapshot.connectionState == ConnectionState.waiting &&
+              !snapshot.hasData) return LoaderSpinner();
+          if (snapshot.connectionState == ConnectionState.done &&
+              !snapshot.hasData) return Container();
           if (snapshot.hasData && snapshot.data != null) {
             return Column(
               children: <Widget>[

@@ -63,7 +63,7 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
         AdminEnrollmentDetailRow(
           icon: Icons.calendar_today,
           text: DateTimeHelpers.ddmmyyyyHHnn(widget.enrollment.creationDate),
-          tooltip: "Dato medlem er oprettet",
+          tooltip: "Dato medlemmet er oprettet",
         ),
         AdminEnrollmentDetailRow(
           icon: Icons.person,
@@ -96,10 +96,12 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
           children: <Widget>[
             Expanded(
               child: AdminEnrollmentDetailRow(
-              icon: Icons.comment,
-              text: widget.enrollment.comment.isEmpty ? "Ingen kommentar" : widget.enrollment.comment,
-              tooltip: "Kommentar",
-            ),
+                icon: Icons.comment,
+                text: widget.enrollment.comment.isEmpty
+                    ? "Ingen kommentar"
+                    : widget.enrollment.comment,
+                tooltip: "Kommentar",
+              ),
             ),
             IconButton(
               icon: Icon(Icons.comment),
@@ -144,7 +146,7 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
                 label: Text("Registere betaling for $_selectedYear"),
               ),
               IconButton(
-                tooltip: "Vælkg år",
+                tooltip: "Vælg år",
                 color: Colors.deepOrange[800],
                 icon: Icon(FontAwesomeIcons.calendarAlt),
                 onPressed: () {
@@ -199,7 +201,8 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
 
   _editComment(BuildContext context, var item) async {
     print(item.comment);
-    String result = await adminEnrollmentFunctions.editComment(context, item.comment);
+    String result =
+        await adminEnrollmentFunctions.editComment(context, item.comment);
     if (result != null) {
       item.comment = result;
       widget.enrollment.save();

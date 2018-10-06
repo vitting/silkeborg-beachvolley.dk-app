@@ -58,7 +58,8 @@ class BulletinFirestore {
   static Stream<QuerySnapshot> getBulletinsByTypeAsStream(BulletinType type) {
     return firestoreInstance
         .collection(_bulletinCollectionName)
-        .where("type", isEqualTo: BulletinTypeHelper.getBulletinTypeAsString(type))
+        .where("type",
+            isEqualTo: BulletinTypeHelper.getBulletinTypeAsString(type))
         .orderBy("creationDate", descending: true)
         .snapshots();
   }
@@ -94,7 +95,7 @@ class BulletinFirestore {
     });
   }
 
-    static Future<void> removeUserHidesBulletinItem(
+  static Future<void> removeUserHidesBulletinItem(
       String bulletId, String userId) async {
     return await firestoreInstance
         .collection(_bulletinCollectionName)
@@ -104,8 +105,7 @@ class BulletinFirestore {
     });
   }
 
-  static Future<void> saveCommitted(
-      CommittedData playerCommitted) async {
+  static Future<void> saveCommitted(CommittedData playerCommitted) async {
     return await firestoreInstance
         .collection(_bulletinCommittedCollectionName)
         .add(playerCommitted.toMap());
@@ -126,8 +126,7 @@ class BulletinFirestore {
     });
   }
 
-  static Future<Null> deleteCommittedByBulletinId(
-      String bulletinId) async {
+  static Future<Null> deleteCommittedByBulletinId(String bulletinId) async {
     QuerySnapshot snapshot = await firestoreInstance
         .collection(_bulletinCommittedCollectionName)
         .where("bulletinId", isEqualTo: bulletinId)
@@ -147,8 +146,7 @@ class BulletinFirestore {
         .getDocuments();
   }
 
-  static Future<bool> checkIsCommited(
-      String bulletinId, String userId) async {
+  static Future<bool> checkIsCommited(String bulletinId, String userId) async {
     QuerySnapshot snapshot = await firestoreInstance
         .collection(_bulletinCommittedCollectionName)
         .where("bulletinId", isEqualTo: bulletinId)

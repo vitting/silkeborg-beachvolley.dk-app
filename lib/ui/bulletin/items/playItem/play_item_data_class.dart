@@ -29,7 +29,8 @@ class BulletinPlayItemData extends BulletinItemData implements BaseData {
             authorName: authorName,
             authorPhotoUrl: authorPhotoUrl,
             hiddenByUser: hiddenByUser,
-            numberOfcomments: numberOfcomments, numberOfCommits: numberOfCommits);
+            numberOfcomments: numberOfcomments,
+            numberOfCommits: numberOfCommits);
 
   ///Deletes all images, comments and the play item.
   Future<bool> delete() async {
@@ -49,7 +50,7 @@ class BulletinPlayItemData extends BulletinItemData implements BaseData {
     authorId = Home.loggedInUser.uid;
     authorName = Home.loggedInUser.displayName;
     authorPhotoUrl = Home.loggedInUser.photoUrl;
-   return BulletinFirestore.saveBulletinItem(this);
+    return BulletinFirestore.saveBulletinItem(this);
   }
 
   factory BulletinPlayItemData.fromMap(Map<String, dynamic> item) {
@@ -63,7 +64,6 @@ class BulletinPlayItemData extends BulletinItemData implements BaseData {
         creationDate: item["creationDate"] ?? DateTime.now(),
         numberOfcomments: item["numberOfcomments"] ?? 0,
         numberOfCommits: item["numberOfCommits"] ?? 0,
-        hiddenByUser: item["hiddenByUser"] ?? []
-    );
+        hiddenByUser: item["hiddenByUser"] ?? []);
   }
 }

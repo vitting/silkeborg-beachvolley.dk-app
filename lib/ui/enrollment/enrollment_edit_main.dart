@@ -10,7 +10,7 @@ class EnrollmentEdit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: "Redgier medlem",
+      title: "Rediger medlem",
       body: Card(
         child: Container(
           padding: EdgeInsets.all(10.0),

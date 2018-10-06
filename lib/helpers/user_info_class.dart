@@ -7,10 +7,10 @@ import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/user_firestore.dart';
 
 class UserInfoData implements BaseData {
-  String id = "";
-  String name = "";
-  String email = "";
-  String photoUrl = "";
+  String id;
+  String name;
+  String email;
+  String photoUrl;
   bool admin1;
   bool admin2;
   UserInfoData({@required this.id, @required this.name, @required this.photoUrl, @required this.email, this.admin1 = false, this.admin2 = false});

@@ -18,16 +18,15 @@ class _EnrollmentStepperState extends State<Enrollment> {
   int _position = 0;
 
   @override
-    void dispose() {
-      _controller.dispose();
-      super.dispose();
-    }
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      actions: <Widget>[
-        _actionMenu(context)
-      ],
+      actions: <Widget>[_actionMenu(context)],
       bottomNavigationBar: DotBottomBar(
           showNavigationButtons: false, numberOfDot: 3, position: _position),
       title: "Indmeldelse",
@@ -51,14 +50,14 @@ class _EnrollmentStepperState extends State<Enrollment> {
 
   Widget _actionMenu(BuildContext context) {
     Widget menu;
-    
+
     if (Home.loggedInUser != null) {
       menu = PopupMenuButton<int>(
         onSelected: (int value) {
-          if (value == 0) Navigator.of(context).push(MaterialPageRoute(
-            fullscreenDialog: true,
-            builder: (BuildContext context) => EnrollmentMadeByUser()
-          ));
+          if (value == 0)
+            Navigator.of(context).push(MaterialPageRoute(
+                fullscreenDialog: true,
+                builder: (BuildContext context) => EnrollmentMadeByUser()));
         },
         initialValue: 0,
         icon: Icon(Icons.more_vert),
@@ -72,7 +71,7 @@ class _EnrollmentStepperState extends State<Enrollment> {
         },
       );
     }
-    
+
     return menu;
   }
 

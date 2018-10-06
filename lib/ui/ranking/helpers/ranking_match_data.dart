@@ -18,7 +18,14 @@ class RankingMatchData implements BaseData {
   RankingMatchPlayerData loser1;
   RankingMatchPlayerData loser2;
 
-  RankingMatchData({this.userId, @required this.matchDate, @required this.winner1, @required this.winner2, @required this.loser1, @required this.loser2, this.createdDate});
+  RankingMatchData(
+      {this.userId,
+      @required this.matchDate,
+      @required this.winner1,
+      @required this.winner2,
+      @required this.loser1,
+      @required this.loser2,
+      this.createdDate});
 
   Future<void> save() async {
     userId = userId ?? Home.loggedInUser.uid;
@@ -46,14 +53,12 @@ class RankingMatchData implements BaseData {
 
   static RankingMatchData fromMap(Map<String, dynamic> item) {
     return RankingMatchData(
-      userId: item["userId"] ?? "",
-      matchDate: item["matchDate"] ?? DateTime.now(),
-      winner1: RankingMatchPlayerData.fromMap(item["winner1"]),
-      winner2: RankingMatchPlayerData.fromMap(item["winner2"]),
-      loser1: RankingMatchPlayerData.fromMap(item["loser1"]),
-      loser2: RankingMatchPlayerData.fromMap(item["loser2"]),
-      createdDate: item["createdDate"]
-      
-    );
+        userId: item["userId"] ?? "",
+        matchDate: item["matchDate"] ?? DateTime.now(),
+        winner1: RankingMatchPlayerData.fromMap(item["winner1"]),
+        winner2: RankingMatchPlayerData.fromMap(item["winner2"]),
+        loser1: RankingMatchPlayerData.fromMap(item["loser1"]),
+        loser2: RankingMatchPlayerData.fromMap(item["loser2"]),
+        createdDate: item["createdDate"]);
   }
 }

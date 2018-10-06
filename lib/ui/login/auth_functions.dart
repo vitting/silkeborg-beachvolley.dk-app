@@ -32,7 +32,8 @@ Future<ConfirmAction> logoutConfirm(BuildContext context) async {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Text("Er du sikker på at du vil logge ud?", textAlign: TextAlign.center),
+                child: Text("Er du sikker på at du vil logge ud?",
+                    textAlign: TextAlign.center),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -54,5 +55,5 @@ Future<ConfirmAction> logoutConfirm(BuildContext context) async {
             ],
           ));
 
-          return choise;
+  return choise;
 }

@@ -33,10 +33,10 @@ class RankingDetailState extends State<RankingDetail> {
   }
 
   @override
-    void dispose() {
-      _controller.dispose();
-      super.dispose();
-    }
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   void _initPages() async {
     _widgets = [

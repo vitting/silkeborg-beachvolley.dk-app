@@ -11,7 +11,8 @@ class CreateTournamentItem extends StatefulWidget {
   final TournamentData tournament;
   final String title;
 
-  const CreateTournamentItem({Key key, this.tournament, this.title}) : super(key: key);
+  const CreateTournamentItem({Key key, this.tournament, this.title})
+      : super(key: key);
   @override
   _CreateTournamentItemState createState() => _CreateTournamentItemState();
 }
@@ -33,16 +34,17 @@ class _CreateTournamentItemState extends State<CreateTournamentItem> {
             endDate: DateTime.now());
 
     _startDateController =
-        TextEditingController(text:DateTimeHelpers.ddmmyyyy(_data.startDate));
-    _endDateController = TextEditingController(text: DateTimeHelpers.ddmmyyyy(_data.endDate));
+        TextEditingController(text: DateTimeHelpers.ddmmyyyy(_data.startDate));
+    _endDateController =
+        TextEditingController(text: DateTimeHelpers.ddmmyyyy(_data.endDate));
   }
 
   @override
-    void dispose() {
-      _startDateController.dispose();
-      _endDateController.dispose();
-      super.dispose();
-    }
+  void dispose() {
+    _startDateController.dispose();
+    _endDateController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +57,8 @@ class _CreateTournamentItemState extends State<CreateTournamentItem> {
   Widget _main() {
     return Card(
       child: Container(
-              margin: EdgeInsets.all(10.0),
-              child: Column(
+        margin: EdgeInsets.all(10.0),
+        child: Column(
           children: <Widget>[
             Form(
               key: _formState,
@@ -77,13 +79,14 @@ class _CreateTournamentItemState extends State<CreateTournamentItem> {
                                 suffixIcon: IconButton(
                                   icon: Icon(Icons.calendar_today),
                                   onPressed: () {
-                                    _selectDate(context, DateTimeType.startDate);
+                                    _selectDate(
+                                        context, DateTimeType.startDate);
                                   },
                                 ),
                               ))),
-                              SizedBox(
-                                width: 10.0,
-                              ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
                       Expanded(
                         child: TextFormField(
                           controller: _endDateController,
@@ -99,8 +102,7 @@ class _CreateTournamentItemState extends State<CreateTournamentItem> {
                                 onPressed: () {
                                   _selectDate(context, DateTimeType.endDate);
                                 },
-                              )
-                          ),
+                              )),
                         ),
                       )
                     ],
@@ -125,12 +127,13 @@ class _CreateTournamentItemState extends State<CreateTournamentItem> {
                     },
                     validator: (String value) {
                       if (value.isEmpty) return "Udfyld link";
-                      RegExp exp = RegExp("^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?\$");
+                      RegExp exp = RegExp(
+                          "^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?\$");
                       try {
-                        Validate.matchesPattern(value, exp);  
+                        Validate.matchesPattern(value, exp);
                       } catch (e) {
                         return "Det indtastede link er ikke et valid link";
-                      }                      
+                      }
                     },
                   )
                 ],

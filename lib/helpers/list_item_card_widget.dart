@@ -10,16 +10,6 @@ class ListItemCard extends StatelessWidget {
       margin: EdgeInsets.all(5.0),
       child: Container(
         padding: padding,
-        // decoration: BoxDecoration(
-        //     gradient: LinearGradient(
-        //   begin: Alignment.topLeft,
-        //   end: Alignment.bottomRight,
-        //   colors: [
-        //     Colors.grey[50],
-        //     Colors.grey[100],
-        //     Colors.grey[200],
-        //   ],
-        // )),
         child: child,
       ),
     );

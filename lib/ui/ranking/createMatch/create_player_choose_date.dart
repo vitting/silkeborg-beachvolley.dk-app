@@ -6,9 +6,10 @@ import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 
 class CreatePlayerChooseDate extends StatefulWidget {
   final Color color;
-  final ValueChanged<DateTime> datePicked; 
-  const CreatePlayerChooseDate({Key key, @required this.color, @required this.datePicked}) : super(key: key);
-
+  final ValueChanged<DateTime> datePicked;
+  const CreatePlayerChooseDate(
+      {Key key, @required this.color, @required this.datePicked})
+      : super(key: key);
 
   @override
   CreatePlayerChooseDateState createState() {
@@ -17,7 +18,7 @@ class CreatePlayerChooseDate extends StatefulWidget {
 }
 
 class CreatePlayerChooseDateState extends State<CreatePlayerChooseDate> {
-  String _dateText = "Vælg kamp dato"; 
+  String _dateText = "Vælg kamp dato";
 
   @override
   Widget build(BuildContext context) {

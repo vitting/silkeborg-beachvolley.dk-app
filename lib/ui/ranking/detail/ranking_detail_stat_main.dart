@@ -41,7 +41,10 @@ class RankingDetailStat extends StatelessWidget {
                   builder: (BuildContext context, BoxConstraints contraints) {
                     return Column(
                       children: <Widget>[
-                        RankingDetailChart(getMatches: matches, width: contraints.maxWidth -50.0, height: 200.0)
+                        RankingDetailChart(
+                            getMatches: matches,
+                            width: contraints.maxWidth - 50.0,
+                            height: 200.0)
                       ],
                     );
                   },
