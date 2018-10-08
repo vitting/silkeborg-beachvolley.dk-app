@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
+import 'package:silkeborgbeachvolley/ui/home/home_launcher_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/bulletin_main.dart';
 import 'package:silkeborgbeachvolley/ui/login/login_main.dart';
@@ -20,8 +21,9 @@ void main() {
     ),
     initialRoute: "/",
     routes: <String, WidgetBuilder>{ 
-      // "/": (BuildContext context) => Home(),
-      "/": (BuildContext context) => TestWidget(),
+      "/": (BuildContext context) => Home(),
+      // "/": (BuildContext context) => HomeLauncherSplash(),
+      // "/": (BuildContext context) => TestWidget(),
       Enrollment.routeName: (BuildContext context) => Enrollment(), 
       AdminEnrollment.routeName: (BuildContext context) => AdminEnrollment(),
       ScoreBoard.routeName: (BuildContext context) => ScoreBoard(),

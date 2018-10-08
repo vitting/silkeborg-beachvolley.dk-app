@@ -3,15 +3,12 @@ import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'auth_functions.dart' as authFunctions;
 
-class Login extends StatefulWidget {
+class Login extends StatelessWidget {
   static final routeName = "/login";
-  @override
-  _LoginState createState() => _LoginState();
-}
+  final ValueChanged<bool> onLogIn;
 
-class _LoginState extends State<Login> {
-  bool isLoggedIn;
-
+  const Login({Key key, this.onLogIn}) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
@@ -52,8 +49,6 @@ class _LoginState extends State<Login> {
             padding: EdgeInsets.all(10.0),
             onPressed: () async {
               await authFunctions.signInWithFacebook();
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  "/", ((Route<dynamic> route) => false));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
