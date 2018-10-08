@@ -33,6 +33,10 @@ class _TestWidgetState extends State<TestWidget> {
         }
       );
 
+     _firebaseMessaging.onTokenRefresh.listen((token) {
+       print("TOKEN REFRESH: $token");
+     });
+
       _firebaseMessaging.getToken().then((String token) {
         print(token);
       });

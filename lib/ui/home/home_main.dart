@@ -16,17 +16,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool _isLoggedIn = false;
-  bool _loading = false;
+  bool _loading = true;
   @override
   void initState() {
     super.initState();
+    print("LOGIN START: ${DateTime.now().millisecond}");
     UserAuth.firebaseAuth.onAuthStateChanged.listen((user) {
       Home.loggedInUser = user;
-      if (mounted) {
-        setState(() {
-          _loading = true;
-        });
-      }
       if (user != null) {
         _loadUserInfo(user.uid);
         _initSettings(user.uid);
@@ -35,6 +31,7 @@ class _HomeState extends State<Home> {
       if (mounted) {
         setState(() {
           _loading = false;
+          print("LOGIN SLUT: ${DateTime.now().millisecond}");
           _isLoggedIn = user == null ? false : true;
         });
       }
@@ -58,6 +55,11 @@ class _HomeState extends State<Home> {
     }
   }
 
+  ///CHRISTIAN: Vi gemmer devicetoken ved ontoken refresh. Hvis den kører ved getToken.
+  ///
+
+///CHRISTIAN: Det vi kan gøre er at så længe vi er i loading fase så vise vi en splashscreen
+///Når vi så ved hvad vi skal vise: Bulletin / Login så viser vi det...
   @override
   Widget build(BuildContext context) {
     return LoaderSpinnerOverlay(

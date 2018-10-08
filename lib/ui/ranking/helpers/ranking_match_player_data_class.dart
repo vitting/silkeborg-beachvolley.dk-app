@@ -18,9 +18,9 @@ class RankingMatchPlayerData {
 
   static RankingMatchPlayerData fromMap(Map<dynamic, dynamic> item) {
     return RankingMatchPlayerData(
-        id: item["id"] == null ? "" : item["id"],
-        name: item["name"] == null ? "" : item["name"],
-        photoUrl: item["photoUrl"] == null ? "" : item["photoUrl"],
-        points: item["points"] == null ? 0 : item["points"]);
+        id: item["id"] ?? "",
+        name: item["name"] ?? "",
+        photoUrl: item["photoUrl"] ?? "",
+        points: item["points"] ?? 0);
   }
 }

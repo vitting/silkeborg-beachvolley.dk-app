@@ -20,8 +20,8 @@ void main() {
     ),
     initialRoute: "/",
     routes: <String, WidgetBuilder>{ 
-      "/": (BuildContext context) => Home(),
-      // "/": (BuildContext context) => TestWidget(),
+      // "/": (BuildContext context) => Home(),
+      "/": (BuildContext context) => TestWidget(),
       Enrollment.routeName: (BuildContext context) => Enrollment(), 
       AdminEnrollment.routeName: (BuildContext context) => AdminEnrollment(),
       ScoreBoard.routeName: (BuildContext context) => ScoreBoard(),

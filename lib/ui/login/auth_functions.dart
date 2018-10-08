@@ -10,11 +10,7 @@ import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_sharedpref.dart'
 Future<void> signInWithFacebook() async {
   final FirebaseUser user = await UserAuth.signInWithFacebook();
 
-  if (user != null) _finalSignInTasks(user, "facebook");
-}
-
-Future<void> _finalSignInTasks(FirebaseUser user, String loginProvider) async {
-  await UserFirestore.setUserInfo(user);
+  if (user != null) await UserFirestore.setUserInfo(user);
 }
 
 Future<void> logout() async {

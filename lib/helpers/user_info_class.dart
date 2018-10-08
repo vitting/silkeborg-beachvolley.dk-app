@@ -52,12 +52,12 @@ class UserInfoData implements BaseData {
 
   factory UserInfoData.fromMap (Map<String, dynamic> user) {
     return UserInfoData(
-      id: user["id"] == null ? "" : user["id"],
-      name: user["name"] == null ? "" : user["name"],
-      email: user["email"] == null ? "" : user["email"],
-      photoUrl: user["photoUrl"] == null ? "" : user["photoUrl"],
-      admin1: user["admin1"] == null ? false : user["admin1"],
-      admin2: user["admin2"] == null ? false : user["admin2"]
+      id: user["id"] ?? "",
+      name: user["name"] ?? "",
+      email: user["email"] ?? "",
+      photoUrl: user["photoUrl"] ?? "",
+      admin1: user["admin1"] ?? false,
+      admin2: user["admin2"] ?? false
     );
   }
 

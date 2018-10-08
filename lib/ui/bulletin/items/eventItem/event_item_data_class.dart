@@ -72,7 +72,7 @@ class BulletinEventItemData extends BulletinItemData implements BaseData {
     return map;
   }
 
-  String get evnetStartDateFormatted =>
+  String get eventStartDateFormatted =>
       DateTimeHelpers.ddmmyyyy(eventStartDate);
 
   String get eventEndDateFormatted => DateTimeHelpers.ddmmyyyy(eventStartDate);
