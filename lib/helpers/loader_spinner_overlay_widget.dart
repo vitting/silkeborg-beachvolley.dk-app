@@ -30,7 +30,7 @@ class LoaderSpinnerOverlay extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             LoaderSpinner(),
-            Container(
+            text.isEmpty ? Container() : Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16.0),
                   color: Colors.blue
