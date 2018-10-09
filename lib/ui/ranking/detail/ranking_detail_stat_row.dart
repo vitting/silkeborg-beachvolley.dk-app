@@ -18,7 +18,7 @@ class RankingDetailStatRow extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(bottom: 10.0),
-            child: ChipHeader(title),
+            child: ChipHeader(title, expanded: true, backgroundColor: Color(0xffaaacb5), fontSize: 16.0, textAlign: TextAlign.center, roundedCorners: false,),
           ),
           Row(
             children: <Widget>[

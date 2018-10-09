@@ -94,21 +94,17 @@ class _EnrollmentStepperState extends State<Enrollment> {
           children: <Widget>[
             Column(
               children: <Widget>[
-                _textEnrollment("Velkommen til indmeldelse i"),
-                _textEnrollment("Silkeborg Beachvolley"),
+                _textEnrollment("Velkommen til indmeldelse i", 16.0),
+                _textEnrollment("Silkeborg Beachvolley", 16.0),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  padding: const EdgeInsets.symmetric(vertical: 30.0),
                   child: Image.asset("assets/images/logo_dark_blue_250x250.png",
-                      width: 80.0),
+                      width: 60.0),
                 ),
                 _textEnrollment(
-                    "Det koster kun 25 kr. pr. sæson at være medlem af Silkeborg Beachvolley"),
+                    "Det koster kun 25 kr. pr. sæson at være medlem. Beløbet indbetales på MobilePay"),
                 Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: _textEnrollment("Beløbet indbetales på MobilePay"),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  padding: const EdgeInsets.symmetric(vertical: 30.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -119,7 +115,7 @@ class _EnrollmentStepperState extends State<Enrollment> {
                   ),
                 ),
                 _textEnrollment(
-                    "Udfyld formularen på næste side for den du vil melde ind i Silkeborg Beachvolley"),
+                    "Udfyld formularen på næste side for den der skal meldes ind"),
                 IconButton(
                   padding: EdgeInsets.only(top: 40.0),
                   color: Colors.deepOrange[700],
@@ -157,13 +153,12 @@ class _EnrollmentStepperState extends State<Enrollment> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: _textEnrollment(
-                      "Tak for din indmeldese i Silkeborg Beachvolley"),
-                ),
-                Image.asset("assets/images/logo_dark_blue_250x250.png",
-                    width: 40.0),
+                _textEnrollment(
+                      "Tak for din indmeldelse", 16.0),
+                      _textEnrollment(
+                      "og velkommen til", 16.0),
+                _textEnrollment(
+                      "Silkeborg Beachvolley", 16.0),
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0),
                   child: _textEnrollment("Færdiggøre din indmeldelse ved at"),
@@ -174,9 +169,12 @@ class _EnrollmentStepperState extends State<Enrollment> {
                   onTap: () async {
                     _launchUrl(url);
                   },
-                  child: Image.asset(
-                      "assets/images/mobilepay_vertical_blue.png",
-                      height: 100.0),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    child: Image.asset(
+                        "assets/images/mobilepay_vertical_blue.png",
+                        height: 100.0),
+                  ),
                 ),
                 _textEnrollment("Du kan trykke på MobilePay logoet"),
                 _textEnrollment("for at åbne din MobilePay app"),
@@ -206,9 +204,9 @@ class _EnrollmentStepperState extends State<Enrollment> {
         ));
   }
 
-  Text _textEnrollment(String text) {
+  Text _textEnrollment(String text, [double fontSize = 14.0]) {
     return Text(text,
-        textAlign: TextAlign.center, style: TextStyle(fontSize: 20.0));
+        textAlign: TextAlign.center, style: TextStyle(fontSize: fontSize));
   }
 
   void _launchUrl(String url) async {

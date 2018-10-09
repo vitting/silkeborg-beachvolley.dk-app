@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
+import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/helpers/list_item_card_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
@@ -38,7 +40,7 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: "Turnerings kalender",
+      title: "Turneringer",
       body: _listView(),
       floatingActionButton: _floatingActionButton(),
     );
@@ -67,10 +69,9 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
           TournamentData item = _tournaments[position];
           return ListItemCard(
             child: ListTile(
-              contentPadding:
-                  EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
+              contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
               onLongPress: () async {
-                await _onLongPress(item);
+                await _onLongPress(context, item);
               },
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,17 +79,17 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),
                     child: Container(
+                      color: Color(0xffaaacb5),
                       padding: EdgeInsets.all(4.0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4.0),
-                          color: Colors.blue),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: _getDate(item),
                       ),
                     ),
                   ),
-                  Text(item.title),
+                  Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Text(item.title))
                 ],
               ),
               subtitle: IconButton(
@@ -117,9 +118,30 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
     }
   }
 
-  Future<void> _onLongPress(TournamentData item) async {
+  Future<void> _onLongPress(BuildContext context, TournamentData item) async {
     if (_isAdmin) {
-      await _showCreateDialog(item, "Redigere turnering");
+      int result = await Dialogs.modalBottomSheet(context, [
+        DialogsModalBottomSheetItem("Redigere", Icons.edit, 0),
+        DialogsModalBottomSheetItem("Slet", Icons.delete, 1)
+      ]);
+      
+      switch (result) {
+        case 0:
+          await _showCreateDialog(item, "Redigere turnering");
+          break;
+        case 1:
+          ConfirmDialogAction action = await Dialogs.confirmDelete(context, "Er du sikker på du vil slette turneringen?");
+
+          if (action != null && action == ConfirmDialogAction.delete) {
+            await item.delete();
+            if (mounted) {
+              setState(() {
+                _tournaments.remove(item);
+              });
+            }
+          }
+          break;
+      }
     }
   }
 

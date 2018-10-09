@@ -79,8 +79,8 @@ class BulletinItemMain extends StatelessWidget {
 
   void _bulletinItemOnPressed(
       BuildContext context, BulletinItemData bulletinItem) {
-    UserInfoData userInfo = Home.userInfo;
-    if (userInfo?.id == bulletinItem.authorId)
+    // UserInfoData userInfo = Home.userInfo;
+    // if (userInfo?.id == bulletinItem.authorId)
       itemFunctions.bulletinItemPopupMenu(context, bulletinItem);
   }
 }

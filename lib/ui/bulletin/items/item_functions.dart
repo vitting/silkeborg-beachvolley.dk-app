@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
+import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/confirm_dialog_options_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
@@ -7,61 +8,46 @@ import 'package:silkeborgbeachvolley/ui/bulletin/items/editItem/bulletin_edit_it
 import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import '../../../helpers/confirm_dialog_functions.dart'
     as confirmDialogFunctions;
 
-void bulletinItemPopupMenu(
-    BuildContext context, BulletinItemData bulletinItem) {
-  showModalBottomSheet<void>(
-      context: context,
-      builder: (BuildContext contextModal) {
-        return Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              ListTile(
-                onTap: () {
-                  bulletinItem.hide();
-                  Navigator.of(contextModal).pop();
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                    duration: Duration(seconds: 10),
-                    content: Text("Opslaget er skjult"),
-                    action: SnackBarAction(
-                      label: "Fortryd",
-                      onPressed: () {
-                        bulletinItem.unhide();
-                      },
-                    ),
-                  ));
-                },
-                title: Text("Skjul"),
-                leading: Icon(Icons.visibility_off),
-              ),
-              Divider(),
-              ListTile(
-                onTap: () {
-                  Navigator.of(contextModal).pop();
-                  Navigator.of(context).push(MaterialPageRoute(
-                      fullscreenDialog: true,
-                      builder: (BuildContext context) =>
-                          EditBulletinItem(bulletinItem)));
-                },
-                title: Text("Rediger"),
-                leading: Icon(Icons.edit),
-              ),
-              Divider(),
-              ListTile(
-                onTap: () {
-                  Navigator.of(contextModal).pop();
-                  bulletinConfirmDialog(context, bulletinItem);
-                },
-                title: Text("Slet"),
-                leading: Icon(Icons.delete),
-              )
-            ],
+void bulletinItemPopupMenu(BuildContext context, BulletinItemData bulletinItem) async {
+  List<DialogsModalBottomSheetItem> items = [
+    DialogsModalBottomSheetItem("Skjul opslaget", Icons.visibility_off, 0)
+  ];
+  if (Home.userInfo?.id == bulletinItem?.authorId) {
+    items.add(DialogsModalBottomSheetItem("Rediger", Icons.edit, 1));
+    items.add(DialogsModalBottomSheetItem("Slet", Icons.delete, 2));
+  }
+
+  int result = await Dialogs.modalBottomSheet(context, items);
+  
+  if (result != null) {
+    switch (result) {
+      case 0:
+        bulletinItem.hide();
+        Scaffold.of(context).showSnackBar(SnackBar(
+          duration: Duration(seconds: 5),
+          content: Text("Opslaget er skjult"),
+          action: SnackBarAction(
+            label: "Fortryd",
+            onPressed: () {
+              bulletinItem.unhide();
+            },
           ),
-        );
-      });
+        ));
+        break;
+      case 1:
+        Navigator.of(context).push(MaterialPageRoute(
+            fullscreenDialog: true,
+            builder: (BuildContext context) => EditBulletinItem(bulletinItem)));
+        break;
+      case 2:
+        bulletinConfirmDialog(context, bulletinItem);
+        break;
+    }
+  }
 }
 
 void bulletinConfirmDialog(

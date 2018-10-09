@@ -33,7 +33,7 @@ class ItemFieldsCreate {
         body: news.body, 
         type: news.type,
       );
-    }
+    } //CHRISTIAN: Når vi forsøger at redigere et bulletin så får vi FEJL
 
     if (item.type == BulletinType.play) {
       BulletinPlayItemData play = item as BulletinPlayItemData;
