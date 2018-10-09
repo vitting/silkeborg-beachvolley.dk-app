@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:silkeborgbeachvolley/helpers/chip_header.dart';
+import 'package:silkeborgbeachvolley/helpers/notification_categories_enum.dart';
+import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data_class.dart';
@@ -16,11 +18,16 @@ class Settings extends StatefulWidget {
 
 class SettingsState extends State<Settings> {
   SettingsData _settingsData;
+  UserMessagingData _messagingData;
   bool _showWeatherState = false;
+  bool _notificationsNews = false;
+  bool _notificationsEvent = false;
+  bool _notificationsPlay = false;
   TextEditingController _rankingNameController = TextEditingController();
   String _rankingNameError;
   Color _rankingNameColor;
   String _sexValue;
+
   @override
   void initState() {
     super.initState();
@@ -29,9 +36,14 @@ class SettingsState extends State<Settings> {
 
   _getSettings() async {
     _settingsData = await SettingsData.getSettings(Home.loggedInUser.uid);
+    _messagingData = await UserMessagingData.getUserMessaging(Home.loggedInUser.uid);
+
     if (mounted) {
       setState(() {
         _showWeatherState = _settingsData.showWeather;
+        _notificationsNews = _settingsData.notificationsShowNews;
+        _notificationsEvent = _settingsData.notificationsShowEvent;
+        _notificationsPlay = _settingsData.notificationsShowPlay;
         if (_settingsData.rankingName.isNotEmpty) {
           _rankingNameController.value =
               TextEditingValue(text: _settingsData.rankingName);
@@ -54,13 +66,13 @@ class SettingsState extends State<Settings> {
     return Container(
       child: ListView(
         children: <Widget>[
-          Card(
+          Card( 
             child: Container(
-              padding: EdgeInsets.all(15.0),
+              // padding: EdgeInsets.all(15.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  ChipHeader("Vejret"),
+                  ChipHeader("Vejret", expanded: true, backgroundColor: Color(0xffaaacb5), fontSize: 16.0, roundedCorners: false),
                   _showWeather(),
                 ],
               ),
@@ -68,18 +80,24 @@ class SettingsState extends State<Settings> {
           ),
           Card(
             child: Container(
-              padding: EdgeInsets.all(15.0),
+              // padding: EdgeInsets.all(15.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  ChipHeader("Ranglisten"),
-                  _rankingName(),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15.0),
-                    child: _sex(),
-                  )
+                  ChipHeader("Notifikationer", expanded: true, backgroundColor: Color(0xffaaacb5), fontSize: 16.0, roundedCorners: false),
+                  _notifications(),
                 ],
               ),
+            ),
+          ),
+          Card(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                ChipHeader("Ranglisten", expanded: true, backgroundColor: Color(0xffaaacb5), fontSize: 16.0, roundedCorners: false),
+                Container(child: _rankingName(), padding: EdgeInsets.symmetric(horizontal: 15.0)),
+                Container(child: _sex(), padding: EdgeInsets.symmetric(horizontal: 15.0)),
+              ],
             ),
           )
         ],
@@ -101,6 +119,70 @@ class SettingsState extends State<Settings> {
       },
       value: _showWeatherState,
       title: Text("Vis vejret"),
+    );
+  }
+
+  Widget _notifications() {
+    return Column(
+      children: <Widget>[
+        SwitchListTile(
+          onChanged: (bool state) {
+            _settingsData.notificationsShowNews = state;
+            _settingsData.save();
+            if(state) {
+              _messagingData.addSubscription(NotificationCategory.news);
+            } else {
+              _messagingData.removeSubscription(NotificationCategory.news);
+            }
+
+            if (mounted) {
+              setState(() {
+                _notificationsNews = state;
+              });
+            }
+          },
+          value: _notificationsNews,
+          title: Text("Nyheder"),
+        ),
+        SwitchListTile(
+          onChanged: (bool state) {
+            _settingsData.notificationsShowEvent = state;
+            _settingsData.save();
+            if(state) {
+              _messagingData.addSubscription(NotificationCategory.event);
+            } else {
+              _messagingData.removeSubscription(NotificationCategory.event);
+            }
+
+            if (mounted) {
+              setState(() {
+                _notificationsEvent = state;
+              });
+            }
+          },
+          value: _notificationsEvent,
+          title: Text("Begivenheder"),
+        ),
+        SwitchListTile(
+          onChanged: (bool state) {
+            _settingsData.notificationsShowPlay = state;
+            _settingsData.save();
+            if(state) {
+              _messagingData.addSubscription(NotificationCategory.play);
+            } else {
+              _messagingData.removeSubscription(NotificationCategory.play);
+            }
+
+            if (mounted) {
+              setState(() {
+                _notificationsPlay = state;
+              });
+            }
+          },
+          value: _notificationsPlay,
+          title: Text("Spil"),
+        )
+      ],
     );
   }
 
