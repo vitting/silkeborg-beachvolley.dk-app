@@ -1,6 +1,6 @@
 name: silkeborgbeachvolley
-description: A new Flutter project.
-
+description: A Silkeborg Beachvolley project.
+ 
 dependencies:
   validate: ^1.7.0
   intl: ^0.15.7
