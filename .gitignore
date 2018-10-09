@@ -11,3 +11,5 @@ build/
 
 google-services.json
 .vscode/temp.sql
+
+lib/ui/test.dart
