@@ -45,6 +45,18 @@ class SilkeborgBeacvolleyScaffoldDrawerState
     List<Widget> widgets;
     widgets = [
       UserAccountsDrawerHeader(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        stops: [0.1, 0.5, 0.7, 0.9],
+        colors: [
+          Colors.blue[300],
+          Colors.blue[500],
+          Colors.blue[700],
+          Colors.blue[900],
+        ],
+      )),
           accountEmail: Text(_email),
           accountName: Text(_name),
           currentAccountPicture: CircleAvatar(
@@ -74,15 +86,10 @@ class SilkeborgBeacvolleyScaffoldDrawerState
           Navigator.of(context).popAndPushNamed(TournamentCalendar.routeName);
         },
       ),
-      ListTile(
-        leading: Icon(Icons.album),
-        title: Text("Nyheder fra beachvolley.dk"),
-        onTap: () {},
-      ),
       Divider(),
       ListTile(
         leading: Icon(Icons.album),
-        title: Text("Log ud"),
+        title: Text("Log af"),
         onTap: () async {
           Navigator.of(context).pop();
           ConfirmAction logoutAction =
@@ -102,19 +109,12 @@ class SilkeborgBeacvolleyScaffoldDrawerState
     ];
 
     if (Home.userInfo != null && Home.userInfo.admin1) {
+      widgets.add(Divider());
       widgets.add(ListTile(
         leading: Icon(Icons.album),
-        title: Text("Admin"),
+        title: Text("Administrere medlemmer"),
         onTap: () {
           Navigator.of(context).popAndPushNamed(AdminEnrollment.routeName);
-        },
-      ));
-
-      widgets.add(ListTile(
-        leading: Icon(Icons.album),
-        title: Text("Admin2"),
-        onTap: () {
-          Navigator.of(context).popAndPushNamed(Settings.routeName);
         },
       ));
     }
