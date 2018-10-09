@@ -7,6 +7,7 @@ import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/bulletin_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_launcher_main.dart';
 import 'package:silkeborgbeachvolley/ui/login/login_main.dart';
+import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data_class.dart';
 import './home_functions.dart' as homeFunctions;
 
 class Home extends StatefulWidget {
@@ -35,8 +36,8 @@ class _HomeState extends State<Home> {
 
       if (user != null) {
         userInfoData = await homeFunctions.loadUserInfo(user.uid);
-        await homeFunctions.initSettings(user.uid, user.displayName);
-        await homeFunctions.initMessaging(user.uid, _firebaseMessaging);
+        SettingsData settings = await homeFunctions.initSettings(user.uid, user.displayName);
+        await homeFunctions.initMessaging(user.uid, _firebaseMessaging, settings);
       }
 
       if (mounted) {

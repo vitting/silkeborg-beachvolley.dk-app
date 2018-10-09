@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/notification_categories_enum.dart';
+import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -50,7 +53,9 @@ class _TestWidgetState extends State<TestWidget> {
             children: <Widget>[
               RaisedButton(
                 onPressed: () async {
-                  
+                  Firestore firestore = Firestore.instance;
+                  QuerySnapshot snapshot = await firestore.collection("users_messaging").where("subscriptions", arrayContains: "palle").getDocuments();
+                  print("QUERY: ${snapshot.documents.length}");
                 },
               )
             ],

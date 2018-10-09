@@ -28,7 +28,7 @@ class SettingsState extends State<Settings> {
   }
 
   _getSettings() async {
-    _settingsData = await SettingsData.get(Home.loggedInUser.uid);
+    _settingsData = await SettingsData.getSettings(Home.loggedInUser.uid);
     if (mounted) {
       setState(() {
         _showWeatherState = _settingsData.showWeather;

@@ -63,7 +63,7 @@ class _BulletinState extends State<Bulletin> {
       bottomNavigationBar: _scaffoldBottomNavigationBar(),
       actions: <Widget>[
         FutureBuilder(
-          future: SettingsData.get(Home.loggedInUser.uid),
+          future: SettingsData.getSettings(Home.loggedInUser.uid),
           builder:
               (BuildContext context, AsyncSnapshot<SettingsData> snapshot) {
             if (snapshot.connectionState == ConnectionState.done &&

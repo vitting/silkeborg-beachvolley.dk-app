@@ -82,15 +82,6 @@ class BulletinItemData {
     return "";
   }
 
-  // Future<int> getUpdatedNumberOfCommittedCount() async {
-  //   DocumentSnapshot snapshot = await BulletinFirestore.getBulletinItem(id);
-  //   if (snapshot.exists) {
-  //     numberOfPlayersCommitted = snapshot.data["numberOfPlayersCommitted"];
-  //   }
-
-  //   return numberOfPlayersCommitted;
-  // }
-
   Future<List<CommittedData>> getCommitted() async {
     QuerySnapshot data = await BulletinFirestore.getCommitted(id);
 
