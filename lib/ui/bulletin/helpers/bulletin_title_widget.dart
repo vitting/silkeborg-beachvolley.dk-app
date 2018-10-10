@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import "package:flutter/material.dart";
+import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
 class BulletinTitle extends StatelessWidget {
   final String name;
   final String photoUrl;
+  final String userId;
   final Function onPressed;
   final bool isDetailMode;
   final bool showImage;
@@ -12,6 +14,7 @@ class BulletinTitle extends StatelessWidget {
       {Key key,
       @required this.name,
       @required this.onPressed,
+      @required this.userId,
       this.photoUrl = "",
       this.showImage = false,
       this.isDetailMode = false})
@@ -34,7 +37,7 @@ class BulletinTitle extends StatelessWidget {
       Expanded(child: Text(name, overflow: TextOverflow.ellipsis))
     );
 
-    if (!isDetailMode) {
+    if (!isDetailMode && Home.loggedInUser.uid == userId) {
       widgets.add(
         IconButton(
           icon: Icon(Icons.more_horiz),

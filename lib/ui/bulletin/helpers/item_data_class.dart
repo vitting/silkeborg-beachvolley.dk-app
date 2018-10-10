@@ -16,7 +16,6 @@ class BulletinItemData {
   String authorName;
   String authorPhotoUrl;
   int numberOfcomments;
-  List<String> hiddenByUser;
   int numberOfCommits;
   BulletinItemData(
       {this.id = "",
@@ -27,7 +26,7 @@ class BulletinItemData {
       this.authorName = "",
       this.authorPhotoUrl = "",
       this.numberOfcomments = 0,
-      this.hiddenByUser, this.numberOfCommits = 0});
+     this.numberOfCommits = 0});
 
   Map<String, dynamic> toMap() {
     return {
@@ -41,8 +40,7 @@ class BulletinItemData {
         "photoUrl": authorPhotoUrl
       },
       "numberOfcomments": numberOfcomments,
-      "numberOfCommits": numberOfCommits,
-      "hiddenByUser": hiddenByUser ?? []
+      "numberOfCommits": numberOfCommits
     };
   }
 
@@ -125,11 +123,7 @@ class BulletinItemData {
         body: item["body"] ?? "",
         creationDate: item["creationDate"],
         numberOfcomments: item["numberOfcomments"] ?? 0,
-        numberOfCommits: item["numberOfCommits"] ?? 0,
-        hiddenByUser: item["hiddenByUser"] == null ? [] : (item["hiddenByUser"] as List<dynamic>).map<String>((dynamic id) {
-          return id;
-        }).toList()
-        
+        numberOfCommits: item["numberOfCommits"] ?? 0
         );
   }
 }

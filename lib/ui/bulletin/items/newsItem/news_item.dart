@@ -29,6 +29,7 @@ class BulletinNewsItem extends StatelessWidget {
       ListTile(
         title: BulletinTitle(
           name: bulletinItem.authorName,
+          userId: bulletinItem.authorId,
           photoUrl: bulletinItem.authorPhotoUrl,
           onPressed: onPressed,
           isDetailMode: isDetailMode,

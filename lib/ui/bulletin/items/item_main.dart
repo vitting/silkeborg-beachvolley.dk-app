@@ -9,7 +9,6 @@ import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data_c
 import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import './item_functions.dart' as itemFunctions;
 
 class BulletinItemMain extends StatelessWidget {
@@ -33,14 +32,15 @@ class BulletinItemMain extends StatelessWidget {
             _bulletinPlayItem(context, BulletinPlayItemData.fromMap(item));
         break;
     }
-
+    if (bulletinItem == null) return Container();
     return ListItemCard(
       child: bulletinItem,
     );
   }
 
-  Widget _bulletinNewsItem(BuildContext context, BulletinNewsItemData bulletinItem) {
-    if (bulletinItem.hiddenByUser.contains(Home.loggedInUser.uid)) return null;
+  Widget _bulletinNewsItem(
+      BuildContext context, BulletinNewsItemData bulletinItem) {
+    // if (itemsHiddenByUser.contains(bulletinItem.id)) return null;
     return BulletinNewsItem(
         bulletinItem: bulletinItem,
         onTap: () async {
@@ -49,8 +49,9 @@ class BulletinItemMain extends StatelessWidget {
         onPressed: () => _bulletinItemOnPressed(context, bulletinItem));
   }
 
-  Widget _bulletinEventItem(BuildContext context, BulletinEventItemData bulletinItem) {
-    if (bulletinItem.hiddenByUser.contains(Home.loggedInUser.uid)) return null;
+  Widget _bulletinEventItem(
+      BuildContext context, BulletinEventItemData bulletinItem) {
+    // if (itemsHiddenByUser.contains(bulletinItem.id)) return null;
     return BulletinEventItem(
         bulletinItem: bulletinItem,
         onTap: () async {
@@ -59,8 +60,9 @@ class BulletinItemMain extends StatelessWidget {
         onPressed: () => _bulletinItemOnPressed(context, bulletinItem));
   }
 
-  Widget _bulletinPlayItem(BuildContext context, BulletinPlayItemData bulletinItem) {
-    if (bulletinItem.hiddenByUser.contains(Home.loggedInUser.uid)) return null;
+  Widget _bulletinPlayItem(
+      BuildContext context, BulletinPlayItemData bulletinItem) {
+    // if (itemsHiddenByUser.contains(bulletinItem.id)) return null;
     return BulletinPlayItem(
         bulletinItem: bulletinItem,
         onTap: () async {
@@ -78,6 +80,6 @@ class BulletinItemMain extends StatelessWidget {
 
   void _bulletinItemOnPressed(
       BuildContext context, BulletinItemData bulletinItem) {
-      itemFunctions.bulletinItemPopupMenu(context, bulletinItem);
+    itemFunctions.bulletinItemPopupMenu(context, bulletinItem);
   }
 }

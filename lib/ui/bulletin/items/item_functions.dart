@@ -8,42 +8,27 @@ import 'package:silkeborgbeachvolley/ui/bulletin/items/editItem/bulletin_edit_it
 import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import '../../../helpers/confirm_dialog_functions.dart'
     as confirmDialogFunctions;
 
-void bulletinItemPopupMenu(BuildContext context, BulletinItemData bulletinItem) async {
+void bulletinItemPopupMenu(
+    BuildContext context, BulletinItemData bulletinItem) async {
   List<DialogsModalBottomSheetItem> items = [
-    DialogsModalBottomSheetItem("Skjul opslaget", Icons.visibility_off, 0)
+    DialogsModalBottomSheetItem("Rediger", Icons.edit, 0),
+    DialogsModalBottomSheetItem("Slet", Icons.delete, 1)
   ];
-  if (Home.userInfo?.id == bulletinItem?.authorId) {
-    items.add(DialogsModalBottomSheetItem("Rediger", Icons.edit, 1));
-    items.add(DialogsModalBottomSheetItem("Slet", Icons.delete, 2));
-  }
+  
 
   int result = await Dialogs.modalBottomSheet(context, items);
-  
+
   if (result != null) {
     switch (result) {
-      case 0:
-        bulletinItem.hide();
-        Scaffold.of(context).showSnackBar(SnackBar(
-          duration: Duration(seconds: 5),
-          content: Text("Opslaget er skjult"),
-          action: SnackBarAction(
-            label: "Fortryd",
-            onPressed: () {
-              bulletinItem.unhide();
-            },
-          ),
-        ));
-        break;
-      case 1:
+      case 0: ///Edit
         Navigator.of(context).push(MaterialPageRoute(
             fullscreenDialog: true,
             builder: (BuildContext context) => EditBulletinItem(bulletinItem)));
         break;
-      case 2:
+      case 1: ///Delete
         bulletinConfirmDialog(context, bulletinItem);
         break;
     }

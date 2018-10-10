@@ -45,18 +45,18 @@ class SilkeborgBeacvolleyScaffoldDrawerState
     List<Widget> widgets;
     widgets = [
       UserAccountsDrawerHeader(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        stops: [0.1, 0.5, 0.7, 0.9],
-        colors: [
-          Colors.blue[300],
-          Colors.blue[500],
-          Colors.blue[700],
-          Colors.blue[900],
-        ],
-      )),
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0.1, 0.5, 0.7, 0.9],
+            colors: [
+              Colors.blue[300],
+              Colors.blue[500],
+              Colors.blue[700],
+              Colors.blue[900],
+            ],
+          )),
           accountEmail: Text(_email),
           accountName: Text(_name),
           currentAccountPicture: CircleAvatar(

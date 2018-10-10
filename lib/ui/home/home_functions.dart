@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_categories_enum.dart';
+import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_class.dart';
 import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
@@ -20,8 +21,11 @@ Future<UserInfoData> loadUserInfo(String userId) {
   return UserInfoData.get(userId);
 }
 
-Future<void> initMessaging(String userId, FirebaseMessaging firebaseMessaging,
-    SettingsData settings) async {
+Future<void> initMessaging(
+    String userId,
+    FirebaseMessaging firebaseMessaging,
+    SettingsData settings,
+    StreamController<NotificationData> notificationController) async {
   firebaseMessaging.requestNotificationPermissions(
       IosNotificationSettings(alert: true, badge: true, sound: true));
 
@@ -30,16 +34,46 @@ Future<void> initMessaging(String userId, FirebaseMessaging firebaseMessaging,
       ///OnLaunch er der ikke body og titel med. Bliver executed når appen er termineret
       onLaunch: (Map<String, dynamic> message) {
     print("ONLAUNCH: $message");
+    NotificationData data;
+    if (message != null) {
+      data = NotificationData(
+          type: message["dataType"] ?? "",
+          bulletinType: message["bulletinType"] ?? "",
+          state: NotificationState.launch
+      );
+    }
+
+    notificationController.add(data);
   },
 
       ///OnMessage er der body og titel med. Bliver executed når appen er aktiv
       onMessage: (Map<String, dynamic> message) {
     print("ONMESSAGE: $message");
+    NotificationData data;
+    if (message != null && message["data"] != null) {
+      data = NotificationData(
+          type: message["data"]["dataType"] ?? "",
+          bulletinType: message["data"]["bulletinType"] ?? "",
+          state: NotificationState.message
+      );
+    }
+
+    notificationController.add(data);
   },
 
       ///OnResume er der ikke body og titel med. Bliver executed når appen er minimeret
       onResume: (Map<String, dynamic> message) {
     print("ONRESUME: $message");
+    NotificationData data;
+    if (message != null) {
+      data = NotificationData(
+          type: message["dataType"] ?? "",
+          bulletinType: message["bulletinType"] ?? "",
+          state: NotificationState.resume
+      );
+    }
+
+    notificationController.add(data);
   });
 
   firebaseMessaging.onTokenRefresh.listen((token) {

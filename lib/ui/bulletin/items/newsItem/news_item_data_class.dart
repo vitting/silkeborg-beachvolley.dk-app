@@ -21,7 +21,6 @@ class BulletinNewsItemData extends BulletinItemData implements BaseData {
       String authorName,
       String authorPhotoUrl,
       int numberOfcomments = 0,
-      List<String> hiddenByUser,
       this.images})
       : super(
             id: id,
@@ -32,7 +31,7 @@ class BulletinNewsItemData extends BulletinItemData implements BaseData {
             authorName: authorName,
             authorPhotoUrl: authorPhotoUrl,
             numberOfcomments: numberOfcomments,
-            hiddenByUser: hiddenByUser);
+            );
 
   @override
   Map<String, dynamic> toMap() {
@@ -84,8 +83,6 @@ class BulletinNewsItemData extends BulletinItemData implements BaseData {
                 .map<BulletinImageData>((dynamic data) {
                 return BulletinImageData.fromMap(data);
               }).toList(),
-        hiddenByUser: item["hiddenByUser"] == null ? [] : (item["hiddenByUser"] as List<dynamic>).map<String>((dynamic id) {
-          return id;
-        }).toList());
+        );
   }
 }

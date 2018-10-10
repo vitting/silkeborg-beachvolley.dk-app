@@ -1,14 +1,11 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:silkeborgbeachvolley/helpers/firebase_functions_call.dart';
-import 'package:silkeborgbeachvolley/helpers/icon_counter_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
+import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/bulletin_bottom_navigationbar_main.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/bulletin_main_fab.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_items_count_data.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_sharedpref.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/item_main.dart';
@@ -17,50 +14,42 @@ import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/weather/weather_widget.dart';
+import './bulletin_main_functions.dart' as bulletinMainFunctions;
 
 class Bulletin extends StatefulWidget {
   static final routeName = "/bulletin";
+  final StreamController<NotificationData> notificationController;
+
+  const Bulletin({Key key, this.notificationController}) : super(key: key);
   @override
   _BulletinState createState() => _BulletinState();
 }
 
 class _BulletinState extends State<Bulletin> {
   int _bottombarSelected = 0;
-  int _newsCount = 0;
-  int _eventCount = 0;
-  int _playCount = 0;
-
-  @override
-  void initState() {
-    _loadBulletinItemsCount();
-    super.initState();
-  }
-
-  _loadBulletinItemsCount() async {
-    int dateInMilliSeconds =
-        await BulletinSharedPref.getLastCheckedDateInMilliSeconds();
-    BulletinItemsCount bulletinItemsCount =
-        await FirebaseFunctions.getBulletinsItemCount(dateInMilliSeconds);
-    if (mounted) {
-      setState(() {
-        _newsCount = bulletinItemsCount.newsCount;
-        _eventCount = bulletinItemsCount.eventCount;
-        _playCount = bulletinItemsCount.playCount;
-      });
-    }
-
-    BulletinSharedPref.setLastCheckedDateInMilliSeconds(
-        DateTime.now().millisecondsSinceEpoch);
-  }
-
+  final int _numberOfItemsToLoadDefault = 20;
+  int _listNumberOfItemsToLoad = 20;
+  
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: _getTitle(_getSelectedType()),
+      title: bulletinMainFunctions
+          .getTitle(bulletinMainFunctions.getSelectedType(_bottombarSelected)),
       body: _main(),
       showDrawer: true,
       floatingActionButton: _scaffoldFloatingActionButton(context),
-      bottomNavigationBar: _scaffoldBottomNavigationBar(),
+      bottomNavigationBar: BulletinBottomNavigationBar(
+        updateCounter: widget.notificationController.stream,
+        initValue: _bottombarSelected,
+        selectedItem: (int value) {
+          if (mounted) {
+            setState(() {
+              _listNumberOfItemsToLoad = _numberOfItemsToLoadDefault;
+              _bottombarSelected = value;
+            });
+          }
+        },
+      ),
       actions: <Widget>[
         FutureBuilder(
           future: SettingsData.getSettings(Home.loggedInUser.uid),
@@ -84,53 +73,60 @@ class _BulletinState extends State<Bulletin> {
     );
   }
 
-  Widget _scaffoldBottomNavigationBar() {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      currentIndex: _bottombarSelected,
-      onTap: (int value) {
-        setState(() {
-          _bottombarSelected = value;
-        });
-      },
-      items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-            title: Text(_getTitle(BulletinType.news)),
-            icon: IconCounter(
-              icon: FontAwesomeIcons.newspaper,
-              counter: _newsCount,
-            )),
-        BottomNavigationBarItem(
-          title: Text(_getTitle(BulletinType.event)),
-          icon: IconCounter(
-            icon: FontAwesomeIcons.calendarAlt,
-            counter: _eventCount,
-          ),
-        ),
-        BottomNavigationBarItem(
-          title: Text(_getTitle(BulletinType.play)),
-          icon: IconCounter(
-              icon: FontAwesomeIcons.volleyballBall, counter: _playCount),
-        )
-      ],
-    );
-  }
-
   Widget _main() {
     return StreamBuilder(
-      stream: BulletinFirestore.getBulletinsByTypeAsStream(_getSelectedType()),
+      stream: BulletinFirestore.getBulletinsByTypeAsStream(
+          bulletinMainFunctions.getSelectedType(_bottombarSelected), _listNumberOfItemsToLoad),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting ||
-            !snapshot.hasData) return LoaderSpinner();
-        return Scrollbar(
-          child: ListView.builder(
-            itemCount: snapshot.data.documents.length,
-            itemBuilder: (BuildContext context, int position) {
-              DocumentSnapshot item = snapshot.data.documents[position];
-              return BulletinItemMain(item.data);
-            },
-          ),
-        );
+        if (!snapshot.hasData) {
+          return LoaderSpinner();
+        }
+
+        if (snapshot.hasData) {
+          if (snapshot.data.documents.length == 0) {
+            return Container(
+              child: Column(
+                children: <Widget>[Text("Der er ingen opslag")],
+              ),
+            );
+          } else {
+            return Scrollbar(
+              child: ListView.builder(
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (BuildContext context, int position) {
+                  if (position == snapshot.data.documents.length - 1 && snapshot.data.documents.length - 1 == _listNumberOfItemsToLoad - 1) {
+                    return Card(
+                        child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 5.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          FlatButton.icon(
+                            textColor: Colors.deepOrange,
+                            onPressed: () {
+                              if (mounted) {
+                                setState(() {
+                                  _listNumberOfItemsToLoad = _listNumberOfItemsToLoad * 2;
+                                });
+                              }
+                            },
+                            icon: Icon(Icons.refresh),
+                            label: Text("Hent flere opslag"),
+                          )
+                        ],
+                      ),
+                    ));
+                  } 
+
+                  DocumentSnapshot item = snapshot.data.documents[position];
+
+                    return BulletinItemMain(
+                        item.data);
+                },
+              ),
+            );
+          }
+        }
       },
     );
   }
@@ -144,20 +140,7 @@ class _BulletinState extends State<Bulletin> {
         fullscreenDialog: true));
   }
 
-  BulletinType _getSelectedType() {
-    BulletinType type = BulletinType.news;
-    if (_bottombarSelected == 0) type = BulletinType.news;
-    if (_bottombarSelected == 1) type = BulletinType.event;
-    if (_bottombarSelected == 2) type = BulletinType.play;
-
-    return type;
-  }
-
-  String _getTitle(BulletinType type) {
-    String title;
-    if (type == BulletinType.news) title = "Nyheder";
-    if (type == BulletinType.event) title = "Begivenheder";
-    if (type == BulletinType.play) title = "Spil";
-    return title;
-  }
+  // _itemHidden(bool value) {
+  //   _loadItemsHiddenByUser();
+  // }
 }

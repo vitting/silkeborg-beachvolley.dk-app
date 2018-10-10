@@ -9,6 +9,7 @@ class BulletinFirestore {
   static final _bulletinCollectionName = "bulletins";
   static final _bulletinCommentsCollectionName = "bulletins_comments";
   static final _bulletinCommittedCollectionName = "bulletins_commits";
+  static final _bulletinHiddenByUserCollectionName = "bulletins_hidden_by_user";
   static Firestore _firestore;
 
   static Firestore get firestoreInstance {
@@ -55,12 +56,13 @@ class BulletinFirestore {
     return batch.commit();
   }
 
-  static Stream<QuerySnapshot> getBulletinsByTypeAsStream(BulletinType type) {
+  static Stream<QuerySnapshot> getBulletinsByTypeAsStream(BulletinType type, int limit) {
     return firestoreInstance
         .collection(_bulletinCollectionName)
         .where("type",
             isEqualTo: BulletinTypeHelper.getBulletinTypeAsString(type))
         .orderBy("creationDate", descending: true)
+        .limit(limit)
         .snapshots();
   }
 
@@ -85,24 +87,32 @@ class BulletinFirestore {
         .delete();
   }
 
+  static Future<List<String>> getHiddenBulletinItems(String userId) async {
+    List<String> ids = [];
+    DocumentSnapshot doc = await firestoreInstance.collection(_bulletinHiddenByUserCollectionName).document(userId).get();
+    if(doc.exists) {
+      ids = (doc.data["ids"] as List<dynamic>).map<String>((dynamic id) {
+        return id;
+      }).toList();
+    }
+
+    return ids;
+  }
+
   static Future<void> addUserHidesBulletinItem(
       String bulletId, String userId) async {
     return await firestoreInstance
-        .collection(_bulletinCollectionName)
-        .document(bulletId)
-        .updateData({
-      "hiddenByUser": FieldValue.arrayUnion([userId])
-    });
+        .collection(_bulletinHiddenByUserCollectionName)
+        .document(userId)
+        .setData({"ids": FieldValue.arrayUnion([bulletId])}, merge: true);
   }
 
   static Future<void> removeUserHidesBulletinItem(
       String bulletId, String userId) async {
     return await firestoreInstance
-        .collection(_bulletinCollectionName)
-        .document(bulletId)
-        .updateData({
-      "hiddenByUser": FieldValue.arrayRemove([userId])
-    });
+        .collection(_bulletinHiddenByUserCollectionName)
+        .document(userId)
+        .setData({"ids": FieldValue.arrayRemove([bulletId])}, merge: true);
   }
 
   static Future<void> saveCommitted(CommittedData playerCommitted) async {

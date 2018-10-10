@@ -1,7 +1,9 @@
+import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_class.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/bulletin_main.dart';
@@ -19,8 +21,17 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
+  final StreamController<NotificationData> _notificationController =
+      StreamController<NotificationData>.broadcast();
+
   bool _isLoggedIn = false;
   Widget homeWidget = HomeLauncherSplash();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _notificationController.close();
+  }
 
   @override
   void initState() {
@@ -36,15 +47,19 @@ class _HomeState extends State<Home> {
 
       if (user != null) {
         userInfoData = await homeFunctions.loadUserInfo(user.uid);
-        SettingsData settings = await homeFunctions.initSettings(user.uid, user.displayName);
-        await homeFunctions.initMessaging(user.uid, _firebaseMessaging, settings);
+        SettingsData settings =
+            await homeFunctions.initSettings(user.uid, user.displayName);
+        await homeFunctions.initMessaging(
+            user.uid, _firebaseMessaging, settings, _notificationController);
       }
 
       if (mounted) {
         setState(() {
           Home.userInfo = userInfoData;
           _isLoggedIn = user == null ? false : true;
-          homeWidget = _isLoggedIn ? Bulletin() : Login();
+          homeWidget = _isLoggedIn
+              ? Bulletin(notificationController: _notificationController)
+              : Login();
         });
       }
     });

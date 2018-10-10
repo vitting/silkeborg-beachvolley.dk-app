@@ -12,7 +12,6 @@ class BuildBulletinItem {
         body: item.body,
         type: item.type,
         id: item.id,
-        hiddenByUser: item.hiddenByUser,
         creationDate: item.creationDate,
         numberOfcomments: item.numberOfcomments,
         images: images.map<BulletinImageData>((ImageInfoData data) {
@@ -26,7 +25,6 @@ class BuildBulletinItem {
       body: item.body, 
       type: item.type,
       id: item.id,
-      hiddenByUser: item.hiddenByUser,
       creationDate: item.creationDate,
       numberOfcomments: item.numberOfcomments,
       numberOfCommits: item.numberOfCommits
@@ -38,7 +36,6 @@ class BuildBulletinItem {
     return BulletinEventItemData(
         id: item.id,
         creationDate: item.creationDate,
-        hiddenByUser: item.hiddenByUser,
         numberOfcomments: item.numberOfcomments,
         body: item.body,
         type: item.type,

@@ -59,6 +59,7 @@ class BulletinPlayItemState extends State<BulletinPlayItem> {
       ListTile(
         title: BulletinTitle(
           name: widget.bulletinItem.authorName,
+          userId: widget.bulletinItem.authorId,
           photoUrl: widget.bulletinItem.authorPhotoUrl,
           onPressed: widget.onPressed,
           isDetailMode: widget.isDetailMode,
