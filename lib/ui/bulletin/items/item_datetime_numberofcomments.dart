@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
 
 class DateTimeNumberOfCommentsAndCommits extends StatelessWidget {
@@ -58,7 +57,7 @@ class DateTimeNumberOfCommentsAndCommits extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Icon(
-                  FontAwesomeIcons.volleyballBall,
+                  Icons.people,
                   size: 12.0,
                 ),
                 Padding(
