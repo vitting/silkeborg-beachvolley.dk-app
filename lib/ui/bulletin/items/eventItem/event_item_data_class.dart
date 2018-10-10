@@ -30,7 +30,7 @@ class BulletinEventItemData extends BulletinItemData implements BaseData {
       String authorPhotoUrl,
       int numberOfcomments = 0,
       int numberOfCommits = 0,
-      List<dynamic> hiddenByUser,
+      List<String> hiddenByUser,
       this.eventStartDate,
       this.eventEndDate,
       this.eventEndTime,
@@ -131,6 +131,8 @@ class BulletinEventItemData extends BulletinItemData implements BaseData {
         eventImage: item["event"]["image"] == null
             ? null
             : BulletinImageData.fromMap(item["event"]["image"]),
-        hiddenByUser: item["hiddenByUser"] ?? []);
+        hiddenByUser: item["hiddenByUser"] == null ? [] : (item["hiddenByUser"] as List<dynamic>).map<String>((dynamic id) {
+          return id;
+        }).toList());
   }
 }

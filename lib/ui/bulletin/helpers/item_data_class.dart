@@ -16,7 +16,7 @@ class BulletinItemData {
   String authorName;
   String authorPhotoUrl;
   int numberOfcomments;
-  List<dynamic> hiddenByUser;
+  List<String> hiddenByUser;
   int numberOfCommits;
   BulletinItemData(
       {this.id = "",
@@ -126,6 +126,10 @@ class BulletinItemData {
         creationDate: item["creationDate"],
         numberOfcomments: item["numberOfcomments"] ?? 0,
         numberOfCommits: item["numberOfCommits"] ?? 0,
-        hiddenByUser: item["hiddenByUser"] ?? []);
+        hiddenByUser: item["hiddenByUser"] == null ? [] : (item["hiddenByUser"] as List<dynamic>).map<String>((dynamic id) {
+          return id;
+        }).toList()
+        
+        );
   }
 }

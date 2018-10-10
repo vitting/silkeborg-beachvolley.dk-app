@@ -18,7 +18,7 @@ class BulletinPlayItemData extends BulletinItemData implements BaseData {
       String authorName,
       String authorPhotoUrl,
       int numberOfcomments = 0,
-      List<dynamic> hiddenByUser,
+      List<String> hiddenByUser,
       int numberOfCommits = 0})
       : super(
             id: id,
@@ -64,6 +64,8 @@ class BulletinPlayItemData extends BulletinItemData implements BaseData {
         creationDate: item["creationDate"] ?? DateTime.now(),
         numberOfcomments: item["numberOfcomments"] ?? 0,
         numberOfCommits: item["numberOfCommits"] ?? 0,
-        hiddenByUser: item["hiddenByUser"] ?? []);
+        hiddenByUser: item["hiddenByUser"] == null ? [] : (item["hiddenByUser"] as List<dynamic>).map<String>((dynamic id) {
+          return id;
+        }).toList());
   }
 }

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/list_item_card_widget.dart';
-import 'package:silkeborgbeachvolley/helpers/user_info_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/detailItem/detail_item_main.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data_class.dart';
@@ -79,8 +78,6 @@ class BulletinItemMain extends StatelessWidget {
 
   void _bulletinItemOnPressed(
       BuildContext context, BulletinItemData bulletinItem) {
-    // UserInfoData userInfo = Home.userInfo;
-    // if (userInfo?.id == bulletinItem.authorId)
       itemFunctions.bulletinItemPopupMenu(context, bulletinItem);
   }
 }
