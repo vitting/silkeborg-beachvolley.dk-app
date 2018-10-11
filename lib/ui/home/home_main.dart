@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_class.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/bulletin_main.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/main/bulletin_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_launcher_main.dart';
 import 'package:silkeborgbeachvolley/ui/login/login_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data_class.dart';
