@@ -7,8 +7,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 class BulletinItemPictures extends StatelessWidget {
   final List<dynamic> images;
-  // final List<ImageInfoData> imageInfoData;
-  final Function onLongpressImageSelected;
+  final Function onTapImageSelected;
   final BulletinImageType type;
   final bool useSquareOnOddImageCount;
   final bool showImageFullScreen;
@@ -17,8 +16,7 @@ class BulletinItemPictures extends StatelessWidget {
       {this.type,
       this.useSquareOnOddImageCount = false,
       this.images,
-      // this.imageInfoData,
-      this.onLongpressImageSelected,
+      this.onTapImageSelected,
       this.showImageFullScreen = false});
 
   @override
@@ -129,9 +127,9 @@ class BulletinItemPictures extends StatelessWidget {
   Widget _getImageContainer(
       BulletinImageType type, double width, double height, dynamic image) {
     return GestureDetector(
-        onLongPress: onLongpressImageSelected != null
+      onTap: onTapImageSelected != null
             ? () {
-                onLongpressImageSelected(image);
+                onTapImageSelected(image);
               }
             : null,
         child: _getImageWidgetType(type, width, height, image));

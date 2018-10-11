@@ -173,7 +173,7 @@ class BulletinEventItemState extends State<BulletinEventItem> {
               ? null
               : [widget.bulletinItem.eventImage.link],
           type: BulletinImageType.network,
-          onLongpressImageSelected: widget.isDetailMode
+          onTapImageSelected: widget.isDetailMode
               ? (String image) {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (BuildContext context) =>

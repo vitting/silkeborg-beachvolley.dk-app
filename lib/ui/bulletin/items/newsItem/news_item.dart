@@ -48,7 +48,7 @@ class BulletinNewsItem extends StatelessWidget {
                 return data.link;
               }).toList(),
               type: BulletinImageType.network,
-              onLongpressImageSelected: isDetailMode
+              onTapImageSelected: isDetailMode
                   ? (String image) {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (BuildContext context) =>

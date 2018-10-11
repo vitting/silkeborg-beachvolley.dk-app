@@ -88,7 +88,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
         type: BulletinImageType.file,
         useSquareOnOddImageCount: true,
         images: _imageFiles,
-        onLongpressImageSelected: (image) {
+        onTapImageSelected: (image) {
           if (image != null && image is ImageInfoData) {
             _removePhoto(image);
           }
