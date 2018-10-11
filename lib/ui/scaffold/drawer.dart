@@ -6,7 +6,7 @@ import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/settings_main.dart';
-import 'package:silkeborgbeachvolley/ui/tournament_calendar/tournament_calendar_main.dart';
+import 'package:silkeborgbeachvolley/ui/tournament_calendar/main/tournament_calendar_main.dart';
 import '../login/auth_functions.dart' as authFunctions;
 
 class SilkeborgBeacvolleyScaffoldDrawer extends StatefulWidget {

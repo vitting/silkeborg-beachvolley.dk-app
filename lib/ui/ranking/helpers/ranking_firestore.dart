@@ -146,14 +146,14 @@ class RankingFirestore {
       await savePlayer(data);
     }
   }
-
+//CHRISTIAN: Only for testing
   static createFakeMatches(int numbertoCreate) async {
     Faker faker = Faker();
     QuerySnapshot playersSnap = await getAllPlayers();
     List<RankingPlayerData> players =
         playersSnap.documents.map<RankingPlayerData>((player) {
       return RankingPlayerData.fromMap(player.data);
-    });
+    }).toList();
 
     if (players.length < 10)
       throw Exception("Please create more Ranking player");

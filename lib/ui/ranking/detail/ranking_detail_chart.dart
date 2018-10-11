@@ -27,24 +27,19 @@ class _RankingDetailChartState extends State<RankingDetailChart> {
         future: _loadMatches(),
         builder: (BuildContext context,
             AsyncSnapshot<List<Series<StatMatchOnWeek, String>>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting &&
-              !snapshot.hasData) return LoaderSpinner();
-          if (snapshot.connectionState == ConnectionState.done &&
-              !snapshot.hasData) return Container();
-          if (snapshot.hasData && snapshot.data != null) {
-            return Column(
-              children: <Widget>[
-                Container(
-                    margin: EdgeInsets.only(top: 20.0, bottom: 5.0),
-                    width: widget.width,
-                    height: widget.height,
-                    child: BarChart(snapshot.data, animate: true)),
-                Text("Antal spillede kampe pr. uge")
-              ],
-            );
-          }
+          if (!snapshot.hasData) return LoaderSpinner();
+          if (snapshot.hasData && snapshot.data.length == 0) return Container();
 
-          return Container();
+          return Column(
+            children: <Widget>[
+              Container(
+                  margin: EdgeInsets.only(top: 20.0, bottom: 5.0),
+                  width: widget.width,
+                  height: widget.height,
+                  child: BarChart(snapshot.data, animate: true)),
+              Text("Antal spillede kampe pr. uge")
+            ],
+          );
         },
       ),
     );
@@ -53,8 +48,7 @@ class _RankingDetailChartState extends State<RankingDetailChart> {
   Future<List<Series<StatMatchOnWeek, String>>> _loadMatches() async {
     SplayTreeMap<int, int> matchOnWeekNumber = SplayTreeMap<int, int>();
     List<RankingMatchData> matches = await widget.getMatches;
-
-    if (matches.length == 0) return null;
+    if (matches.length == 0) return [];
 
     matches.forEach((RankingMatchData match) {
       int weekNumber = DateTimeHelpers.weekInYear(match.matchDate);

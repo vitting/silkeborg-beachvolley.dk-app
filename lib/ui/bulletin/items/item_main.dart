@@ -40,7 +40,6 @@ class BulletinItemMain extends StatelessWidget {
 
   Widget _bulletinNewsItem(
       BuildContext context, BulletinNewsItemData bulletinItem) {
-    // if (itemsHiddenByUser.contains(bulletinItem.id)) return null;
     return BulletinNewsItem(
         bulletinItem: bulletinItem,
         onTap: () async {
@@ -51,7 +50,6 @@ class BulletinItemMain extends StatelessWidget {
 
   Widget _bulletinEventItem(
       BuildContext context, BulletinEventItemData bulletinItem) {
-    // if (itemsHiddenByUser.contains(bulletinItem.id)) return null;
     return BulletinEventItem(
         bulletinItem: bulletinItem,
         onTap: () async {
@@ -62,7 +60,6 @@ class BulletinItemMain extends StatelessWidget {
 
   Widget _bulletinPlayItem(
       BuildContext context, BulletinPlayItemData bulletinItem) {
-    // if (itemsHiddenByUser.contains(bulletinItem.id)) return null;
     return BulletinPlayItem(
         bulletinItem: bulletinItem,
         onTap: () async {

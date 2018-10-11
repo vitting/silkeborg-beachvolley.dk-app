@@ -10,6 +10,7 @@ import 'package:silkeborgbeachvolley/ui/tournament_calendar/helpers/tournament_f
 class TournamentData implements BaseData {
   String id;
   String title;
+  String body;
   String link;
   DateTime startDate;
   DateTime endDate;
@@ -17,6 +18,7 @@ class TournamentData implements BaseData {
   TournamentData(
       {this.id,
       @required this.title,
+      @required this.body,
       @required this.link,
       @required this.startDate,
       @required this.endDate});
@@ -25,6 +27,7 @@ class TournamentData implements BaseData {
     return {
       "id": id,
       "title": title,
+      "body": body,
       "link": link,
       "startDate": startDate,
       "endDate": endDate
@@ -33,6 +36,10 @@ class TournamentData implements BaseData {
 
   String get startDateFormatted {
     return DateTimeHelpers.ddMMyyyy(startDate);
+  }
+
+  String get startDateFormattedShort {
+    return DateTimeHelpers.ddMM(startDate);
   }
 
   String get endDateFormatted {
@@ -51,7 +58,8 @@ class TournamentData implements BaseData {
   factory TournamentData.formMap(Map<String, dynamic> item) {
     return TournamentData(
         id: item["id"],
-        title: item["title"] ?? "",
+        title: item["title"],
+        body: item["body"] ?? "",
         link: item["link"] ?? "",
         startDate: item["startDate"],
         endDate: item["endDate"]);

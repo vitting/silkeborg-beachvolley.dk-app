@@ -9,7 +9,7 @@ import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_main.dart';
 import 'package:silkeborgbeachvolley/ui/scoreboard/scoreboard_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/settings_main.dart';
 import 'package:silkeborgbeachvolley/ui/test.dart';
-import 'package:silkeborgbeachvolley/ui/tournament_calendar/tournament_calendar_main.dart';
+import 'package:silkeborgbeachvolley/ui/tournament_calendar/main/tournament_calendar_main.dart';
 
 void main() {
 

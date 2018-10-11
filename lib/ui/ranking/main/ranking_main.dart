@@ -49,49 +49,44 @@ class _RankingState extends State<Ranking> {
   }
 
   Widget _main() {
+    // RankingFirestore.createFakeMatches(50);
     return Container(
-        child: Scrollbar(
-      child: ListView(
-        children: <Widget>[
-          // RaisedButton(
-          //   onPressed: () async {
-          //     await RankingSharedPref.removeIsItFirstTime();
-          //   },
-          // ),
-          StreamBuilder(
-            stream: RankingFirestore.getRanking(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting ||
-                  !snapshot.hasData) return LoaderSpinner();
-              int counter = -1;
-              return Column(
-                children:
-                    snapshot.data.documents.map<Widget>((DocumentSnapshot doc) {
-                  RankingPlayerData player =
-                      RankingPlayerData.fromMap(doc.data);
-                  counter++;
+      child: StreamBuilder(
+        stream: RankingFirestore.getRanking(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) return LoaderSpinner();
 
-                  return RankingItem(
-                    player: player,
-                    showAnimation: counter == 0,
-                    position: counter,
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              fullscreenDialog: true,
-                              builder: (BuildContext context) =>
-                                  RankingDetail(player)));
-                    },
-                  );
-                }).toList(),
-              );
-            },
-          ),
-        ],
+          if (snapshot.data.documents.length == 0) {
+            return Center(
+                child: Text("Der er pt. ingen personer på ranglisten"));
+          }
+          int counter = -1;
+          return Scrollbar(
+            child: ListView(
+              children:
+                  snapshot.data.documents.map<Widget>((DocumentSnapshot doc) {
+                RankingPlayerData player = RankingPlayerData.fromMap(doc.data);
+                counter++;
+
+                return RankingItem(
+                  player: player,
+                  showAnimation: counter == 0,
+                  position: counter,
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            fullscreenDialog: true,
+                            builder: (BuildContext context) =>
+                                RankingDetail(player)));
+                  },
+                );
+              }).toList(),
+            ),
+          );
+        },
       ),
-    ));
+    );
   }
 
   _showFirstTimeSetup(BuildContext context) async {

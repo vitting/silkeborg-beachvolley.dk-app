@@ -84,10 +84,8 @@ class _BulletinState extends State<Bulletin> {
 
         if (snapshot.hasData) {
           if (snapshot.data.documents.length == 0) {
-            return Container(
-              child: Column(
-                children: <Widget>[Text("Der er ingen opslag")],
-              ),
+            return Center(
+              child: Text("Der er ingen opslag")
             );
           } else {
             return Scrollbar(

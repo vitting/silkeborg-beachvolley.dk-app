@@ -7,7 +7,10 @@ class DateTimeNumberOfCommentsAndCommits extends StatelessWidget {
   final Function onTapPlayerCount;
   final double size;
   DateTimeNumberOfCommentsAndCommits(
-      {this.bulletinItem, this.numberOfCommits = -1, this.onTapPlayerCount, this.size = 12.0});
+      {this.bulletinItem,
+      this.numberOfCommits = -1,
+      this.onTapPlayerCount,
+      this.size = 14.0});
 
   @override
   Widget build(BuildContext context) {
@@ -16,44 +19,52 @@ class DateTimeNumberOfCommentsAndCommits extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Icon(Icons.access_time, size: size),
-              Padding(
-                padding: const EdgeInsets.only(left: 5.0),
-                child: Text(
-                  bulletinItem.creationDateFormatted,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(fontSize: size),
-                ),
-              )
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Icon(
-                Icons.chat_bubble_outline,
-                size: size,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 5.0),
-                child: Text(
-                  bulletinItem.numberOfcomments.toString(),
-                  style: TextStyle(fontSize: size),
-                ),
-              ),
-            ],
-          ),
-          _showCounter(context)
+          _creationDate(bulletinItem.creationDateFormatted),
+          _commentsCounter(bulletinItem.numberOfcomments.toString()),
+          _commitsCounter(context)
         ],
       ),
     );
   }
 
-  Widget _showCounter(BuildContext context) {
+  Widget _creationDate(String date) {
+    return Row(
+      children: <Widget>[
+        Icon(Icons.access_time, size: size),
+        Padding(
+          padding: const EdgeInsets.only(left: 5.0),
+          child: Text(
+            date,
+            textAlign: TextAlign.start,
+            style: TextStyle(fontSize: size),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _commentsCounter(String numberOfComments) {
+    return Row(
+      children: <Widget>[
+        Icon(
+          Icons.chat_bubble_outline,
+          size: size,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 5.0),
+          child: Text(
+            numberOfComments,
+            style: TextStyle(fontSize: size),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _commitsCounter(BuildContext context) {
     return numberOfCommits == -1
         ? Container()
-        : GestureDetector(
+        : InkWell(
             onTap: onTapPlayerCount,
             child: Row(
               children: <Widget>[

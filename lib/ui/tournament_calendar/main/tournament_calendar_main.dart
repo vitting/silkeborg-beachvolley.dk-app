@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
@@ -8,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:silkeborgbeachvolley/ui/tournament_calendar/helpers/torunament_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/tournament_calendar/tournament_create_main.dart';
+import 'package:silkeborgbeachvolley/ui/tournament_calendar/create/tournament_create_main.dart';
 
 class TournamentCalendar extends StatefulWidget {
   static final String routeName = "/tournamentcalendar";
@@ -28,7 +29,7 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
     super.initState();
   }
 
-  _loadTournaments() async {
+  void _loadTournaments() async {
     List<TournamentData> data = await TournamentData.getTournaments();
     if (mounted) {
       setState(() {
@@ -41,7 +42,7 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
       title: "Turneringer",
-      body: _listView(),
+      body: _main(),
       floatingActionButton: _floatingActionButton(),
     );
   }
@@ -61,42 +62,42 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
     return button;
   }
 
-  Widget _listView() {
+  Widget _main() {
+    if (_tournaments.length == 0) {
+      return Center(child: Text("Der er pt. ingen turneringer"));
+    }
     return Scrollbar(
       child: ListView.builder(
         itemCount: _tournaments.length,
         itemBuilder: (BuildContext context, int position) {
           TournamentData item = _tournaments[position];
           return ListItemCard(
+            title: Row(
+              children: _tournamentTitle(item),
+            ),
             child: ListTile(
               contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
-              onLongPress: () async {
-                await _onLongPress(context, item);
-              },
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: Container(
-                      color: Color(0xffaaacb5),
-                      padding: EdgeInsets.all(4.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: _getDate(item),
-                      ),
-                    ),
-                  ),
                   Container(
                       padding: EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Text(item.title))
+                      child: Text(item.body))
                 ],
               ),
-              subtitle: IconButton(
-                color: Colors.deepOrange[700],
+              subtitle: item.link.isEmpty ? null : FlatButton.icon(
+                label: Text("Gå til hjemmeside"),
+                textColor: Colors.deepOrange[700],
                 icon: Icon(Icons.launch),
                 onPressed: () {
                   _launchUrl(item.link);
+                },
+              ),
+              trailing: IconButton(
+                color: Colors.deepOrange[700],
+                icon: Icon(Icons.more_horiz),
+                onPressed: () async {
+                  await _menuOnPressed(context, item);
                 },
               ),
             ),
@@ -115,22 +116,24 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
 
     if (data != null) {
       await data.save();
+      _loadTournaments();
     }
   }
 
-  Future<void> _onLongPress(BuildContext context, TournamentData item) async {
+  Future<void> _menuOnPressed(BuildContext context, TournamentData item) async {
     if (_isAdmin) {
       int result = await Dialogs.modalBottomSheet(context, [
         DialogsModalBottomSheetItem("Redigere", Icons.edit, 0),
         DialogsModalBottomSheetItem("Slet", Icons.delete, 1)
       ]);
-      
+
       switch (result) {
         case 0:
           await _showCreateDialog(item, "Redigere turnering");
           break;
         case 1:
-          ConfirmDialogAction action = await Dialogs.confirmDelete(context, "Er du sikker på du vil slette turneringen?");
+          ConfirmDialogAction action = await Dialogs.confirmDelete(
+              context, "Er du sikker på du vil slette turneringen?");
 
           if (action != null && action == ConfirmDialogAction.delete) {
             await item.delete();
@@ -145,37 +148,57 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
     }
   }
 
-  List<Widget> _getDate(TournamentData item) {
+  List<Widget> _tournamentTitle(TournamentData item) {
+    bool datesIsDiff =
+        DateTimeHelpers.dateCompare(item.startDate, item.endDate);
     List<Widget> widgets = [
       Padding(
         padding: const EdgeInsets.only(right: 10.0),
         child: Icon(
-          Icons.calendar_today,
+          FontAwesomeIcons.volleyballBall,
           size: 15.0,
           color: Colors.white,
         ),
       ),
       Text(
-        item.startDateFormatted,
+        datesIsDiff ? item.startDateFormatted : item.startDateFormattedShort,
         style: TextStyle(color: Colors.white),
-      )
+      ),
     ];
 
-    if (!DateTimeHelpers.dateCompare(item.startDate, item.endDate)) {
+    if (!datesIsDiff) {
       widgets.addAll([
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Text("-"),
+          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          child: Text(
+            "-",
+            style: TextStyle(color: Colors.white),
+          ),
         ),
-        Text(item.endDateFormatted)
+        Text(
+          item.endDateFormatted,
+          style: TextStyle(color: Colors.white),
+        )
       ]);
     }
+
+    widgets.addAll([
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Text("-", style: TextStyle(color: Colors.white)),
+      ),
+      Expanded(
+        child: Text(item.title,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: TextStyle(color: Colors.white)),
+      )
+    ]);
 
     return widgets;
   }
 
   void _launchUrl(String url) async {
-    print(url);
     if (await canLaunch(url)) {
       await launch(url);
     } else {

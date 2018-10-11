@@ -25,9 +25,12 @@ class RankingDetailMatches extends StatelessWidget {
       future: matches,
       builder: (BuildContext context,
           AsyncSnapshot<List<RankingMatchData>> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting ||
-            !snapshot.hasData) return LoaderSpinner();
-
+        if (!snapshot.hasData) return LoaderSpinner();
+        if (snapshot.hasData && snapshot.data.length == 0) {
+          return Center(
+            child: Text("Kan ikke vise spillede kampe"),
+          );
+        }
         return Container(
           constraints: BoxConstraints.expand(),
           child: Scrollbar(
