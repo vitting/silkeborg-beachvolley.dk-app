@@ -5,8 +5,9 @@ class DateTimeNumberOfCommentsAndCommits extends StatelessWidget {
   final BulletinItemData bulletinItem;
   final int numberOfCommits;
   final Function onTapPlayerCount;
+  final double size;
   DateTimeNumberOfCommentsAndCommits(
-      {this.bulletinItem, this.numberOfCommits = -1, this.onTapPlayerCount});
+      {this.bulletinItem, this.numberOfCommits = -1, this.onTapPlayerCount, this.size = 12.0});
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +18,13 @@ class DateTimeNumberOfCommentsAndCommits extends StatelessWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              Icon(Icons.access_time, size: 12.0),
+              Icon(Icons.access_time, size: size),
               Padding(
                 padding: const EdgeInsets.only(left: 5.0),
                 child: Text(
                   bulletinItem.creationDateFormatted,
                   textAlign: TextAlign.start,
-                  style: TextStyle(fontSize: 12.0),
+                  style: TextStyle(fontSize: size),
                 ),
               )
             ],
@@ -32,13 +33,13 @@ class DateTimeNumberOfCommentsAndCommits extends StatelessWidget {
             children: <Widget>[
               Icon(
                 Icons.chat_bubble_outline,
-                size: 12.0,
+                size: size,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 5.0),
                 child: Text(
                   bulletinItem.numberOfcomments.toString(),
-                  style: TextStyle(fontSize: 12.0),
+                  style: TextStyle(fontSize: size),
                 ),
               ),
             ],
@@ -58,13 +59,13 @@ class DateTimeNumberOfCommentsAndCommits extends StatelessWidget {
               children: <Widget>[
                 Icon(
                   Icons.people,
-                  size: 12.0,
+                  size: size,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0),
                   child: Text(
                     numberOfCommits.toString(),
-                    style: TextStyle(fontSize: 12.0),
+                    style: TextStyle(fontSize: size),
                   ),
                 )
               ],
