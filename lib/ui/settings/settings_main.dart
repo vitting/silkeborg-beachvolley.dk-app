@@ -68,7 +68,6 @@ class SettingsState extends State<Settings> {
         children: <Widget>[
           Card( 
             child: Container(
-              // padding: EdgeInsets.all(15.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -80,7 +79,6 @@ class SettingsState extends State<Settings> {
           ),
           Card(
             child: Container(
-              // padding: EdgeInsets.all(15.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[

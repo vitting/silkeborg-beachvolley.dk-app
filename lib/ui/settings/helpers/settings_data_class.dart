@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:silkeborgbeachvolley/helpers/userauth.dart';
+import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_firestore.dart';
 
@@ -45,14 +45,23 @@ class SettingsData {
 
   Future<void> save() async {
     RankingPlayerData data =
-        await RankingPlayerData.get(UserAuth.loggedInUserId);
+        await RankingPlayerData.get(Home.loggedInUser.uid);
 
     if (data != null) {
       data.name = rankingName;
       data.sex = sex;
-      data.save();
+    } else {
+      data = RankingPlayerData(
+        userId: Home.loggedInUser.uid,
+        name: rankingName,
+        sex: sex,
+        photoUrl: Home.loggedInUser.photoUrl
+      );
     }
-    return SettingsFirestore.saveSettings(this, UserAuth.loggedInUserId);
+
+    data.save();
+
+    return SettingsFirestore.saveSettings(this, Home.loggedInUser.uid);
   }
 
   static Future<SettingsData> getSettings(String userId) async {

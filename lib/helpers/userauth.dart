@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import "package:shared_preferences/shared_preferences.dart";
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
 class UserAuth {
   static FirebaseAuth _firebaseAuth;
@@ -62,9 +61,5 @@ class UserAuth {
       print(e);
       return false;
     }
-  }
-
-  static String get loggedInUserId {
-    return Home.loggedInUser.uid;
   }
 }
