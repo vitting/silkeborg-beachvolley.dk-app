@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/dot_bottombar.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/createMatch/ranking_create_match_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_list_main.dart';
@@ -52,6 +53,16 @@ class RankingState extends State<Ranking> {
           numberOfDot: 2,
           position: _position,
         ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.deepOrange[700],
+          tooltip: "Registere kamp",
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => RankingCreateMatch(),
+                fullscreenDialog: true));
+          },
+          child: Icon(Icons.add),
+        ),
         body: PageView.builder(
           itemCount: _widgets.length,
           controller: _controller,
@@ -76,12 +87,11 @@ class RankingState extends State<Ranking> {
   Future<List<RankingMatchData>> _loadMatches() async {
     QuerySnapshot list = await RankingFirestore.getMatches(10);
 
-    List<RankingMatchData> matches = list.documents.map<RankingMatchData>((DocumentSnapshot doc) {
+    List<RankingMatchData> matches =
+        list.documents.map<RankingMatchData>((DocumentSnapshot doc) {
       return RankingMatchData.fromMap(doc.data);
     }).toList();
 
     return matches;
   }
 }
-
-
