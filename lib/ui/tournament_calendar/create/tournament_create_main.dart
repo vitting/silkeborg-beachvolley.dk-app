@@ -169,7 +169,7 @@ class _CreateTournamentItemState extends State<CreateTournamentItem> {
                   padding: const EdgeInsets.only(top: 20.0),
                   child: FlatButton.icon(
                     textColor: Colors.deepOrange[700],
-                    icon: Icon(Icons.save),
+                    icon: Icon(Icons.check_circle),
                     label: Text("Gem turnering"),
                     onPressed: () {
                       if (_formState.currentState.validate()) {
