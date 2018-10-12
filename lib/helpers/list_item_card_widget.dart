@@ -23,6 +23,7 @@ class ListItemCard extends StatelessWidget {
       child: Container(
         padding: padding,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: widgets,
         ),
       ),
