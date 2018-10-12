@@ -34,9 +34,10 @@ class SettingsState extends State<Settings> {
     _getSettings();
   }
 
-  _getSettings() async {
-    _settingsData = await SettingsData.getSettings(Home.loggedInUser.uid);
-    _messagingData = await UserMessagingData.getUserMessaging(Home.loggedInUser.uid);
+  Future<Null> _getSettings() async {
+    _settingsData = Home.settings;
+    _messagingData = Home
+        .userMessaging; //await UserMessagingData.getUserMessaging(Home.loggedInUser.uid);
 
     if (mounted) {
       setState(() {
@@ -66,12 +67,16 @@ class SettingsState extends State<Settings> {
     return Container(
       child: ListView(
         children: <Widget>[
-          Card( 
+          Card(
             child: Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  ChipHeader("Vejret", expanded: true, backgroundColor: Color(0xffaaacb5), fontSize: 16.0, roundedCorners: false),
+                  ChipHeader("Vejret",
+                      expanded: true,
+                      backgroundColor: Color(0xffaaacb5),
+                      fontSize: 16.0,
+                      roundedCorners: false),
                   _showWeather(),
                 ],
               ),
@@ -82,7 +87,11 @@ class SettingsState extends State<Settings> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  ChipHeader("Notifikationer", expanded: true, backgroundColor: Color(0xffaaacb5), fontSize: 16.0, roundedCorners: false),
+                  ChipHeader("Notifikationer",
+                      expanded: true,
+                      backgroundColor: Color(0xffaaacb5),
+                      fontSize: 16.0,
+                      roundedCorners: false),
                   _notifications(),
                 ],
               ),
@@ -92,9 +101,17 @@ class SettingsState extends State<Settings> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                ChipHeader("Ranglisten", expanded: true, backgroundColor: Color(0xffaaacb5), fontSize: 16.0, roundedCorners: false),
-                Container(child: _rankingName(), padding: EdgeInsets.symmetric(horizontal: 15.0)),
-                Container(child: _sex(), padding: EdgeInsets.symmetric(horizontal: 15.0)),
+                ChipHeader("Ranglisten",
+                    expanded: true,
+                    backgroundColor: Color(0xffaaacb5),
+                    fontSize: 16.0,
+                    roundedCorners: false),
+                Container(
+                    child: _rankingName(),
+                    padding: EdgeInsets.symmetric(horizontal: 15.0)),
+                Container(
+                    child: _sex(),
+                    padding: EdgeInsets.symmetric(horizontal: 15.0)),
               ],
             ),
           )
@@ -127,7 +144,7 @@ class SettingsState extends State<Settings> {
           onChanged: (bool state) {
             _settingsData.notificationsShowNews = state;
             _settingsData.save();
-            if(state) {
+            if (state) {
               _messagingData.addSubscription(NotificationCategory.news);
             } else {
               _messagingData.removeSubscription(NotificationCategory.news);
@@ -146,7 +163,7 @@ class SettingsState extends State<Settings> {
           onChanged: (bool state) {
             _settingsData.notificationsShowEvent = state;
             _settingsData.save();
-            if(state) {
+            if (state) {
               _messagingData.addSubscription(NotificationCategory.event);
             } else {
               _messagingData.removeSubscription(NotificationCategory.event);
@@ -165,7 +182,7 @@ class SettingsState extends State<Settings> {
           onChanged: (bool state) {
             _settingsData.notificationsShowPlay = state;
             _settingsData.save();
-            if(state) {
+            if (state) {
               _messagingData.addSubscription(NotificationCategory.play);
             } else {
               _messagingData.removeSubscription(NotificationCategory.play);
