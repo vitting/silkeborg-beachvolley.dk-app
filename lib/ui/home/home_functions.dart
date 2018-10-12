@@ -33,7 +33,6 @@ Future<void> initMessaging(
 
       ///OnLaunch er der ikke body og titel med. Bliver executed når appen er termineret
       onLaunch: (Map<String, dynamic> message) {
-    print("ONLAUNCH: $message");
     NotificationData data;
     if (message != null) {
       data = NotificationData(
@@ -48,7 +47,6 @@ Future<void> initMessaging(
 
       ///OnMessage er der body og titel med. Bliver executed når appen er aktiv
       onMessage: (Map<String, dynamic> message) {
-    print("ONMESSAGE: $message");
     NotificationData data;
     if (message != null && message["data"] != null) {
       data = NotificationData(
@@ -63,7 +61,6 @@ Future<void> initMessaging(
 
       ///OnResume er der ikke body og titel med. Bliver executed når appen er minimeret
       onResume: (Map<String, dynamic> message) {
-    print("ONRESUME: $message");
     NotificationData data;
     if (message != null) {
       data = NotificationData(
@@ -82,6 +79,7 @@ Future<void> initMessaging(
           _createUserMessaging(settings, userId, token);
 
       userMessagingData.save();
+      Home.userMessaging = userMessagingData;
     }
   });
 
