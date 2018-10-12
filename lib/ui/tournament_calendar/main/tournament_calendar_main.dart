@@ -85,14 +85,16 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
                       child: Text(item.body))
                 ],
               ),
-              subtitle: item.link.isEmpty ? null : FlatButton.icon(
-                label: Text("Gå til hjemmeside"),
-                textColor: Colors.deepOrange[700],
-                icon: Icon(Icons.launch),
-                onPressed: () {
-                  _launchUrl(item.link);
-                },
-              ),
+              subtitle: item.link.isEmpty
+                  ? null
+                  : FlatButton.icon(
+                      label: Text("Gå til hjemmeside"),
+                      textColor: Colors.deepOrange[700],
+                      icon: Icon(Icons.launch),
+                      onPressed: () {
+                        _launchUrl(item.link);
+                      },
+                    ),
               trailing: IconButton(
                 color: Colors.deepOrange[700],
                 icon: Icon(Icons.more_horiz),
