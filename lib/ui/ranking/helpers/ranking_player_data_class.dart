@@ -46,7 +46,7 @@ class RankingPlayerData implements BaseData {
     throw Exception("Delete is not implementet");
   }
 
-  static Future<RankingPlayerData> get(String userId) async {
+  static Future<RankingPlayerData> getPlayer(String userId) async {
     RankingPlayerData data;
     DocumentSnapshot snapshot = await RankingFirestore.getPlayer(userId);
     if (snapshot.exists) {

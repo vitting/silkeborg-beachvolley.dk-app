@@ -6,6 +6,7 @@ import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_player_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 
 /// createdDate is of type DateTime, but is marked as dynmic so it's possible to
 /// use it with Firestore FieldValue.serverTimestamp().
@@ -27,6 +28,10 @@ class RankingMatchData implements BaseData {
       @required this.loser2,
       this.createdDate});
 
+  Future<RankingPlayerData> getPlayerCreatedMatch() {
+    return RankingPlayerData.getPlayer(userId);
+  }
+
   Future<void> save() async {
     userId = userId ?? Home.loggedInUser.uid;
     createdDate = createdDate ?? FieldValue.serverTimestamp();
@@ -35,8 +40,7 @@ class RankingMatchData implements BaseData {
   }
 
   Future<void> delete() async {
-    //We don't save matchid
-    // await RankingFirestore.deleteMatch(id)
+    throw Exception("Delete is not implementet");
   }
 
   Map<String, dynamic> toMap() {

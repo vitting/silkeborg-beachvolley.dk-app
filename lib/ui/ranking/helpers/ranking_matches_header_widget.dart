@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class RankingDetailMatchesHeader extends StatelessWidget {
+class RankingMatchesHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

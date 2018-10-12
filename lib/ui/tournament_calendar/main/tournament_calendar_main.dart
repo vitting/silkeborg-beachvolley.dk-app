@@ -64,7 +64,7 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
 
   Widget _main() {
     if (_tournaments.length == 0) {
-      return Center(child: Text("Der er pt. ingen turneringer"));
+      return Card(child: Center(child: Text("Der er pt. ingen turneringer")));
     }
     return Scrollbar(
       child: ListView.builder(

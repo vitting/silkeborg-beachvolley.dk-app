@@ -34,18 +34,15 @@ class DotBottomBar extends StatelessWidget {
             Expanded(flex: 2, child: _getLabel(labelLeft)),
             Expanded(
               flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    DotsIndicator(
-                      dotActiveColor: Colors.white,
-                      numberOfDot: numberOfDot,
-                      position: position,
-                    )
-                  ],
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  DotsIndicator(
+                    dotActiveColor: Colors.white,
+                    numberOfDot: numberOfDot,
+                    position: position,
+                  )
+                ],
               ),
             ),
             Expanded(flex: 2, child: _getLabel(labelRight)),

@@ -1,110 +1,87 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_main.dart';
+import 'package:silkeborgbeachvolley/helpers/dot_bottombar.dart';
+import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_sharedpref.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/createMatch/ranking_create_match_main.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_firsttime_main.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_item.dart';
-import 'package:silkeborgbeachvolley/ui/scaffold/silkeborgBeachvolleyScaffold.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_list_main.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_matches_main.dart';
+import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class Ranking extends StatefulWidget {
   static final String routeName = "/ranking";
   @override
-  _RankingState createState() => _RankingState();
+  RankingState createState() {
+    return new RankingState();
+  }
 }
 
-class _RankingState extends State<Ranking> {
+class RankingState extends State<Ranking> {
+  int _position = 0;
+  List<Widget> _widgets = [];
+  PageController _controller = PageController();
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _checkIfPlayerExists(context));
+    _initPages();
   }
 
-  void _checkIfPlayerExists(BuildContext context) async {
-    if (await RankingSharedPref.isItfirstTime()) {
-      _showFirstTimeSetup(context);
-    }
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _initPages() async {
+    _widgets = [
+      RankingList(),
+      RankingMatches(
+        matches: _loadMatches(),
+        userId: Home.loggedInUser.uid,
+      )
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: "Ranglisten",
-      body: _main(),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepOrange[700],
-        tooltip: "Registere kamp",
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => RankingCreateMatch(),
-              fullscreenDialog: true));
-        },
-        child: Icon(Icons.add),
-      ),
-    );
+        title: _getPageTitle(_position),
+        bottomNavigationBar: DotBottomBar(
+          numberOfDot: 2,
+          position: _position,
+        ),
+        body: PageView.builder(
+          itemCount: _widgets.length,
+          controller: _controller,
+          itemBuilder: (BuildContext context, int page) {
+            return _widgets[page];
+          },
+          onPageChanged: (int page) {
+            setState(() {
+              _position = page;
+            });
+          },
+        ));
   }
 
-  Widget _main() {
-    // RankingFirestore.createFakeMatches(50);
-    return Container(
-      child: StreamBuilder(
-        stream: RankingFirestore.getRanking(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) return LoaderSpinner();
-
-          if (snapshot.data.documents.length == 0) {
-            return Center(
-                child: Text("Der er pt. ingen personer på ranglisten"));
-          }
-          int counter = -1;
-          return Scrollbar(
-            child: ListView(
-              children:
-                  snapshot.data.documents.map<Widget>((DocumentSnapshot doc) {
-                RankingPlayerData player = RankingPlayerData.fromMap(doc.data);
-                counter++;
-
-                return RankingItem(
-                  player: player,
-                  showAnimation: counter == 0,
-                  position: counter,
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            fullscreenDialog: true,
-                            builder: (BuildContext context) =>
-                                RankingDetail(player)));
-                  },
-                );
-              }).toList(),
-            ),
-          );
-        },
-      ),
-    );
+  String _getPageTitle(int page) {
+    String title = "";
+    if (page == 0) title = "Ranglisten";
+    if (page == 1) title = "De sidste 10 spillede kampe";
+    return title;
   }
 
-  _showFirstTimeSetup(BuildContext context) async {
-    await showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return SimpleDialog(
-            children: <Widget>[
-              RankingFirstTime(
-                onPressedValue: (bool value) async {
-                  if (value) {
-                    await RankingSharedPref.setIsItFirsttime(false);
-                  }
-                },
-              )
-            ],
-          );
-        });
+  Future<List<RankingMatchData>> _loadMatches() async {
+    QuerySnapshot list = await RankingFirestore.getMatches(10);
+
+    List<RankingMatchData> matches = list.documents.map<RankingMatchData>((DocumentSnapshot doc) {
+      return RankingMatchData.fromMap(doc.data);
+    }).toList();
+
+    return matches;
   }
 }
+
+

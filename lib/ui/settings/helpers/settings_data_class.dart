@@ -45,7 +45,7 @@ class SettingsData {
 
   Future<void> save() async {
     RankingPlayerData data =
-        await RankingPlayerData.get(Home.loggedInUser.uid);
+        await RankingPlayerData.getPlayer(Home.loggedInUser.uid);
 
     if (data != null) {
       data.name = rankingName;

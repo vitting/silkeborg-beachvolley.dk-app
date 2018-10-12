@@ -66,6 +66,10 @@ class RankingFirestore {
         .get();
   }
 
+  static Future<QuerySnapshot> getMatches([int limit = 20, bool descending = true]) {
+    return firestoreInstance.collection(_collectionNameMatch).orderBy("createdDate", descending: descending).limit(limit).getDocuments();
+  }
+
   static Future<void> saveMatch(RankingMatchData match) async {
     return firestoreInstance
         .collection(_collectionNameMatch)
