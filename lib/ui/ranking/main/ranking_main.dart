@@ -1,14 +1,11 @@
-import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/dot_bottombar.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/ranking_create_match_main.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_list_main.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_matches_main.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_sharedpref.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/main/first_time/ranking_firsttime_main.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/main/list_of_matches/ranking_matches_main.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/main/list_of_ranking/ranking_list_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class Ranking extends StatefulWidget {
@@ -23,10 +20,14 @@ class RankingState extends State<Ranking> {
   int _position = 0;
   List<Widget> _widgets = [];
   PageController _controller = PageController();
+
   @override
   void initState() {
     super.initState();
     _initPages();
+
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _checkIfPlayerExists(context));
   }
 
   @override
@@ -39,7 +40,6 @@ class RankingState extends State<Ranking> {
     _widgets = [
       RankingList(),
       RankingMatches(
-        matches: _loadMatches(),
         userId: Home.loggedInUser.uid,
       )
     ];
@@ -56,8 +56,8 @@ class RankingState extends State<Ranking> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.deepOrange[700],
           tooltip: "Registere kamp",
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
+          onPressed: () async {
+            await Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) => RankingCreateMatch(),
                 fullscreenDialog: true));
           },
@@ -84,14 +84,28 @@ class RankingState extends State<Ranking> {
     return title;
   }
 
-  Future<List<RankingMatchData>> _loadMatches() async {
-    QuerySnapshot list = await RankingFirestore.getMatches(10);
+  void _checkIfPlayerExists(BuildContext context) async {
+    if (await RankingSharedPref.isItfirstTime()) {
+      _showFirstTimeSetup(context);
+    }
+  }
 
-    List<RankingMatchData> matches =
-        list.documents.map<RankingMatchData>((DocumentSnapshot doc) {
-      return RankingMatchData.fromMap(doc.data);
-    }).toList();
-
-    return matches;
+  _showFirstTimeSetup(BuildContext context) async {
+    await showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            children: <Widget>[
+              RankingFirstTime(
+                onPressedValue: (bool value) async {
+                  if (value) {
+                    await RankingSharedPref.setIsItFirsttime(false);
+                  }
+                },
+              )
+            ],
+          );
+        });
   }
 }

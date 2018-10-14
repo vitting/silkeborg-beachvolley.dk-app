@@ -4,7 +4,7 @@ import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_item.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/main/list_of_ranking/ranking_item.dart';
 
 class RankingList extends StatefulWidget {
   @override

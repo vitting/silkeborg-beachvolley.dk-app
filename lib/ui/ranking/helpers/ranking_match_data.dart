@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
+import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_player_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 
-/// createdDate is of type DateTime, but is marked as dynmic so it's possible to
-/// use it with Firestore FieldValue.serverTimestamp().
 class RankingMatchData implements BaseData {
+  String id;
   String userId;
   DateTime matchDate;
   dynamic createdDate;
@@ -21,6 +21,7 @@ class RankingMatchData implements BaseData {
 
   RankingMatchData(
       {this.userId,
+      this.id,
       @required this.matchDate,
       @required this.winner1,
       @required this.winner2,
@@ -33,6 +34,7 @@ class RankingMatchData implements BaseData {
   }
 
   Future<void> save() async {
+    id = id ?? UuidHelpers.generateUuid();
     userId = userId ?? Home.loggedInUser.uid;
     createdDate = createdDate ?? FieldValue.serverTimestamp();
 
@@ -40,11 +42,13 @@ class RankingMatchData implements BaseData {
   }
 
   Future<void> delete() async {
+    // RankingFirestore.deleteMatch(id)
     throw Exception("Delete is not implementet");
   }
 
   Map<String, dynamic> toMap() {
     return {
+      "id": id,
       "userId": userId,
       "matchDate": matchDate,
       "winner1": winner1.toMap(),
@@ -57,6 +61,7 @@ class RankingMatchData implements BaseData {
 
   static RankingMatchData fromMap(Map<String, dynamic> item) {
     return RankingMatchData(
+        id: item["id"],
         userId: item["userId"] ?? "",
         matchDate: item["matchDate"] ?? DateTime.now(),
         winner1: RankingMatchPlayerData.fromMap(item["winner1"]),

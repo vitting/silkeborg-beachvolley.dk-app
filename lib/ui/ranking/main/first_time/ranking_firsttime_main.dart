@@ -126,7 +126,8 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
   }
 
   void _savePlayer() async {
-    SettingsData settings = await SettingsData.getSettings(_rankingPlayerData.userId);
+    SettingsData settings =
+        await SettingsData.getSettings(_rankingPlayerData.userId);
     if (settings != null) {
       settings.rankingName = _rankingPlayerData.name;
       settings.sex = _rankingPlayerData.sex;
