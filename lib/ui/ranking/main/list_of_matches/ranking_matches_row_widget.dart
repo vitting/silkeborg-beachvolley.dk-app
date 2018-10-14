@@ -106,7 +106,7 @@ class RankingMatchesRow extends StatelessWidget {
           print("PLAYER LOOKUP");
           RankingMatchesRow._cachedData
               .putIfAbsent(match.userId, () => player.data.name);
-          widgets = _createdByPlayerRow(player.data.name);
+          return _createdByPlayerRow(player.data.name);
         },
       );
     }
