@@ -20,7 +20,7 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = [
-      ChipHeader(
+      Text(
           "Der er ikke registeret nogen betalinger for det pågældende medlem.",
           textAlign: TextAlign.center)
     ];
