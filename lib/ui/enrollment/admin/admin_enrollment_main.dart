@@ -36,7 +36,7 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: "Medlemmer",
+      title: "Administrer medlemmer",
       body: _main(),
     );
   }
