@@ -1,18 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
 import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/list_of_matches/ranking_matches_row_widget.dart';
 
-class RankingMatches extends StatelessWidget {
+class AdminRankingMatches extends StatefulWidget {
   final String userId;
-  final Stream<QuerySnapshot> matches;
-  const RankingMatches({Key key, this.userId, this.matches}) : super(key: key);
+  
+  const AdminRankingMatches({Key key, this.userId}) : super(key: key);
 
+  @override
+  AdminRankingMatchesState createState() {
+    return new AdminRankingMatchesState();
+  }
+}
+
+class AdminRankingMatchesState extends State<AdminRankingMatches> {
+  final int _numberOfItemsToLoadDefault = 20;
+  int _listNumberOfItemsToLoad = 20;
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: matches,
+      stream: RankingFirestore.getMatchesAsStream(_listNumberOfItemsToLoad),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (!snapshot.hasData) return LoaderSpinner();
         if (snapshot.hasData && snapshot.data.documents.length == 0) {
@@ -43,7 +53,7 @@ class RankingMatches extends StatelessWidget {
             RankingMatchData item = list[position];
             return RankingMatchesRow(
               match: item,
-              userId: userId,
+              userId: widget.userId,
             );
           },
         ),

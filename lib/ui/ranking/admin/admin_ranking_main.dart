@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/dot_bottombar.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/createMatch/ranking_create_match_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_sharedpref.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/main/first_time/ranking_firsttime_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/list_of_matches/ranking_matches_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/list_of_ranking/ranking_list_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
@@ -26,9 +23,6 @@ class RankingState extends State<Ranking> {
   void initState() {
     super.initState();
     _initPages();
-
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _checkIfPlayerExists(context));
   }
 
   @override
@@ -55,16 +49,6 @@ class RankingState extends State<Ranking> {
           numberOfDot: 2,
           position: _position,
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.deepOrange[700],
-          tooltip: "Registere kamp",
-          onPressed: () async {
-            await Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => RankingCreateMatch(),
-                fullscreenDialog: true));
-          },
-          child: Icon(Icons.add),
-        ),
         body: PageView.builder(
           itemCount: _widgets.length,
           controller: _controller,
@@ -81,33 +65,8 @@ class RankingState extends State<Ranking> {
 
   String _getPageTitle(int page) {
     String title = "";
-    if (page == 0) title = "Ranglisten";
-    if (page == 1) title = "De sidste 10 spillede kampe";
+    if (page == 0) title = "Administerer spillere";
+    if (page == 1) title = "Administerer kampe";
     return title;
-  }
-
-  void _checkIfPlayerExists(BuildContext context) async {
-    if (await RankingSharedPref.isItfirstTime()) {
-      _showFirstTimeSetup(context);
-    }
-  }
-
-  _showFirstTimeSetup(BuildContext context) async {
-    await showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return SimpleDialog(
-            children: <Widget>[
-              RankingFirstTime(
-                onPressedValue: (bool value) async {
-                  if (value) {
-                    await RankingSharedPref.setIsItFirsttime(false);
-                  }
-                },
-              )
-            ],
-          );
-        });
   }
 }

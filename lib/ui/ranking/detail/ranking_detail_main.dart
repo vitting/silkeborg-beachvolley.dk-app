@@ -21,6 +21,7 @@ class RankingDetail extends StatefulWidget {
 }
 
 class RankingDetailState extends State<RankingDetail> {
+  List<RankingMatchData> _cachedMatches;
   int _position = 0;
   String _title;
   List<Widget> _widgets = [];
@@ -80,6 +81,8 @@ class RankingDetailState extends State<RankingDetail> {
   }
 
   Future<List<RankingMatchData>> _loadMatches() async {
+    if (_cachedMatches != null) return _cachedMatches;
+
     List<DocumentSnapshot> list =
         await RankingFirestore.getPlayerMatches(widget.player.userId);
     List<RankingMatchData> matches = list.map((DocumentSnapshot doc) {
@@ -89,6 +92,7 @@ class RankingDetailState extends State<RankingDetail> {
     matches.sort((RankingMatchData a, RankingMatchData b) =>
         a.matchDate.compareTo(b.matchDate));
 
+    _cachedMatches = matches;
     return matches;
   }
 }

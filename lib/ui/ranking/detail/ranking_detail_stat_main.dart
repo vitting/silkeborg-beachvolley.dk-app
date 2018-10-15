@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_chart.dart';
-// import 'package:charts_flutter/flutter.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_charts_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_stat_row.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_stat_title.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
@@ -39,13 +38,11 @@ class RankingDetailStat extends StatelessWidget {
                     lost: player.numberOfPlayedMatches.lost),
                 LayoutBuilder(
                   builder: (BuildContext context, BoxConstraints contraints) {
-                    return Column(
-                      children: <Widget>[
-                        RankingDetailChart(
-                            getMatches: matches,
-                            width: contraints.maxWidth - 50.0,
-                            height: 200.0)
-                      ],
+                    return RankingDetailCharts(
+                      height: 200.0,
+                      width: contraints.maxWidth,
+                      player: player,
+                      matches: matches,
                     );
                   },
                 )
