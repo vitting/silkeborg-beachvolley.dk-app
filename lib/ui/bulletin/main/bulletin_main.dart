@@ -29,7 +29,7 @@ class _BulletinState extends State<Bulletin> {
   int _bottombarSelected = 0;
   final int _numberOfItemsToLoadDefault = 20;
   int _listNumberOfItemsToLoad = 20;
-  
+
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
@@ -76,7 +76,8 @@ class _BulletinState extends State<Bulletin> {
   Widget _main() {
     return StreamBuilder(
       stream: BulletinFirestore.getBulletinsByTypeAsStream(
-          bulletinMainFunctions.getSelectedType(_bottombarSelected), _listNumberOfItemsToLoad),
+          bulletinMainFunctions.getSelectedType(_bottombarSelected),
+          _listNumberOfItemsToLoad),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (!snapshot.hasData) {
           return LoaderSpinner();
@@ -85,16 +86,16 @@ class _BulletinState extends State<Bulletin> {
         if (snapshot.hasData) {
           if (snapshot.data.documents.length == 0) {
             return Card(
-                          child: Center(
-                child: Text("Der er ingen opslag")
-              ),
+              child: Center(child: Text("Der er ingen opslag")),
             );
           } else {
             return Scrollbar(
               child: ListView.builder(
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (BuildContext context, int position) {
-                  if (position == snapshot.data.documents.length - 1 && snapshot.data.documents.length - 1 == _listNumberOfItemsToLoad - 1) {
+                  if (position == snapshot.data.documents.length - 1 &&
+                      snapshot.data.documents.length - 1 ==
+                          _listNumberOfItemsToLoad - 1) {
                     return Card(
                         child: Container(
                       padding: EdgeInsets.symmetric(vertical: 5.0),
@@ -106,7 +107,8 @@ class _BulletinState extends State<Bulletin> {
                             onPressed: () {
                               if (mounted) {
                                 setState(() {
-                                  _listNumberOfItemsToLoad = _listNumberOfItemsToLoad * 2;
+                                  _listNumberOfItemsToLoad =
+                                      _listNumberOfItemsToLoad * 2;
                                 });
                               }
                             },
@@ -116,12 +118,11 @@ class _BulletinState extends State<Bulletin> {
                         ],
                       ),
                     ));
-                  } 
+                  }
 
                   DocumentSnapshot item = snapshot.data.documents[position];
 
-                    return BulletinItemMain(
-                        item.data);
+                  return BulletinItemMain(item.data);
                 },
               ),
             );
@@ -139,8 +140,4 @@ class _BulletinState extends State<Bulletin> {
         },
         fullscreenDialog: true));
   }
-
-  // _itemHidden(bool value) {
-  //   _loadItemsHiddenByUser();
-  // }
 }
