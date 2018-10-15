@@ -84,7 +84,7 @@ packages:
       name: cloud_functions
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.4"
+    version: "0.0.4+1"
   collection:
     dependency: transitive
     description:
@@ -215,7 +215,7 @@ packages:
       name: font_awesome_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.0.1"
+    version: "8.1.0"
   front_end:
     dependency: transitive
     description:
