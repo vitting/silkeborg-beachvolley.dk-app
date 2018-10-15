@@ -42,8 +42,7 @@ class RankingMatchData implements BaseData {
   }
 
   Future<void> delete() async {
-    // RankingFirestore.deleteMatch(id)
-    throw Exception("Delete is not implementet");
+    return RankingFirestore.deleteMatch(id);
   }
 
   Map<String, dynamic> toMap() {

@@ -93,7 +93,6 @@ class RankingMatchesRow extends StatelessWidget {
   Widget _createdByPlayer() {
     Widget widgets;
     if (RankingMatchesRow._cachedData.containsKey(match.userId)) {
-      print("PLAYER CACHED");
       String playerName = RankingMatchesRow._cachedData[match.userId];
       widgets = _createdByPlayerRow(playerName);
     } else {
@@ -103,7 +102,6 @@ class RankingMatchesRow extends StatelessWidget {
             (BuildContext context, AsyncSnapshot<RankingPlayerData> player) {
           if (!player.hasData) return Container();
 
-          print("PLAYER LOOKUP");
           RankingMatchesRow._cachedData
               .putIfAbsent(match.userId, () => player.data.name);
           return _createdByPlayerRow(player.data.name);

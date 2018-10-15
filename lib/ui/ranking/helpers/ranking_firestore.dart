@@ -81,8 +81,6 @@ class RankingFirestore {
         .setData(match.toMap());
   }
 
-  //CHRISTIAN: If we delete a match, we have to rollback points
-  //Maybe only admin can delete a match
   static Future<void> deleteMatch(String id) {
     return firestoreInstance
         .collection(_collectionNameMatch)

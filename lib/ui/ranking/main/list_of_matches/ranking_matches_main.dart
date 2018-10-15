@@ -50,6 +50,4 @@ class RankingMatches extends StatelessWidget {
       ),
     );
   }
-//CHRISTIAN: Prøv at redesigne Row og få lavet delete færdig. Der skal laves en firebase function der
-//trækker point fra
 }
