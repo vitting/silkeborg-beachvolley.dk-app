@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/app_state_container_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/main/bulletin_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
@@ -12,26 +13,25 @@ import 'package:silkeborgbeachvolley/ui/test.dart';
 import 'package:silkeborgbeachvolley/ui/tournament_calendar/main/tournament_calendar_main.dart';
 
 void main() {
-
-  
-  runApp(new MaterialApp(
-    title: 'Silkeborg Beachvolley',
-    theme: ThemeData(
+  runApp(MaterialApp(
+  title: 'Silkeborg Beachvolley',
+  theme: ThemeData(
       // primaryColor: Colors.yellow
-    ),
-    initialRoute: "/",
-    routes: <String, WidgetBuilder>{ 
-      "/": (BuildContext context) => Home(),
-      // "/": (BuildContext context) => HomeLauncherSplash(),
-      // "/": (BuildContext context) => TestWidget(),
-      Enrollment.routeName: (BuildContext context) => Enrollment(), 
-      AdminEnrollment.routeName: (BuildContext context) => AdminEnrollment(),
-      ScoreBoard.routeName: (BuildContext context) => ScoreBoard(),
-      Bulletin.routeName: (BuildContext context) => Bulletin(),
-      Login.routeName: (BuildContext context) => Login(),
-      Settings.routeName: (BuildContext context) => Settings(),
-      Ranking.routeName: (BuildContext context) => Ranking(),
-      TournamentCalendar.routeName: (BuildContext context) => TournamentCalendar()
-    },
-  ));
+      ),
+  initialRoute: "/",
+  routes: <String, WidgetBuilder>{
+    "/": (BuildContext context) => Home(),
+    // "/": (BuildContext context) => HomeLauncherSplash(),
+    // "/": (BuildContext context) => TestWidget(),
+    Enrollment.routeName: (BuildContext context) => Enrollment(),
+    AdminEnrollment.routeName: (BuildContext context) => AdminEnrollment(),
+    ScoreBoard.routeName: (BuildContext context) => ScoreBoard(),
+    Bulletin.routeName: (BuildContext context) => Bulletin(),
+    Login.routeName: (BuildContext context) => Login(),
+    Settings.routeName: (BuildContext context) => Settings(),
+    Ranking.routeName: (BuildContext context) => Ranking(),
+    TournamentCalendar.routeName: (BuildContext context) =>
+        TournamentCalendar()
+  },
+    ));
 }

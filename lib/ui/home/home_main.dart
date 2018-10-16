@@ -52,7 +52,8 @@ class _HomeState extends State<Home> {
       if (user != null) {
         userInfoData = await homeFunctions.loadUserInfo(user.uid);
         settings = await homeFunctions.initSettings(user.uid, user.displayName);
-        await homeFunctions.initMessaging(user.uid, _firebaseMessaging, settings, _notificationController);
+        await homeFunctions.initMessaging(
+            user.uid, _firebaseMessaging, settings, _notificationController);
       }
 
       if (mounted) {
