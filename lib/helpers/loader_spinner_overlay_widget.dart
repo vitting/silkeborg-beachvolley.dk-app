@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
+import 'package:silkeborgbeachvolley/helpers/loader_spinner_widget.dart';
 
 class LoaderSpinnerOverlay extends StatelessWidget {
   final Widget child;

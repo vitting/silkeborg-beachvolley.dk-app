@@ -4,13 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
-import 'package:silkeborgbeachvolley/helpers/user_info_class.dart';
+import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
 import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/main/bulletin_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_launcher_main.dart';
 import 'package:silkeborgbeachvolley/ui/login/login_main.dart';
-import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
 import './home_functions.dart' as homeFunctions;
 
 class Home extends StatefulWidget {

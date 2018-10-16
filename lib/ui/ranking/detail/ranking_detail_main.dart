@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/helpers/dot_bottombar.dart';
+import 'package:silkeborgbeachvolley/helpers/dot_bottombar_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_matches_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_stat_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
@@ -12,7 +12,7 @@ import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.da
 
 class RankingDetail extends StatefulWidget {
   final RankingPlayerData player;
-  RankingDetail(this.player);
+  const RankingDetail(this.player);
 
   @override
   RankingDetailState createState() {

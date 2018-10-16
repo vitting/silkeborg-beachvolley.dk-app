@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/event_datetime_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
-import 'package:silkeborgbeachvolley/ui/tournament_calendar/helpers/torunament_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/tournament_calendar/helpers/torunament_data.dart';
 import 'package:validate/validate.dart';
 
 class CreateTournamentItem extends StatefulWidget {

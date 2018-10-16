@@ -21,7 +21,7 @@ import '../../helpers/photo_functions.dart' as photoFunctions;
 class EditBulletinItem extends StatefulWidget {
   final BulletinItemData bulletinItem;
 
-  EditBulletinItem(this.bulletinItem);
+  const EditBulletinItem(this.bulletinItem);
 
   @override
   _EditBulletinItemState createState() => _EditBulletinItemState();

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:silkeborgbeachvolley/helpers/chip_header.dart';
+import 'package:silkeborgbeachvolley/helpers/chip_header_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_categories_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
-import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
 
 class Settings extends StatefulWidget {
   static final routeName = "/settings";

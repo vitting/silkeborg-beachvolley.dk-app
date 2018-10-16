@@ -11,7 +11,7 @@ import './enrollment_form_functions.dart' as formFunctions;
 class EnrollmentForm extends StatefulWidget {
   final ValueChanged<bool> saved;
   final EnrollmentUserData item;
-  EnrollmentForm({@required this.saved, this.item});
+  const EnrollmentForm({@required this.saved, this.item});
   @override
   _EnrollmentFormState createState() => _EnrollmentFormState();
 }

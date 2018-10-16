@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_committed_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/detailItem/comment_item_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/detailItem/bulletin_comment_item_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
 
 class BulletinFirestore {
@@ -21,23 +21,24 @@ class BulletinFirestore {
   }
 
   static Stream<QuerySnapshot> getAllBulletinCommentsAsStream(
-      String commentsId) {
+      String bulletinId) {
     return firestoreInstance
         .collection(_bulletinCommentsCollectionName)
-        .where("id", isEqualTo: commentsId)
+        .where("bulletinId", isEqualTo: bulletinId)
         .orderBy("creationDate", descending: false)
         .snapshots();
   }
 
   static Future<void> saveCommentItem(
-      BulletinCommentItem bulletinCommentItem) async {
-    return await firestoreInstance
+      BulletinCommentItemData bulletinCommentItem) async {
+    return firestoreInstance
         .collection(_bulletinCommentsCollectionName)
-        .add(bulletinCommentItem.toMap());
+        .document(bulletinCommentItem.id)
+        .setData(bulletinCommentItem.toMap());
   }
 
   static Future<void> deleteComment(String id) async {
-    return await firestoreInstance
+    return firestoreInstance
         .collection(_bulletinCommentsCollectionName)
         .document(id)
         .delete();
@@ -46,7 +47,7 @@ class BulletinFirestore {
   static Future<Null> deleteCommentsByBulletinId(String bulletinId) async {
     QuerySnapshot snapshot = await firestoreInstance
         .collection(_bulletinCommentsCollectionName)
-        .where("id", isEqualTo: bulletinId)
+        .where("bulletinId", isEqualTo: bulletinId)
         .getDocuments();
     WriteBatch batch = firestoreInstance.batch();
     snapshot.documents.forEach((DocumentSnapshot snap) {
@@ -56,7 +57,8 @@ class BulletinFirestore {
     return batch.commit();
   }
 
-  static Stream<QuerySnapshot> getBulletinsByTypeAsStream(BulletinType type, int limit) {
+  static Stream<QuerySnapshot> getBulletinsByTypeAsStream(
+      BulletinType type, int limit) {
     return firestoreInstance
         .collection(_bulletinCollectionName)
         .where("type",
@@ -89,8 +91,11 @@ class BulletinFirestore {
 
   static Future<List<String>> getHiddenBulletinItems(String userId) async {
     List<String> ids = [];
-    DocumentSnapshot doc = await firestoreInstance.collection(_bulletinHiddenByUserCollectionName).document(userId).get();
-    if(doc.exists) {
+    DocumentSnapshot doc = await firestoreInstance
+        .collection(_bulletinHiddenByUserCollectionName)
+        .document(userId)
+        .get();
+    if (doc.exists) {
       ids = (doc.data["ids"] as List<dynamic>).map<String>((dynamic id) {
         return id;
       }).toList();
@@ -104,7 +109,9 @@ class BulletinFirestore {
     return await firestoreInstance
         .collection(_bulletinHiddenByUserCollectionName)
         .document(userId)
-        .setData({"ids": FieldValue.arrayUnion([bulletId])}, merge: true);
+        .setData({
+      "ids": FieldValue.arrayUnion([bulletId])
+    }, merge: true);
   }
 
   static Future<void> removeUserHidesBulletinItem(
@@ -112,7 +119,9 @@ class BulletinFirestore {
     return await firestoreInstance
         .collection(_bulletinHiddenByUserCollectionName)
         .document(userId)
-        .setData({"ids": FieldValue.arrayRemove([bulletId])}, merge: true);
+        .setData({
+      "ids": FieldValue.arrayRemove([bulletId])
+    }, merge: true);
   }
 
   static Future<void> saveCommitted(CommittedData playerCommitted) async {

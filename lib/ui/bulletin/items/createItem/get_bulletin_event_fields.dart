@@ -15,7 +15,7 @@ class BulletinEventFields extends StatefulWidget {
   final ItemFieldsCreate itemFieldsValue;
   final Function onTapImage;
   final ImageInfoData eventImage;
-  BulletinEventFields(
+  const BulletinEventFields(
       {@required this.startDateController,
       @required this.endDateController,
       @required this.startTimeController,

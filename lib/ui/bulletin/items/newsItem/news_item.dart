@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_image_viewer.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_image_viewer_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_pictures_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_title_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/image_type.dart';
@@ -15,7 +15,7 @@ class BulletinNewsItem extends StatelessWidget {
   final TextOverflow overflow;
   final bool isDetailMode;
 
-  BulletinNewsItem(
+  const BulletinNewsItem(
       {this.bulletinItem,
       this.onTap,
       this.onPressed,

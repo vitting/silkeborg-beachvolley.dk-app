@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_commit_button_widget.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_image_viewer.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_image_viewer_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_pictures_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_title_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/image_type.dart';
@@ -17,7 +17,7 @@ class BulletinEventItem extends StatefulWidget {
   final TextOverflow overflow;
   final bool isDetailMode;
 
-  BulletinEventItem(
+  const BulletinEventItem(
       {this.bulletinItem,
       this.onTap,
       this.onPressed,

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
 
 class RankingFirstTime extends StatefulWidget {
   final ValueChanged<bool> onPressedValue;
   @override
   _RankingFirstTimeState createState() => _RankingFirstTimeState();
-  RankingFirstTime({@required this.onPressedValue});
+  const RankingFirstTime({@required this.onPressedValue});
 }
 
 class _RankingFirstTimeState extends State<RankingFirstTime> {

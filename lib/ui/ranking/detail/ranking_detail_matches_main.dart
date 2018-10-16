@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/list_item_card_widget.dart';
-import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
+import 'package:silkeborgbeachvolley/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_matches_header_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_matches_row_widget.dart';

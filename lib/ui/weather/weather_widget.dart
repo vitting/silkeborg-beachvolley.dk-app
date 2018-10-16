@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class Weather extends StatelessWidget {
   final bool showWind;
-  Weather({this.showWind = false});
+  const Weather({this.showWind = false});
 
   factory Weather.withWind() {
     return Weather(showWind: true);

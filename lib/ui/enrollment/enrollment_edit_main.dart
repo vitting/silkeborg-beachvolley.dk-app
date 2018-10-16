@@ -5,7 +5,7 @@ import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.da
 
 class EnrollmentEdit extends StatelessWidget {
   final EnrollmentUserData item;
-  EnrollmentEdit(this.item);
+  const EnrollmentEdit(this.item);
 
   @override
   Widget build(BuildContext context) {

@@ -5,7 +5,7 @@ import 'package:photo_view/photo_view.dart';
 class BulletinItemImageViewer extends StatelessWidget {
   final String imageUrl;
   
-  BulletinItemImageViewer(this.imageUrl);
+  const BulletinItemImageViewer(this.imageUrl);
 
   @override
   Widget build(BuildContext context) {

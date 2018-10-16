@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:silkeborgbeachvolley/helpers/user_info_class.dart';
+import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
 import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
 
 class UserFirestore {

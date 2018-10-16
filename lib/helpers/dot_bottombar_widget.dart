@@ -12,7 +12,7 @@ class DotBottomBar extends StatelessWidget {
   final bool navigationButtonsAutoShow;
   final String labelLeft;
   final String labelRight;
-  DotBottomBar(
+  const DotBottomBar(
       {@required this.position,
       @required this.numberOfDot,
       this.onPressed,

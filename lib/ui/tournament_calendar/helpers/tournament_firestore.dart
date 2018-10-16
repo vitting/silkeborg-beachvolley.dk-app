@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:silkeborgbeachvolley/ui/tournament_calendar/helpers/torunament_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/tournament_calendar/helpers/torunament_data.dart';
 
 class TournamentFirestore {
   static final _collectionName = "tournaments";

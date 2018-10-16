@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
-import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
+import 'package:silkeborgbeachvolley/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/list_of_matches/ranking_matches_row_widget.dart';

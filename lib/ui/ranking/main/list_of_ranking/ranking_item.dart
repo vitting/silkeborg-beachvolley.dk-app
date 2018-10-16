@@ -9,7 +9,7 @@ class RankingItem extends StatefulWidget {
   final Function onTap;
   final int position;
 
-  RankingItem(
+  const RankingItem(
       {@required this.player,
       @required this.onTap,
       @required this.position,

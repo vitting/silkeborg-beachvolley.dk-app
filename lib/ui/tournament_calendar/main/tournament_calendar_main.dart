@@ -8,7 +8,7 @@ import 'package:silkeborgbeachvolley/helpers/list_item_card_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
-import 'package:silkeborgbeachvolley/ui/tournament_calendar/helpers/torunament_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/tournament_calendar/helpers/torunament_data.dart';
 import 'package:silkeborgbeachvolley/ui/tournament_calendar/create/tournament_create_main.dart';
 
 class TournamentCalendar extends StatefulWidget {

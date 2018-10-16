@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
 
 class SettingsFirestore {
   static final _collectionName = "settings";

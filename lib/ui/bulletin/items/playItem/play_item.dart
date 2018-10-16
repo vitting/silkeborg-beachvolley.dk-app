@@ -15,7 +15,7 @@ class BulletinPlayItem extends StatefulWidget {
   final TextOverflow overflow;
   final bool isDetailMode;
 
-  BulletinPlayItem(
+  const BulletinPlayItem(
       {this.bulletinItem,
       this.onTap,
       this.onPressed,

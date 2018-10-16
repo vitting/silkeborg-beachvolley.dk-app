@@ -18,7 +18,7 @@ import '../../helpers/photo_functions.dart' as photoFunctions;
 class CreateBulletinItem extends StatefulWidget {
   final BulletinType bulletinType;
   
-  CreateBulletinItem(this.bulletinType);
+  const CreateBulletinItem(this.bulletinType);
 
   @override
   _CreateBulletinItemState createState() => _CreateBulletinItemState();

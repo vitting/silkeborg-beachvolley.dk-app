@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/user_firestore.dart';
-import 'package:silkeborgbeachvolley/helpers/user_info_class.dart';
+import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
 import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollmentExists.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_firestore.dart';

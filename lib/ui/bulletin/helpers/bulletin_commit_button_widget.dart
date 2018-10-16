@@ -7,7 +7,7 @@ class ConfirmButton extends StatelessWidget {
   final ValueChanged<ButtonState> onPress;
   final String toolTip;
 
-ConfirmButton(
+const ConfirmButton(
       {Key key,
       @required this.buttonState,
       @required this.onPress,

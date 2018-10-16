@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/helpers/loader_spinner.dart';
+import 'package:silkeborgbeachvolley/helpers/loader_spinner_widget.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/image_type.dart';
@@ -12,7 +12,7 @@ class BulletinItemPictures extends StatelessWidget {
   final bool useSquareOnOddImageCount;
   final bool showImageFullScreen;
 
-  BulletinItemPictures(
+  const BulletinItemPictures(
       {this.type,
       this.useSquareOnOddImageCount = false,
       this.images,

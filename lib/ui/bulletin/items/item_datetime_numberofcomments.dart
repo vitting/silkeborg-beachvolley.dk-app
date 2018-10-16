@@ -6,7 +6,7 @@ class DateTimeNumberOfCommentsAndCommits extends StatelessWidget {
   final int numberOfCommits;
   final Function onTapPlayerCount;
   final double size;
-  DateTimeNumberOfCommentsAndCommits(
+  const DateTimeNumberOfCommentsAndCommits(
       {this.bulletinItem,
       this.numberOfCommits = -1,
       this.onTapPlayerCount,

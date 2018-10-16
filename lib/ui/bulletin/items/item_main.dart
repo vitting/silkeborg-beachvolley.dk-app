@@ -13,7 +13,7 @@ import './item_functions.dart' as itemFunctions;
 
 class BulletinItemMain extends StatelessWidget {
   final Map item;
-  BulletinItemMain(this.item);
+  const BulletinItemMain(this.item);
 
   @override
   Widget build(BuildContext context) {
