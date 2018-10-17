@@ -11,7 +11,7 @@ import 'package:silkeborgbeachvolley/ui/bulletin/main/bulletin_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_launcher_main.dart';
 import 'package:silkeborgbeachvolley/ui/login/login_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
-import './home_functions.dart' as homeFunctions;
+import './helpers/home_functions.dart' as homeFunctions;
 
 class Home extends StatefulWidget {
   static FirebaseUser loggedInUser;

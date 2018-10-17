@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_chart_matches_week_widget.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_chart_points_week_widget.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/detail/helpers/ranking_detail_chart_matches_week_widget.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/detail/helpers/ranking_detail_chart_points_week_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 

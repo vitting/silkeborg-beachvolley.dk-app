@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/main/list_of_matches/ranking_matches_row_widget.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/main/list_of_matches/helpers/ranking_matches_row_widget.dart';
 
 class RankingMatches extends StatelessWidget {
   final String userId;

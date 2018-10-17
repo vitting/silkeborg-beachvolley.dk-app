@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import 'package:silkeborgbeachvolley/ui/scaffold/drawer.dart';
+import 'package:silkeborgbeachvolley/ui/scaffold/helpers/drawer_widget.dart';
 
 class SilkeborgBeachvolleyScaffold extends StatefulWidget {
   final String title;

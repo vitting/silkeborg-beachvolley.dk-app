@@ -7,7 +7,7 @@ import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_matches_header_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_matches_row_widget.dart';
-import './ranking_detail_functions.dart' as rankingDetailFunctions;
+import './helpers/ranking_detail_functions.dart' as rankingDetailFunctions;
 
 class RankingDetailMatches extends StatelessWidget {
   final Future<List<RankingMatchData>> matches;

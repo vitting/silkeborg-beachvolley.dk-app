@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
-import 'auth_functions.dart' as authFunctions;
+import 'helpers/auth_functions.dart' as authFunctions;
 
 class Login extends StatelessWidget {
   static final routeName = "/login";

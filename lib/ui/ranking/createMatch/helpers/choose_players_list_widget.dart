@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/createMatch/choose_players_list_row.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/createMatch/create_player_chooser.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/createMatch/helpers/choose_players_list_row_widget.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/createMatch/helpers/create_player_chooser_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 

@@ -4,7 +4,7 @@ import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/main/list_of_matches/ranking_matches_row_element_widget.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/main/list_of_matches/helpers/ranking_matches_row_element_widget.dart';
 
 class RankingMatchesRow extends StatelessWidget {
   static Map<String, String> _cachedData =
