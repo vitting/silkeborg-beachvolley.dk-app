@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
-import 'package:silkeborgbeachvolley/helpers/app_state_container_widget.dart';
-import 'package:silkeborgbeachvolley/helpers/loader_spinner_widget.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/item_main.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/create_item_main.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/main/bulletin_bottom_navigationbar_main.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/main/bulletin_main_fab.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/no_data_widget.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
@@ -86,9 +86,7 @@ class _BulletinState extends State<Bulletin> {
 
         if (snapshot.hasData) {
           if (snapshot.data.documents.length == 0) {
-            return Card(
-              child: Center(child: Text("Der er ingen opslag")),
-            );
+            return NoData("Der er ingen opslag");
           } else {
             return Scrollbar(
               child: ListView.builder(

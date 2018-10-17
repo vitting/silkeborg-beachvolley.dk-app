@@ -3,14 +3,14 @@ import 'dart:isolate';
 
 import 'package:meta/meta.dart';
 
-class ImageParam {
+class ImageParamData {
   final String firebaseStorageFolder;
   final int imageSize;
   final File file;
   final Directory tempDir;
   final String fileName;
   SendPort sendPort;
-  ImageParam(
+  ImageParamData(
       {@required this.file,
       @required this.sendPort,
       @required this.imageSize,

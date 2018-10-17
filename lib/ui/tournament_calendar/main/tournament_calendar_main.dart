@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
-import 'package:silkeborgbeachvolley/helpers/list_item_card_widget.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/list_item_card_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';

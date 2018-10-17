@@ -1,6 +1,6 @@
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 
-class BulletinImageHelper {
+class BulletinImageHelpers {
   static int getImageSize(BulletinType type) {
     int size = 0;
     if (type == BulletinType.event) size = 1200;

@@ -1,8 +1,8 @@
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data.dart';
 
 class ItemFieldsCreate {
   String id;

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
+import 'package:silkeborgbeachvolley/helpers/image_info_data.dart';
 
 class BulletinFireStorage {
   static FirebaseStorage _firestorage;

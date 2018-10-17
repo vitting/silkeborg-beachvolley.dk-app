@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data.dart';
 
 class DateTimeNumberOfCommentsAndCommits extends StatelessWidget {
   final BulletinItemData bulletinItem;

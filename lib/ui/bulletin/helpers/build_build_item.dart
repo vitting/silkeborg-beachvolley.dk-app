@@ -1,9 +1,9 @@
-import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data_class.dart';
+import 'package:silkeborgbeachvolley/helpers/image_info_data.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_fields_create_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data.dart';
 
 class BuildBulletinItem {
   static BulletinNewsItemData buildNewsItem(

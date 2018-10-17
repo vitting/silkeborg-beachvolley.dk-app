@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data.dart';
 enum ImageInfoState {
   delete,
   deleteOnExit,

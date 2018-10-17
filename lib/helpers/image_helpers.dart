@@ -4,14 +4,14 @@ import 'dart:isolate';
 
 import 'package:image/image.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
-import 'package:silkeborgbeachvolley/helpers/image_param_class.dart';
+import 'package:silkeborgbeachvolley/helpers/image_info_data.dart';
+import 'package:silkeborgbeachvolley/helpers/image_param_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestorage.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data.dart';
 import 'package:uuid/uuid.dart';
 
 class ImageHelpers {
-  static void processImageIsolate(ImageParam param) async {
+  static void processImageIsolate(ImageParamData param) async {
     final Image imageDecoded = decodeImage(await param.file.readAsBytes());
     Image resizedImage;
 
@@ -48,7 +48,7 @@ class ImageHelpers {
   static Future<ImageInfoData> saveImage(
       File file, int imageSize, String storageFolder) async {
     ReceivePort receivePort = new ReceivePort();
-    ImageParam imageParam = ImageParam(
+    ImageParamData imageParam = ImageParamData(
         file: file,
         sendPort: receivePort.sendPort,
         imageSize: imageSize,

@@ -3,7 +3,7 @@ import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/postcal_codes_data.dart';
-import 'package:silkeborgbeachvolley/helpers/system_helpers_class.dart';
+import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_data_class.dart';
 import 'package:validate/validate.dart';
 import './enrollment_form_functions.dart' as formFunctions;

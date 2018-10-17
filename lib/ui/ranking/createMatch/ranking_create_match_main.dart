@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/helpers/loader_spinner_overlay_widget.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_overlay_widget.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/choose_players_list.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/create_player_choose_date.dart';

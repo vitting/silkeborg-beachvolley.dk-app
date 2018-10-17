@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:silkeborgbeachvolley/helpers/event_datetime_type_enum.dart';
-import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
+import 'package:silkeborgbeachvolley/helpers/image_info_data.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';

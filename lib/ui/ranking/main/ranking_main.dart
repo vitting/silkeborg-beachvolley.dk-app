@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/helpers/dot_bottombar_widget.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/dot_bottombar_widget.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/ranking_create_match_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';

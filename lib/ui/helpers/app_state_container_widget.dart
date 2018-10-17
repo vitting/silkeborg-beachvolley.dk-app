@@ -14,9 +14,10 @@ class AppState {
 
 class AppStateContainer extends StatefulWidget {
   final Widget child;
+  final AppState state;
 
   AppStateContainer({
-    @required this.child,
+    @required this.child, this.state
   });
 
   static _AppStateContainerState of(
@@ -40,6 +41,7 @@ class _AppStateContainerState extends State<AppStateContainer> {
   @override
   void initState() {
     super.initState();
+    state = widget.state;
   }
 
   @override

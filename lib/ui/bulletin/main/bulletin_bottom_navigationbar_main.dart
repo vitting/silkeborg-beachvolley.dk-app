@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/firebase_functions_call.dart';
-import 'package:silkeborgbeachvolley/helpers/icon_counter_widget.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/icon_counter_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_items_count_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_sharedpref.dart';

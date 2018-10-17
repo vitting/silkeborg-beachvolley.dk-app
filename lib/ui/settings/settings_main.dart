@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:silkeborgbeachvolley/helpers/chip_header_widget.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/chip_header_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_categories_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';

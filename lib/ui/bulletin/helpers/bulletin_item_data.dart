@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_committed_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_committed_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/confirm_dialog_options_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/confirm_dialog_options_data.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/editItem/bulletin_edit_item_main.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data.dart';
 import '../../../helpers/confirm_dialog_functions.dart'
     as confirmDialogFunctions;
 
@@ -37,7 +37,7 @@ void bulletinItemPopupMenu(
 
 void bulletinConfirmDialog(
     BuildContext context, BulletinItemData bulletinItem) async {
-  ConfirmDialogOptions dialogOptions =
+  ConfirmDialogOptionsData dialogOptions =
       getConfimDialogOptions(bulletinItem.type);
   ConfirmDialogAction result = await confirmDialogFunctions.confirmDialog(
       context,
@@ -51,8 +51,8 @@ void bulletinConfirmDialog(
   }
 }
 
-ConfirmDialogOptions getConfimDialogOptions(BulletinType type) {
-  ConfirmDialogOptions dialogOptions = new ConfirmDialogOptions();
+ConfirmDialogOptionsData getConfimDialogOptions(BulletinType type) {
+  ConfirmDialogOptionsData dialogOptions = new ConfirmDialogOptionsData();
   switch (type) {
     case BulletinType.news:
       dialogOptions.title = Text("Slet nyhed");

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_image_viewer_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_pictures_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_title_widget.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/image_type.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/image_type_enum.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/item_datetime_numberofcomments.dart';
 
 class BulletinNewsItem extends StatelessWidget {

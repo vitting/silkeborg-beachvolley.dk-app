@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_committed_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_committed_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/detailItem/bulletin_comment_item_data.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data.dart';
 
 class BulletinFirestore {
   static final _bulletinCollectionName = "bulletins";

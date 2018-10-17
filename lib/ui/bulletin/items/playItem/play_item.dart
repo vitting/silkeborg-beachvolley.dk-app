@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_commit_button_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_title_widget.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data_class.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/item_datetime_numberofcomments.dart';
 import '../../helpers/bulletin_commit_functions.dart' as committedFunctions;
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/helpers/loader_spinner_overlay_widget.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_overlay_widget.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class HomeLauncherSplash extends StatelessWidget {

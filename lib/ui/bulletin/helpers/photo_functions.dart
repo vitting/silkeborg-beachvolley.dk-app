@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:silkeborgbeachvolley/helpers/image_helpers.dart';
-import 'package:silkeborgbeachvolley/helpers/image_info_data_class.dart';
-import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_helper_class.dart';
+import 'package:silkeborgbeachvolley/helpers/image_info_data.dart';
+import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 
 Future<ImageInfoData> addPhoto(BuildContext context, BulletinType bulletinType) async {
@@ -45,8 +45,8 @@ Future<ImageInfoData> selectPhoto(String mode, BulletinType bulletinType) async 
     if (imageFile != null) {
       imageInfo = await ImageHelpers.saveImage(
           imageFile,
-          BulletinImageHelper.getImageSize(bulletinType),
-          BulletinImageHelper.getStorageFolder(bulletinType));
+          BulletinImageHelpers.getImageSize(bulletinType),
+          BulletinImageHelpers.getStorageFolder(bulletinType));
     }
 
     return imageInfo;

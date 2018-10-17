@@ -26,10 +26,9 @@ class _HomeState extends State<Home> {
   final FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
   final StreamController<NotificationData> _notificationController =
       StreamController<NotificationData>.broadcast();
-
   bool _isLoggedIn = false;
   Widget homeWidget = HomeLauncherSplash();
-
+  
   @override
   void dispose() {
     super.dispose();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:silkeborgbeachvolley/helpers/chip_header_widget.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/chip_header_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_detail_row.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_payment_data.dart';

@@ -4,7 +4,7 @@ import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_made_by_user.dart'
 import 'package:silkeborgbeachvolley/ui/enrollment/form/enrollment_form.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:silkeborgbeachvolley/helpers/dot_bottombar_widget.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/dot_bottombar_widget.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/silkeborgBeachvolleyScaffold.dart';
 
 class Enrollment extends StatefulWidget {

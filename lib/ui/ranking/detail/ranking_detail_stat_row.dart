@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/helpers/chip_header_widget.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/chip_header_widget.dart';
 
 class RankingDetailStatRow extends StatelessWidget {
   final int total;

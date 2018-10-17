@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
-import 'package:silkeborgbeachvolley/helpers/list_item_card_widget.dart';
-import 'package:silkeborgbeachvolley/helpers/searchbar_widget.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/list_item_card_widget.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/searchbar_widget.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_detail_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_edit_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_data_class.dart';
