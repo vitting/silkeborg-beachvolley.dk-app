@@ -36,6 +36,16 @@ class Dialogs {
     );
   }
 
+  static Future<ConfirmDialogAction> confirmReset(BuildContext context, String body) async {
+    return confirmFunctions.confirmDialog(context, 
+    body: [Text(body)],
+    title: Text("Nulstil"),
+    actionLeft: ConfirmDialogAction.cancel,
+    actionRight: ConfirmDialogAction.reset,
+    barrierDismissible: false
+    );
+  }
+
   static Future<int> modalBottomSheet(BuildContext context, List<DialogsModalBottomSheetItem> items) async {
     return showModalBottomSheet(
       context: context,

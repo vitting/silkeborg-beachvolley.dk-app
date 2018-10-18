@@ -74,6 +74,9 @@ Text _getButtonText(ConfirmDialogAction action) {
     case ConfirmDialogAction.unhide:
       value = "Vis";
       break;
+    case ConfirmDialogAction.reset:
+      value = "Nulstil";
+      break;
     default:
       value = "";
   }

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
+import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
+import 'package:silkeborgbeachvolley/helpers/firebase_functions_call.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/dot_bottombar_widget.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_overlay_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/admin/admin_ranking_matches_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/admin/admin_ranking_players_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
@@ -13,6 +17,7 @@ class AdminRanking extends StatefulWidget {
 }
 
 class AdminRankingState extends State<AdminRanking> {
+  bool _showLoader = false;
   int _position = 0;
   bool _showDeletedPlayers = false;
   int _numberOfPages = 2;
@@ -33,17 +38,21 @@ class AdminRankingState extends State<AdminRanking> {
           numberOfDot: _numberOfPages,
           position: _position,
         ),
-        body: PageView.builder(
-          itemCount: _numberOfPages,
-          controller: _controller,
-          itemBuilder: (BuildContext context, int page) {
-            return _getPage(page);
-          },
-          onPageChanged: (int page) {
-            setState(() {
-              _position = page;
-            });
-          },
+        body: LoaderSpinnerOverlay(
+          show: _showLoader,
+          text: "Nulstiller sæsonen",
+          child: PageView.builder(
+            itemCount: _numberOfPages,
+            controller: _controller,
+            itemBuilder: (BuildContext context, int page) {
+              return _getPage(page);
+            },
+            onPageChanged: (int page) {
+              setState(() {
+                _position = page;
+              });
+            },
+          ),
         ));
   }
 
@@ -61,7 +70,8 @@ class AdminRankingState extends State<AdminRanking> {
                   child: _showDeletedPlayers
                       ? Text("Vis ikke slettede spillere")
                       : Text("Vis slettede spillere"),
-                )
+                ),
+                PopupMenuItem(value: 1, child: Text("Nulstil sæson"))
               ]);
 
           if (result != null && result == 0) {
@@ -69,9 +79,29 @@ class AdminRankingState extends State<AdminRanking> {
               _showDeletedPlayers = !_showDeletedPlayers;
             });
           }
+
+          if (result != null && result == 1) {
+            await _resetSeason(context);
+          }
         },
       ),
     ];
+  }
+
+  Future<void> _resetSeason(BuildContext context) async {
+    ConfirmDialogAction result = await Dialogs.confirmReset(context,
+        "Er du sikker på du vil nulstille sæsonen?\n\nVær opmærksom på at alle kampe vi blive skjult og alle spiller data (point og spillede kampe) vil blive nustillet.");
+
+    if (result != null && result == ConfirmDialogAction.reset) {
+      setState(() {
+        _showLoader = true;              
+      });
+      String result = await FirebaseFunctions.resetRanking();
+      print("RESULT resetRanking: $result");
+      setState(() {
+        _showLoader = false;              
+      });
+    }
   }
 
   String _getPageTitle(int page) {
