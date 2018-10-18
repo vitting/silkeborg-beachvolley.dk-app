@@ -24,21 +24,25 @@ class RankingFirestore {
     List<DocumentSnapshot> list = [];
     QuerySnapshot winner1 = await firestoreInstance
         .collection(_collectionNameMatch)
+        .where("enabled", isEqualTo: true)
         .where("winner1.id", isEqualTo: userId)
         .orderBy("matchDate")
         .getDocuments();
     QuerySnapshot winner2 = await firestoreInstance
         .collection(_collectionNameMatch)
+        .where("enabled", isEqualTo: true)
         .where("winner2.id", isEqualTo: userId)
         .orderBy("matchDate")
         .getDocuments();
     QuerySnapshot loser1 = await firestoreInstance
         .collection(_collectionNameMatch)
+        .where("enabled", isEqualTo: true)
         .where("loser1.id", isEqualTo: userId)
         .orderBy("matchDate")
         .getDocuments();
     QuerySnapshot loser2 = await firestoreInstance
         .collection(_collectionNameMatch)
+        .where("enabled", isEqualTo: true)
         .where("loser2.id", isEqualTo: userId)
         .orderBy("matchDate")
         .getDocuments();
@@ -70,6 +74,7 @@ class RankingFirestore {
       [int limit = 20, bool descending = true]) {
     return firestoreInstance
         .collection(_collectionNameMatch)
+        .where("enabled", isEqualTo: true)
         .orderBy("createdDate", descending: descending)
         .limit(limit)
         .getDocuments();
@@ -79,6 +84,7 @@ class RankingFirestore {
       [int limit = 20, bool descending = true]) {
     return firestoreInstance
         .collection(_collectionNameMatch)
+        .where("enabled", isEqualTo: true)
         .orderBy("createdDate", descending: descending)
         .limit(limit)
         .snapshots();
@@ -87,6 +93,7 @@ class RankingFirestore {
   static Stream<QuerySnapshot> getMatchesAsStream([bool descending = true]) {
     return firestoreInstance
         .collection(_collectionNameMatch)
+        .where("enabled", isEqualTo: true)
         .orderBy("createdDate", descending: descending)
         .snapshots();
   }

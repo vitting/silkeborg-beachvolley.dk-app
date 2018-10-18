@@ -14,6 +14,8 @@ class RankingMatchData implements BaseData {
   String userId;
   DateTime matchDate;
   dynamic createdDate;
+  int year;
+  bool enabled;
   RankingMatchPlayerData winner1;
   RankingMatchPlayerData winner2;
   RankingMatchPlayerData loser1;
@@ -27,7 +29,7 @@ class RankingMatchData implements BaseData {
       @required this.winner2,
       @required this.loser1,
       @required this.loser2,
-      this.createdDate});
+      this.createdDate, this.year, this.enabled = true});
 
   Future<RankingPlayerData> getPlayerCreatedMatch() {
     return RankingPlayerData.getPlayer(userId);
@@ -37,6 +39,7 @@ class RankingMatchData implements BaseData {
     id = id ?? UuidHelpers.generateUuid();
     userId = userId ?? Home.loggedInUser.uid;
     createdDate = createdDate ?? FieldValue.serverTimestamp();
+    year = year ?? matchDate.year;
 
     await RankingFirestore.saveMatch(this);
   }
@@ -54,7 +57,9 @@ class RankingMatchData implements BaseData {
       "winner2": winner2.toMap(),
       "loser1": loser1.toMap(),
       "loser2": loser2.toMap(),
-      "createdDate": createdDate
+      "createdDate": createdDate,
+      "year": year,
+      "enabled": enabled
     };
   }
 
@@ -75,6 +80,9 @@ class RankingMatchData implements BaseData {
         winner2: RankingMatchPlayerData.fromMap(item["winner2"]),
         loser1: RankingMatchPlayerData.fromMap(item["loser1"]),
         loser2: RankingMatchPlayerData.fromMap(item["loser2"]),
-        createdDate: item["createdDate"]);
+        createdDate: item["createdDate"],
+        year: item["year"],
+        enabled: item["enabled"]
+        );
   }
 }

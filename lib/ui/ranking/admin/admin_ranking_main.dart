@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/dot_bottombar_widget.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/admin/admin_ranking_matches_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/admin/admin_ranking_players_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
@@ -54,17 +53,16 @@ class AdminRankingState extends State<AdminRanking> {
         icon: Icon(Icons.more_vert),
         onPressed: () async {
           int result = await showMenu<int>(
-            position: RelativeRect.fromLTRB(0.0, 70.0, -10.0, 0.0),
-            context: context,
-            items:  <PopupMenuEntry<int>> [
-               PopupMenuItem(
-                value: 0,
-                child: _showDeletedPlayers
-                    ? Text("Vis ikke slettede spillere")
-                    : Text("Vis slettede spillere"),
-              )
-            ]
-          );
+              position: RelativeRect.fromLTRB(0.0, 70.0, -10.0, 0.0),
+              context: context,
+              items: <PopupMenuEntry<int>>[
+                PopupMenuItem(
+                  value: 0,
+                  child: _showDeletedPlayers
+                      ? Text("Vis ikke slettede spillere")
+                      : Text("Vis slettede spillere"),
+                )
+              ]);
 
           if (result != null && result == 0) {
             setState(() {
