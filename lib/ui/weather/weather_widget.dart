@@ -16,8 +16,7 @@ class Weather extends StatelessWidget {
     return FutureBuilder(
       future: _load(),
       builder: (BuildContext context, AsyncSnapshot<WeatherData> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting ||
-            !snapshot.hasData) return Container();
+        if (!snapshot.hasData) return Container();
         if (snapshot.hasData)
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 10.0),

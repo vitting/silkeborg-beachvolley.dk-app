@@ -13,7 +13,6 @@ import 'package:silkeborgbeachvolley/ui/bulletin/main/bulletin_main_fab.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/no_data_widget.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
-import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
 import 'package:silkeborgbeachvolley/ui/weather/weather_widget.dart';
 import './bulletin_main_functions.dart' as bulletinMainFunctions;
 
@@ -27,9 +26,16 @@ class Bulletin extends StatefulWidget {
 }
 
 class _BulletinState extends State<Bulletin> {
-  int _bottombarSelected = 0;
   final int _numberOfItemsToLoadDefault = 20;
+  Widget _weatherCache;
+  int _bottombarSelected = 0;
   int _listNumberOfItemsToLoad = 20;
+
+  @override
+    void initState() {
+      super.initState();
+      _weatherCache = Home.settings.showWeather ? Weather.withWind() : Container();
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -52,14 +58,12 @@ class _BulletinState extends State<Bulletin> {
         },
       ),
       actions: <Widget>[
-        FutureBuilder(
-          future: SettingsData.getSettings(Home.loggedInUser.uid),
-          builder:
-              (BuildContext context, AsyncSnapshot<SettingsData> snapshot) {
-            if (snapshot.connectionState == ConnectionState.done &&
-                snapshot.hasData &&
-                snapshot.data.showWeather) return Weather.withWind();
-            return Container();
+        InkWell(
+          child: _weatherCache,
+          onTap: () {
+            setState(() {
+              _weatherCache = Home.settings.showWeather ? Weather.withWind() : Container();              
+            });
           },
         )
       ],
