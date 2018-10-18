@@ -58,6 +58,14 @@ class RankingMatchData implements BaseData {
     };
   }
 
+  static Stream<QuerySnapshot> getMatchesAsStreamWithLimit(int limit) {
+    return RankingFirestore.getMatchesAsStreamWithLimit(limit);
+  }
+
+  static Stream<QuerySnapshot> getMatchesAsStream() {
+    return RankingFirestore.getMatchesAsStream();
+  }
+
   static RankingMatchData fromMap(Map<String, dynamic> item) {
     return RankingMatchData(
         id: item["id"],

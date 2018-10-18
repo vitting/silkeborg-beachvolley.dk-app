@@ -16,6 +16,26 @@ class Dialogs {
     );
   }
 
+  static Future<ConfirmDialogAction> confirmHide(BuildContext context, String body) async {
+    return confirmFunctions.confirmDialog(context, 
+    body: [Text(body)],
+    title: Text("Skjul"),
+    actionLeft: ConfirmDialogAction.cancel,
+    actionRight: ConfirmDialogAction.hide,
+    barrierDismissible: false
+    );
+  }
+
+  static Future<ConfirmDialogAction> confirmUnHide(BuildContext context, String body) async {
+    return confirmFunctions.confirmDialog(context, 
+    body: [Text(body)],
+    title: Text("Vis"),
+    actionLeft: ConfirmDialogAction.cancel,
+    actionRight: ConfirmDialogAction.unhide,
+    barrierDismissible: false
+    );
+  }
+
   static Future<int> modalBottomSheet(BuildContext context, List<DialogsModalBottomSheetItem> items) async {
     return showModalBottomSheet(
       context: context,

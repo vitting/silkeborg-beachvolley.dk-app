@@ -1,18 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
+import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
+import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
+import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/main/list_of_matches/helpers/ranking_matches_row_widget.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_matches_row_widget.dart';
 
 class RankingMatches extends StatelessWidget {
-  final String userId;
-  final Stream<QuerySnapshot> matches;
-  const RankingMatches({Key key, this.userId, this.matches}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: matches,
+      stream: RankingMatchData.getMatchesAsStreamWithLimit(10),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (!snapshot.hasData) return LoaderSpinner();
         if (snapshot.hasData && snapshot.data.documents.length == 0) {
@@ -43,11 +42,37 @@ class RankingMatches extends StatelessWidget {
             RankingMatchData item = list[position];
             return RankingMatchesRow(
               match: item,
-              userId: userId,
+              userId: Home.loggedInUser.uid,
+              icon: _menuIcon(item),
+              iconOnTap: (RankingMatchData match) {
+                _showDelete(context, match);
+              },
             );
           },
         ),
       ),
     );
+  }
+
+  IconData _menuIcon(RankingMatchData match) {
+    IconData icon;
+    if (Home.loggedInUser.uid == match.userId) {
+      icon = Icons.more_horiz;
+    }
+    return icon;
+  }
+
+    Future<void> _showDelete(BuildContext context, RankingMatchData match) async {
+    int result = await Dialogs.modalBottomSheet(
+        context, [DialogsModalBottomSheetItem("Slet", Icons.delete, 0)]);
+
+    if (result != null) {
+      ConfirmDialogAction action = await Dialogs.confirmDelete(
+          context, "Er du sikker på du vil slette kampen?");
+
+      if (action != null && action == ConfirmDialogAction.delete) {
+        match.delete();
+      }
+    }
   }
 }

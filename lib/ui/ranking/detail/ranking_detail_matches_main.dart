@@ -6,7 +6,7 @@ import 'package:silkeborgbeachvolley/ui/helpers/list_item_card_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_matches_header_widget.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_matches_row_widget.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_matches_stat_row_widget.dart';
 import './helpers/ranking_detail_functions.dart' as rankingDetailFunctions;
 
 class RankingDetailMatches extends StatelessWidget {
@@ -74,7 +74,7 @@ class RankingDetailMatches extends StatelessWidget {
                         ),
                       ),
                       RankingMatchesHeader(),
-                      RankingMatchesRow(
+                      RankingMatchesStatRow(
                         winner: item.winner1,
                         loser: item.loser1,
                         userId: userId,
@@ -82,7 +82,7 @@ class RankingDetailMatches extends StatelessWidget {
                       SizedBox(
                         height: 5.0,
                       ),
-                      RankingMatchesRow(
+                      RankingMatchesStatRow(
                         winner: item.winner2,
                         loser: item.loser2,
                         userId: userId,

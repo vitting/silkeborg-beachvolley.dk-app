@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_main.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/list_of_ranking/helpers/ranking_item_widget.dart';
 
@@ -16,7 +15,7 @@ class _RankingListState extends State<RankingList> {
   Widget build(BuildContext context) {
     return Container(
       child: StreamBuilder(
-        stream: RankingFirestore.getRanking(),
+        stream: RankingPlayerData.getRankingAsStream(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return LoaderSpinner();
 

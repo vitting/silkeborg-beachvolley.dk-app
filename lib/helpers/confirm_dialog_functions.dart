@@ -68,6 +68,12 @@ Text _getButtonText(ConfirmDialogAction action) {
     case ConfirmDialogAction.close:
       value = "Luk";
       break;
+    case ConfirmDialogAction.hide:
+      value = "Skjul";
+      break;
+    case ConfirmDialogAction.unhide:
+      value = "Vis";
+      break;
     default:
       value = "";
   }

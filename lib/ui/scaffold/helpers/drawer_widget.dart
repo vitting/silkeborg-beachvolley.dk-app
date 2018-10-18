@@ -4,6 +4,7 @@ import 'package:silkeborgbeachvolley/helpers/confirm_action_enum.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/admin/admin_ranking_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/settings_main.dart';
 import 'package:silkeborgbeachvolley/ui/tournament_calendar/main/tournament_calendar_main.dart';
@@ -115,6 +116,14 @@ class SilkeborgBeacvolleyScaffoldDrawerState
         title: Text("Administrere medlemmer"),
         onTap: () {
           Navigator.of(context).popAndPushNamed(AdminEnrollment.routeName);
+        },
+      ));
+
+      widgets.add(ListTile(
+        leading: Icon(Icons.album),
+        title: Text("Administrere Ranglisten"),
+        onTap: () {
+          Navigator.of(context).popAndPushNamed(AdminRanking.routeName);
         },
       ));
     }

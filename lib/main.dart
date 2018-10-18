@@ -5,6 +5,7 @@ import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_launcher_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/login/login_main.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/admin/admin_ranking_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_main.dart';
 import 'package:silkeborgbeachvolley/ui/scoreboard/scoreboard_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/settings_main.dart';
@@ -20,7 +21,6 @@ void main() {
   initialRoute: "/",
   routes: <String, WidgetBuilder>{
     "/": (BuildContext context) => Home(),
-    // "/": (BuildContext context) => HomeLauncherSplash(),
     // "/": (BuildContext context) => TestWidget(),
     Enrollment.routeName: (BuildContext context) => Enrollment(),
     AdminEnrollment.routeName: (BuildContext context) => AdminEnrollment(),
@@ -29,6 +29,7 @@ void main() {
     Login.routeName: (BuildContext context) => Login(),
     Settings.routeName: (BuildContext context) => Settings(),
     Ranking.routeName: (BuildContext context) => Ranking(),
+    AdminRanking.routeName: (BuildContext context) => AdminRanking(),
     TournamentCalendar.routeName: (BuildContext context) =>
         TournamentCalendar()
   },

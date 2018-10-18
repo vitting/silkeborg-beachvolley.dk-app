@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/dot_bottombar_widget.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/ranking_create_match_main.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_sharedpref.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/first_time/ranking_firsttime_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/list_of_matches/ranking_matches_main.dart';
@@ -40,10 +38,7 @@ class RankingState extends State<Ranking> {
   void _initPages() async {
     _widgets = [
       RankingList(),
-      RankingMatches(
-        userId: Home.loggedInUser.uid,
-        matches: RankingFirestore.getMatchesAsStream(10)
-      )
+      RankingMatches()
     ];
   }
 
