@@ -17,6 +17,10 @@ class _RankingListState extends State<RankingList> {
       child: StreamBuilder(
         stream: RankingPlayerData.getRankingAsStream(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            print("ERROR ranking_list_main StreamBuilder: ${snapshot.error}");
+            return Container();
+          }
           if (!snapshot.hasData) return LoaderSpinner();
 
           if (snapshot.data.documents.length == 0) {

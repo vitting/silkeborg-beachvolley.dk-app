@@ -13,6 +13,10 @@ class RankingMatches extends StatelessWidget {
     return StreamBuilder(
       stream: RankingMatchData.getMatchesAsStreamWithLimit(10),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          print("ERROR ranking_matches_main StreamBuilder: ${snapshot.error}");
+          return Container();
+        }
         if (!snapshot.hasData) return LoaderSpinner();
         if (snapshot.hasData && snapshot.data.documents.length == 0) {
           return Card(

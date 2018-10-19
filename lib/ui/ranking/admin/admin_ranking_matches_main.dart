@@ -21,6 +21,10 @@ class AdminRankingMatchesState extends State<AdminRankingMatches> {
     return StreamBuilder(
       stream: RankingMatchData.getMatchesAsStream(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          print("ERROR admin_ranking_matches_main StreamBuilder: ${snapshot.error}");
+          return Container();
+        }
         if (!snapshot.hasData) return LoaderSpinner();
         if (snapshot.hasData && snapshot.data.documents.length == 0) {
           return NoData("Der blev ikke fundet nogen kampe");

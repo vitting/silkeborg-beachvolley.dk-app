@@ -23,6 +23,10 @@ class EnrollmentMadeByUserState extends State<EnrollmentMadeByUser> {
           future: EnrollmentUserData.getAllAddedByUser(),
           builder: (BuildContext context,
               AsyncSnapshot<List<EnrollmentUserData>> snapshot) {
+            if (snapshot.hasError) {
+              print("ERROR enrollment_made_by_user FutureBuilder: ${snapshot.error}");
+              return Container();
+            }
             if (!snapshot.hasData) return LoaderSpinner();
 
             if (snapshot.hasData && snapshot.data.length == 0)

@@ -84,6 +84,11 @@ class _BulletinState extends State<Bulletin> {
           bulletinMainFunctions.getSelectedType(_bottombarSelected),
           _listNumberOfItemsToLoad),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          print("ERROR bulletin_main StreamBuilder: ${snapshot.error}");
+          return Container();
+        }
+
         if (!snapshot.hasData) {
           return LoaderSpinner();
         }
