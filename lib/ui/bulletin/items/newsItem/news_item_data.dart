@@ -16,7 +16,7 @@ class BulletinNewsItemData extends BulletinItemData implements BaseData {
       {String id,
       BulletinType type = BulletinType.none,
       String body = "",
-      dynamic creationDate,
+      Timestamp creationDate,
       String authorId,
       String authorName,
       String authorPhotoUrl,
@@ -59,7 +59,7 @@ class BulletinNewsItemData extends BulletinItemData implements BaseData {
 
   Future<void> save() async {
     id = id ?? UuidHelpers.generateUuid();
-    creationDate = creationDate ?? FieldValue.serverTimestamp();
+    creationDate = creationDate ?? Timestamp.now();
     authorId = Home.loggedInUser.uid;
     authorName = Home.loggedInUser.displayName;
     authorPhotoUrl = Home.loggedInUser.photoUrl;

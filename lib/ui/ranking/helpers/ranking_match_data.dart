@@ -13,7 +13,7 @@ class RankingMatchData implements BaseData {
   String id;
   String userId;
   DateTime matchDate;
-  dynamic createdDate;
+  Timestamp createdDate;
   int year;
   bool enabled;
   RankingMatchPlayerData winner1;
@@ -38,7 +38,7 @@ class RankingMatchData implements BaseData {
   Future<void> save() async {
     id = id ?? UuidHelpers.generateUuid();
     userId = userId ?? Home.loggedInUser.uid;
-    createdDate = createdDate ?? FieldValue.serverTimestamp();
+    createdDate = createdDate ?? Timestamp.now();
     year = year ?? matchDate.year;
 
     await RankingFirestore.saveMatch(this);
@@ -52,7 +52,7 @@ class RankingMatchData implements BaseData {
     return {
       "id": id,
       "userId": userId,
-      "matchDate": matchDate,
+      "matchDate": Timestamp.fromDate(matchDate),
       "winner1": winner1.toMap(),
       "winner2": winner2.toMap(),
       "loser1": loser1.toMap(),
@@ -75,7 +75,7 @@ class RankingMatchData implements BaseData {
     return RankingMatchData(
         id: item["id"],
         userId: item["userId"] ?? "",
-        matchDate: item["matchDate"] ?? DateTime.now(),
+        matchDate: (item["matchDate"] as Timestamp).toDate(),
         winner1: RankingMatchPlayerData.fromMap(item["winner1"]),
         winner2: RankingMatchPlayerData.fromMap(item["winner2"]),
         loser1: RankingMatchPlayerData.fromMap(item["loser1"]),

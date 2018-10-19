@@ -13,7 +13,7 @@ import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 class EnrollmentUserData {
   String id;
   String addedByUserId;
-  dynamic creationDate;
+  Timestamp creationDate;
   String name;
   String street;
   int postalCode;
@@ -47,7 +47,7 @@ class EnrollmentUserData {
       "street": street,
       "postalCode": postalCode,
       "city": city,
-      "birthday": birthdate,
+      "birthday": Timestamp.fromDate(birthdate),
       "email": email,
       "phone": phone,
       "comment": comment,
@@ -70,7 +70,7 @@ class EnrollmentUserData {
       street = item["street"];
       postalCode = item["postalCode"];
       city = item["city"];
-      birthdate = item["birthday"];
+      birthdate = (item["birthday"] as Timestamp).toDate();
       email = item["email"];
       phone = item["phone"];
       comment = item["comment"] ?? "";
@@ -129,7 +129,7 @@ class EnrollmentUserData {
   Future<void> save() {
     id = id ?? UuidHelpers.generateUuid();
     addedByUserId = Home.loggedInUser?.uid;
-    creationDate = creationDate ?? FieldValue.serverTimestamp();
+    creationDate = creationDate ?? Timestamp.now();
     payment = payment ?? [];
     comment = comment ?? "";
     return EnrollmentFirestore.saveEnrollment(this);
@@ -170,12 +170,12 @@ class EnrollmentUserData {
     return EnrollmentUserData(
         id: item["id"] ?? "",
         addedByUserId: item["addedByUserId"],
-        creationDate: item["creationDate"] ?? DateTime.now(),
+        creationDate: item["creationDate"],
         name: item["name"] ?? "",
         street: item["street"] ?? "",
         postalCode: item["postalCode"] ?? 0,
         city: item["city"] ?? "",
-        birthdate: item["birthday"] ?? DateTime.now(),
+        birthdate: (item["birthday"] as Timestamp).toDate(),
         email: item["email"] ?? "",
         phone: item["phone"] ?? 0,
         comment: item["comment"] ?? "",

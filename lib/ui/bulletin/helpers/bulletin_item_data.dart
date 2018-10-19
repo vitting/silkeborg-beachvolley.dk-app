@@ -11,7 +11,7 @@ class BulletinItemData {
   String id;
   BulletinType type;
   String body;
-  dynamic creationDate;
+  Timestamp creationDate;
   String authorId;
   String authorName;
   String authorPhotoUrl;
@@ -33,7 +33,7 @@ class BulletinItemData {
       "id": id,
       "type": BulletinTypeHelper.getBulletinTypeAsString(type),
       "body": body,
-      "creationDate": creationDate == null ? DateTime.now() : creationDate,
+      "creationDate": creationDate,
       "author": {
         "id": authorId,
         "name": authorName,
@@ -73,11 +73,7 @@ class BulletinItemData {
   }
 
   String get creationDateFormatted {
-    if (creationDate is DateTime) {
-      return DateTimeHelpers.ddmmyyyyHHnn(creationDate);
-    }
-
-    return "";
+    return DateTimeHelpers.ddmmyyyyHHnn(creationDate.toDate());
   }
 
   Future<List<CommittedData>> getCommitted() async {

@@ -13,7 +13,7 @@ class BulletinPlayItemData extends BulletinItemData implements BaseData {
       {String id,
       BulletinType type = BulletinType.none,
       String body = "",
-      dynamic creationDate,
+      Timestamp creationDate,
       String authorId,
       String authorName,
       String authorPhotoUrl,
@@ -44,7 +44,7 @@ class BulletinPlayItemData extends BulletinItemData implements BaseData {
 
   Future<void> save() async {
     id = id ?? UuidHelpers.generateUuid();
-    creationDate = creationDate ?? FieldValue.serverTimestamp();
+    creationDate = creationDate ?? Timestamp.now();
     authorId = Home.loggedInUser.uid;
     authorName = Home.loggedInUser.displayName;
     authorPhotoUrl = Home.loggedInUser.photoUrl;
@@ -59,7 +59,7 @@ class BulletinPlayItemData extends BulletinItemData implements BaseData {
         authorName: item["author"]["name"] ?? "",
         authorPhotoUrl: item["author"]["photoUrl"] ?? "",
         body: item["body"] ?? "",
-        creationDate: item["creationDate"] ?? DateTime.now(),
+        creationDate: item["creationDate"],
         numberOfcomments: item["numberOfcomments"] ?? 0,
         numberOfCommits: item["numberOfCommits"] ?? 0,
         );

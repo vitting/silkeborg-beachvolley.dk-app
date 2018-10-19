@@ -11,7 +11,7 @@ class BulletinCommentItemData implements BaseData {
   String id;
   String bulletinId;
   String body;
-  dynamic creationDate;
+  Timestamp creationDate;
   String authorId;
   String authorName;
   String authorPhotoUrl;
@@ -30,7 +30,7 @@ class BulletinCommentItemData implements BaseData {
       "id": id,
       "bulletinId": bulletinId,
       "body": body,
-      "creationDate": creationDate ?? FieldValue.serverTimestamp(),
+      "creationDate": creationDate ?? Timestamp.now(),
       "author": {"id": authorId, "name": authorName, "photoUrl": authorPhotoUrl},
     };
   }
@@ -49,7 +49,7 @@ class BulletinCommentItemData implements BaseData {
         id: item["id"] ?? "",
         bulletinId: item["bulletinId"] ?? "",
         body: item["body"] ?? "",
-        creationDate: item["creationDate"] ?? DateTime.now(),
+        creationDate: item["creationDate"],
         authorId: item["author"]["id"] ?? "",
         authorName: item["author"]["name"]?? "",
         authorPhotoUrl: item["author"]["photoUrl"] ?? ""
@@ -57,7 +57,7 @@ class BulletinCommentItemData implements BaseData {
   }
 
   String get creationDateFormatted =>
-      DateTimeHelpers.ddmmyyyyHHnn(creationDate);
+      DateTimeHelpers.ddmmyyyyHHnn(creationDate.toDate());
 
   @override
   Future<void> delete() {

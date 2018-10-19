@@ -24,7 +24,7 @@ class BulletinEventItemData extends BulletinItemData implements BaseData {
       {String id,
       BulletinType type,
       String body = "",
-      DateTime creationDate,
+      Timestamp creationDate,
       String authorId,
       String authorName,
       String authorPhotoUrl,
@@ -53,10 +53,10 @@ class BulletinEventItemData extends BulletinItemData implements BaseData {
     Map<String, dynamic> map = super.toMap();
     map.addAll({
       "event": {
-        "startDate": eventStartDate,
-        "endDate": eventEndDate,
-        "startTime": eventStartTime,
-        "endTime": eventEndTime,
+        "startDate": Timestamp.fromDate(eventStartDate),
+        "endDate": Timestamp.fromDate(eventEndDate),
+        "startTime": Timestamp.fromDate(eventStartTime),
+        "endTime": Timestamp.fromDate(eventEndTime),
         "location": eventLocation,
         "title": eventTitle,
         "image": {
@@ -92,7 +92,7 @@ class BulletinEventItemData extends BulletinItemData implements BaseData {
 
   Future<void> save() {
     id = id ?? UuidHelpers.generateUuid();
-    creationDate = creationDate ?? FieldValue.serverTimestamp();
+    creationDate = creationDate ?? Timestamp.now();
     authorId = Home.loggedInUser.uid;
     authorName = Home.loggedInUser.displayName;
     authorPhotoUrl = Home.loggedInUser.photoUrl;
@@ -117,13 +117,13 @@ class BulletinEventItemData extends BulletinItemData implements BaseData {
         authorName: item["author"]["name"] ?? "",
         authorPhotoUrl: item["author"]["photoUrl"] ?? "",
         body: item["body"] ?? "",
-        creationDate: item["creationDate"] ?? DateTime.now(),
+        creationDate: item["creationDate"],
         numberOfcomments: item["numberOfcomments"] ?? 0,
         numberOfCommits: item["numberOfCommits"] ?? 0,
-        eventStartDate: item["event"]["startDate"] ?? DateTime.now(),
-        eventEndDate: item["event"]["endDate"] ?? DateTime.now(),
-        eventStartTime: item["event"]["startTime"] ?? DateTime.now(),
-        eventEndTime: item["event"]["endTime"] ?? DateTime.now(),
+        eventStartDate: (item["event"]["startDate"] as Timestamp).toDate(),
+        eventEndDate: (item["event"]["endDate"] as Timestamp).toDate(),
+        eventStartTime: (item["event"]["startTime"] as Timestamp).toDate(),
+        eventEndTime: (item["event"]["endTime"] as Timestamp).toDate(),
         eventLocation: item["event"]["location"] ?? "",
         eventTitle: item["event"]["title"] ?? "",
         eventImage: item["event"]["image"] == null

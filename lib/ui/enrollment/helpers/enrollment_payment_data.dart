@@ -1,8 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
 class EnrollmentPaymentData {
-  dynamic createdDate;
+  Timestamp createdDate;
   String approvedUserId;
   final int year;
   String comment;
@@ -14,7 +15,7 @@ class EnrollmentPaymentData {
 
   Map<String, dynamic> toMap() {
     return {
-      "createdDate": createdDate ?? DateTime.now(),
+      "createdDate": createdDate ?? Timestamp.now(),
       "approvedUserId": approvedUserId ?? Home.loggedInUser.uid,
       "year": year,
       "comment": comment

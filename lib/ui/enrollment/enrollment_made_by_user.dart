@@ -23,10 +23,9 @@ class EnrollmentMadeByUserState extends State<EnrollmentMadeByUser> {
           future: EnrollmentUserData.getAllAddedByUser(),
           builder: (BuildContext context,
               AsyncSnapshot<List<EnrollmentUserData>> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting &&
-                !snapshot.hasData) return LoaderSpinner();
+            if (!snapshot.hasData) return LoaderSpinner();
 
-            if (snapshot.data.length == 0)
+            if (snapshot.hasData && snapshot.data.length == 0)
               return Card(
                 child: Center(
                   child: ChipHeader(
@@ -58,7 +57,7 @@ class EnrollmentMadeByUserState extends State<EnrollmentMadeByUser> {
                             children: <Widget>[
                               _row(
                                   Icons.calendar_today,
-                                  DateTimeHelpers.ddmmyyyyHHnn(item.creationDate),
+                                  DateTimeHelpers.ddmmyyyyHHnn(item.creationDate.toDate()),
                                   "Oprettelses dato"),
                               _row(Icons.person, item.name, "Navn"),
                               _row(

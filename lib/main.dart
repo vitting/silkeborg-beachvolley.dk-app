@@ -1,8 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/main/bulletin_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_launcher_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/login/login_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/admin/admin_ranking_main.dart';
@@ -12,7 +13,12 @@ import 'package:silkeborgbeachvolley/ui/settings/settings_main.dart';
 import 'package:silkeborgbeachvolley/ui/test.dart';
 import 'package:silkeborgbeachvolley/ui/tournament_calendar/main/tournament_calendar_main.dart';
 
-void main() {
+void main() async {
+  /// Set firestore to save and return dates as Timestamp
+  final FirebaseApp app = FirebaseApp(name: "[DEFAULT]");
+  final Firestore firestore = Firestore(app: app);
+  await firestore.settings(timestampsInSnapshotsEnabled: true);
+
   runApp(MaterialApp(
   title: 'Silkeborg Beachvolley',
   theme: ThemeData(

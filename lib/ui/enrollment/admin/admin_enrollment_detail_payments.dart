@@ -66,7 +66,7 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
                 children: <Widget>[
                   AdminEnrollmentDetailRow(
                     icon: Icons.calendar_today,
-                    text: DateTimeHelpers.ddmmyyyyHHnn(payment.createdDate),
+                    text: DateTimeHelpers.ddmmyyyyHHnn(payment.createdDate.toDate()),
                     tooltip: "Dato medlem er oprettet",
                   ),
                   AdminEnrollmentDetailRow(

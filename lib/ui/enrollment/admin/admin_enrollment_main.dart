@@ -79,7 +79,7 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(DateTimeHelpers.ddmmyyyyHHnn(item.creationDate)),
+          Text(DateTimeHelpers.ddmmyyyyHHnn(item.creationDate.toDate())),
           Text(item.name, style: TextStyle(fontWeight: FontWeight.bold)),
           Text(item.street),
           Text("${item.postalCode.toString()} ${item.city}")
