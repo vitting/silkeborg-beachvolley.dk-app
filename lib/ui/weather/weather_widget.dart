@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -40,9 +41,7 @@ Future<WeatherData> _load() async {
   final http.Response response =
       await http.get("http://vejr.eu/api.php?location=Silkeborg&degree=C");
   if (response.statusCode == 200) {
-    Map<String, dynamic> bodyJson = json.decode(
-        response.body.replaceFirst("<pre>", "").replaceAll("</pre>", ""));
-    data = WeatherData.fromJson(bodyJson);
+    data = await compute<String, WeatherData>(parseJson, response.body);
   }
   return data;
 }
@@ -62,4 +61,9 @@ class WeatherData {
         temperature: json["CurrentData"]["temperature"],
         wind: json["CurrentData"]["windText"]);
   }
+}
+
+WeatherData parseJson(String responseBody) {
+  Map<String, dynamic> bodyJson = json.decode(responseBody.replaceFirst("<pre>", "").replaceAll("</pre>", ""));
+  return WeatherData.fromJson(bodyJson);
 }

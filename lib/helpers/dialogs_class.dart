@@ -46,6 +46,15 @@ class Dialogs {
     );
   }
 
+  static Future<ConfirmDialogAction> confirmError(BuildContext context, String body) async {
+    return confirmFunctions.confirmDialog(context, 
+    body: [Text(body)],
+    title: Text("Fejl"),
+    actionRight: ConfirmDialogAction.ok,
+    barrierDismissible: true
+    );
+  }
+
   static Future<int> modalBottomSheet(BuildContext context, List<DialogsModalBottomSheetItem> items) async {
     return showModalBottomSheet(
       context: context,

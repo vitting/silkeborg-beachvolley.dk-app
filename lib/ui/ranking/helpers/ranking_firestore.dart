@@ -8,39 +8,31 @@ import 'package:faker/faker.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_stats_data_class.dart';
 
 class RankingFirestore {
-  static Firestore _firestore;
+  static Firestore _firestore = Firestore.instance;
   static final _collectionNamePlayer = "ranking_players";
   static final _collectionNameMatch = "ranking_matches";
 
-  static Firestore get firestoreInstance {
-    if (_firestore == null) {
-      _firestore = Firestore.instance;
-    }
-
-    return _firestore;
-  }
-
   static Future<List<DocumentSnapshot>> getPlayerMatches(String userId) async {
     List<DocumentSnapshot> list = [];
-    QuerySnapshot winner1 = await firestoreInstance
+    QuerySnapshot winner1 = await _firestore
         .collection(_collectionNameMatch)
         .where("enabled", isEqualTo: true)
         .where("winner1.id", isEqualTo: userId)
         .orderBy("matchDate")
         .getDocuments();
-    QuerySnapshot winner2 = await firestoreInstance
+    QuerySnapshot winner2 = await _firestore
         .collection(_collectionNameMatch)
         .where("enabled", isEqualTo: true)
         .where("winner2.id", isEqualTo: userId)
         .orderBy("matchDate")
         .getDocuments();
-    QuerySnapshot loser1 = await firestoreInstance
+    QuerySnapshot loser1 = await _firestore
         .collection(_collectionNameMatch)
         .where("enabled", isEqualTo: true)
         .where("loser1.id", isEqualTo: userId)
         .orderBy("matchDate")
         .getDocuments();
-    QuerySnapshot loser2 = await firestoreInstance
+    QuerySnapshot loser2 = await _firestore
         .collection(_collectionNameMatch)
         .where("enabled", isEqualTo: true)
         .where("loser2.id", isEqualTo: userId)
@@ -56,7 +48,7 @@ class RankingFirestore {
   }
 
   static Stream<QuerySnapshot> getRankingAsStream() {
-    return firestoreInstance
+    return _firestore
         .collection(_collectionNamePlayer)
         .orderBy("points.total", descending: true)
         .orderBy("numberOfPlayedMatches.total", descending: true)
@@ -64,7 +56,7 @@ class RankingFirestore {
   }
 
   static Future<DocumentSnapshot> getMatch(String matchId) async {
-    return firestoreInstance
+    return _firestore
         .collection(_collectionNameMatch)
         .document(matchId)
         .get();
@@ -72,7 +64,7 @@ class RankingFirestore {
 
   static Future<QuerySnapshot> getMatches(
       [int limit = 20, bool descending = true]) {
-    return firestoreInstance
+    return _firestore
         .collection(_collectionNameMatch)
         .where("enabled", isEqualTo: true)
         .orderBy("createdDate", descending: descending)
@@ -82,7 +74,7 @@ class RankingFirestore {
 
   static Stream<QuerySnapshot> getMatchesAsStreamWithLimit(
       [int limit = 20, bool descending = true]) {
-    return firestoreInstance
+    return _firestore
         .collection(_collectionNameMatch)
         .where("enabled", isEqualTo: true)
         .orderBy("createdDate", descending: descending)
@@ -91,7 +83,7 @@ class RankingFirestore {
   }
 
   static Stream<QuerySnapshot> getMatchesAsStream([bool descending = true]) {
-    return firestoreInstance
+    return _firestore
         .collection(_collectionNameMatch)
         .where("enabled", isEqualTo: true)
         .orderBy("createdDate", descending: descending)
@@ -99,21 +91,21 @@ class RankingFirestore {
   }
 
   static Future<void> saveMatch(RankingMatchData match) async {
-    return firestoreInstance
+    return _firestore
         .collection(_collectionNameMatch)
         .document(match.id)
         .setData(match.toMap());
   }
 
   static Future<void> deleteMatch(String id) {
-    return firestoreInstance
+    return _firestore
         .collection(_collectionNameMatch)
         .document(id)
         .delete();
   }
 
   static Future<QuerySnapshot> getAllPlayers([bool deleted = false]) {
-    return firestoreInstance
+    return _firestore
         .collection(_collectionNamePlayer)
         .where("deleted", isEqualTo: deleted)
         .orderBy("name")
@@ -121,7 +113,7 @@ class RankingFirestore {
   }
 
   static Stream<QuerySnapshot> getAllPlayersAsStream([bool deleted = false]) {
-    return firestoreInstance
+    return _firestore
         .collection(_collectionNamePlayer)
         .where("deleted", isEqualTo: deleted)
         .orderBy("name")
@@ -130,28 +122,28 @@ class RankingFirestore {
 
   static Future<DocumentSnapshot> getPlayer(String userId,
       [bool deleted = false]) async {
-    return firestoreInstance
+    return _firestore
         .collection(_collectionNamePlayer)
         .document(userId)
         .get();
   }
 
   static Future<void> savePlayer(RankingPlayerData player) async {
-    return firestoreInstance
+    return _firestore
         .collection(_collectionNamePlayer)
         .document(player.userId)
         .setData(player.toMap());
   }
 
   static Future<void> deletePlayerMarkAsDeleted(String userId) {
-    return firestoreInstance
+    return _firestore
         .collection(_collectionNamePlayer)
         .document(userId)
         .updateData({"deleted": true});
   }
 
   static Future<void> deletePlayerMarkAsNotDeleted(String userId) {
-    return firestoreInstance
+    return _firestore
         .collection(_collectionNamePlayer)
         .document(userId)
         .updateData({"deleted": false});
@@ -159,7 +151,7 @@ class RankingFirestore {
 
   static Future<void> addPlayerAsFavorite(
       String userId, String favoritePlayerId) {
-    return firestoreInstance
+    return _firestore
         .collection(_collectionNamePlayer)
         .document(userId)
         .updateData({
@@ -169,7 +161,7 @@ class RankingFirestore {
 
   static Future<void> removePlayerAsFavorite(
       String userId, String favoritePlayerId) {
-    return firestoreInstance
+    return _firestore
         .collection(_collectionNamePlayer)
         .document(userId)
         .updateData({

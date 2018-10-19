@@ -10,19 +10,11 @@ class BulletinFirestore {
   static final _bulletinCommentsCollectionName = "bulletins_comments";
   static final _bulletinCommittedCollectionName = "bulletins_commits";
   static final _bulletinHiddenByUserCollectionName = "bulletins_hidden_by_user";
-  static Firestore _firestore;
-
-  static Firestore get firestoreInstance {
-    if (_firestore == null) {
-      _firestore = Firestore.instance;
-    }
-
-    return _firestore;
-  }
+  static Firestore _firestore = Firestore.instance;
 
   static Stream<QuerySnapshot> getAllBulletinCommentsAsStream(
       String bulletinId) {
-    return firestoreInstance
+    return _firestore
         .collection(_bulletinCommentsCollectionName)
         .where("bulletinId", isEqualTo: bulletinId)
         .orderBy("creationDate", descending: false)
@@ -31,25 +23,25 @@ class BulletinFirestore {
 
   static Future<void> saveCommentItem(
       BulletinCommentItemData bulletinCommentItem) async {
-    return firestoreInstance
+    return _firestore
         .collection(_bulletinCommentsCollectionName)
         .document(bulletinCommentItem.id)
         .setData(bulletinCommentItem.toMap());
   }
 
   static Future<void> deleteComment(String id) async {
-    return firestoreInstance
+    return _firestore
         .collection(_bulletinCommentsCollectionName)
         .document(id)
         .delete();
   }
 
   static Future<Null> deleteCommentsByBulletinId(String bulletinId) async {
-    QuerySnapshot snapshot = await firestoreInstance
+    QuerySnapshot snapshot = await _firestore
         .collection(_bulletinCommentsCollectionName)
         .where("bulletinId", isEqualTo: bulletinId)
         .getDocuments();
-    WriteBatch batch = firestoreInstance.batch();
+    WriteBatch batch = _firestore.batch();
     snapshot.documents.forEach((DocumentSnapshot snap) {
       batch.delete(snap.reference);
     });
@@ -59,7 +51,7 @@ class BulletinFirestore {
 
   static Stream<QuerySnapshot> getBulletinsByTypeAsStream(
       BulletinType type, int limit) {
-    return firestoreInstance
+    return _firestore
         .collection(_bulletinCollectionName)
         .where("type",
             isEqualTo: BulletinTypeHelper.getBulletinTypeAsString(type))
@@ -69,21 +61,21 @@ class BulletinFirestore {
   }
 
   static Future<void> saveBulletinItem(BulletinItemData bulletinItem) async {
-    await firestoreInstance
+    await _firestore
         .collection(_bulletinCollectionName)
         .document(bulletinItem.id)
         .setData(bulletinItem.toMap());
   }
 
   static Future<void> updateBulletinItem(BulletinItemData bulletinItem) async {
-    return await firestoreInstance
+    return await _firestore
         .collection(_bulletinCollectionName)
         .document(bulletinItem.id)
         .updateData(bulletinItem.toMap());
   }
 
   static Future<void> deleteBulletinItem(String id) async {
-    return await firestoreInstance
+    return await _firestore
         .collection(_bulletinCollectionName)
         .document(id)
         .delete();
@@ -91,7 +83,7 @@ class BulletinFirestore {
 
   static Future<List<String>> getHiddenBulletinItems(String userId) async {
     List<String> ids = [];
-    DocumentSnapshot doc = await firestoreInstance
+    DocumentSnapshot doc = await _firestore
         .collection(_bulletinHiddenByUserCollectionName)
         .document(userId)
         .get();
@@ -106,7 +98,7 @@ class BulletinFirestore {
 
   static Future<void> addUserHidesBulletinItem(
       String bulletId, String userId) async {
-    return await firestoreInstance
+    return await _firestore
         .collection(_bulletinHiddenByUserCollectionName)
         .document(userId)
         .setData({
@@ -116,7 +108,7 @@ class BulletinFirestore {
 
   static Future<void> removeUserHidesBulletinItem(
       String bulletId, String userId) async {
-    return await firestoreInstance
+    return await _firestore
         .collection(_bulletinHiddenByUserCollectionName)
         .document(userId)
         .setData({
@@ -125,20 +117,20 @@ class BulletinFirestore {
   }
 
   static Future<void> saveCommitted(CommittedData playerCommitted) async {
-    return await firestoreInstance
+    return await _firestore
         .collection(_bulletinCommittedCollectionName)
         .add(playerCommitted.toMap());
   }
 
   static Future<void> deleteCommitted(String bulletinId, String userId) async {
-    QuerySnapshot snapshot = await firestoreInstance
+    QuerySnapshot snapshot = await _firestore
         .collection(_bulletinCommittedCollectionName)
         .where("bulletinId", isEqualTo: bulletinId)
         .where("userId", isEqualTo: userId)
         .getDocuments();
 
     snapshot.documents.forEach((DocumentSnapshot doc) {
-      firestoreInstance
+      _firestore
           .collection(_bulletinCommittedCollectionName)
           .document(doc.documentID)
           .delete();
@@ -146,11 +138,11 @@ class BulletinFirestore {
   }
 
   static Future<Null> deleteCommittedByBulletinId(String bulletinId) async {
-    QuerySnapshot snapshot = await firestoreInstance
+    QuerySnapshot snapshot = await _firestore
         .collection(_bulletinCommittedCollectionName)
         .where("bulletinId", isEqualTo: bulletinId)
         .getDocuments();
-    WriteBatch batch = firestoreInstance.batch();
+    WriteBatch batch = _firestore.batch();
     snapshot.documents.forEach((DocumentSnapshot snap) {
       batch.delete(snap.reference);
     });
@@ -159,14 +151,14 @@ class BulletinFirestore {
   }
 
   static Future<QuerySnapshot> getCommitted(String bulletinId) async {
-    return firestoreInstance
+    return _firestore
         .collection(_bulletinCommittedCollectionName)
         .where("bulletinId", isEqualTo: bulletinId)
         .getDocuments();
   }
 
   static Future<bool> checkIsCommited(String bulletinId, String userId) async {
-    QuerySnapshot snapshot = await firestoreInstance
+    QuerySnapshot snapshot = await _firestore
         .collection(_bulletinCommittedCollectionName)
         .where("bulletinId", isEqualTo: bulletinId)
         .where("userId", isEqualTo: userId)
@@ -176,7 +168,7 @@ class BulletinFirestore {
   }
 
   static Future<DocumentSnapshot> getBulletinItem(String bulletinId) async {
-    return await firestoreInstance
+    return await _firestore
         .collection(_bulletinCollectionName)
         .document(bulletinId)
         .get();

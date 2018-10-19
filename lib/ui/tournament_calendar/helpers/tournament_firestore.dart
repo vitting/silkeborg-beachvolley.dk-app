@@ -5,32 +5,24 @@ import 'package:silkeborgbeachvolley/ui/tournament_calendar/helpers/torunament_d
 
 class TournamentFirestore {
   static final _collectionName = "tournaments";
-  static Firestore _firestore;
-
-  static Firestore get firestoreInstance {
-    if (_firestore == null) {
-      _firestore = Firestore.instance;
-    }
-
-    return _firestore;
-  }
+  static Firestore _firestore = Firestore.instance;
 
   static Future<QuerySnapshot> getTournaments() {
-    return firestoreInstance
+    return _firestore
         .collection(_collectionName)
         .orderBy("startDate")
         .getDocuments();
   }
 
   static Future<void> saveTournament(TournamentData tournament) {
-    return firestoreInstance
+    return _firestore
         .collection(_collectionName)
         .document(tournament.id)
         .setData(tournament.toMap());
   }
 
   static Future<void> deleteTournament(String tournamentId) {
-    return firestoreInstance
+    return _firestore
         .collection(_collectionName)
         .document(tournamentId)
         .delete();

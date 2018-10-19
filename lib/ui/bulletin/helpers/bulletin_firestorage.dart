@@ -3,20 +3,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:silkeborgbeachvolley/helpers/image_info_data.dart';
 
 class BulletinFireStorage {
-  static FirebaseStorage _firestorage;
-
-  static FirebaseStorage get firestorageInstance {
-    if (_firestorage == null) {
-      _firestorage = FirebaseStorage.instance;
-    }
-
-    return _firestorage;
-  }
+  static FirebaseStorage _firestorage = FirebaseStorage.instance;
 
   static Future<ImageInfoData> saveImageToFirebaseStorage(
       ImageInfoData imageInfo) async {
     try {
-      StorageUploadTask uploadTask = firestorageInstance
+      StorageUploadTask uploadTask = _firestorage
           .ref()
           .child("${imageInfo.imagesStoreageFolder}/${imageInfo.filename}")
           .putFile(imageInfo.imageFile);
@@ -33,7 +25,7 @@ class BulletinFireStorage {
 
   static Future<void> deleteFromFirebaseStorage(
       String filename, String imagesStoreageFolder) async {
-    return await firestorageInstance
+    return await _firestorage
         .ref()
         .child("$imagesStoreageFolder/$filename")
         .delete();
