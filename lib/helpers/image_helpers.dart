@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:isolate';
 
+import 'package:flutter/foundation.dart';
 import 'package:image/image.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:silkeborgbeachvolley/helpers/image_info_data.dart';
@@ -10,55 +10,82 @@ import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestorage.da
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data.dart';
 import 'package:uuid/uuid.dart';
 
-class ImageHelpers {
-  static void processImageIsolate(ImageParamData param) async {
-    final Image imageDecoded = decodeImage(await param.file.readAsBytes());
-    Image resizedImage;
+class _ResizeImageParam {
+  final List<int> fileAsByte;
+  final int imageSize;
 
-    try {
-      if (imageDecoded.width >= param.imageSize ||
-          imageDecoded.height > param.imageSize) {
-        if (imageDecoded.width >= imageDecoded.height) {
-          resizedImage = copyResize(imageDecoded, param.imageSize);
-        } else {
-          resizedImage = copyResize(imageDecoded, -1, param.imageSize);
-        }
+  _ResizeImageParam(this.fileAsByte, this.imageSize);
+}
+
+class _ResizeImageResult {
+  final List<int> fileAsByte;
+  final int height;
+  final int width;
+
+  _ResizeImageResult(this.fileAsByte, this.width, this.height);
+}
+
+_ResizeImageResult _reziseImage(_ResizeImageParam testImageInfo) {
+  final Image imageDecoded = decodeImage(testImageInfo.fileAsByte);
+  Image resizedImage;
+
+  try {
+    if (imageDecoded.width >= testImageInfo.imageSize ||
+        imageDecoded.height > testImageInfo.imageSize) {
+      if (imageDecoded.width >= imageDecoded.height) {
+        resizedImage = copyResize(imageDecoded, testImageInfo.imageSize);
       } else {
-        resizedImage = imageDecoded;
+        resizedImage = copyResize(imageDecoded, -1, testImageInfo.imageSize);
       }
+    } else {
+      resizedImage = imageDecoded;
+    }
 
-      final File tempFile =
+    return _ResizeImageResult(encodeJpg(resizedImage, quality: 85),
+        resizedImage.width, resizedImage.height);
+  } catch (e) {
+    print("_reziseImage error: $e");
+    return null;
+  }
+}
+
+class ImageHelpers {
+  static Future<ImageInfoData> processImageIsolate(ImageParamData param) async {
+    ImageInfoData imageInfo;
+    try {
+      _ResizeImageResult resizedImage = await compute(_reziseImage, _ResizeImageParam(await param.file.readAsBytes(), param.imageSize));
+      
+      if (resizedImage != null) {
+        final File tempFile =
           await File("${param.tempDir.path}/${param.fileName}")
-              .writeAsBytes(encodeJpg(resizedImage, quality: 85));
+              .writeAsBytes(resizedImage.fileAsByte);
 
-      ImageInfoData imageInfo = ImageInfoData(
+      imageInfo = ImageInfoData(
           height: resizedImage.height,
           width: resizedImage.width,
           type: "jpg",
           imageFile: tempFile,
           filename: param.fileName);
-
-      param.sendPort.send(imageInfo);
+      }
+    
+      return imageInfo;
     } catch (e) {
       print("processImage error: $e");
-      param.sendPort.send(null);
+      return null;
     }
   }
 
   static Future<ImageInfoData> saveImage(
       File file, int imageSize, String storageFolder) async {
-    ReceivePort receivePort = new ReceivePort();
     ImageParamData imageParam = ImageParamData(
         file: file,
-        sendPort: receivePort.sendPort,
         imageSize: imageSize,
         firebaseStorageFolder: storageFolder,
         fileName: ImageHelpers.createFilename("jpg"),
         tempDir: await getTemporaryDirectory());
 
-    await Isolate.spawn(ImageHelpers.processImageIsolate, imageParam);
-
-    ImageInfoData imageInfo = await receivePort.first;
+    ImageInfoData imageInfo =
+        await ImageHelpers.processImageIsolate(imageParam);
 
     imageInfo.imagesStoreageFolder = storageFolder;
     if (imageInfo.imageFile != null) {
@@ -75,7 +102,7 @@ class ImageHelpers {
       if (image.imageFile != null) {
         image.imageFile.delete();
       }
-      
+
       BulletinFireStorage.deleteFromFirebaseStorage(
           image.filename, image.imagesStoreageFolder);
       return true;
@@ -96,8 +123,7 @@ class ImageHelpers {
     }
   }
 
-  static Future<Null> deleteBulletinImage(
-      BulletinImageData image) async {
+  static Future<Null> deleteBulletinImage(BulletinImageData image) async {
     BulletinFireStorage.deleteFromFirebaseStorage(image.name, image.folder);
   }
 
