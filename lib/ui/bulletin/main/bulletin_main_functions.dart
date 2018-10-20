@@ -9,10 +9,10 @@ String getTitle(BulletinType type) {
 }
 
 BulletinType getSelectedType(int selected) {
-    BulletinType type = BulletinType.news;
-    if (selected == 0) type = BulletinType.news;
-    if (selected == 1) type = BulletinType.event;
-    if (selected == 2) type = BulletinType.play;
+  BulletinType type = BulletinType.news;
+  if (selected == 0) type = BulletinType.news;
+  if (selected == 1) type = BulletinType.event;
+  if (selected == 2) type = BulletinType.play;
 
-    return type;
-  }
+  return type;
+}

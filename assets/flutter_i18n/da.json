@@ -1,0 +1,401 @@
+{
+    "common": {
+        "cancel": "Anuller",
+        "delete": "Slet",
+        "no": "Nej",
+        "yes": "Ja",
+        "ok": "Ok",
+        "save": "Gem",
+        "close": "Close",
+        "hide": "Skjul",
+        "show": "Vis",
+        "reset": "Nulstil",
+        "error": "Fejl"
+    },
+    "monthsLong": {
+        "1": "Januar",
+        "2": "Februar",
+        "3": "Marts",
+        "4": "April",
+        "5": "Maj",
+        "6": "Juni",
+        "7": "Juli",
+        "8": "August",
+        "9": "September",
+        "10": "Oktober",
+        "11": "November",
+        "12": "December"
+    },
+    "monthsShort": {
+        "1": "jan.",
+        "2": "feb.",
+        "3": "mar.",
+        "4": "apr.",
+        "5": "maj",
+        "6": "jun.",
+        "7": "jul.",
+        "8": "aug.",
+        "9": "sept.",
+        "10": "okt.",
+        "11": "nov.",
+        "12": "dec."
+    },
+    "confirmDialogFunctions": {},
+    "dialogs": {},
+    "searchbar": {
+        "string1": "Søg"
+    },
+    "bulletin": {
+        "photoAddPhotoWidget": {
+            "title": "Indsæt billede fra",
+            "string1": "Galleri",
+            "string2": "Kamera"
+        },
+        "createItemMain": {
+            "title1": "Opret nyhed",
+            "title2": "Opret begivenhed",
+            "title3": "Opret spil",
+            "saveMessage": "Gemmer opslag...",
+            "processImage": "Behandler billedet..."
+        },
+        "getBulletinEventFields": {
+            "string1": "Start dato",
+            "string2": "Udfyld Start dato",
+            "string3": "Slut dato",
+            "string4": "Udfyld Slut dato",
+            "string5": "Start tid",
+            "string6": "Udfyld Start tid",
+            "string7": "Slut tid",
+            "string8": "Udfyld Slut tid",
+            "string9": "Tilføj et billede. Det er ikke påkrævet.",
+            "strnig10": "Plakat billede. Ikke påkrævet",
+            "string11": "Titel",
+            "string12": "Titel skal udfyldes",
+            "string13": "Sted",
+            "string14": "Sted skal udfyldes"
+        },
+        "getBulletinTextField": {
+            "string1": "Opslag",
+            "string2": "Opslaget skal udfyldes"
+        },
+        "bulletinCommentItemRowWidget": {
+            "string1": "Slet",
+            "string2": "Vil du slette din kommentar?"
+        },
+        "detailItemMain": {
+            "title": "Silkeborg Beachvolley",
+            "string1": "Skal udfyldes",
+            "string2": "Skriv en kommentar"
+        },
+        "bulletinEdititemMain": {
+            "title1": "Rediger nyhed",
+            "title2": "Rediger begivenhed",
+            "title3": "Rediger spil"
+        },
+        "itemFunctions": {
+            "string1": "Rediger",
+            "string2": "Slet",
+            "string3": "Slet nyhed",
+            "string4": "Er du sikker på du vil slette din nyhed?",
+            "string5": "Du skal være opmærksom på at alle billeder og kommentarer for nyheden også vil bliver slettet",
+            "string6": "Slet begivenhed",
+            "string7": "Er du sikker på du vil slette din begivenhed?",
+            "string8": "Du skal være opmærksom på at alle kommentarer for begivenheden også vil bliver slettet",
+            "string9": "Slet spil",
+            "string10": "Er du sikker på du vil slette dit opslag om spil?",
+            "string11": "Du skal være opmærksom på at alle kommentarer for opsalget også vil bliver slettet"
+        },
+        "bulletinMainFab": {
+            "string1": "Nyhed",
+            "string2": "Begivenhed",
+            "string3": "Spil",
+            "string4": "Nyt opslag"
+        },
+        "bulletinMainFunctions": {
+            "string1": "Nyheder",
+            "string2": "Begivenheder",
+            "string3": "Spil"
+        }
+    },
+    "enrollment": {
+        "adminEnrollmentDetailMain": {
+            "string1": "Medlemsinfo",
+            "string2": "Medlems id",
+            "string3": "Dato medlemmet er oprettet",
+            "string4": "Medlems navn",
+            "string5": "Medlems adresse",
+            "string6": "Medlems e-mail adresse",
+            "string7": "Medlems mobilnummer",
+            "string8": "år",
+            "string9": "Medlems fødselsdato og alder",
+            "string10": "Ingen kommentar",
+            "string11": "Kommentar",
+            "string12": "Der er allerede er oprettet en betaling for",
+            "string13": "Registere betaling for",
+            "string14": "Vælg år"
+        },
+        "adminEnrollmentDetailPayments": {
+            "string1": "Der er ikke registeret nogen betalinger for det pågældende medlem.",
+            "string2": "Slet betaling",
+            "string3": "Rediger kommentar",
+            "string4": "Dato medlem er oprettet",
+            "string5": "Id på den person der har godkendt betalingen",
+            "string6": "Ingen kommentar",
+            "string7": "Kommentar fra administrator"
+        },
+        "adminEnrollmentFuncstions": {
+            "string1": "Kommentar",
+            "string2": "Kommentar",
+            "string3": "Slet betaling",
+            "string4": "Vil du slette betaling for"
+        },
+        "adminEnrollmentMain": {
+            "title": "Administrer medlemmer",
+            "string1": "Rediger"
+        },
+        "enrollmentFormFunctions": {
+            "string1": "Info",
+            "string2": "Vil du fortsætte med at oprette medlemmet?",
+            "string3": "Der er allerede oprettet",
+            "string4": "flere medlemmer",
+            "string5": "et medlem",
+            "string6": "under den angivne e-mail adresse",
+            "string7": " og ",
+            "string8": " under det angivne mobilnummer"
+        },
+        "enrollmentForm": {
+            "string1": "Indsend formular",
+            "string2": "Opdater",
+            "string3": "Navn",
+            "string4": "Indtast dit navn",
+            "string5": "Addresse",
+            "string6": "Indtast din addresse",
+            "string7": "Postnummer",
+            "string8": "Indtast dit postnummer",
+            "string9": "Det indtastede postnummer existere ikke",
+            "string10": "By",
+            "string11": "Fødselsdato",
+            "string12": "Tryk på knappen og bruger kalenderen",
+            "string13": "Indtast fødselsdato",
+            "string14": "Indtast fødselsdato i formatet dd-mm-yyyy",
+            "string15": "E-mail",
+            "string16": "Indtast din e-mail addresse",
+            "string17": "Indtast en gyldig e-mail addresse",
+            "string18": "Mobilnummer",
+            "string19": "Indtast dit mobilnummer"
+        },
+        "enrollmentEditMain": {
+            "title": "Rediger medlem"
+        },
+        "enrollmentMadeByUser": {
+            "title": "Mine indmeldser",
+            "string1": "Der blev ikke fundet nogen indmeldelser!",
+            "string2": "Oprettelses dato",
+            "string3": "Navn",
+            "string4": "Adresse",
+            "string5": "E-mail",
+            "string6": "Telefonnummer",
+            "string7": "Fødselsdato"
+        },
+        "enrollmentMain": {
+            "title": "Indmeldelse",
+            "string1": "Vis mine indmeldelser"
+        },
+        "enrollmentReadMe": {
+            "string1": "Velkommen til indmeldelse i",
+            "string2": "Silkeborg Beachvolley",
+            "string3": "Det koster kun 25 kr. pr. sæson at være medlem. Beløbet indbetales på MobilePay",
+            "string4": "18185",
+            "string5": "Udfyld formularen på næste side for den der skal meldes ind"
+        },
+        "enrollmentPayment": {
+            "string1": "Tak for din indmeldelse",
+            "string2": "og velkommen til",
+            "string3": "Silkeborg Beachvolley",
+            "string4": "Færdiggøre din indmeldelse ved at",
+            "string5": "overføre 25 kr. i MobilePay",
+            "string6": "til nummer: 18185",
+            "string7": "Du kan trykke på MobilePay logoet",
+            "string8": "for at åbne din MobilePay app",
+            "string9": "Gå til forsiden hvis der er flere du vil melde ind i Silkeborg Beachvolley"
+        }
+    },
+    "login": {
+        "authFunctions": {
+            "string1": "Log ud",
+            "string2": "Er du sikker på at du vil logge ud?"
+        },
+        "loginMain": {
+            "string1": "Velkommen til Silkeborg Beachvolley",
+            "string2": "Log ind med Facebook",
+            "string3": "Det med småt - Du skal logge ind med din Facebook konto for at kunne bruge denne app. Vi beder ikke om nogen specille tilladelser fra Facebook da vi kun skal bruge dit navn og profil billede. Dvs. vi kan ikke slå noget op på vegne af dig eller har adgang til dine billeder og venner.",
+            "string4": "Hvis du kun vil bruge denne app til at melde dig ind i Silkeborg Beachvolley så tryk herunder.",
+            "string5": "Indmeldelse i Silkeborg Beachvolley"
+        }
+    },
+    "ranking": {
+        "adminRankingPlayersPlayerInfo": {
+            "string1": "Spiller info",
+            "string2": "Bruger id",
+            "string3": "Kampe",
+            "string4": "Vundne",
+            "string5": "Tabte",
+            "string6": "Samlet",
+            "string7": "Point"
+        },
+        "adminRankingMain": {
+            "string1": "Nulstiller sæsonen",
+            "string2": "Vis ikke slettede spillere",
+            "string3": "Vis slettede spillere",
+            "string4": "Nulstil sæson",
+            "string5": "Er du sikker på du vil nulstille sæsonen?\n\nVær opmærksom på at alle kampe vi blive skjult og alle spiller data (point og spillede kampe) vil blive nustillet.",
+            "string6": "Administerer spillere",
+            "string7": "Administerer slettede spillere",
+            "string8": "Administerer kampe"
+        },
+        "adminRankingMatchesMain": {
+            "string1": "Der blev ikke fundet nogen kampe",
+            "string2": "Slet",
+            "string3": "Er du sikker på du vil slette kampen?"
+        },
+        "adminRankingPlayersMain": {
+            "string1": "Der blev ikke fundet nogen spillere",
+            "string2": "Skjul",
+            "string3": "Vis",
+            "string4": "Er du sikker på du Vil vise spilleren?",
+            "string5": "Er du sikker på du Vil skjule spilleren?\nSpilleren kan vises igen ved at vælge spilleren i menuen skjulte spillere"
+        },
+        "choosePlayersList": {
+            "string1": "Vælg vinder",
+            "string2": "Vælg taber"
+        },
+        "createPlayerChooseDate": {
+            "string1": "Vælg kamp dato"
+        },
+        "rankingCreateMatchMain": {
+            "string1": "Ingen spiller valgt",
+            "string2": "Registere kamp",
+            "string3": "Gemmer kampen...",
+            "string4": "Vindere",
+            "string5": "Tabere",
+            "string6": "Registere kampen",
+            "string7": "Du skal udfylde de felter der er røde før de kan gemme kampen."
+        },
+        "rankingDetailChartMatchesWeek": {
+            "string1": "Antal spillede kampe pr. uge"
+        },
+        "rankingDetailChartPaintsWeek": {
+            "string1": "Antal point pr. uge"
+        },
+        "rankingDetailFunctions": {
+            "string1": "Kamp info",
+            "string2": "Kamp dato",
+            "string3": "Oprettet af",
+            "string4": "Vindere",
+            "string5": "Tabere"
+        },
+        "rankingDetailStatRow": {
+            "string1": "Samlet",
+            "string2": "Vundet",
+            "string3": "Tabt"
+        },
+        "rankingDetailMain": {
+            "title1": "Spiller statestik",
+            "title2": "Spillede kampe"
+        },
+        "rankingDetailMatchesMain": {
+            "string1": "Kan ikke vise spillede kampe",
+            "string2": "Kamp dato"
+        },
+        "rankingDetailStatMain": {
+            "string1": "Points",
+            "string2": "Spillede kampe"
+        },
+        "rankingMatchesHeaderWidget": {
+            "string1": "Vindere",
+            "string2": "Tabere"
+        },
+        "rankingMatchesRowWidget": {
+            "string1": "Kamp dato",
+            "string2": "Oprettet af"
+        },
+        "rankingMatchesStatRowWidget": {
+            "string1": "Point"
+        },
+        "rankingFirsttimeMain": {
+            "string1": "Velkommen til Ranglisten",
+            "string2": "Før du kan gå i gang med at registere dine kampe skal vi lige vide et par ting om dig. Du kan altid senere ændre dine oplysninger i indstillinger.",
+            "string3": "Du skal udfylde dit rangliste navn",
+            "string4": "Dit rangliste navn",
+            "string5": "Du skal vælge dit køn",
+            "string6": "Kvinde",
+            "string7": "Mand",
+            "string8": "Gem min profil"
+        },
+        "rankingMatchesMain": {
+            "string1": "Der blev ikke fundet nogen kampe",
+            "string2": "Er du sikker på du vil slette kampen?"
+        },
+        "rankingListMain": {
+            "string1": "Der er pt. ingen personer på ranglisten"
+        },
+        "rankingMain": {
+            "string1": "Registere kamp",
+            "title1": "Ranglisten",
+            "title2": "De sidste 10 spillede kampe"
+        }
+    },
+    "scaffold": {
+        "drawerWidget": {
+            "string1": "Indmeldelse",
+            "string2": "Ranglisten",
+            "string3": "Livescore",
+            "string4": "Stævnekalender",
+            "string5": "Log af",
+            "string6": "Indstillinger",
+            "string7": "Administrere medlemmer",
+            "string8": "Administrere Ranglisten"
+        }
+    },
+    "settings": {
+        "settingsMain": {
+            "title": "Indstillinger",
+            "string1": "Vejret",
+            "string2": "Notifikationer",
+            "string3": "Ranglisten",
+            "string4": "Vis vejret",
+            "string5": "Nyheder",
+            "string6": "Begivenheder",
+            "string7": "Spil",
+            "string8": "Rangliste navn",
+            "string9": "Kvinde",
+            "string10": "Mand"
+        }
+    },
+    "tournamentCalendar": {
+        "tournamentCreateMain": {
+            "string1": "Udyld start dato",
+            "string2": "Start dato",
+            "string3": "Udyld slut dato",
+            "string4": "Slut dato",
+            "string5": "Sted / kort titel",
+            "string6": "Udfyld sted / kort titel",
+            "string7": "Tekst",
+            "string8": "Udfyld tekst",
+            "string9": "Link til hjemmeside",
+            "string10": "Link er ikke påkrævet",
+            "string11": "Det indtastede link er ikke et valid link",
+            "string12": "Gem turnering"
+        },
+        "tournamentCalendarMain": {
+            "title": "Turneringer",
+            "string1": "Opret turnering",
+            "string2": "Der er pt. ingen turneringer",
+            "string3": "Gå til hjemmeside",
+            "string4": "Redigere",
+            "string5": "Slet",
+            "string6": "Redigere turnering",
+            "string7": "Er du sikker på du vil slette turneringen?"
+        }
+    }
+}

@@ -20,8 +20,7 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = [
-      Text(
-          "Der er ikke registeret nogen betalinger for det pågældende medlem.",
+      Text("Der er ikke registeret nogen betalinger for det pågældende medlem.",
           textAlign: TextAlign.center)
     ];
     if (enrollment.payment.isNotEmpty) {
@@ -66,7 +65,8 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
                 children: <Widget>[
                   AdminEnrollmentDetailRow(
                     icon: Icons.calendar_today,
-                    text: DateTimeHelpers.ddmmyyyyHHnn(payment.createdDate.toDate()),
+                    text: DateTimeHelpers.ddmmyyyyHHnn(
+                        payment.createdDate.toDate()),
                     tooltip: "Dato medlem er oprettet",
                   ),
                   AdminEnrollmentDetailRow(

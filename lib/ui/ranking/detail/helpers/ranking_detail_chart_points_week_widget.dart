@@ -13,7 +13,8 @@ class RankingDetailChartPointsWeek extends StatelessWidget {
   final double width;
   final double height;
 
-  const RankingDetailChartPointsWeek({Key key, this.playerId, this.getMatches, this.height, this.width})
+  const RankingDetailChartPointsWeek(
+      {Key key, this.playerId, this.getMatches, this.height, this.width})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -57,7 +58,7 @@ class RankingDetailChartPointsWeek extends StatelessWidget {
       } else if (match.loser2.id == playerId) {
         points = match.loser2.points;
       }
-      
+
       matchOnWeekNumber.update(weekNumber, (int value) => value += points,
           ifAbsent: () => points);
     });

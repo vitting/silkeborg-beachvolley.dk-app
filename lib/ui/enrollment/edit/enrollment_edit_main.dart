@@ -16,7 +16,7 @@ class EnrollmentEdit extends StatelessWidget {
           padding: EdgeInsets.all(10.0),
           child: EnrollmentForm(
             item: item,
-            saved: null,
+            onFormSaved: null,
           ),
         ),
       ),

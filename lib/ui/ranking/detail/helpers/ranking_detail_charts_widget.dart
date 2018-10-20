@@ -24,7 +24,9 @@ class _RankingDetailChartsState extends State<RankingDetailCharts> {
       onDoubleTap: () {
         if (mounted) {
           setState(() {
-            _state = _state == CrossFadeState.showFirst ? CrossFadeState.showSecond : CrossFadeState.showFirst;
+            _state = _state == CrossFadeState.showFirst
+                ? CrossFadeState.showSecond
+                : CrossFadeState.showFirst;
           });
         }
       },

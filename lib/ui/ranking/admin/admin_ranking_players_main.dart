@@ -26,7 +26,8 @@ class _AdminRankingPlayersState extends State<AdminRankingPlayers> {
       stream: RankingPlayerData.getPlayersAsStream(widget.showDeletedPlayers),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
-          print("ERROR admin_ranking_players_main StreamBuilder: ${snapshot.error}");
+          print(
+              "ERROR admin_ranking_players_main StreamBuilder: ${snapshot.error}");
           return Container();
         }
         if (!snapshot.hasData) return LoaderSpinner();

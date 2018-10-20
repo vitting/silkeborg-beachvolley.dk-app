@@ -66,7 +66,6 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
     _startTimeController.dispose();
     _endTimeController.dispose();
     super.dispose();
-    
   }
 
   String _getTitle(BulletinType type) {
@@ -159,7 +158,7 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
         onPressedSave: () async {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
-            
+
             await _saveBulletinItem();
             Navigator.of(context).pop();
           }

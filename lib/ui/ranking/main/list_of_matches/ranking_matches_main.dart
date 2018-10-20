@@ -66,7 +66,7 @@ class RankingMatches extends StatelessWidget {
     return icon;
   }
 
-    Future<void> _showDelete(BuildContext context, RankingMatchData match) async {
+  Future<void> _showDelete(BuildContext context, RankingMatchData match) async {
     int result = await Dialogs.modalBottomSheet(
         context, [DialogsModalBottomSheetItem("Slet", Icons.delete, 0)]);
 

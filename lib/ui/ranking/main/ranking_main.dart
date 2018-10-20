@@ -36,10 +36,7 @@ class RankingState extends State<Ranking> {
   }
 
   void _initPages() async {
-    _widgets = [
-      RankingList(),
-      RankingMatches()
-    ];
+    _widgets = [RankingList(), RankingMatches()];
   }
 
   @override

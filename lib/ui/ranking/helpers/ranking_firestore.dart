@@ -56,10 +56,7 @@ class RankingFirestore {
   }
 
   static Future<DocumentSnapshot> getMatch(String matchId) async {
-    return _firestore
-        .collection(_collectionNameMatch)
-        .document(matchId)
-        .get();
+    return _firestore.collection(_collectionNameMatch).document(matchId).get();
   }
 
   static Future<QuerySnapshot> getMatches(
@@ -98,10 +95,7 @@ class RankingFirestore {
   }
 
   static Future<void> deleteMatch(String id) {
-    return _firestore
-        .collection(_collectionNameMatch)
-        .document(id)
-        .delete();
+    return _firestore.collection(_collectionNameMatch).document(id).delete();
   }
 
   static Future<QuerySnapshot> getAllPlayers([bool deleted = false]) {
@@ -122,10 +116,7 @@ class RankingFirestore {
 
   static Future<DocumentSnapshot> getPlayer(String userId,
       [bool deleted = false]) async {
-    return _firestore
-        .collection(_collectionNamePlayer)
-        .document(userId)
-        .get();
+    return _firestore.collection(_collectionNamePlayer).document(userId).get();
   }
 
   static Future<void> savePlayer(RankingPlayerData player) async {

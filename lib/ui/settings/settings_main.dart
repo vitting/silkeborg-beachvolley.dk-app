@@ -36,7 +36,7 @@ class SettingsState extends State<Settings> {
 
   Future<Null> _getSettings() async {
     _settingsData = Home.settings;
-    _messagingData = Home.userMessaging; 
+    _messagingData = Home.userMessaging;
 
     if (mounted) {
       setState(() {

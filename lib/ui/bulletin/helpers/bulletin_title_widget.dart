@@ -24,18 +24,14 @@ class BulletinTitle extends StatelessWidget {
     List<Widget> widgets = [];
 
     if (showImage) {
-      widgets.add(
-        Padding(
+      widgets.add(Padding(
         padding: const EdgeInsets.only(right: 10.0),
         child:
             CircleAvatar(backgroundImage: CachedNetworkImageProvider(photoUrl)),
-      )
-      );
+      ));
     }
-    
-    widgets.add(
-      Expanded(child: Text(name, overflow: TextOverflow.ellipsis))
-    );
+
+    widgets.add(Expanded(child: Text(name, overflow: TextOverflow.ellipsis)));
 
     if (!isDetailMode && Home.loggedInUser.uid == userId) {
       widgets.add(

@@ -96,8 +96,9 @@ class AdminRankingState extends State<AdminRanking> {
       setState(() {
         _showLoader = true;              
       });
-      String result = await FirebaseFunctions.resetRanking();
-      print("RESULT resetRanking: $result");
+      
+      await FirebaseFunctions.resetRanking();
+      
       setState(() {
         _showLoader = false;              
       });

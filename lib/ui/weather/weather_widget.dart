@@ -64,6 +64,7 @@ class WeatherData {
 }
 
 WeatherData parseJson(String responseBody) {
-  Map<String, dynamic> bodyJson = json.decode(responseBody.replaceFirst("<pre>", "").replaceAll("</pre>", ""));
+  Map<String, dynamic> bodyJson = json
+      .decode(responseBody.replaceFirst("<pre>", "").replaceAll("</pre>", ""));
   return WeatherData.fromJson(bodyJson);
 }

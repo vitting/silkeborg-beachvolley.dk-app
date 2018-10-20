@@ -9,22 +9,18 @@ class BulletinImageData implements BaseData {
   String folder;
   String link;
 
-  BulletinImageData({@required this.name, @required this.folder, @required this.link});
+  BulletinImageData(
+      {@required this.name, @required this.folder, @required this.link});
 
   Map<String, dynamic> toMap() {
-    return {
-      "name": name,
-      "folder": folder,
-      "link": link
-    };
+    return {"name": name, "folder": folder, "link": link};
   }
 
   static BulletinImageData fromMap(map) {
     return BulletinImageData(
-      name: map["name"] ?? "",
-      folder: map["folder"] ?? "",
-      link: map["link"] ?? ""
-    );
+        name: map["name"] ?? "",
+        folder: map["folder"] ?? "",
+        link: map["link"] ?? "");
   }
 
   Future<void> delete() {

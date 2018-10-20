@@ -16,19 +16,20 @@ class BuildBulletinItem {
         numberOfcomments: item.numberOfcomments,
         images: images.map<BulletinImageData>((ImageInfoData data) {
           return BulletinImageData(
-              name: data.filename, folder: data.imagesStoreageFolder, link: data.linkFirebaseStorage);
+              name: data.filename,
+              folder: data.imagesStoreageFolder,
+              link: data.linkFirebaseStorage);
         }).toList());
   }
 
   static BulletinPlayItemData buildPlayItem(ItemFieldsCreate item) {
     return BulletinPlayItemData(
-      body: item.body, 
-      type: item.type,
-      id: item.id,
-      creationDate: item.creationDate,
-      numberOfcomments: item.numberOfcomments,
-      numberOfCommits: item.numberOfCommits
-    );
+        body: item.body,
+        type: item.type,
+        id: item.id,
+        creationDate: item.creationDate,
+        numberOfcomments: item.numberOfcomments,
+        numberOfCommits: item.numberOfCommits);
   }
 
   static BulletinEventItemData buildEventItem(
@@ -48,7 +49,8 @@ class BuildBulletinItem {
         eventImage: images.length != 0
             ? BulletinImageData(
                 name: images[0].filename,
-                folder: images[0].imagesStoreageFolder, link: images[0].linkFirebaseStorage)
+                folder: images[0].imagesStoreageFolder,
+                link: images[0].linkFirebaseStorage)
             : null);
   }
 }

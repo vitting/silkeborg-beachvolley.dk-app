@@ -1,7 +1,7 @@
 class BulletinTypeHelper {
   static const news = "news";
   static const play = "play";
-  static const event ="event";
+  static const event = "event";
   static const none = "none";
 
   static String getBulletinTypeAsString(BulletinType bulletinType) {
@@ -23,9 +23,4 @@ class BulletinTypeHelper {
   }
 }
 
-enum BulletinType {
-  news,
-  play,
-  event,
-  none
-}
+enum BulletinType { news, play, event, none }

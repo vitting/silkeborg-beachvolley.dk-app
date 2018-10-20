@@ -26,7 +26,7 @@ class BulletinItemData {
       this.authorName = "",
       this.authorPhotoUrl = "",
       this.numberOfcomments = 0,
-     this.numberOfCommits = 0});
+      this.numberOfCommits = 0});
 
   Map<String, dynamic> toMap() {
     return {
@@ -45,11 +45,13 @@ class BulletinItemData {
   }
 
   Future<void> hide() {
-    return BulletinFirestore.addUserHidesBulletinItem(id, Home.loggedInUser.uid);
+    return BulletinFirestore.addUserHidesBulletinItem(
+        id, Home.loggedInUser.uid);
   }
 
   Future<void> unhide() {
-    return BulletinFirestore.removeUserHidesBulletinItem(id, Home.loggedInUser.uid);
+    return BulletinFirestore.removeUserHidesBulletinItem(
+        id, Home.loggedInUser.uid);
   }
 
   ///Deletes all images, comments and the news item.
@@ -85,8 +87,7 @@ class BulletinItemData {
   }
 
   Future<bool> isCommitted() async {
-    return BulletinFirestore.checkIsCommited(
-        id, Home.loggedInUser.uid);
+    return BulletinFirestore.checkIsCommited(id, Home.loggedInUser.uid);
   }
 
   Future<void> setAsCommitted() async {
@@ -95,8 +96,7 @@ class BulletinItemData {
         name: Home.loggedInUser.displayName,
         photoUrl: Home.loggedInUser.photoUrl,
         userId: Home.loggedInUser.uid,
-        type: type
-      );
+        type: type);
 
     return BulletinFirestore.saveCommitted(playerCommitted);
   }
@@ -119,7 +119,6 @@ class BulletinItemData {
         body: item["body"] ?? "",
         creationDate: item["creationDate"],
         numberOfcomments: item["numberOfcomments"] ?? 0,
-        numberOfCommits: item["numberOfCommits"] ?? 0
-        );
+        numberOfCommits: item["numberOfCommits"] ?? 0);
   }
 }

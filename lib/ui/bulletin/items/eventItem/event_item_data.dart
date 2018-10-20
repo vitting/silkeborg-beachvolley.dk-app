@@ -111,24 +111,24 @@ class BulletinEventItemData extends BulletinItemData implements BaseData {
 
   factory BulletinEventItemData.fromMap(Map<String, dynamic> item) {
     return new BulletinEventItemData(
-        id: item["id"] ?? "",
-        type: BulletinTypeHelper.getBulletinTypeStringAsType(item["type"]),
-        authorId: item["author"]["id"] ?? "",
-        authorName: item["author"]["name"] ?? "",
-        authorPhotoUrl: item["author"]["photoUrl"] ?? "",
-        body: item["body"] ?? "",
-        creationDate: item["creationDate"],
-        numberOfcomments: item["numberOfcomments"] ?? 0,
-        numberOfCommits: item["numberOfCommits"] ?? 0,
-        eventStartDate: (item["event"]["startDate"] as Timestamp).toDate(),
-        eventEndDate: (item["event"]["endDate"] as Timestamp).toDate(),
-        eventStartTime: (item["event"]["startTime"] as Timestamp).toDate(),
-        eventEndTime: (item["event"]["endTime"] as Timestamp).toDate(),
-        eventLocation: item["event"]["location"] ?? "",
-        eventTitle: item["event"]["title"] ?? "",
-        eventImage: item["event"]["image"] == null
-            ? null
-            : BulletinImageData.fromMap(item["event"]["image"]),
-        );
+      id: item["id"] ?? "",
+      type: BulletinTypeHelper.getBulletinTypeStringAsType(item["type"]),
+      authorId: item["author"]["id"] ?? "",
+      authorName: item["author"]["name"] ?? "",
+      authorPhotoUrl: item["author"]["photoUrl"] ?? "",
+      body: item["body"] ?? "",
+      creationDate: item["creationDate"],
+      numberOfcomments: item["numberOfcomments"] ?? 0,
+      numberOfCommits: item["numberOfCommits"] ?? 0,
+      eventStartDate: (item["event"]["startDate"] as Timestamp).toDate(),
+      eventEndDate: (item["event"]["endDate"] as Timestamp).toDate(),
+      eventStartTime: (item["event"]["startTime"] as Timestamp).toDate(),
+      eventEndTime: (item["event"]["endTime"] as Timestamp).toDate(),
+      eventLocation: item["event"]["location"] ?? "",
+      eventTitle: item["event"]["title"] ?? "",
+      eventImage: item["event"]["image"] == null
+          ? null
+          : BulletinImageData.fromMap(item["event"]["image"]),
+    );
   }
 }

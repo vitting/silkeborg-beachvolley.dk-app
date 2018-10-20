@@ -38,8 +38,7 @@ Future<void> initMessaging(
       data = NotificationData(
           type: message["dataType"] ?? "",
           bulletinType: message["bulletinType"] ?? "",
-          state: NotificationState.launch
-      );
+          state: NotificationState.launch);
     }
 
     notificationController.add(data);
@@ -52,8 +51,7 @@ Future<void> initMessaging(
       data = NotificationData(
           type: message["data"]["dataType"] ?? "",
           bulletinType: message["data"]["bulletinType"] ?? "",
-          state: NotificationState.message
-      );
+          state: NotificationState.message);
     }
 
     notificationController.add(data);
@@ -66,8 +64,7 @@ Future<void> initMessaging(
       data = NotificationData(
           type: message["dataType"] ?? "",
           bulletinType: message["bulletinType"] ?? "",
-          state: NotificationState.resume
-      );
+          state: NotificationState.resume);
     }
 
     notificationController.add(data);

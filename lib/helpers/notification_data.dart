@@ -1,9 +1,4 @@
-enum NotificationState {
-  message,
-  resume,
-  launch,
-  none
-}
+enum NotificationState { message, resume, launch, none }
 
 class NotificationData {
   final String type;

@@ -9,16 +9,15 @@ class AppState {
   UserInfoData userInfo;
   SettingsData settings;
   UserMessagingData userMessaging;
-  AppState({this.loggedInUser, this.userInfo, this.settings, this.userMessaging});
+  AppState(
+      {this.loggedInUser, this.userInfo, this.settings, this.userMessaging});
 }
 
 class AppStateContainer extends StatefulWidget {
   final Widget child;
   final AppState state;
 
-  AppStateContainer({
-    @required this.child, this.state
-  });
+  AppStateContainer({@required this.child, this.state});
 
   static _AppStateContainerState of(
       [BuildContext context, bool rebuild = true]) {

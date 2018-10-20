@@ -44,7 +44,7 @@ Future<void> showMatchInfo(
                       return Container(
                         height: 15.0,
                       );
-                      
+
                     return Tooltip(
                       message: "Oprettet af",
                       child: Row(

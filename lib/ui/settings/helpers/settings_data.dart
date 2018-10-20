@@ -23,8 +23,8 @@ class SettingsData {
 
   Map<String, dynamic> toMap() {
     return {
-      "showWeather": showWeather, 
-      "rankingName": rankingName, 
+      "showWeather": showWeather,
+      "rankingName": rankingName,
       "sex": sex,
       "notificationsShowNews": notificationsShowNews,
       "notificationsShowEvent": notificationsShowEvent,
@@ -39,8 +39,7 @@ class SettingsData {
         sex: item["sex"] ?? "",
         notificationsShowNews: item["notificationsShowNews"] ?? true,
         notificationsShowEvent: item["notificationsShowEvent"] ?? true,
-        notificationsShowPlay: item["notificationsShowPlay"] ?? true
-        );
+        notificationsShowPlay: item["notificationsShowPlay"] ?? true);
   }
 
   Future<void> save() async {
@@ -52,11 +51,10 @@ class SettingsData {
       data.sex = sex;
     } else {
       data = RankingPlayerData(
-        userId: Home.loggedInUser.uid,
-        name: rankingName,
-        sex: sex,
-        photoUrl: Home.loggedInUser.photoUrl
-      );
+          userId: Home.loggedInUser.uid,
+          name: rankingName,
+          sex: sex,
+          photoUrl: Home.loggedInUser.photoUrl);
     }
 
     data.save();

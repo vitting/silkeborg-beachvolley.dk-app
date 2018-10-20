@@ -127,7 +127,7 @@ class BulletinItemPictures extends StatelessWidget {
   Widget _getImageContainer(
       BulletinImageType type, double width, double height, dynamic image) {
     return GestureDetector(
-      onTap: onTapImageSelected != null
+        onTap: onTapImageSelected != null
             ? () {
                 onTapImageSelected(image);
               }

@@ -21,7 +21,8 @@ class RankingPlayerData {
       this.points,
       this.sex,
       this.userId,
-      this.playerFavorites, this.deleted = false});
+      this.playerFavorites,
+      this.deleted = false});
 
   Map<String, dynamic> toMap() {
     return {

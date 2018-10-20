@@ -29,7 +29,9 @@ class RankingMatchData implements BaseData {
       @required this.winner2,
       @required this.loser1,
       @required this.loser2,
-      this.createdDate, this.year, this.enabled = true});
+      this.createdDate,
+      this.year,
+      this.enabled = true});
 
   Future<RankingPlayerData> getPlayerCreatedMatch() {
     return RankingPlayerData.getPlayer(userId);
@@ -82,7 +84,6 @@ class RankingMatchData implements BaseData {
         loser2: RankingMatchPlayerData.fromMap(item["loser2"]),
         createdDate: item["createdDate"],
         year: item["year"],
-        enabled: item["enabled"]
-        );
+        enabled: item["enabled"]);
   }
 }

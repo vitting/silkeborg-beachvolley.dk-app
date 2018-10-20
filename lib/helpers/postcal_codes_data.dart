@@ -11,17 +11,11 @@ class PostalCode {
   PostalCode({@required this.postalCode, @required this.city});
 
   Map<String, dynamic> toMap() {
-    return {
-      "postalCode": postalCode,
-      "city": city
-    };
+    return {"postalCode": postalCode, "city": city};
   }
 
   factory PostalCode.fromMap(dynamic item) {
-    return PostalCode(
-      postalCode: int.parse(item["nr"]),
-      city: item["navn"]
-    );
+    return PostalCode(postalCode: int.parse(item["nr"]), city: item["navn"]);
   }
 
   Future<void> save() {

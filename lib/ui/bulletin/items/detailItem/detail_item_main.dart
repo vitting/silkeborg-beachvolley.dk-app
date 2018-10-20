@@ -42,7 +42,8 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
         _addComment(),
         StreamBuilder(
           stream: widget.bulletinItem.getCommentsAsStream(),
-          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
               print("ERROR detail_item_main StreamBuilder: ${snapshot.error}");
               return Container();

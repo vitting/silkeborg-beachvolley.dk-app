@@ -8,7 +8,11 @@ class LoaderSpinnerOverlay extends StatelessWidget {
   final String text;
 
   const LoaderSpinnerOverlay(
-      {Key key, @required this.child, @required this.show, this.showModalBarrier = true, this.text = ""})
+      {Key key,
+      @required this.child,
+      @required this.show,
+      this.showModalBarrier = true,
+      this.text = ""})
       : super(key: key);
 
   @override
@@ -30,14 +34,15 @@ class LoaderSpinnerOverlay extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             LoaderSpinner(),
-            text.isEmpty ? Container() : Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.0),
-                  color: Colors.blue
-                ),
-                padding: EdgeInsets.all(10.0),
-                child: Text(text, style: TextStyle(color: Colors.white)),
-              )
+            text.isEmpty
+                ? Container()
+                : Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16.0),
+                        color: Colors.blue),
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(text, style: TextStyle(color: Colors.white)),
+                  )
           ],
         ),
       )

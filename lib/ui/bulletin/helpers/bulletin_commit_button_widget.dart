@@ -7,7 +7,7 @@ class ConfirmButton extends StatelessWidget {
   final ValueChanged<ButtonState> onPress;
   final String toolTip;
 
-const ConfirmButton(
+  const ConfirmButton(
       {Key key,
       @required this.buttonState,
       @required this.onPress,
@@ -27,12 +27,12 @@ const ConfirmButton(
     Widget iconButton = Container();
     if (buttonState == ButtonState.add) {
       iconButton = IconButton(
-        icon: Icon(Icons.check_circle),
-        color: Colors.greenAccent,
-        iconSize: 40.0,
-        onPressed: () {
-          onPress(ButtonState.add);
-        });
+          icon: Icon(Icons.check_circle),
+          color: Colors.greenAccent,
+          iconSize: 40.0,
+          onPressed: () {
+            onPress(ButtonState.add);
+          });
     }
     if (buttonState == ButtonState.remove)
       iconButton = IconButton(

@@ -62,8 +62,7 @@ class TournamentData implements BaseData {
         body: item["body"] ?? "",
         link: item["link"] ?? "",
         startDate: (item["startDate"] as Timestamp).toDate(),
-        endDate: (item["endDate"] as Timestamp).toDate()
-        );
+        endDate: (item["endDate"] as Timestamp).toDate());
   }
 
   static Future<List<TournamentData>> getTournaments() async {

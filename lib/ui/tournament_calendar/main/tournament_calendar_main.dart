@@ -5,6 +5,7 @@ import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/list_item_card_widget.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/no_data_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
@@ -63,9 +64,8 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
   }
 
   Widget _main() {
-    if (_tournaments.length == 0) {
-      return Card(child: Center(child: Text("Der er pt. ingen turneringer")));
-    }
+    if (_tournaments.length == 0) return NoData("Der er pt. ingen turneringer");
+
     return Scrollbar(
       child: ListView.builder(
         itemCount: _tournaments.length,

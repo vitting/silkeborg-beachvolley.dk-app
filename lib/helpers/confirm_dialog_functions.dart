@@ -15,7 +15,7 @@ Future<ConfirmDialogAction> confirmDialog(
 
   if (actionLeft != ConfirmDialogAction.none) {
     actions.add(FlatButton(
-        child: _getButtonText(actionLeft),
+        child: _getButtonText(context, actionLeft),
         onPressed: () {
           Navigator.of(context).pop(actionLeft);
         }));
@@ -23,7 +23,7 @@ Future<ConfirmDialogAction> confirmDialog(
 
   if (actionRight != ConfirmDialogAction.none) {
     actions.add(FlatButton(
-        child: _getButtonText(actionRight),
+        child: _getButtonText(context, actionRight),
         onPressed: () {
           Navigator.of(context).pop(actionRight);
         }));
@@ -43,7 +43,7 @@ Future<ConfirmDialogAction> confirmDialog(
       });
 }
 
-Text _getButtonText(ConfirmDialogAction action) {
+Text _getButtonText(BuildContext context, ConfirmDialogAction action) {
   String value;
 
   switch (action) {

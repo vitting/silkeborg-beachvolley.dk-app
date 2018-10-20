@@ -13,8 +13,14 @@ class UserInfoData implements BaseData {
   String photoUrl;
   bool admin1;
   bool admin2;
-  UserInfoData({@required this.id, @required this.name, @required this.photoUrl, @required this.email, this.admin1 = false, this.admin2 = false});
-  
+  UserInfoData(
+      {@required this.id,
+      @required this.name,
+      @required this.photoUrl,
+      @required this.email,
+      this.admin1 = false,
+      this.admin2 = false});
+
   Map<String, dynamic> toMap() {
     return {
       "id": id,
@@ -35,7 +41,7 @@ class UserInfoData implements BaseData {
   static Future<UserInfoData> get(String id) async {
     DocumentSnapshot snapshot = await UserFirestore.getUserInfo(id);
     UserInfoData userInfoData;
-    if (snapshot.exists)  userInfoData = UserInfoData.fromMap(snapshot.data);
+    if (snapshot.exists) userInfoData = UserInfoData.fromMap(snapshot.data);
 
     return userInfoData;
   }
@@ -47,18 +53,16 @@ class UserInfoData implements BaseData {
       email: user.email,
       photoUrl: user.photoUrl,
     );
-
   }
 
-  factory UserInfoData.fromMap (Map<String, dynamic> user) {
+  factory UserInfoData.fromMap(Map<String, dynamic> user) {
     return UserInfoData(
-      id: user["id"] ?? "",
-      name: user["name"] ?? "",
-      email: user["email"] ?? "",
-      photoUrl: user["photoUrl"] ?? "",
-      admin1: user["admin1"] ?? false,
-      admin2: user["admin2"] ?? false
-    );
+        id: user["id"] ?? "",
+        name: user["name"] ?? "",
+        email: user["email"] ?? "",
+        photoUrl: user["photoUrl"] ?? "",
+        admin1: user["admin1"] ?? false,
+        admin2: user["admin2"] ?? false);
   }
 
   @override

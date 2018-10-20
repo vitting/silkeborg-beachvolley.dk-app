@@ -3,7 +3,7 @@ import 'package:silkeborgbeachvolley/ui/helpers/chip_header_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/list_item_card_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
-import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_edit_main.dart';
+import 'package:silkeborgbeachvolley/ui/enrollment/edit/enrollment_edit_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
@@ -24,7 +24,8 @@ class EnrollmentMadeByUserState extends State<EnrollmentMadeByUser> {
           builder: (BuildContext context,
               AsyncSnapshot<List<EnrollmentUserData>> snapshot) {
             if (snapshot.hasError) {
-              print("ERROR enrollment_made_by_user FutureBuilder: ${snapshot.error}");
+              print(
+                  "ERROR enrollment_made_by_user FutureBuilder: ${snapshot.error}");
               return Container();
             }
             if (!snapshot.hasData) return LoaderSpinner();
@@ -41,7 +42,7 @@ class EnrollmentMadeByUserState extends State<EnrollmentMadeByUser> {
 
             return Container(
               child: Scrollbar(
-                              child: ListView.builder(
+                child: ListView.builder(
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int position) {
                       EnrollmentUserData item = snapshot.data[position];
@@ -52,16 +53,17 @@ class EnrollmentMadeByUserState extends State<EnrollmentMadeByUser> {
                             color: Colors.blueAccent,
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                fullscreenDialog: true,
-                                builder: (BuildContext context) => EnrollmentEdit(item)
-                              ));
+                                  fullscreenDialog: true,
+                                  builder: (BuildContext context) =>
+                                      EnrollmentEdit(item)));
                             },
                           ),
                           title: ListBody(
                             children: <Widget>[
                               _row(
                                   Icons.calendar_today,
-                                  DateTimeHelpers.ddmmyyyyHHnn(item.creationDate.toDate()),
+                                  DateTimeHelpers.ddmmyyyyHHnn(
+                                      item.creationDate.toDate()),
                                   "Oprettelses dato"),
                               _row(Icons.person, item.name, "Navn"),
                               _row(

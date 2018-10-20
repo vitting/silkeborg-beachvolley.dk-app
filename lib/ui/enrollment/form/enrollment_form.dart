@@ -9,9 +9,9 @@ import 'package:validate/validate.dart';
 import './enrollment_form_functions.dart' as formFunctions;
 
 class EnrollmentForm extends StatefulWidget {
-  final ValueChanged<bool> saved;
+  final ValueChanged<bool> onFormSaved;
   final EnrollmentUserData item;
-  const EnrollmentForm({@required this.saved, this.item});
+  const EnrollmentForm({@required this.onFormSaved, this.item});
   @override
   _EnrollmentFormState createState() => _EnrollmentFormState();
 }
@@ -226,8 +226,8 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
 
             await _user.save();
 
-            if (widget.saved != null) {
-              widget.saved(true);
+            if (widget.onFormSaved != null) {
+              widget.onFormSaved(true);
             } else {
               Navigator.of(context).pop();
             }

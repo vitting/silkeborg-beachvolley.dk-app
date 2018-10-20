@@ -1,6 +1,1 @@
-enum BulletinImageType {
-  file,
-  local,
-  network, 
-  fileAndNetwork
-}
+enum BulletinImageType { file, local, network, fileAndNetwork }

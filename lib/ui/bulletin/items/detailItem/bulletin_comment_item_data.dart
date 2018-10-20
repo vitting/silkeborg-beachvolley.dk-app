@@ -15,9 +15,9 @@ class BulletinCommentItemData implements BaseData {
   String authorId;
   String authorName;
   String authorPhotoUrl;
-  
+
   BulletinCommentItemData(
-      {this.id, 
+      {this.id,
       this.bulletinId = "",
       this.body = "",
       this.creationDate,
@@ -31,7 +31,11 @@ class BulletinCommentItemData implements BaseData {
       "bulletinId": bulletinId,
       "body": body,
       "creationDate": creationDate ?? Timestamp.now(),
-      "author": {"id": authorId, "name": authorName, "photoUrl": authorPhotoUrl},
+      "author": {
+        "id": authorId,
+        "name": authorName,
+        "photoUrl": authorPhotoUrl
+      },
     };
   }
 
@@ -51,9 +55,8 @@ class BulletinCommentItemData implements BaseData {
         body: item["body"] ?? "",
         creationDate: item["creationDate"],
         authorId: item["author"]["id"] ?? "",
-        authorName: item["author"]["name"]?? "",
-        authorPhotoUrl: item["author"]["photoUrl"] ?? ""
-        );
+        authorName: item["author"]["name"] ?? "",
+        authorPhotoUrl: item["author"]["photoUrl"] ?? "");
   }
 
   String get creationDateFormatted =>

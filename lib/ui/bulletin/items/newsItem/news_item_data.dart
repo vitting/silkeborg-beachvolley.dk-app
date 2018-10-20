@@ -23,15 +23,15 @@ class BulletinNewsItemData extends BulletinItemData implements BaseData {
       int numberOfcomments = 0,
       this.images})
       : super(
-            id: id,
-            type: type,
-            body: body,
-            creationDate: creationDate,
-            authorId: authorId,
-            authorName: authorName,
-            authorPhotoUrl: authorPhotoUrl,
-            numberOfcomments: numberOfcomments,
-            );
+          id: id,
+          type: type,
+          body: body,
+          creationDate: creationDate,
+          authorId: authorId,
+          authorName: authorName,
+          authorPhotoUrl: authorPhotoUrl,
+          numberOfcomments: numberOfcomments,
+        );
 
   @override
   Map<String, dynamic> toMap() {
@@ -69,20 +69,20 @@ class BulletinNewsItemData extends BulletinItemData implements BaseData {
 
   factory BulletinNewsItemData.fromMap(Map<dynamic, dynamic> item) {
     return new BulletinNewsItemData(
-        id: item["id"] ?? "",
-        type: BulletinTypeHelper.getBulletinTypeStringAsType(item["type"]),
-        authorId: item["author"]["id"] ?? "",
-        authorName: item["author"]["name"] ?? "",
-        authorPhotoUrl: item["author"]["photoUrl"] ?? "",
-        body: item["body"] ?? "",
-        creationDate: item["creationDate"] ?? "",
-        numberOfcomments: item["numberOfcomments"] ?? 0,
-        images: item["images"] == null
-            ? []
-            : (item["images"] as List<dynamic>)
-                .map<BulletinImageData>((dynamic data) {
-                return BulletinImageData.fromMap(data);
-              }).toList(),
-        );
+      id: item["id"] ?? "",
+      type: BulletinTypeHelper.getBulletinTypeStringAsType(item["type"]),
+      authorId: item["author"]["id"] ?? "",
+      authorName: item["author"]["name"] ?? "",
+      authorPhotoUrl: item["author"]["photoUrl"] ?? "",
+      body: item["body"] ?? "",
+      creationDate: item["creationDate"] ?? "",
+      numberOfcomments: item["numberOfcomments"] ?? 0,
+      images: item["images"] == null
+          ? []
+          : (item["images"] as List<dynamic>)
+              .map<BulletinImageData>((dynamic data) {
+              return BulletinImageData.fromMap(data);
+            }).toList(),
+    );
   }
 }

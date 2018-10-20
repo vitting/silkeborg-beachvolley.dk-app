@@ -18,7 +18,19 @@ class ItemFieldsCreate {
   String eventLocation;
   String eventTitle;
 
-  ItemFieldsCreate({this.id, this.creationDate, this.type, this.body = "", this.eventEndDate, this.eventEndTime, this.eventLocation  ="", this.eventStartDate, this.eventStartTime, this.eventTitle = "", this.numberOfcomments = 0, this.numberOfCommits = 0});
+  ItemFieldsCreate(
+      {this.id,
+      this.creationDate,
+      this.type,
+      this.body = "",
+      this.eventEndDate,
+      this.eventEndTime,
+      this.eventLocation = "",
+      this.eventStartDate,
+      this.eventStartTime,
+      this.eventTitle = "",
+      this.numberOfcomments = 0,
+      this.numberOfCommits = 0});
 
   factory ItemFieldsCreate.fromBulletinItem(BulletinItemData item) {
     ItemFieldsCreate data;
@@ -28,38 +40,36 @@ class ItemFieldsCreate {
         id: news.id,
         creationDate: news.creationDate,
         numberOfcomments: news.numberOfcomments,
-        body: news.body, 
+        body: news.body,
         type: news.type,
       );
-    } 
+    }
 
     if (item.type == BulletinType.play) {
       BulletinPlayItemData play = item as BulletinPlayItemData;
       data = ItemFieldsCreate(
-        id: play.id,
-        creationDate: play.creationDate,
-        numberOfcomments: play.numberOfcomments,
-        body: play.body, 
-        type: play.type,
-        numberOfCommits: play.numberOfCommits
-      );
+          id: play.id,
+          creationDate: play.creationDate,
+          numberOfcomments: play.numberOfcomments,
+          body: play.body,
+          type: play.type,
+          numberOfCommits: play.numberOfCommits);
     }
 
     if (item.type == BulletinType.event) {
       BulletinEventItemData event = item as BulletinEventItemData;
       data = ItemFieldsCreate(
-        id: event.id,
-        creationDate: event.creationDate,
-        body: event.body,
-        type: event.type,
-        numberOfcomments: event.numberOfcomments,
-        eventTitle: event.eventTitle,
-        eventLocation: event.eventLocation,
-        eventStartDate: event.eventStartDate,
-        eventEndDate: event.eventEndDate,
-        eventStartTime: event.eventStartTime,
-        eventEndTime: event.eventEndTime
-      );
+          id: event.id,
+          creationDate: event.creationDate,
+          body: event.body,
+          type: event.type,
+          numberOfcomments: event.numberOfcomments,
+          eventTitle: event.eventTitle,
+          eventLocation: event.eventLocation,
+          eventStartDate: event.eventStartDate,
+          eventEndDate: event.eventEndDate,
+          eventStartTime: event.eventStartTime,
+          eventEndTime: event.eventEndTime);
     }
 
     return data;

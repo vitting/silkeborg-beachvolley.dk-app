@@ -17,7 +17,7 @@ import '../../helpers/photo_functions.dart' as photoFunctions;
 
 class CreateBulletinItem extends StatefulWidget {
   final BulletinType bulletinType;
-  
+
   const CreateBulletinItem(this.bulletinType);
 
   @override
@@ -64,13 +64,12 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: _getTitle(widget.bulletinType), 
-      body: LoaderSpinnerOverlay(
-        show: _saving,
-        child: _main(),
-        text: "Gemmer opslag...",
-      )
-    );
+        title: _getTitle(widget.bulletinType),
+        body: LoaderSpinnerOverlay(
+          show: _saving,
+          child: _main(),
+          text: "Gemmer opslag...",
+        ));
   }
 
   Widget _main() {
@@ -79,23 +78,21 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
     ];
 
     if (widget.bulletinType == BulletinType.news)
-      widgets.add(
-        LoaderSpinnerOverlay(
-          show: _loadingImage,
-          showModalBarrier: false,
-          text: "Behandler billedet...",
-          child: BulletinItemPictures(
-        type: BulletinImageType.file,
-        useSquareOnOddImageCount: true,
-        images: _imageFiles,
-        onTapImageSelected: (image) {
-          if (image != null && image is ImageInfoData) {
-            _removePhoto(image);
-          }
-        },
-      ),
-        )
-      );
+      widgets.add(LoaderSpinnerOverlay(
+        show: _loadingImage,
+        showModalBarrier: false,
+        text: "Behandler billedet...",
+        child: BulletinItemPictures(
+          type: BulletinImageType.file,
+          useSquareOnOddImageCount: true,
+          images: _imageFiles,
+          onTapImageSelected: (image) {
+            if (image != null && image is ImageInfoData) {
+              _removePhoto(image);
+            }
+          },
+        ),
+      ));
 
     return Card(
       child: ListView(
@@ -150,13 +147,13 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
             _formKey.currentState.save();
             if (mounted) {
               setState(() {
-                _saving = true;                              
+                _saving = true;
               });
             }
             await _saveBulletinItem();
             if (mounted) {
               setState(() {
-                _saving = false;                              
+                _saving = false;
               });
             }
 
@@ -202,22 +199,22 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
       if (mounted) {
         setState(() {
           _loadingImage = false;
-        _imageFiles.add(imageInfo);
-      });
+          _imageFiles.add(imageInfo);
+        });
       }
     } else {
       if (mounted) {
-      setState(() {
-        _loadingImage = false;
-      });
-    }
+        setState(() {
+          _loadingImage = false;
+        });
+      }
     }
   }
 
   void _removePhoto(ImageInfoData image) async {
     if (mounted) {
       setState(() {
-        _loadingImage = true;              
+        _loadingImage = true;
       });
     }
     PhotoAction action = await photoFunctions.removePhoto(context);
@@ -226,16 +223,16 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
       await ImageHelpers.deleteImageFromCacheAndStorage(image);
       if (mounted) {
         setState(() {
-        _loadingImage = false;
-        _imageFiles.remove(image);
-      });
+          _loadingImage = false;
+          _imageFiles.remove(image);
+        });
       }
     } else {
       if (mounted) {
-      setState(() {
-        _loadingImage = false;              
-      });
-    }
+        setState(() {
+          _loadingImage = false;
+        });
+      }
     }
   }
 }

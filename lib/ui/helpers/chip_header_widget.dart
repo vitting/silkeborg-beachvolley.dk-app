@@ -32,12 +32,11 @@ class ChipHeader extends StatelessWidget {
     return Container(
         padding: EdgeInsets.all(5.0),
         decoration: BoxDecoration(
-            color: backgroundColor, borderRadius: roundedCorners ? BorderRadius.circular(6.0) : null),
+            color: backgroundColor,
+            borderRadius: roundedCorners ? BorderRadius.circular(6.0) : null),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            widgets
-          ],
+          children: <Widget>[widgets],
         ));
   }
 }

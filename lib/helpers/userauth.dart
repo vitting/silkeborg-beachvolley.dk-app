@@ -44,7 +44,7 @@ class UserAuth {
 
     FacebookLoginResult result =
         await facebookSignIn.logInWithReadPermissions(facebookPermissions);
-    
+
     if (result.status == FacebookLoginStatus.cancelledByUser) return null;
     FirebaseUser user = await firebaseAuth.signInWithFacebook(
         accessToken: result.accessToken.token);

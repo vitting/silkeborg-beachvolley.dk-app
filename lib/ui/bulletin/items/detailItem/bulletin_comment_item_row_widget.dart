@@ -8,32 +8,32 @@ class BulletinCommentItemRow extends StatelessWidget {
   final BulletinCommentItemData bulletinItem;
   final ValueChanged<ConfirmDialogAction> onTapMenu;
 
-  const BulletinCommentItemRow({Key key, this.bulletinItem, this.onTapMenu}) : super(key: key);
+  const BulletinCommentItemRow({Key key, this.bulletinItem, this.onTapMenu})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(bulletinItem.authorName),
-          Row(
-            children: <Widget>[
-              Icon(Icons.access_time, size: 10.0),
-              Padding(
-                padding: const EdgeInsets.only(left: 5.0),
-                child: Text(bulletinItem.creationDateFormatted,
-                    style: TextStyle(fontSize: 10.0)),
-              )
-            ],
-          )
-        ],
-      ),
-      leading: CircleAvatar(
-        backgroundImage: NetworkImage(bulletinItem.authorPhotoUrl),
-      ),
-      subtitle: Text(bulletinItem.body),
-      trailing: _getButton(context, bulletinItem.authorId)
-    );
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(bulletinItem.authorName),
+            Row(
+              children: <Widget>[
+                Icon(Icons.access_time, size: 10.0),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Text(bulletinItem.creationDateFormatted,
+                      style: TextStyle(fontSize: 10.0)),
+                )
+              ],
+            )
+          ],
+        ),
+        leading: CircleAvatar(
+          backgroundImage: NetworkImage(bulletinItem.authorPhotoUrl),
+        ),
+        subtitle: Text(bulletinItem.body),
+        trailing: _getButton(context, bulletinItem.authorId));
   }
 
   Widget _getButton(BuildContext context, String authorId) {
@@ -43,13 +43,13 @@ class BulletinCommentItemRow extends StatelessWidget {
         icon: Icon(Icons.more_vert),
         onPressed: () async {
           ConfirmDialogAction action = ConfirmDialogAction.none;
-          int resultModalBottomSheet = await Dialogs.modalBottomSheet(context, [
-            DialogsModalBottomSheetItem("Slet", Icons.delete, 0)
-          ]);
+          int resultModalBottomSheet = await Dialogs.modalBottomSheet(
+              context, [DialogsModalBottomSheetItem("Slet", Icons.delete, 0)]);
 
           if (resultModalBottomSheet != null) {
-            action = await Dialogs.confirmDelete(context, "Vil du slette din kommentar?");
-          } 
+            action = await Dialogs.confirmDelete(
+                context, "Vil du slette din kommentar?");
+          }
 
           onTapMenu(action);
         },

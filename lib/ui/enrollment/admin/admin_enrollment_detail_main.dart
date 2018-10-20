@@ -62,7 +62,8 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
         ),
         AdminEnrollmentDetailRow(
           icon: Icons.calendar_today,
-          text: DateTimeHelpers.ddmmyyyyHHnn(widget.enrollment.creationDate.toDate()),
+          text: DateTimeHelpers.ddmmyyyyHHnn(
+              widget.enrollment.creationDate.toDate()),
           tooltip: "Dato medlemmet er oprettet",
         ),
         AdminEnrollmentDetailRow(

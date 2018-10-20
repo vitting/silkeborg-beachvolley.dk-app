@@ -17,18 +17,21 @@ void bulletinItemPopupMenu(
     DialogsModalBottomSheetItem("Rediger", Icons.edit, 0),
     DialogsModalBottomSheetItem("Slet", Icons.delete, 1)
   ];
-  
 
   int result = await Dialogs.modalBottomSheet(context, items);
 
   if (result != null) {
     switch (result) {
-      case 0: ///Edit
+      case 0:
+
+        ///Edit
         Navigator.of(context).push(MaterialPageRoute(
             fullscreenDialog: true,
             builder: (BuildContext context) => EditBulletinItem(bulletinItem)));
         break;
-      case 1: ///Delete
+      case 1:
+
+        ///Delete
         bulletinConfirmDialog(context, bulletinItem);
         break;
     }

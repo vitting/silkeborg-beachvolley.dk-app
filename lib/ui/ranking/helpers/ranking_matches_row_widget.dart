@@ -5,22 +5,25 @@ import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_matches_row_elem
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 
 class RankingMatchesRow extends StatelessWidget {
-  static Map<String, String> _cachedData =
-      Map<String, String>();
+  static Map<String, String> _cachedData = Map<String, String>();
   final RankingMatchData match;
   final String userId;
   final IconData icon;
   final ValueChanged<RankingMatchData> iconOnTap;
 
   const RankingMatchesRow(
-      {Key key, @required this.match, @required this.userId, this.icon, this.iconOnTap})
+      {Key key,
+      @required this.match,
+      @required this.userId,
+      this.icon,
+      this.iconOnTap})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
-              child: Column(
+        child: Column(
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -44,13 +47,15 @@ class RankingMatchesRow extends StatelessWidget {
                       ],
                     ),
                   ),
-                  icon == null ? Container() : IconButton(
-                    icon: Icon(icon),
-                    onPressed: () {
-                      iconOnTap(match);
-                    },
-                    color: Colors.deepOrange[700],
-                  )
+                  icon == null
+                      ? Container()
+                      : IconButton(
+                          icon: Icon(icon),
+                          onPressed: () {
+                            iconOnTap(match);
+                          },
+                          color: Colors.deepOrange[700],
+                        )
                 ],
               ),
             ),
@@ -136,31 +141,4 @@ class RankingMatchesRow extends StatelessWidget {
       ),
     );
   }
-
-  // Widget _menuIcon(BuildContext context, RankingMatchData match) {
-  //   Widget icon = Container();
-  //   if (userId == match.userId) {
-  //     icon = IconButton(
-  //       icon: Icon(Icons.more_horiz, color: Colors.deepOrange[700]),
-  //       onPressed: () {
-  //         _showDelete(context, match);
-  //       },
-  //     );
-  //   }
-  //   return icon;
-  // }
-
-  // Future<void> _showDelete(BuildContext context, RankingMatchData match) async {
-  //   int result = await Dialogs.modalBottomSheet(
-  //       context, [DialogsModalBottomSheetItem("Slet", Icons.delete, 0)]);
-
-  //   if (result != null) {
-  //     ConfirmDialogAction action = await Dialogs.confirmDelete(
-  //         context, "Er du sikker på du vil slette kampen?");
-
-  //     if (action != null && action == ConfirmDialogAction.delete) {
-  //       match.delete();
-  //     }
-  //   }
-  // }
 }

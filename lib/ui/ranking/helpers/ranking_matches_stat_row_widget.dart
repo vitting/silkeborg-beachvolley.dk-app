@@ -13,19 +13,23 @@ class RankingMatchesStatRow extends StatelessWidget {
       {Key key,
       @required this.winner,
       @required this.loser,
-      @required this.userId, this.showPoints = false})
+      @required this.userId,
+      this.showPoints = false})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        _playerItem(winner.name, winner.photoUrl, winner.id, winner.points, Colors.blue),
-        _playerItem(loser.name, loser.photoUrl, loser.id, loser.points, Colors.blue[700]),
+        _playerItem(winner.name, winner.photoUrl, winner.id, winner.points,
+            Colors.blue),
+        _playerItem(loser.name, loser.photoUrl, loser.id, loser.points,
+            Colors.blue[700]),
       ],
     );
   }
 
-  Widget _playerItem(String name, String photoUrl, String id, int point, Color color) {
+  Widget _playerItem(
+      String name, String photoUrl, String id, int point, Color color) {
     return Flexible(
       flex: 2,
       child: Padding(
@@ -43,22 +47,25 @@ class RankingMatchesStatRow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     _getName(name, id),
-                    showPoints ? Padding(
-                      padding: const EdgeInsets.only(top: 3.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Tooltip(
-                            message: "Point",
-                            child: Icon(FontAwesomeIcons.trophy, size: 12.0, color: color),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5.0),
-                            child: Text(point.toString()),
+                    showPoints
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 3.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Tooltip(
+                                  message: "Point",
+                                  child: Icon(FontAwesomeIcons.trophy,
+                                      size: 12.0, color: color),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 5.0),
+                                  child: Text(point.toString()),
+                                )
+                              ],
+                            ),
                           )
-                        ],
-                      ),
-                    ) : Container()
+                        : Container()
                   ],
                 ),
               ),

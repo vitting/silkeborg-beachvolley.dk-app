@@ -12,13 +12,16 @@ class RankingDetailChartMatchesWeek extends StatefulWidget {
   final double width;
   final double height;
 
-  const RankingDetailChartMatchesWeek({Key key, this.getMatches, this.height, this.width})
+  const RankingDetailChartMatchesWeek(
+      {Key key, this.getMatches, this.height, this.width})
       : super(key: key);
   @override
-  _RankingDetailChartMatchesWeekState createState() => _RankingDetailChartMatchesWeekState();
+  _RankingDetailChartMatchesWeekState createState() =>
+      _RankingDetailChartMatchesWeekState();
 }
 
-class _RankingDetailChartMatchesWeekState extends State<RankingDetailChartMatchesWeek> {
+class _RankingDetailChartMatchesWeekState
+    extends State<RankingDetailChartMatchesWeek> {
   @override
   Widget build(BuildContext context) {
     return Container(

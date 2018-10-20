@@ -26,7 +26,8 @@ class RankingDetailMatches extends StatelessWidget {
       builder: (BuildContext context,
           AsyncSnapshot<List<RankingMatchData>> snapshot) {
         if (snapshot.hasError) {
-          print("ERROR ranking_detail_matches_main FutureBuilder: ${snapshot.error}");
+          print(
+              "ERROR ranking_detail_matches_main FutureBuilder: ${snapshot.error}");
           return Container();
         }
         if (!snapshot.hasData) return LoaderSpinner();

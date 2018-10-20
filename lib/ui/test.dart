@@ -1,6 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/helpers/firebase_functions_call.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class TestWidget extends StatefulWidget {
@@ -18,9 +17,9 @@ class _TestWidgetState extends State<TestWidget> {
           child: Column(
             children: <Widget>[
               RaisedButton(
+                child: Text("TEST"),
                 onPressed: () async {
-                  String result = await FirebaseFunctions.resetRanking();
-                  print("FUNCTIONS: $result");
+                  print(FlutterI18n.translate(context, "ranking.adminRankingPlayersPlayerInfo.string1"));                  
                 },
               )
             ],

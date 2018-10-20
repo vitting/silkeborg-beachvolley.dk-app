@@ -12,6 +12,7 @@ import 'package:silkeborgbeachvolley/ui/home/home_launcher_main.dart';
 import 'package:silkeborgbeachvolley/ui/login/login_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
 import './helpers/home_functions.dart' as homeFunctions;
+
 class Home extends StatefulWidget {
   static FirebaseUser loggedInUser;
   static UserInfoData userInfo;
@@ -27,7 +28,7 @@ class _HomeState extends State<Home> {
       StreamController<NotificationData>.broadcast();
   bool _isLoggedIn = false;
   Widget homeWidget = HomeLauncherSplash();
-  
+
   @override
   void dispose() {
     super.dispose();

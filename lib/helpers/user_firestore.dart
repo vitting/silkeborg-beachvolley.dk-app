@@ -11,7 +11,10 @@ class UserFirestore {
   static String _collectionNameUsersMessaging = "users_messaging";
 
   static Future<DocumentSnapshot> getUserMessaging(String id) {
-    return _firestore.collection(_collectionNameUsersMessaging).document(id).get();
+    return _firestore
+        .collection(_collectionNameUsersMessaging)
+        .document(id)
+        .get();
   }
 
   static Future<void> setUserMessaging(UserMessagingData item) {

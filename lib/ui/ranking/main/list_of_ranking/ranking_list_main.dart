@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/no_data_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/list_of_ranking/helpers/ranking_item_widget.dart';
@@ -23,10 +24,9 @@ class _RankingListState extends State<RankingList> {
           }
           if (!snapshot.hasData) return LoaderSpinner();
 
-          if (snapshot.data.documents.length == 0) {
-            return Center(
-                child: Text("Der er pt. ingen personer på ranglisten"));
-          }
+          if (snapshot.data.documents.length == 0)
+            return NoData("Der er pt. ingen personer på ranglisten");
+
           int counter = -1;
           return Scrollbar(
             child: ListView(

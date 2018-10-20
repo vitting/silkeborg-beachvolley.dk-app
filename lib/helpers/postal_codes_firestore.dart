@@ -15,15 +15,24 @@ class PostalCodesFirestore {
   }
 
   static Future<DocumentSnapshot> getCity(int postalCode) {
-    return firestoreInstance.collection(_collectionName).document(postalCode.toString()).get();
-  } 
+    return firestoreInstance
+        .collection(_collectionName)
+        .document(postalCode.toString())
+        .get();
+  }
 
   static Future<void> setPostalCode(PostalCode item) {
-    return firestoreInstance.collection(_collectionName).document(item.postalCode.toString()).setData(item.toMap());
+    return firestoreInstance
+        .collection(_collectionName)
+        .document(item.postalCode.toString())
+        .setData(item.toMap());
   }
 
   static Future<void> deletePostalCode(int postalCode) {
-    return firestoreInstance.collection(_collectionName).document(postalCode.toString()).delete();
+    return firestoreInstance
+        .collection(_collectionName)
+        .document(postalCode.toString())
+        .delete();
   }
 
   static Future<QuerySnapshot> getAllPostalCodes() {

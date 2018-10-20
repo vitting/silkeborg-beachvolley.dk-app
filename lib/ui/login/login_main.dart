@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import 'package:silkeborgbeachvolley/ui/enrollment/enrollment_main.dart';
+import 'package:silkeborgbeachvolley/ui/enrollment/main/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'helpers/auth_functions.dart' as authFunctions;
 
@@ -8,7 +8,7 @@ class Login extends StatelessWidget {
   final ValueChanged<bool> onLogIn;
 
   const Login({Key key, this.onLogIn}) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
@@ -44,7 +44,7 @@ class Login extends StatelessWidget {
               width: 100.0, height: 100.0),
           Container(
             width: 250.0,
-                      child: RaisedButton(
+            child: RaisedButton(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
               color: Color(0xFF4267B2),

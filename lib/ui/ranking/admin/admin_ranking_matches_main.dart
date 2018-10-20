@@ -22,7 +22,8 @@ class AdminRankingMatchesState extends State<AdminRankingMatches> {
       stream: RankingMatchData.getMatchesAsStream(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
-          print("ERROR admin_ranking_matches_main StreamBuilder: ${snapshot.error}");
+          print(
+              "ERROR admin_ranking_matches_main StreamBuilder: ${snapshot.error}");
           return Container();
         }
         if (!snapshot.hasData) return LoaderSpinner();

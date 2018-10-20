@@ -4,7 +4,7 @@ import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart
 
 class BulletinMainFab extends StatefulWidget {
   final ValueChanged<BulletinType> onPressedValue;
-  
+
   const BulletinMainFab({@required this.onPressedValue});
 
   @override
