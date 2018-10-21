@@ -1,5 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 
 class AdminRankingPlayersRow extends StatelessWidget {
   final String name;
@@ -17,8 +17,8 @@ class AdminRankingPlayersRow extends StatelessWidget {
           onTap: () {
             rowOnTap(true);
           },
-          leading: CircleAvatar(
-            backgroundImage: CachedNetworkImageProvider(photoUrl),
+          leading: CircleProfileImage(
+            url: photoUrl
           ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

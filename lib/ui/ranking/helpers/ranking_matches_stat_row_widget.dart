@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_player_data_class.dart';
 
 class RankingMatchesStatRow extends StatelessWidget {
@@ -21,25 +21,25 @@ class RankingMatchesStatRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        _playerItem(context, winner.name, winner.photoUrl, winner.id, winner.points,
-            Colors.blue),
+        _playerItem(context, winner.name, winner.photoUrl, winner.id,
+            winner.points, Colors.blue),
         _playerItem(context, loser.name, loser.photoUrl, loser.id, loser.points,
             Colors.blue[700]),
       ],
     );
   }
 
-  Widget _playerItem(BuildContext context,
-      String name, String photoUrl, String id, int point, Color color) {
+  Widget _playerItem(BuildContext context, String name, String photoUrl,
+      String id, int point, Color color) {
     return Flexible(
       flex: 2,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0),
         child: Row(
           children: <Widget>[
-            CircleAvatar(
-              radius: 15.0,
-              backgroundImage: CachedNetworkImageProvider(photoUrl),
+            CircleProfileImage(
+              size: 30.0,
+              url: photoUrl
             ),
             Expanded(
               child: Padding(
@@ -55,7 +55,8 @@ class RankingMatchesStatRow extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 Tooltip(
-                                  message: FlutterI18n.translate(context, "ranking.rankingMatchesStatRowWidget.string1"),
+                                  message: FlutterI18n.translate(context,
+                                      "ranking.rankingMatchesStatRowWidget.string1"),
                                   child: Icon(FontAwesomeIcons.trophy,
                                       size: 12.0, color: color),
                                 ),

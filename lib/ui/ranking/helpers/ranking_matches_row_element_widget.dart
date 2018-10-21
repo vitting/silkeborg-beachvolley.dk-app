@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 
 class RankingMatchesRowElement extends StatelessWidget {
   final String name;
@@ -54,9 +54,8 @@ class RankingMatchesRowElement extends StatelessWidget {
         ),
         Positioned(
           top: 5.0,
-          child: CircleAvatar(
-            radius: 20.0,
-            backgroundImage: CachedNetworkImageProvider(photoUrl),
+          child: CircleProfileImage(
+            url: photoUrl
           ),
         ),
       ],

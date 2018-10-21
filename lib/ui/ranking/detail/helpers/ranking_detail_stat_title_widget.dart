@@ -1,5 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 
 class RankingDetailStatTitle extends StatelessWidget {
   final String photoUrl;
@@ -12,8 +12,8 @@ class RankingDetailStatTitle extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        CircleAvatar(
-          backgroundImage: CachedNetworkImageProvider(photoUrl),
+        CircleProfileImage(
+          url: photoUrl
         ),
         Padding(
           padding: const EdgeInsets.only(left: 10.0),

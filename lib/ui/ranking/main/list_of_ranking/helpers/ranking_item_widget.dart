@@ -1,6 +1,6 @@
 import 'dart:math' as math;
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 
 class RankingItem extends StatefulWidget {
@@ -62,10 +62,9 @@ class RankingItemState extends State<RankingItem>
         padding: EdgeInsets.all(10.0),
         child: Row(
           children: <Widget>[
-            CircleAvatar(
-              radius: 25.0,
-              backgroundImage:
-                  CachedNetworkImageProvider(widget.player.photoUrl),
+            CircleProfileImage(
+              size: 50.0,
+              url: widget.player.photoUrl
             ),
             Container(
               width: 50.0,

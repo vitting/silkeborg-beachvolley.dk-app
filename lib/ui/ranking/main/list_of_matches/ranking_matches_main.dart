@@ -4,6 +4,7 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/no_data_widget.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_matches_row_widget.dart';
@@ -20,11 +21,7 @@ class RankingMatches extends StatelessWidget {
         }
         if (!snapshot.hasData) return LoaderSpinner();
         if (snapshot.hasData && snapshot.data.documents.length == 0) {
-          return Card(
-            child: Center(
-              child: Text(FlutterI18n.translate(context, "ranking.rankingMatchesMain.string1")),
-            ),
-          );
+          return NoData(FlutterI18n.translate(context, "ranking.rankingMatchesMain.string1"));
         }
         List<RankingMatchData> list = snapshot.data.documents
             .map<RankingMatchData>((DocumentSnapshot doc) {

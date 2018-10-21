@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_committed_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data.dart';
 
@@ -21,8 +21,8 @@ Future<List> _buildCommittedDialogItems(BulletinItemData item) async {
   return data.map((CommittedData committed) {
     return ListTile(
       title: Text(committed.name),
-      leading: CircleAvatar(
-        backgroundImage: CachedNetworkImageProvider(committed.photoUrl),
+      leading: CircleProfileImage(
+        url: committed.photoUrl
       ),
     );
   }).toList();

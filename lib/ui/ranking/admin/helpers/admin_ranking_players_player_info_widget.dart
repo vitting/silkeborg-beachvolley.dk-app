@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_colors.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/chip_header_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
@@ -14,16 +14,17 @@ class AdminRankingPlayersPlayerInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      title: Text(FlutterI18n.translate(context, "ranking.adminRankingPlayersPlayerInfoWidget.string1")),
+      title: Text(FlutterI18n.translate(
+          context, "ranking.adminRankingPlayersPlayerInfoWidget.string1")),
       children: <Widget>[
         Column(
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                CircleAvatar(
-                  backgroundImage: CachedNetworkImageProvider(player.photoUrl),
-                  radius: 30.0,
+                CircleProfileImage(
+                  size: 60.0,
+                  url: player.photoUrl
                 ),
               ],
             ),
@@ -40,7 +41,8 @@ class AdminRankingPlayersPlayerInfo extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Tooltip(
-                      message: FlutterI18n.translate(context, "ranking.adminRankingPlayersPlayerInfoWidget.string2"),
+                      message: FlutterI18n.translate(context,
+                          "ranking.adminRankingPlayersPlayerInfoWidget.string2"),
                       child: Icon(FontAwesomeIcons.idCard, size: 12.0)),
                   Padding(
                     padding: const EdgeInsets.only(left: 5.0),
@@ -52,7 +54,8 @@ class AdminRankingPlayersPlayerInfo extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: ChipHeader(
-                FlutterI18n.translate(context, "ranking.adminRankingPlayersPlayerInfoWidget.string3"),
+                FlutterI18n.translate(context,
+                    "ranking.adminRankingPlayersPlayerInfoWidget.string3"),
                 roundedCorners: false,
                 expanded: true,
                 textAlign: TextAlign.center,
@@ -65,15 +68,18 @@ class AdminRankingPlayersPlayerInfo extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Column(children: <Widget>[
-                    Text(FlutterI18n.translate(context, "ranking.adminRankingPlayersPlayerInfoWidget.string4")),
+                    Text(FlutterI18n.translate(context,
+                        "ranking.adminRankingPlayersPlayerInfoWidget.string4")),
                     Text(player.numberOfPlayedMatches.won.toString())
                   ]),
                   Column(children: <Widget>[
-                    Text(FlutterI18n.translate(context, "ranking.adminRankingPlayersPlayerInfoWidget.string5")),
+                    Text(FlutterI18n.translate(context,
+                        "ranking.adminRankingPlayersPlayerInfoWidget.string5")),
                     Text(player.numberOfPlayedMatches.lost.toString())
                   ]),
                   Column(children: <Widget>[
-                    Text(FlutterI18n.translate(context, "ranking.adminRankingPlayersPlayerInfoWidget.string6")),
+                    Text(FlutterI18n.translate(context,
+                        "ranking.adminRankingPlayersPlayerInfoWidget.string6")),
                     Text(player.numberOfPlayedMatches.total.toString())
                   ])
                 ],
@@ -82,7 +88,8 @@ class AdminRankingPlayersPlayerInfo extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: ChipHeader(
-                FlutterI18n.translate(context, "ranking.adminRankingPlayersPlayerInfoWidget.string7"),
+                FlutterI18n.translate(context,
+                    "ranking.adminRankingPlayersPlayerInfoWidget.string7"),
                 roundedCorners: false,
                 expanded: true,
                 textAlign: TextAlign.center,

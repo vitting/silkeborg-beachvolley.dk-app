@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/detailItem/bulletin_comment_item_data.dart';
@@ -30,8 +31,8 @@ class BulletinCommentItemRow extends StatelessWidget {
             )
           ],
         ),
-        leading: CircleAvatar(
-          backgroundImage: NetworkImage(bulletinItem.authorPhotoUrl),
+        leading: CircleProfileImage(
+          url: bulletinItem.authorPhotoUrl
         ),
         subtitle: Text(bulletinItem.body),
         trailing: _getButton(context, bulletinItem.authorId));

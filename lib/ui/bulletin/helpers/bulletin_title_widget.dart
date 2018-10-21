@@ -1,5 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import "package:flutter/material.dart";
+import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
 class BulletinTitle extends StatelessWidget {
@@ -27,7 +27,9 @@ class BulletinTitle extends StatelessWidget {
       widgets.add(Padding(
         padding: const EdgeInsets.only(right: 10.0),
         child:
-            CircleAvatar(backgroundImage: CachedNetworkImageProvider(photoUrl)),
+        CircleProfileImage(
+          url: photoUrl
+        )
       ));
     }
 

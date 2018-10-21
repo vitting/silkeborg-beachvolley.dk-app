@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
@@ -37,10 +37,9 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
-            child: CircleAvatar(
-              radius: 30.0,
-              backgroundImage:
-                  CachedNetworkImageProvider(_rankingPlayerData.photoUrl),
+            child: CircleProfileImage(
+              url: _rankingPlayerData.photoUrl,
+              size: 60.0
             ),
           ),
           Form(

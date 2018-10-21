@@ -1,5 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 
@@ -56,9 +56,8 @@ class ChoosePlayerListRowState extends State<ChoosePlayerListRow> {
           child: Stack(
             overflow: Overflow.visible,
             children: <Widget>[
-              CircleAvatar(
-                backgroundImage:
-                    CachedNetworkImageProvider(widget.player.photoUrl),
+              CircleProfileImage(
+                url: widget.player.photoUrl
               ),
               Positioned(
                   bottom: -6.0,
