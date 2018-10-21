@@ -1,0 +1,400 @@
+{
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "no": "No",
+    "yes": "Yes",
+    "ok": "Ok",
+    "save": "Save",
+    "close": "Close",
+    "hide": "Hide",
+    "show": "Show",
+    "reset": "Reset",
+    "error": "Error",
+    "monthsLong": {
+        "1": "January",
+        "2": "February",
+        "3": "Marts",
+        "4": "April",
+        "5": "May",
+        "6": "June",
+        "7": "July",
+        "8": "August",
+        "9": "September",
+        "10": "October",
+        "11": "November",
+        "12": "December"
+    },
+    "monthsShort": {
+        "1": "jan.",
+        "2": "feb.",
+        "3": "mar.",
+        "4": "apr.",
+        "5": "may",
+        "6": "jun.",
+        "7": "jul.",
+        "8": "aug.",
+        "9": "sept.",
+        "10": "oct.",
+        "11": "nov.",
+        "12": "dec."
+    },
+    "searchbar": {
+        "string1": "Search"
+    },
+    "bulletin": {
+        "photoAddPhotoWidget": {
+            "title": "Insert picture from",
+            "string1": "Gallery",
+            "string2": "Camera"
+        },
+        "createItemMain": {
+            "title1": "Create news",
+            "title2": "Create event",
+            "title3": "Create play",
+            "string1": "Saveing bulletin...",
+            "string2": "Processing the image..."
+        },
+        "getBulletinEventFields": {
+            "string1": "Start date",
+            "string2": "Fill out Start date",
+            "string3": "End date",
+            "string4": "Fill out End date",
+            "string5": "Start time",
+            "string6": "Fill out Start time",
+            "string7": "End time",
+            "string8": "Fill out End time",
+            "string9": "Add a picture. It's not required.",
+            "string10": "Poster picture. It's not required",
+            "string11": "Title",
+            "string12": "Title must be completed",
+            "string13": "Place",
+            "string14": "Place must be completed"
+        },
+        "getBulletinTextField": {
+            "string1": "Bulletins",
+            "string2": "Bulletin must be completed"
+        },
+        "bulletinCommentItemRowWidget": {
+            "string1": "Delete",
+            "string2": "Do you want to delete your comment?"
+        },
+        "detailItemMain": {
+            "title": "Silkeborg Beachvolley",
+            "string1": "Must be completed",
+            "string2": "Write a comment"
+        },
+        "bulletinEdititemMain": {
+            "title1": "Edit news",
+            "title2": "Edit event",
+            "title3": "Edit play"
+        },
+        "itemFunctions": {
+            "string1": "Edit",
+            "string2": "Delete",
+            "string3": "Delete news",
+            "string4": "Are you sure you want to delete your news item?",
+            "string5": "You should be aware that all pictures and comments for the news item will also be deleted",
+            "string6": "Delete event",
+            "string7": "Are you sure you want to delete your event item?",
+            "string8": "You should be aware that all pictures and comments for the event item will also be deleted",
+            "string9": "Delete play",
+            "string10": "Are you sure you want to delete your play item?",
+            "string11": "You should be aware that all comments for the play item will be deleted"
+        },
+        "bulletinMainFab": {
+            "string1": "News",
+            "string2": "Event",
+            "string3": "Play",
+            "string4": "New Bulletin"
+        },
+        "bulletinMainFunctions": {
+            "string1": "News",
+            "string2": "Events",
+            "string3": "Play"
+        }
+    },
+    "enrollment": {
+        "adminEnrollmentDetailMain": {
+            "string1": "Member info",
+            "string2": "Member ID",
+            "string3": "Date member is created",
+            "string4": "Member name",
+            "string5": "Member address",
+            "string6": "Member e-mail address",
+            "string7": "Member mobile number",
+            "string8": "Year",
+            "string9": "Member date and age",
+            "string10": "No comment",
+            "string11": "Comment",
+            "string12": "A payment has already been created for",
+            "string13": "Register payment for",
+            "string14": "Choose year"
+        },
+        "adminEnrollmentDetailPayments": {
+            "string1": "There are no playment registrations for the member.",
+            "string2": "Delte playment",
+            "string3": "Edit comment",
+            "string4": "Date member is created",
+            "string5": "ID of the person who approved the payment",
+            "string6": "No comment",
+            "string7": "Administrator comment"
+        },
+        "adminEnrollmentFuncstions": {
+            "string1": "Comment",
+            "string2": "Comment",
+            "string3": "Delete playment",
+            "string4": "Do you want to delete payment for"
+        },
+        "adminEnrollmentMain": {
+            "title": "Manage members",
+            "string1": "Edit"
+        },
+        "enrollmentFormFunctions": {
+            "string1": "Info",
+            "string2": "Do you want to continue creating the member?",
+            "string3": "It has already been created",
+            "string4": "more members",
+            "string5": "one member",
+            "string6": "with the specified e-mail address",
+            "string7": " and ",
+            "string8": " with the specified mobile number"
+        },
+        "enrollmentForm": {
+            "string1": "Submit form",
+            "string2": "Update",
+            "string3": "Name",
+            "string4": "Fill out name",
+            "string5": "Address",
+            "string6": "Fill out address",
+            "string7": "Zip code",
+            "string8": "Fill out zip code",
+            "string9": "The entered zip code does not exist",
+            "string10": "City",
+            "string11": "Date of birth",
+            "string12": "Press the button and use the calendar",
+            "string13": "Fill out date of birth",
+            "string14": "Fill out date of birth in the format dd-mm-yyyy",
+            "string15": "E-mail",
+            "string16": "Fill out e-mail addresse",
+            "string17": "Enter a valid e-mail address",
+            "string18": "Mobile number",
+            "string19": "Fill out mobile number"
+        },
+        "enrollmentEditMain": {
+            "title": "Edit member"
+        },
+        "enrollmentMadeByUser": {
+            "title": "My enrollments",
+            "string1": "No enrollemnts where found!",
+            "string2": "Creation date",
+            "string3": "Name",
+            "string4": "Address",
+            "string5": "E-mail",
+            "string6": "Mobile phone",
+            "string7": "Date of birth"
+        },
+        "enrollmentMain": {
+            "title": "Enrollment",
+            "string1": "Show my enrollments"
+        },
+        "enrollmentReadMe": {
+            "string1": "Welcome to enrollment in",
+            "string2": "Silkeborg Beachvolley",
+            "string3": "It only costs 25 kr. for a season to be a member. The amount is paid with MobilePay",
+            "string4": "18185",
+            "string5": "Fill out the form on the next page for the person to enroll"
+        },
+        "enrollmentPayment": {
+            "string1": "Thank you for your enrollment",
+            "string2": "and welcome to",
+            "string3": "Silkeborg Beachvolley",
+            "string4": "Complete your registration by",
+            "string5": "transfer 25 kr. with MobilePay",
+            "string6": "to the number: 18185",
+            "string7": "You can tap the MobilePay logo",
+            "string8": "to open your MobilePay app",
+            "string9": "Go to the front page if enroll more people in Silkeborg Beach Volleyball"
+        }
+    },
+    "login": {
+        "authFunctions": {
+            "string1": "Log out",
+            "string2": "Are you sure you want to log out?",
+            "string3": "Yes",
+            "string4": "No"
+        },
+        "loginMain": {
+            "string1": "Welcome to Silkeborg Beachvolley",
+            "string2": "Sign in with Facebook",
+            "string3": "The fine print - You must log in with your Facebook account to be able to use this app. We do not ask for any special permissions from Facebook as we only need your name and profile picture. We can post anything on your behalf and don't have access to your photos and friends.",
+            "string4": "If you only want to use this app to enroll in Silkeborg Beachvolley then press below.",
+            "string5": "Enrollment in Silkeborg Beachvolley"
+        }
+    },
+    "ranking": {
+        "adminRankingPlayersPlayerInfoWidget": {
+            "string1": "Player info",
+            "string2": "User ID",
+            "string3": "Matches",
+            "string4": "Won",
+            "string5": "Lost",
+            "string6": "Total",
+            "string7": "Points"
+        },
+        "adminRankingMain": {
+            "string1": "Reset season",
+            "string2": "Show players",
+            "string3": "Show hidden players",
+            "string4": "Reset season",
+            "string5": "Are you sure you want to reset the season?\n\nBe aware that all matches will be hidden and all player data (points and played matches) will be set to zero.",
+            "string6": "Manage players",
+            "string7": "Manage hidden players",
+            "string8": "Manage matches"
+        },
+        "adminRankingMatchesMain": {
+            "string1": "No matches where found",
+            "string2": "Delete",
+            "string3": "Are you sure you want to delete the match?"
+        },
+        "adminRankingPlayersMain": {
+            "string1": "No player where found",
+            "string2": "Hide",
+            "string3": "Show",
+            "string4": "Are you sure you want to show the player?",
+            "string5": "Are you sure you want to hide the player?\nThe player can be displayed again by selecting the player in the players menu - Show hidden "
+        },
+        "choosePlayersListWidget": {
+            "string1": "Choose winner",
+            "string2": "Choose loser"
+        },
+        "createPlayerChooseDateWidget": {
+            "string1": "Choose match date"
+        },
+        "rankingCreateMatchMain": {
+            "string1": "No player selected",
+            "string2": "Save the match",
+            "string3": "Saving the match...",
+            "string4": "Winners",
+            "string5": "Losers",
+            "string6": "Save the match",
+            "string7": "You must fill in the fields with red before saving the match."
+        },
+        "rankingDetailChartMatchesWeekWidget": {
+            "string1": "Number of games played per. week"
+        },
+        "rankingDetailChartPointsWeekWidget": {
+            "string1": "Number of points per. week"
+        },
+        "rankingDetailFunctions": {
+            "string1": "Match info",
+            "string2": "Match date",
+            "string3": "Created by",
+            "string4": "Winners",
+            "string5": "Losers"
+        },
+        "rankingDetailStatRowWidget": {
+            "string1": "total",
+            "string2": "Won",
+            "string3": "Lost"
+        },
+        "rankingDetailMain": {
+            "title1": "Players statistic",
+            "title2": "Played matches"
+        },
+        "rankingDetailMatchesMain": {
+            "string1": "Can't show played matches",
+            "string2": "Match date"
+        },
+        "rankingDetailStatMain": {
+            "string1": "Points",
+            "string2": "Played matches"
+        },
+        "rankingMatchesHeaderWidget": {
+            "string1": "Winners",
+            "string2": "Losers"
+        },
+        "rankingMatchesRowWidget": {
+            "string1": "Match date",
+            "string2": "Created by"
+        },
+        "rankingMatchesStatRowWidget": {
+            "string1": "Points"
+        },
+        "rankingFirsttimeMain": {
+            "string1": "Welcome to the Rankings",
+            "string2": "Before you can start registering your matches, we just need to know a few things about you. You can always change your information later in settings.",
+            "string3": "Fill out ranking name",
+            "string4": "Your ranking name",
+            "string5": "Choose your sex",
+            "string6": "Female",
+            "string7": "Male",
+            "string8": "Save my profile"
+        },
+        "rankingMatchesMain": {
+            "string1": "No matches where found",
+            "string2": "Are you sure you want to delete the match?"
+        },
+        "rankingListMain": {
+            "string1": "There is pt. no people in the rankings"
+        },
+        "rankingMain": {
+            "string1": "Register match",
+            "title1": "Ranking",
+            "title2": "The last 10 played matches"
+        }
+    },
+    "scaffold": {
+        "drawerWidget": {
+            "string1": "Enrollment",
+            "string2": "Ranking",
+            "string3": "Live score",
+            "string4": "Tournament calendar",
+            "string5": "Logout",
+            "string6": "Settings",
+            "string7": "Manage members",
+            "string8": "Manage ranking"
+        }
+    },
+    "settings": {
+        "settingsMain": {
+            "title": "Settings",
+            "string1": "Weather",
+            "string2": "Notifications",
+            "string3": "Ranking",
+            "string4": "Show weather",
+            "string5": "News",
+            "string6": "Events",
+            "string7": "Play",
+            "string8": "Ranking name",
+            "string9": "Fill out ranking name",
+            "string10": "Female",
+            "string11": "Male"
+        }
+    },
+    "tournamentCalendar": {
+        "tournamentCreateMain": {
+            "string1": "Fill out start date",
+            "string2": "Start date",
+            "string3": "Fill out end date",
+            "string4": "End date",
+            "string5": "Location / short title",
+            "string6": "Fill out location / short title",
+            "string7": "Text",
+            "string8": "Fill out text",
+            "string9": "Link to website",
+            "string10": "Link is not required",
+            "string11": "The entered link is not a valid link",
+            "string12": "Save tournament"
+        },
+        "tournamentCalendarMain": {
+            "title": "Tournaments",
+            "string1": "Create tournament",
+            "string2": "There are at the moment no tournaments",
+            "string3": "Go to website",
+            "string4": "Edit",
+            "string5": "Delete",
+            "string6": "Edit tournament",
+            "string7": "Are you sure you want to delte the tournament?"
+        }
+    }
+}
