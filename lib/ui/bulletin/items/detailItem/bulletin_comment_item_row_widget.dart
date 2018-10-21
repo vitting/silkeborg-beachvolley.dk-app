@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/detailItem/bulletin_comment_item_data.dart';
@@ -44,11 +45,11 @@ class BulletinCommentItemRow extends StatelessWidget {
         onPressed: () async {
           ConfirmDialogAction action = ConfirmDialogAction.none;
           int resultModalBottomSheet = await Dialogs.modalBottomSheet(
-              context, [DialogsModalBottomSheetItem("Slet", Icons.delete, 0)]);
+              context, [DialogsModalBottomSheetItem(FlutterI18n.translate(context, "bulletin.bulletinCommentItemRowWidget.string1"), Icons.delete, 0)]);
 
           if (resultModalBottomSheet != null) {
             action = await Dialogs.confirmDelete(
-                context, "Vil du slette din kommentar?");
+                context, FlutterI18n.translate(context, "bulletin.bulletinCommentItemRowWidget.string2"));
           }
 
           onTapMenu(action);

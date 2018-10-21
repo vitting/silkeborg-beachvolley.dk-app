@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 class RankingMatchesHeader extends StatelessWidget {
   @override
@@ -14,7 +15,7 @@ class RankingMatchesHeader extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 2.0),
                   color: Colors.blue,
                   child: Text(
-                    "Vindere",
+                    FlutterI18n.translate(context, "ranking.rankingMatchesHeaderWidget.string1"),
                     style: TextStyle(color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
@@ -25,7 +26,7 @@ class RankingMatchesHeader extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 2.0),
                   color: Colors.blue[700],
                   child: Text(
-                    "Tabere",
+                    FlutterI18n.translate(context, "ranking.rankingMatchesHeaderWidget.string2"),
                     style: TextStyle(color: Colors.white),
                     textAlign: TextAlign.center,
                   ),

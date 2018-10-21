@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/main/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'helpers/auth_functions.dart' as authFunctions;
@@ -36,7 +37,7 @@ class Login extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(top: 70.0),
-            child: Text("Velkommen til Silkeborg Beachvolley",
+            child: Text(FlutterI18n.translate(context, "login.loginMain.string1"),
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white, fontSize: 18.0)),
           ),
@@ -60,7 +61,7 @@ class Login extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 20.0),
                     child: Text(
-                      "Log ind med Facebook",
+                      FlutterI18n.translate(context, "login.loginMain.string2"),
                       style: TextStyle(color: Colors.white, fontSize: 16.0),
                     ),
                   ),
@@ -69,11 +70,11 @@ class Login extends StatelessWidget {
             ),
           ),
           Text(
-              "Det med småt - Du skal logge ind med din Facebook konto for at kunne bruge denne app. Vi beder ikke om nogen specille tilladelser fra Facebook da vi kun skal bruge dit navn og profil billede. Dvs. vi kan ikke slå noget op på vegne af dig eller har adgang til dine billeder og venner.",
+              FlutterI18n.translate(context, "login.loginMain.string3"),
               style: TextStyle(color: Colors.white, fontSize: 12.0),
               textAlign: TextAlign.center),
           Text(
-              "Hvis du kun vil bruge denne app til at melde dig ind i Silkeborg Beachvolley så tryk herunder.",
+              FlutterI18n.translate(context, "login.loginMain.string4"),
               style: TextStyle(color: Colors.white, fontSize: 12.0),
               textAlign: TextAlign.center),
           FlatButton.icon(
@@ -81,7 +82,7 @@ class Login extends StatelessWidget {
               Navigator.of(context).pushNamed(Enrollment.routeName);
             },
             label: Text(
-              "Indmeldelse i Silkeborg Beachvolley",
+              FlutterI18n.translate(context, "login.loginMain.string5"),
               style: TextStyle(color: Colors.white),
             ),
             icon: Icon(

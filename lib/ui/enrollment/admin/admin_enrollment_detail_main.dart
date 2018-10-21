@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_detail_payments.dart';
@@ -23,7 +24,7 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
   int _selectedYear = DateTime.now().year;
   @override
   Widget build(BuildContext context) {
-    return SilkeborgBeachvolleyScaffold(title: "Medlemsinfo", body: _main());
+    return SilkeborgBeachvolleyScaffold(title: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string1"), body: _main());
   }
 
   Widget _main() {
@@ -58,40 +59,40 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
         AdminEnrollmentDetailRow(
           icon: FontAwesomeIcons.idCard,
           text: widget.enrollment.id,
-          tooltip: "Medlems id",
+          tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string2"),
         ),
         AdminEnrollmentDetailRow(
           icon: Icons.calendar_today,
           text: DateTimeHelpers.ddmmyyyyHHnn(
               widget.enrollment.creationDate.toDate()),
-          tooltip: "Dato medlemmet er oprettet",
+          tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string3"),
         ),
         AdminEnrollmentDetailRow(
           icon: Icons.person,
           text: widget.enrollment.name,
-          tooltip: "Medlems navn",
+          tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string4"),
         ),
         AdminEnrollmentDetailRow(
           icon: Icons.location_city,
           text:
               "${widget.enrollment.street}\n${widget.enrollment.postalCode} ${widget.enrollment.city}",
-          tooltip: "Medlems adresse",
+          tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string5"),
         ),
         AdminEnrollmentDetailRow(
           icon: Icons.email,
           text: widget.enrollment.email,
-          tooltip: "Medlems e-mail adresse",
+          tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string6"),
         ),
         AdminEnrollmentDetailRow(
           icon: Icons.phone,
           text: widget.enrollment.phone.toString(),
-          tooltip: "Medlems mobilnummer",
+          tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string7"),
         ),
         AdminEnrollmentDetailRow(
           icon: Icons.cake,
           text:
-              "${DateTimeHelpers.ddmmyyyy(widget.enrollment.birthdate)} / ${widget.enrollment.age} år",
-          tooltip: "Medlems fødselsdato og alder",
+              "${DateTimeHelpers.ddmmyyyy(widget.enrollment.birthdate)} / ${widget.enrollment.age} ${FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string8")}",
+          tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string9"),
         ),
         Row(
           children: <Widget>[
@@ -99,9 +100,9 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
               child: AdminEnrollmentDetailRow(
                 icon: Icons.comment,
                 text: widget.enrollment.comment.isEmpty
-                    ? "Ingen kommentar"
+                    ? FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string10")
                     : widget.enrollment.comment,
-                tooltip: "Kommentar",
+                tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string11"),
               ),
             ),
             IconButton(
@@ -138,16 +139,16 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
                   } else {
                     Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text(
-                          "Der er allerede er oprettet en betaling for $_selectedYear."),
+                          "${FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string12")} $_selectedYear."),
                       duration: Duration(seconds: 4),
                     ));
                   }
                 },
                 icon: Icon(Icons.add_circle),
-                label: Text("Registere betaling for $_selectedYear"),
+                label: Text("${FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string13")} $_selectedYear"),
               ),
               IconButton(
-                tooltip: "Vælg år",
+                tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string14"),
                 color: Colors.deepOrange[800],
                 icon: Icon(FontAwesomeIcons.calendarAlt),
                 onPressed: () {

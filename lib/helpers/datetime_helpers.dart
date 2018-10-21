@@ -1,35 +1,36 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
-Map<int, String> months = {
-  1: "Januar",
-  2: "Februar",
-  3: "Marts",
-  4: "April",
-  5: "Maj",
-  6: "Juni",
-  7: "Juli",
-  8: "August",
-  9: "September",
-  10: "Oktober",
-  11: "November",
-  12: "December"
-};
+// Map<int, String> months = {
+//   1: "Januar",
+//   2: "Februar",
+//   3: "Marts",
+//   4: "April",
+//   5: "Maj",
+//   6: "Juni",
+//   7: "Juli",
+//   8: "August",
+//   9: "September",
+//   10: "Oktober",
+//   11: "November",
+//   12: "December"
+// };
 
-Map<int, String> monthsShort = {
-  1: "jan.",
-  2: "feb.",
-  3: "mar.",
-  4: "apr.",
-  5: "maj",
-  6: "jun.",
-  7: "jul.",
-  8: "aug.",
-  9: "sept.",
-  10: "okt.",
-  11: "nov.",
-  12: "dec."
-};
+// Map<int, String> monthsShort = {
+//   1: "jan.",
+//   2: "feb.",
+//   3: "mar.",
+//   4: "apr.",
+//   5: "maj",
+//   6: "jun.",
+//   7: "jul.",
+//   8: "aug.",
+//   9: "sept.",
+//   10: "okt.",
+//   11: "nov.",
+//   12: "dec."
+// };
 
 class DateTimeHelpers {
   static int weekInYear(DateTime date) {
@@ -50,16 +51,19 @@ class DateTimeHelpers {
     return formatDate(date, [dd, "-", mm, "-", yyyy]);
   }
 
-  static String ddMMyyyy(DateTime date) {
-    return formatDate(date, [dd, ". ", monthsShort[date.month], " ", yyyy]);
+  static String ddMMyyyy(BuildContext context, DateTime date) {
+    // return formatDate(date, [dd, ". ", monthsShort[date.month], " ", yyyy]);
+    return formatDate(date, [dd, ". ", FlutterI18n.translate(context, "monthsShort.${date.month}"), " ", yyyy]);
   }
 
-  static String dMMyyyy(DateTime date) {
-    return formatDate(date, [d, ". ", monthsShort[date.month], " ", yyyy]);
+  static String dMMyyyy(BuildContext context, DateTime date) {
+    // return formatDate(date, [d, ". ", monthsShort[date.month], " ", yyyy]);
+    return formatDate(date, [d, ". ", FlutterI18n.translate(context, "monthsShort.${date.month}"), " ", yyyy]);
   }
 
-  static String ddMM(DateTime date) {
-    return formatDate(date, [dd, ". ", monthsShort[date.month]]);
+  static String ddMM(BuildContext context, DateTime date) {
+    // return formatDate(date, [dd, ". ", monthsShort[date.month]]);
+    return formatDate(date, [dd, ". ", FlutterI18n.translate(context, "monthsShort.${date.month}")]);
   }
 
   static String hhnn(dynamic date) {

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
@@ -28,7 +29,7 @@ class AdminRankingMatchesState extends State<AdminRankingMatches> {
         }
         if (!snapshot.hasData) return LoaderSpinner();
         if (snapshot.hasData && snapshot.data.documents.length == 0) {
-          return NoData("Der blev ikke fundet nogen kampe");
+          return NoData(FlutterI18n.translate(context, "ranking.adminRankingMatchesMain.string1"));
         }
         List<RankingMatchData> list = snapshot.data.documents
             .map<RankingMatchData>((DocumentSnapshot doc) {
@@ -73,11 +74,11 @@ class AdminRankingMatchesState extends State<AdminRankingMatches> {
 
   Future<void> _showDelete(BuildContext context, RankingMatchData match) async {
     int result = await Dialogs.modalBottomSheet(
-        context, [DialogsModalBottomSheetItem("Slet", Icons.delete, 0)]);
+        context, [DialogsModalBottomSheetItem(FlutterI18n.translate(context, "ranking.adminRankingMatchesMain.string2"), Icons.delete, 0)]);
 
     if (result != null) {
       ConfirmDialogAction action = await Dialogs.confirmDelete(
-          context, "Er du sikker på du vil slette kampen?");
+          context, FlutterI18n.translate(context, "ranking.adminRankingMatchesMain.string3"));
 
       if (action != null && action == ConfirmDialogAction.delete) {
         match.delete();

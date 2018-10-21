@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
@@ -42,19 +43,19 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: "Turneringer",
-      body: _main(),
-      floatingActionButton: _floatingActionButton(),
+      title: FlutterI18n.translate(context, "tournamentCalendar.tournamentCalendarMain.title"),
+      body: _main(context),
+      floatingActionButton: _floatingActionButton(context),
     );
   }
 
-  Widget _floatingActionButton() {
+  Widget _floatingActionButton(BuildContext context) {
     Widget button;
     if (_isAdmin) {
       button = FloatingActionButton(
         backgroundColor: Colors.deepOrange[700],
         onPressed: () async {
-          await _showCreateDialog(null, "Opret turnering");
+          await _showCreateDialog(null, FlutterI18n.translate(context, "tournamentCalendar.tournamentCalendarMain.string1"));
         },
         child: Icon(Icons.add),
       );
@@ -63,8 +64,8 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
     return button;
   }
 
-  Widget _main() {
-    if (_tournaments.length == 0) return NoData("Der er pt. ingen turneringer");
+  Widget _main(BuildContext context) {
+    if (_tournaments.length == 0) return NoData(FlutterI18n.translate(context, "tournamentCalendar.tournamentCalendarMain.string2"));
 
     return Scrollbar(
       child: ListView.builder(
@@ -73,7 +74,7 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
           TournamentData item = _tournaments[position];
           return ListItemCard(
             title: Row(
-              children: _tournamentTitle(item),
+              children: _tournamentTitle(context, item),
             ),
             child: ListTile(
               contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
@@ -88,7 +89,7 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
               subtitle: item.link.isEmpty
                   ? null
                   : FlatButton.icon(
-                      label: Text("Gå til hjemmeside"),
+                      label: Text(FlutterI18n.translate(context, "tournamentCalendar.tournamentCalendarMain.string3")),
                       textColor: Colors.deepOrange[700],
                       icon: Icon(Icons.launch),
                       onPressed: () {
@@ -125,17 +126,17 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
   Future<void> _menuOnPressed(BuildContext context, TournamentData item) async {
     if (_isAdmin) {
       int result = await Dialogs.modalBottomSheet(context, [
-        DialogsModalBottomSheetItem("Redigere", Icons.edit, 0),
-        DialogsModalBottomSheetItem("Slet", Icons.delete, 1)
+        DialogsModalBottomSheetItem(FlutterI18n.translate(context, "tournamentCalendar.tournamentCalendarMain.string4"), Icons.edit, 0),
+        DialogsModalBottomSheetItem(FlutterI18n.translate(context, "tournamentCalendar.tournamentCalendarMain.string5"), Icons.delete, 1)
       ]);
 
       switch (result) {
         case 0:
-          await _showCreateDialog(item, "Redigere turnering");
+          await _showCreateDialog(item, FlutterI18n.translate(context, "tournamentCalendar.tournamentCalendarMain.string6"));
           break;
         case 1:
           ConfirmDialogAction action = await Dialogs.confirmDelete(
-              context, "Er du sikker på du vil slette turneringen?");
+              context, FlutterI18n.translate(context, "tournamentCalendar.tournamentCalendarMain.string7"));
 
           if (action != null && action == ConfirmDialogAction.delete) {
             await item.delete();
@@ -150,7 +151,7 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
     }
   }
 
-  List<Widget> _tournamentTitle(TournamentData item) {
+  List<Widget> _tournamentTitle(BuildContext context, TournamentData item) {
     bool datesIsDiff =
         DateTimeHelpers.dateCompare(item.startDate, item.endDate);
     List<Widget> widgets = [
@@ -163,7 +164,7 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
         ),
       ),
       Text(
-        datesIsDiff ? item.startDateFormatted : item.startDateFormattedShort,
+        datesIsDiff ? item.startDateFormatted(context) : item.startDateFormattedShort(context),
         style: TextStyle(color: Colors.white),
       ),
     ];
@@ -178,7 +179,7 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
           ),
         ),
         Text(
-          item.endDateFormatted,
+          item.endDateFormatted(context),
           style: TextStyle(color: Colors.white),
         )
       ]);

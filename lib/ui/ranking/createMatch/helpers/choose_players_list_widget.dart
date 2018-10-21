@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/helpers/choose_players_list_row_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/helpers/create_player_chooser_widget.dart';
@@ -47,7 +48,7 @@ class _ChoosePlayersListState extends State<ChoosePlayersList> {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-        title: Text(_getDialogTitle(widget.type)),
+        title: Text(_getDialogTitle(context, widget.type)),
         children: <Widget>[
           ListBody(
             children: _playerFavoriteListWidgets,
@@ -120,11 +121,11 @@ class _ChoosePlayersListState extends State<ChoosePlayersList> {
         });
   }
 
-  String _getDialogTitle(PlayerChooserType type) {
+  String _getDialogTitle(BuildContext context, PlayerChooserType type) {
     if (type == PlayerChooserType.winner1 || type == PlayerChooserType.winner2)
-      return "Vælg vinder";
+      return FlutterI18n.translate(context, "ranking.choosePlayersListWidget.string1");
     if (type == PlayerChooserType.loser1 || type == PlayerChooserType.loser2)
-      return "Vælg taber";
+      return FlutterI18n.translate(context, "ranking.choosePlayersListWidget.string2");
     return "";
   }
 }

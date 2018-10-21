@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 class PhotoAddPhoto extends StatelessWidget {
   final ValueChanged<String> menuItemOnTap;
@@ -10,18 +11,18 @@ class PhotoAddPhoto extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               ListTile(
-                title: Text("Indsæt billede fra"),
+                title: Text(FlutterI18n.translate(context, "bulletin.photoAddPhotoWidget.title")),
               ),
               ListTile(
                 leading: Icon(Icons.photo),
-                title: Text("Galleri"),
+                title: Text(FlutterI18n.translate(context, "bulletin.photoAddPhotoWidget.string1")),
                 onTap: () {
                   menuItemOnTap("gallery");
                 },
               ),
               ListTile(
                 leading: Icon(Icons.camera),
-                title: Text("Kamera"),
+                title: Text(FlutterI18n.translate(context, "bulletin.photoAddPhotoWidget.string2")),
                 onTap: () {
                   menuItemOnTap("camera");
                 },

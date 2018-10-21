@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 class BulletinTextField extends StatelessWidget {
   final Function onPressedSave;
@@ -24,11 +25,11 @@ class BulletinTextField extends StatelessWidget {
       maxLines: 6,
       initialValue: initalValue,
       decoration: new InputDecoration(
-          labelText: "Opslag",
+          labelText: FlutterI18n.translate(context, "bulletin.getBulletinTextField.string1"),
           suffixIcon:
               Column(mainAxisSize: MainAxisSize.min, children: _setButtons())),
       validator: (String value) {
-        if (value.isEmpty) return "Opslaget skal udfyldes";
+        if (value.isEmpty) return FlutterI18n.translate(context, "bulletin.getBulletinTextField.string2");
       },
       onSaved: onSave,
     );

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/list_item_card_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
@@ -33,7 +34,7 @@ class RankingDetailMatches extends StatelessWidget {
         if (!snapshot.hasData) return LoaderSpinner();
         if (snapshot.hasData && snapshot.data.length == 0) {
           return Center(
-            child: Text("Kan ikke vise spillede kampe"),
+            child: Text(FlutterI18n.translate(context, "ranking.rankingDetailMatchesMain.string1")),
           );
         }
         return Container(
@@ -57,13 +58,13 @@ class RankingDetailMatches extends StatelessWidget {
                             Row(
                               children: <Widget>[
                                 Tooltip(
-                                  message: "Kamp dato",
+                                  message: FlutterI18n.translate(context, "ranking.rankingDetailMatchesMain.string2"),
                                   child: Icon(Icons.calendar_today, size: 12.0),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 5.0),
                                   child: Text(
-                                      DateTimeHelpers.dMMyyyy(item.matchDate)),
+                                      DateTimeHelpers.dMMyyyy(context, item.matchDate)),
                                 ),
                               ],
                             ),

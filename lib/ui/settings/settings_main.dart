@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/chip_header_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_categories_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
@@ -59,10 +60,10 @@ class SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
-    return SilkeborgBeachvolleyScaffold(title: "Indstillinger", body: _main());
+    return SilkeborgBeachvolleyScaffold(title: FlutterI18n.translate(context, "settings.settingsMain.title"), body: _main(context));
   }
 
-  _main() {
+  _main(BuildContext context) {
     return Container(
       child: ListView(
         children: <Widget>[
@@ -71,12 +72,12 @@ class SettingsState extends State<Settings> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  ChipHeader("Vejret",
+                  ChipHeader(FlutterI18n.translate(context, "settings.settingsMain.string1"),
                       expanded: true,
                       backgroundColor: Color(0xffaaacb5),
                       fontSize: 16.0,
                       roundedCorners: false),
-                  _showWeather(),
+                  _showWeather(context),
                 ],
               ),
             ),
@@ -86,12 +87,12 @@ class SettingsState extends State<Settings> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  ChipHeader("Notifikationer",
+                  ChipHeader(FlutterI18n.translate(context, "settings.settingsMain.string2"),
                       expanded: true,
                       backgroundColor: Color(0xffaaacb5),
                       fontSize: 16.0,
                       roundedCorners: false),
-                  _notifications(),
+                  _notifications(context),
                 ],
               ),
             ),
@@ -100,16 +101,16 @@ class SettingsState extends State<Settings> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                ChipHeader("Ranglisten",
+                ChipHeader(FlutterI18n.translate(context, "settings.settingsMain.string3"),
                     expanded: true,
                     backgroundColor: Color(0xffaaacb5),
                     fontSize: 16.0,
                     roundedCorners: false),
                 Container(
-                    child: _rankingName(),
+                    child: _rankingName(context),
                     padding: EdgeInsets.symmetric(horizontal: 15.0)),
                 Container(
-                    child: _sex(),
+                    child: _sex(context),
                     padding: EdgeInsets.symmetric(horizontal: 15.0)),
               ],
             ),
@@ -119,7 +120,7 @@ class SettingsState extends State<Settings> {
     );
   }
 
-  Widget _showWeather() {
+  Widget _showWeather(BuildContext context) {
     return SwitchListTile(
       onChanged: (bool state) async {
         _settingsData.showWeather = state;
@@ -132,11 +133,11 @@ class SettingsState extends State<Settings> {
         }
       },
       value: _showWeatherState,
-      title: Text("Vis vejret"),
+      title: Text(FlutterI18n.translate(context, "settings.settingsMain.string4")),
     );
   }
 
-  Widget _notifications() {
+  Widget _notifications(BuildContext context) {
     return Column(
       children: <Widget>[
         SwitchListTile(
@@ -156,7 +157,7 @@ class SettingsState extends State<Settings> {
             }
           },
           value: _notificationsNews,
-          title: Text("Nyheder"),
+          title: Text(FlutterI18n.translate(context, "settings.settingsMain.string5")),
         ),
         SwitchListTile(
           onChanged: (bool state) {
@@ -175,7 +176,7 @@ class SettingsState extends State<Settings> {
             }
           },
           value: _notificationsEvent,
-          title: Text("Begivenheder"),
+          title: Text(FlutterI18n.translate(context, "settings.settingsMain.string6")),
         ),
         SwitchListTile(
           onChanged: (bool state) {
@@ -194,26 +195,26 @@ class SettingsState extends State<Settings> {
             }
           },
           value: _notificationsPlay,
-          title: Text("Spil"),
+          title: Text(FlutterI18n.translate(context, "settings.settingsMain.string7")),
         )
       ],
     );
   }
 
-  Widget _rankingName() {
+  Widget _rankingName(BuildContext contxet) {
     return TextField(
       controller: _rankingNameController,
       keyboardType: TextInputType.text,
       inputFormatters: [LengthLimitingTextInputFormatter(50)],
       decoration: InputDecoration(
           errorText: _rankingNameError,
-          labelText: "Rangliste navn",
+          labelText: FlutterI18n.translate(context, "settings.settingsMain.string8"),
           suffixIcon: Icon(Icons.check_circle, color: _rankingNameColor)),
       onSubmitted: (String value) {
         String error;
         Color color = Colors.green;
         if (value.isEmpty) {
-          error = "Rangliste navn skal være udfyldt";
+          error = FlutterI18n.translate(context, "settings.settingsMain.string9");
           color = Colors.red;
         } else {
           _settingsData.rankingName = value;
@@ -230,7 +231,7 @@ class SettingsState extends State<Settings> {
     );
   }
 
-  Widget _sex() {
+  Widget _sex(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -238,8 +239,8 @@ class SettingsState extends State<Settings> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text("Køn", style: TextStyle(fontSize: 16.0)),
-            _sexElement("Kvinde", "female"),
-            _sexElement("Mand", "male")
+            _sexElement(FlutterI18n.translate(context, "settings.settingsMain.string10"), "female"),
+            _sexElement(FlutterI18n.translate(context, "settings.settingsMain.string11"), "male")
           ],
         ),
       ],

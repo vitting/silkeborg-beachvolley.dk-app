@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/list_item_card_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
@@ -32,7 +33,7 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-        title: "Silkeborg Beachvolley", body: _main());
+        title: FlutterI18n.translate(context, "bulletin.detailItemMain.title"), body: _main());
   }
 
   Widget _main() {
@@ -121,10 +122,10 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
                 bulletinCommentItem.body = value;
               },
               validator: (String value) {
-                if (value.isEmpty) return "Skal udfyldes";
+                if (value.isEmpty) return FlutterI18n.translate(context, "bulletin.detailItemMain.string1");
               },
               decoration: InputDecoration(
-                  labelText: "Skriv en kommentar",
+                  labelText: FlutterI18n.translate(context, "bulletin.detailItemMain.string2"),
                   suffixIcon: IconButton(
                       icon: Icon(Icons.send),
                       onPressed: () async {

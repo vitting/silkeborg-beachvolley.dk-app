@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/helpers/firebase_functions_call.dart';
@@ -32,7 +33,7 @@ class AdminRankingState extends State<AdminRanking> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-        title: _getPageTitle(_position),
+        title: _getPageTitle(context, _position),
         actions: _position == 0 ? _actionMenu() : null,
         bottomNavigationBar: DotBottomBar(
           numberOfDot: _numberOfPages,
@@ -40,7 +41,7 @@ class AdminRankingState extends State<AdminRanking> {
         ),
         body: LoaderSpinnerOverlay(
           show: _showLoader,
-          text: "Nulstiller sæsonen",
+          text: FlutterI18n.translate(context, "ranking.adminRankingMain.string1"),
           child: PageView.builder(
             itemCount: _numberOfPages,
             controller: _controller,
@@ -68,10 +69,10 @@ class AdminRankingState extends State<AdminRanking> {
                 PopupMenuItem(
                   value: 0,
                   child: _showDeletedPlayers
-                      ? Text("Vis ikke slettede spillere")
-                      : Text("Vis slettede spillere"),
+                      ? Text(FlutterI18n.translate(context, "ranking.adminRankingMain.string2"))
+                      : Text(FlutterI18n.translate(context, "ranking.adminRankingMain.string3")),
                 ),
-                PopupMenuItem(value: 1, child: Text("Nulstil sæson"))
+                PopupMenuItem(value: 1, child: Text(FlutterI18n.translate(context, "ranking.adminRankingMain.string4")))
               ]);
 
           if (result != null && result == 0) {
@@ -90,7 +91,7 @@ class AdminRankingState extends State<AdminRanking> {
 
   Future<void> _resetSeason(BuildContext context) async {
     ConfirmDialogAction result = await Dialogs.confirmReset(context,
-        "Er du sikker på du vil nulstille sæsonen?\n\nVær opmærksom på at alle kampe vi blive skjult og alle spiller data (point og spillede kampe) vil blive nustillet.");
+        FlutterI18n.translate(context, "ranking.adminRankingMain.string5"));
 
     if (result != null && result == ConfirmDialogAction.reset) {
       setState(() {
@@ -105,13 +106,13 @@ class AdminRankingState extends State<AdminRanking> {
     }
   }
 
-  String _getPageTitle(int page) {
+  String _getPageTitle(BuildContext context, int page) {
     String title = "";
     if (page == 0 && _showDeletedPlayers == false)
-      title = "Administerer spillere";
+      title = FlutterI18n.translate(context, "ranking.adminRankingMain.string6");
     if (page == 0 && _showDeletedPlayers)
-      title = "Administerer slettede spillere";
-    if (page == 1) title = "Administerer kampe";
+      title = FlutterI18n.translate(context, "ranking.adminRankingMain.string7");
+    if (page == 1) title = FlutterI18n.translate(context, "ranking.adminRankingMain.string8");
     return title;
   }
 

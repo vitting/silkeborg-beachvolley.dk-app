@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/list_item_card_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/searchbar_widget.dart';
@@ -36,7 +37,7 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: "Administrer medlemmer",
+      title: FlutterI18n.translate(context, "enrollment.adminEnrollmentMain.title"),
       body: _main(),
     );
   }
@@ -115,7 +116,7 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     ListTile(
-                      title: Text("Rediger"),
+                      title: Text(FlutterI18n.translate(context, "enrollment.adminEnrollmentMain.string1")),
                       leading: Icon(Icons.edit),
                       onTap: () {
                         Navigator.of(contextModal)

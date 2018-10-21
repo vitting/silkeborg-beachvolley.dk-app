@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/image_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/image_info_data.dart';
@@ -68,18 +69,18 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
     super.dispose();
   }
 
-  String _getTitle(BulletinType type) {
+  String _getTitle(BuildContext context, BulletinType type) {
     String title = "";
-    if (type == BulletinType.news) title = "Rediger nyhed";
-    if (type == BulletinType.event) title = "Rediger begivenhed";
-    if (type == BulletinType.play) title = "Rediger spil";
+    if (type == BulletinType.news) title = FlutterI18n.translate(context, "bulletin.bulletinEdititemMain.title1");
+    if (type == BulletinType.event) title = FlutterI18n.translate(context, "bulletin.bulletinEdititemMain.title2");
+    if (type == BulletinType.play) title = FlutterI18n.translate(context, "bulletin.bulletinEdititemMain.title3");
     return title;
   }
 
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-        title: _getTitle(itemFieldsValue.type), body: _main());
+        title: _getTitle(context, itemFieldsValue.type), body: _main());
   }
 
   Widget _main() {

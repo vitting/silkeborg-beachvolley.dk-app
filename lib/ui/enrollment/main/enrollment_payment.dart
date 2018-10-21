@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class EnrollmentPayment extends StatelessWidget {
@@ -16,15 +17,15 @@ class EnrollmentPayment extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                _textEnrollment("Tak for din indmeldelse", 16.0),
-                _textEnrollment("og velkommen til", 16.0),
-                _textEnrollment("Silkeborg Beachvolley", 16.0),
+                _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentPayment.string1"), 16.0),
+                _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentPayment.string2"), 16.0),
+                _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentPayment.string3"), 16.0),
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0),
-                  child: _textEnrollment("Færdiggøre din indmeldelse ved at"),
+                  child: _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentPayment.string4")),
                 ),
-                _textEnrollment("overføre 25 kr. i MobilePay"),
-                _textEnrollment("til nummer: 18185"),
+                _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentPayment.string5")),
+                _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentPayment.string6")),
                 InkWell(
                   onTap: () async {
                     onTapMobilePayUrl(true);
@@ -36,12 +37,12 @@ class EnrollmentPayment extends StatelessWidget {
                         height: 100.0),
                   ),
                 ),
-                _textEnrollment("Du kan trykke på MobilePay logoet"),
-                _textEnrollment("for at åbne din MobilePay app"),
+                _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentPayment.string7")),
+                _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentPayment.string8")),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: _textEnrollment(
-                      "Gå til forsiden hvis der er flere du vil melde ind i Silkeborg Beachvolley"),
+                      FlutterI18n.translate(context, "enrollment.enrollmentPayment.string9")),
                 ),
                 IconButton(
                   iconSize: 45.0,

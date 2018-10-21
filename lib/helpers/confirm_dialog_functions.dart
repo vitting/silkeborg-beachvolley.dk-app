@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 
 Future<ConfirmDialogAction> confirmDialog(
@@ -48,34 +49,34 @@ Text _getButtonText(BuildContext context, ConfirmDialogAction action) {
 
   switch (action) {
     case ConfirmDialogAction.cancel:
-      value = "Anuller";
+      value = FlutterI18n.translate(context, "cancel");
       break;
     case ConfirmDialogAction.delete:
-      value = "Slet";
+      value = FlutterI18n.translate(context, "delete");
       break;
     case ConfirmDialogAction.no:
-      value = "Nej";
+      value = FlutterI18n.translate(context, "no");
       break;
     case ConfirmDialogAction.yes:
-      value = "Ja";
+      value = FlutterI18n.translate(context, "yes");
       break;
     case ConfirmDialogAction.ok:
-      value = "Ok";
+      value = FlutterI18n.translate(context, "ok");
       break;
     case ConfirmDialogAction.save:
-      value = "Gem";
+      value = FlutterI18n.translate(context, "save");
       break;
     case ConfirmDialogAction.close:
-      value = "Luk";
+      value = FlutterI18n.translate(context, "close");
       break;
     case ConfirmDialogAction.hide:
-      value = "Skjul";
+      value = FlutterI18n.translate(context, "hide");
       break;
     case ConfirmDialogAction.unhide:
-      value = "Vis";
+      value = FlutterI18n.translate(context, "show");
       break;
     case ConfirmDialogAction.reset:
-      value = "Nulstil";
+      value = FlutterI18n.translate(context, "reset");
       break;
     default:
       value = "";

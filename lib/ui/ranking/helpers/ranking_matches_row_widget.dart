@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_matches_row_element_widget.dart';
@@ -35,13 +36,13 @@ class RankingMatchesRow extends StatelessWidget {
                     child: Row(
                       children: <Widget>[
                         Tooltip(
-                          message: "Kamp dato",
+                          message: FlutterI18n.translate(context, "ranking.rankingMatchesRowWidget.string1"),
                           child: Icon(Icons.calendar_today,
                               size: 12.0, color: Colors.black),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 5.0),
-                          child: Text(DateTimeHelpers.dMMyyyy(match.matchDate),
+                          child: Text(DateTimeHelpers.dMMyyyy(context, match.matchDate),
                               style: TextStyle(color: Colors.black)),
                         ),
                       ],
@@ -100,18 +101,18 @@ class RankingMatchesRow extends StatelessWidget {
                 )
               ],
             ),
-            _createdByPlayer()
+            _createdByPlayer(context)
           ],
         ),
       ),
     );
   }
 
-  Widget _createdByPlayer() {
+  Widget _createdByPlayer(BuildContext context) {
     Widget widgets;
     if (RankingMatchesRow._cachedData.containsKey(match.userId)) {
       String playerName = RankingMatchesRow._cachedData[match.userId];
-      widgets = _createdByPlayerRow(playerName);
+      widgets = _createdByPlayerRow(context, playerName);
     } else {
       widgets = FutureBuilder(
         future: match.getPlayerCreatedMatch(),
@@ -121,7 +122,7 @@ class RankingMatchesRow extends StatelessWidget {
 
           RankingMatchesRow._cachedData
               .putIfAbsent(match.userId, () => player.data.name);
-          return _createdByPlayerRow(player.data.name);
+          return _createdByPlayerRow(context, player.data.name);
         },
       );
     }
@@ -129,13 +130,13 @@ class RankingMatchesRow extends StatelessWidget {
     return widgets;
   }
 
-  Widget _createdByPlayerRow(String name) {
+  Widget _createdByPlayerRow(BuildContext context, String name) {
     return Padding(
       padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 5.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          Text("Oprettet af $name",
+          Text("${FlutterI18n.translate(context, "ranking.rankingMatchesRowWidget.string2")} $name",
               style: TextStyle(fontSize: 10.0, fontStyle: FontStyle.italic))
         ],
       ),

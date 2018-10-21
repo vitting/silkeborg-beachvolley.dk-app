@@ -3,6 +3,7 @@ import 'dart:collection';
 
 import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
@@ -33,7 +34,7 @@ class RankingDetailChartPointsWeek extends StatelessWidget {
                   width: width,
                   height: height,
                   child: BarChart(snapshot.data, animate: true)),
-              Text("Antal point pr. uge")
+              Text(FlutterI18n.translate(context, "ranking.rankingDetailChartPointsWeekWidget.string1"))
             ],
           );
         },

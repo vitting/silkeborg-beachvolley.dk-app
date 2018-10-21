@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/dot_bottombar_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_matches_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_stat_main.dart';
@@ -29,7 +30,6 @@ class RankingDetailState extends State<RankingDetail> {
   @override
   void initState() {
     super.initState();
-    _title = _getPageTitle(_position);
     _initPages();
   }
 
@@ -52,6 +52,7 @@ class RankingDetailState extends State<RankingDetail> {
 
   @override
   Widget build(BuildContext context) {
+    _title = _getPageTitle(context, _position);
     return SilkeborgBeachvolleyScaffold(
         title: _title,
         bottomNavigationBar: DotBottomBar(
@@ -67,16 +68,16 @@ class RankingDetailState extends State<RankingDetail> {
           onPageChanged: (int page) {
             setState(() {
               _position = page;
-              _title = _getPageTitle(page);
+              _title = _getPageTitle(context, page);
             });
           },
         ));
   }
 
-  String _getPageTitle(int page) {
+  String _getPageTitle(BuildContext context, int page) {
     String title = "";
-    if (page == 0) title = "Spiller statestik";
-    if (page == 1) title = "Spillede kampe";
+    if (page == 0) title = FlutterI18n.translate(context, "ranking.rankingDetailMain.title1");
+    if (page == 1) title = FlutterI18n.translate(context, "ranking.rankingDetailMain.title2");
     return title;
   }
 

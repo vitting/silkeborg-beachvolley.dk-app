@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
@@ -21,7 +22,7 @@ class RankingMatches extends StatelessWidget {
         if (snapshot.hasData && snapshot.data.documents.length == 0) {
           return Card(
             child: Center(
-              child: Text("Der blev ikke fundet nogen kampe"),
+              child: Text(FlutterI18n.translate(context, "ranking.rankingMatchesMain.string1")),
             ),
           );
         }
@@ -72,7 +73,7 @@ class RankingMatches extends StatelessWidget {
 
     if (result != null) {
       ConfirmDialogAction action = await Dialogs.confirmDelete(
-          context, "Er du sikker på du vil slette kampen?");
+          context, FlutterI18n.translate(context, "ranking.rankingMatchesMain.string2"));
 
       if (action != null && action == ConfirmDialogAction.delete) {
         match.delete();

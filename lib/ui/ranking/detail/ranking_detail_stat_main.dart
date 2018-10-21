@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/detail/helpers/ranking_detail_charts_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/detail/helpers/ranking_detail_stat_row_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/detail/helpers/ranking_detail_stat_title_widget.dart';
@@ -27,12 +28,12 @@ class RankingDetailStat extends StatelessWidget {
                   photoUrl: player.photoUrl,
                 ),
                 RankingDetailStatRow(
-                    title: "Points",
+                    title: FlutterI18n.translate(context, "ranking.rankingDetailStatMain.string1"),
                     total: player.points.total,
                     won: player.points.won,
                     lost: player.points.lost),
                 RankingDetailStatRow(
-                    title: "Spillede kampe",
+                    title: FlutterI18n.translate(context, "ranking.rankingDetailStatMain.string2"),
                     total: player.numberOfPlayedMatches.total,
                     won: player.numberOfPlayedMatches.won,
                     lost: player.numberOfPlayedMatches.lost),

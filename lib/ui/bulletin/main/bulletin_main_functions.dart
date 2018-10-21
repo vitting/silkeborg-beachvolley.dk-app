@@ -1,10 +1,12 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 
-String getTitle(BulletinType type) {
+String getTitle(BuildContext context, BulletinType type) {
   String title;
-  if (type == BulletinType.news) title = "Nyheder";
-  if (type == BulletinType.event) title = "Begivenheder";
-  if (type == BulletinType.play) title = "Spil";
+  if (type == BulletinType.news) title = FlutterI18n.translate(context, "bulletin.bulletinMainFunctions.string1");
+  if (type == BulletinType.event) title = FlutterI18n.translate(context, "bulletin.bulletinMainFunctions.string2");
+  if (type == BulletinType.play) title = FlutterI18n.translate(context, "bulletin.bulletinMainFunctions.string3");
   return title;
 }
 

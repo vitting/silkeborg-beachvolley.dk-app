@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class EnrollmentReadMe extends StatelessWidget {
@@ -14,15 +15,15 @@ class EnrollmentReadMe extends StatelessWidget {
           children: <Widget>[
             Column(
               children: <Widget>[
-                _textEnrollment("Velkommen til indmeldelse i", 16.0),
-                _textEnrollment("Silkeborg Beachvolley", 16.0),
+                _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentReadMe.string1"), 16.0),
+                _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentReadMe.string2"), 16.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 30.0),
                   child: Image.asset("assets/images/logo_dark_blue_250x250.png",
                       width: 60.0),
                 ),
                 _textEnrollment(
-                    "Det koster kun 25 kr. pr. sæson at være medlem. Beløbet indbetales på MobilePay"),
+                    FlutterI18n.translate(context, "enrollment.enrollmentReadMe.string3")),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 30.0),
                   child: Row(
@@ -30,12 +31,12 @@ class EnrollmentReadMe extends StatelessWidget {
                     children: <Widget>[
                       Image.asset("assets/images/mobilepay_horisontal_blue.png",
                           height: 50.0),
-                      _textEnrollment("18185")
+                      _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentReadMe.string4"))
                     ],
                   ),
                 ),
                 _textEnrollment(
-                    "Udfyld formularen på næste side for den der skal meldes ind"),
+                    FlutterI18n.translate(context, "enrollment.enrollmentReadMe.string5")),
                 IconButton(
                   padding: EdgeInsets.only(top: 40.0),
                   color: Colors.deepOrange[700],

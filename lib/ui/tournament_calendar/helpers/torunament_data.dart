@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
@@ -34,16 +35,16 @@ class TournamentData implements BaseData {
     };
   }
 
-  String get startDateFormatted {
-    return DateTimeHelpers.ddMMyyyy(startDate);
+  String startDateFormatted(BuildContext context) {
+    return DateTimeHelpers.ddMMyyyy(context, startDate);
   }
 
-  String get startDateFormattedShort {
-    return DateTimeHelpers.ddMM(startDate);
+  String startDateFormattedShort(BuildContext context) {
+    return DateTimeHelpers.ddMM(context, startDate);
   }
 
-  String get endDateFormatted {
-    return DateTimeHelpers.ddMMyyyy(endDate);
+  String endDateFormatted(BuildContext context) {
+    return DateTimeHelpers.ddMMyyyy(context, endDate);
   }
 
   Future<void> save() {

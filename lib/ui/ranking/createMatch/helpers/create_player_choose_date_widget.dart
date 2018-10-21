@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 
@@ -18,10 +19,11 @@ class CreatePlayerChooseDate extends StatefulWidget {
 }
 
 class CreatePlayerChooseDateState extends State<CreatePlayerChooseDate> {
-  String _dateText = "Vælg kamp dato";
+  String _dateText = "";
 
   @override
   Widget build(BuildContext context) {
+    _dateText = FlutterI18n.translate(context, "ranking.createPlayerChooseDateWidget.string1");
     return Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(

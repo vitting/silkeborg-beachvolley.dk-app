@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
@@ -32,7 +33,7 @@ class _AdminRankingPlayersState extends State<AdminRankingPlayers> {
         }
         if (!snapshot.hasData) return LoaderSpinner();
         if (snapshot.hasData && snapshot.data.documents.length == 0)
-          return NoData("Der blev ikke fundet nogen spillere");
+          return NoData(FlutterI18n.translate(context, "ranking.adminRankingPlayersMain.string1"));
         return Container(
           child: ListView.builder(
             itemCount: snapshot.data.documents.length,
@@ -59,9 +60,9 @@ class _AdminRankingPlayersState extends State<AdminRankingPlayers> {
   Future<void> rowOnMenuTap(
       BuildContext context, RankingPlayerData player) async {
     DialogsModalBottomSheetItem item =
-        DialogsModalBottomSheetItem("Skjul", FontAwesomeIcons.eyeSlash, 0);
+        DialogsModalBottomSheetItem(FlutterI18n.translate(context, "ranking.adminRankingPlayersMain.string2"), FontAwesomeIcons.eyeSlash, 0);
     if (widget.showDeletedPlayers) {
-      item = DialogsModalBottomSheetItem("Vis", FontAwesomeIcons.eye, 0);
+      item = DialogsModalBottomSheetItem(FlutterI18n.translate(context, "ranking.adminRankingPlayersMain.string3"), FontAwesomeIcons.eye, 0);
     }
 
     int result = await Dialogs.modalBottomSheet(context, [item]);
@@ -70,10 +71,10 @@ class _AdminRankingPlayersState extends State<AdminRankingPlayers> {
     if (result != null && result == 0) {
       if (widget.showDeletedPlayers) {
         action = await Dialogs.confirmUnHide(
-            context, "Er du sikker på du Vil vise spilleren?");
+            context, FlutterI18n.translate(context, "ranking.adminRankingPlayersMain.string4"));
       } else {
         action = await Dialogs.confirmHide(context,
-            "Er du sikker på du Vil skjule spilleren? \nSpilleren kan vises igen ved at vælge spilleren i menuen skjulte spillere");
+            FlutterI18n.translate(context, "ranking.adminRankingPlayersMain.string5"));
       }
 
       if (action != null && action == ConfirmDialogAction.unhide) {

@@ -89,8 +89,7 @@ class BulletinEventItemState extends State<BulletinEventItem> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0),
-                  child: Text(DateTimeHelpers.ddMMyyyy(
-                      widget.bulletinItem.eventStartDate)),
+                  child: Text(DateTimeHelpers.ddMMyyyy(context, widget.bulletinItem.eventStartDate)),
                 ),
                 DateTimeHelpers.dateCompare(widget.bulletinItem.eventStartDate,
                         widget.bulletinItem.eventEndDate)
@@ -102,8 +101,7 @@ class BulletinEventItemState extends State<BulletinEventItem> {
                                 const EdgeInsets.symmetric(horizontal: 10.0),
                             child: Text("-"),
                           ),
-                          Text(DateTimeHelpers.ddMMyyyy(
-                              widget.bulletinItem.eventEndDate))
+                          Text(DateTimeHelpers.ddMMyyyy(context, widget.bulletinItem.eventEndDate))
                         ],
                       )
               ],

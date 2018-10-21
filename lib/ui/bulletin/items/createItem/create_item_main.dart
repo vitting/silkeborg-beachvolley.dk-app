@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/image_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/image_info_data.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_overlay_widget.dart';
@@ -53,22 +54,22 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
     super.dispose();
   }
 
-  String _getTitle(BulletinType type) {
+  String _getTitle(BuildContext context, BulletinType type) {
     String title = "";
-    if (type == BulletinType.news) title = "Opret nyhed";
-    if (type == BulletinType.event) title = "Opret begivenhed";
-    if (type == BulletinType.play) title = "Opret spil";
+    if (type == BulletinType.news) title = FlutterI18n.translate(context, "bulletin.createItemMain.title1");
+    if (type == BulletinType.event) title = FlutterI18n.translate(context, "bulletin.createItemMain.title2");
+    if (type == BulletinType.play) title = FlutterI18n.translate(context, "bulletin.createItemMain.title3");
     return title;
   }
 
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-        title: _getTitle(widget.bulletinType),
+        title: _getTitle(context, widget.bulletinType),
         body: LoaderSpinnerOverlay(
           show: _saving,
           child: _main(),
-          text: "Gemmer opslag...",
+          text: FlutterI18n.translate(context, "bulletin.createItemMain.string1"),
         ));
   }
 
@@ -81,7 +82,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
       widgets.add(LoaderSpinnerOverlay(
         show: _loadingImage,
         showModalBarrier: false,
-        text: "Behandler billedet...",
+        text: FlutterI18n.translate(context, "bulletin.createItemMain.string2"),
         child: BulletinItemPictures(
           type: BulletinImageType.file,
           useSquareOnOddImageCount: true,

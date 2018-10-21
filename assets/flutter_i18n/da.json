@@ -1,17 +1,15 @@
 {
-    "common": {
-        "cancel": "Anuller",
-        "delete": "Slet",
-        "no": "Nej",
-        "yes": "Ja",
-        "ok": "Ok",
-        "save": "Gem",
-        "close": "Close",
-        "hide": "Skjul",
-        "show": "Vis",
-        "reset": "Nulstil",
-        "error": "Fejl"
-    },
+    "cancel": "Anuller",
+    "delete": "Slet",
+    "no": "Nej",
+    "yes": "Ja",
+    "ok": "Ok",
+    "save": "Gem",
+    "close": "Close",
+    "hide": "Skjul",
+    "show": "Vis",
+    "reset": "Nulstil",
+    "error": "Fejl",
     "monthsLong": {
         "1": "Januar",
         "2": "Februar",
@@ -40,8 +38,6 @@
         "11": "nov.",
         "12": "dec."
     },
-    "confirmDialogFunctions": {},
-    "dialogs": {},
     "searchbar": {
         "string1": "Søg"
     },
@@ -55,8 +51,8 @@
             "title1": "Opret nyhed",
             "title2": "Opret begivenhed",
             "title3": "Opret spil",
-            "saveMessage": "Gemmer opslag...",
-            "processImage": "Behandler billedet..."
+            "string1": "Gemmer opslag...",
+            "string2": "Behandler billedet..."
         },
         "getBulletinEventFields": {
             "string1": "Start dato",
@@ -223,7 +219,9 @@
     "login": {
         "authFunctions": {
             "string1": "Log ud",
-            "string2": "Er du sikker på at du vil logge ud?"
+            "string2": "Er du sikker på at du vil logge ud?",
+            "string3": "Ja",
+            "string4": "Nej"
         },
         "loginMain": {
             "string1": "Velkommen til Silkeborg Beachvolley",
@@ -234,7 +232,7 @@
         }
     },
     "ranking": {
-        "adminRankingPlayersPlayerInfo": {
+        "adminRankingPlayersPlayerInfoWidget": {
             "string1": "Spiller info",
             "string2": "Bruger id",
             "string3": "Kampe",
@@ -265,11 +263,11 @@
             "string4": "Er du sikker på du Vil vise spilleren?",
             "string5": "Er du sikker på du Vil skjule spilleren?\nSpilleren kan vises igen ved at vælge spilleren i menuen skjulte spillere"
         },
-        "choosePlayersList": {
+        "choosePlayersListWidget": {
             "string1": "Vælg vinder",
             "string2": "Vælg taber"
         },
-        "createPlayerChooseDate": {
+        "createPlayerChooseDateWidget": {
             "string1": "Vælg kamp dato"
         },
         "rankingCreateMatchMain": {
@@ -281,10 +279,10 @@
             "string6": "Registere kampen",
             "string7": "Du skal udfylde de felter der er røde før de kan gemme kampen."
         },
-        "rankingDetailChartMatchesWeek": {
+        "rankingDetailChartMatchesWeekWidget": {
             "string1": "Antal spillede kampe pr. uge"
         },
-        "rankingDetailChartPaintsWeek": {
+        "rankingDetailChartPointsWeekWidget": {
             "string1": "Antal point pr. uge"
         },
         "rankingDetailFunctions": {
@@ -294,7 +292,7 @@
             "string4": "Vindere",
             "string5": "Tabere"
         },
-        "rankingDetailStatRow": {
+        "rankingDetailStatRowWidget": {
             "string1": "Samlet",
             "string2": "Vundet",
             "string3": "Tabt"
@@ -368,8 +366,9 @@
             "string6": "Begivenheder",
             "string7": "Spil",
             "string8": "Rangliste navn",
-            "string9": "Kvinde",
-            "string10": "Mand"
+            "string9": "Rangliste navn skal være udfyldt",
+            "string10": "Kvinde",
+            "string11": "Mand"
         }
     },
     "tournamentCalendar": {

@@ -19,7 +19,7 @@ class _TestWidgetState extends State<TestWidget> {
               RaisedButton(
                 child: Text("TEST"),
                 onPressed: () async {
-                  print(FlutterI18n.translate(context, "ranking.adminRankingPlayersPlayerInfo.string1"));                  
+                  print(FlutterI18n.translate(context, "bulletin.photoAddPhotoWidget.title"));                  
                 },
               )
             ],

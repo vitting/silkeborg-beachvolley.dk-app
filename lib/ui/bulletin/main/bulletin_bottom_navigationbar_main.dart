@@ -69,20 +69,20 @@ class _BulletinBottomNavigationBarState
       },
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-            title: Text(bulletinMainFunctions.getTitle(BulletinType.news)),
+            title: Text(bulletinMainFunctions.getTitle(context, BulletinType.news)),
             icon: IconCounter(
               icon: FontAwesomeIcons.newspaper,
               counter: _newsCount,
             )),
         BottomNavigationBarItem(
-          title: Text(bulletinMainFunctions.getTitle(BulletinType.event)),
+          title: Text(bulletinMainFunctions.getTitle(context, BulletinType.event)),
           icon: IconCounter(
             icon: FontAwesomeIcons.calendarAlt,
             counter: _eventCount,
           ),
         ),
         BottomNavigationBarItem(
-          title: Text(bulletinMainFunctions.getTitle(BulletinType.play)),
+          title: Text(bulletinMainFunctions.getTitle(context, BulletinType.play)),
           icon: IconCounter(
               icon: FontAwesomeIcons.volleyballBall, counter: _playCount),
         )

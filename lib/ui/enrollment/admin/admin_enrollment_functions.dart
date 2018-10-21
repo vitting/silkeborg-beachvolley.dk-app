@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_payment_data.dart';
 import "../../../helpers/confirm_dialog_functions.dart" as confirmActions;
@@ -9,7 +10,7 @@ Future<String> editComment(BuildContext context, String text) async {
   String comment;
   TextEditingController _commentController = TextEditingController(text: text);
   ConfirmDialogAction result = await confirmActions.confirmDialog(context,
-      title: Text("Kommentar"),
+      title: Text(FlutterI18n.translate(context, "enrollment.adminEnrollmentFuncstions.string1")),
       barrierDismissible: false,
       actionRight: ConfirmDialogAction.close,
       body: <Widget>[
@@ -19,7 +20,7 @@ Future<String> editComment(BuildContext context, String text) async {
             maxLength: 500,
             maxLines: 4,
             decoration: InputDecoration(
-                labelText: "Kommentar",
+                labelText: FlutterI18n.translate(context, "enrollment.adminEnrollmentFuncstions.string2"),
                 suffixIcon: IconButton(
                   icon: Icon(Icons.send),
                   onPressed: () {
@@ -40,11 +41,11 @@ Future<String> editComment(BuildContext context, String text) async {
 Future<bool> deletePayment(
     BuildContext context, EnrollmentPaymentData payment) async {
   ConfirmDialogAction result = await confirmActions.confirmDialog(context,
-      title: Text("Slet betaling"),
+      title: Text(FlutterI18n.translate(context, "enrollment.adminEnrollmentFuncstions.string3")),
       barrierDismissible: false,
       actionLeft: ConfirmDialogAction.cancel,
       actionRight: ConfirmDialogAction.delete,
-      body: <Widget>[Text("Vil du slette betaling for ${payment.year}")]);
+      body: <Widget>[Text("${FlutterI18n.translate(context, "enrollment.adminEnrollmentFuncstions.string4")} ${payment.year}")]);
 
   if (result != null && result == ConfirmDialogAction.delete) {
     return true;

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_action_enum.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/main/enrollment_main.dart';
@@ -66,23 +67,23 @@ class SilkeborgBeacvolleyScaffoldDrawerState
                   : CachedNetworkImageProvider(_photoUrl))),
       ListTile(
         leading: Icon(Icons.album),
-        title: Text("Indmeldelse"),
+        title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string1")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(Enrollment.routeName);
         },
       ),
       ListTile(
         leading: Icon(Icons.album),
-        title: Text("Ranglisten"),
+        title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string2")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(Ranking.routeName);
         },
       ),
       ListTile(
-          leading: Icon(Icons.album), title: Text("Livescore"), onTap: () {}),
+          leading: Icon(Icons.album), title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string3")), onTap: () {}),
       ListTile(
         leading: Icon(Icons.album),
-        title: Text("Stævnekalender"),
+        title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string4")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(TournamentCalendar.routeName);
         },
@@ -90,7 +91,7 @@ class SilkeborgBeacvolleyScaffoldDrawerState
       Divider(),
       ListTile(
         leading: Icon(Icons.album),
-        title: Text("Log af"),
+        title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string5")),
         onTap: () async {
           Navigator.of(context).pop();
           ConfirmAction logoutAction =
@@ -102,7 +103,7 @@ class SilkeborgBeacvolleyScaffoldDrawerState
       ),
       ListTile(
         leading: Icon(Icons.album),
-        title: Text("Indstillinger"),
+        title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string6")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(Settings.routeName);
         },
@@ -113,7 +114,7 @@ class SilkeborgBeacvolleyScaffoldDrawerState
       widgets.add(Divider());
       widgets.add(ListTile(
         leading: Icon(Icons.album),
-        title: Text("Administrere medlemmer"),
+        title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string7")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(AdminEnrollment.routeName);
         },
@@ -121,7 +122,7 @@ class SilkeborgBeacvolleyScaffoldDrawerState
 
       widgets.add(ListTile(
         leading: Icon(Icons.album),
-        title: Text("Administrere Ranglisten"),
+        title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string8")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(AdminRanking.routeName);
         },

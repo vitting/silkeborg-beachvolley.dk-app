@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/event_datetime_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
@@ -52,11 +53,11 @@ class _CreateTournamentItemState extends State<CreateTournamentItem> {
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
       title: widget.title,
-      body: _main(),
+      body: _main(context),
     );
   }
 
-  Widget _main() {
+  Widget _main(BuildContext context) {
     return Card(
       child: Container(
         margin: EdgeInsets.all(10.0),
@@ -76,11 +77,11 @@ class _CreateTournamentItemState extends State<CreateTournamentItem> {
                                   onSaved: (_) {},
                                   validator: (String value) {
                                     if (value.isEmpty)
-                                      return "Udyld start dato";
+                                      return FlutterI18n.translate(context, "tournamentCalendar.tournamentCreateMain.string1");
                                   },
                                   textAlign: TextAlign.center,
                                   decoration: InputDecoration(
-                                    labelText: "Start dato",
+                                    labelText: FlutterI18n.translate(context, "tournamentCalendar.tournamentCreateMain.string2"),
                                     suffixIcon: IconButton(
                                       icon: Icon(Icons.calendar_today),
                                       onPressed: () {
@@ -97,11 +98,11 @@ class _CreateTournamentItemState extends State<CreateTournamentItem> {
                               controller: _endDateController,
                               onSaved: (_) {},
                               validator: (String value) {
-                                if (value.isEmpty) return "Udyld slut dato";
+                                if (value.isEmpty) return FlutterI18n.translate(context, "tournamentCalendar.tournamentCreateMain.string3");
                               },
                               textAlign: TextAlign.center,
                               decoration: InputDecoration(
-                                  labelText: "Slut dato",
+                                  labelText: FlutterI18n.translate(context, "tournamentCalendar.tournamentCreateMain.string4"),
                                   suffixIcon: IconButton(
                                     icon: Icon(Icons.calendar_today),
                                     onPressed: () {
@@ -117,19 +118,19 @@ class _CreateTournamentItemState extends State<CreateTournamentItem> {
                         initialValue: _data.title,
                         keyboardType: TextInputType.text,
                         decoration:
-                            InputDecoration(labelText: "Sted / kort titel"),
+                            InputDecoration(labelText: FlutterI18n.translate(context, "tournamentCalendar.tournamentCreateMain.string5")),
                         inputFormatters: [LengthLimitingTextInputFormatter(25)],
                         onSaved: (String value) {
                           _data.title = value;
                         },
                         validator: (String value) {
-                          if (value.isEmpty) return "Udfyld sted / kort titel";
+                          if (value.isEmpty) return FlutterI18n.translate(context, "tournamentCalendar.tournamentCreateMain.string6");
                         },
                       ),
                       TextFormField(
                         initialValue: _data.body,
                         keyboardType: TextInputType.text,
-                        decoration: InputDecoration(labelText: "Tekst"),
+                        decoration: InputDecoration(labelText: FlutterI18n.translate(context, "tournamentCalendar.tournamentCreateMain.string7")),
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(500)
                         ],
@@ -137,15 +138,15 @@ class _CreateTournamentItemState extends State<CreateTournamentItem> {
                           _data.body = value;
                         },
                         validator: (String value) {
-                          if (value.isEmpty) return "Udfyld tekst";
+                          if (value.isEmpty) return FlutterI18n.translate(context, "tournamentCalendar.tournamentCreateMain.string8");
                         },
                       ),
                       TextFormField(
                         initialValue: _data.link,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
-                            labelText: "Link til hjemmeside",
-                            helperText: "Link er ikke påkrævet"),
+                            labelText: FlutterI18n.translate(context, "tournamentCalendar.tournamentCreateMain.string9"),
+                            helperText: FlutterI18n.translate(context, "tournamentCalendar.tournamentCreateMain.string10")),
                         onSaved: (String value) {
                           _data.link = value.toLowerCase().trim();
                         },
@@ -157,7 +158,7 @@ class _CreateTournamentItemState extends State<CreateTournamentItem> {
                               Validate.matchesPattern(
                                   value.toLowerCase().trim(), exp);
                             } catch (e) {
-                              return "Det indtastede link er ikke et valid link";
+                              return FlutterI18n.translate(context, "tournamentCalendar.tournamentCreateMain.string11");
                             }
                           }
                         },
@@ -170,7 +171,7 @@ class _CreateTournamentItemState extends State<CreateTournamentItem> {
                   child: FlatButton.icon(
                     textColor: Colors.deepOrange[700],
                     icon: Icon(Icons.check_circle),
-                    label: Text("Gem turnering"),
+                    label: Text(FlutterI18n.translate(context, "tournamentCalendar.tournamentCreateMain.string12")),
                     onPressed: () {
                       if (_formState.currentState.validate()) {
                         _formState.currentState.save();

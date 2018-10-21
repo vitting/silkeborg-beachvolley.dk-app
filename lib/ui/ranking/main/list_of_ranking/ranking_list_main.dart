@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/no_data_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/detail/ranking_detail_main.dart';
@@ -25,7 +26,7 @@ class _RankingListState extends State<RankingList> {
           if (!snapshot.hasData) return LoaderSpinner();
 
           if (snapshot.data.documents.length == 0)
-            return NoData("Der er pt. ingen personer på ranglisten");
+            return NoData(FlutterI18n.translate(context, "ranking.rankingListMain.string1"));
 
           int counter = -1;
           return Scrollbar(

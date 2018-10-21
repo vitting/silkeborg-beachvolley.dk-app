@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
@@ -25,12 +26,12 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
       padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
       child: Column(
         children: <Widget>[
-          Text("Velkommen til Ranglisten",
+          Text(FlutterI18n.translate(context, "ranking.rankingFirsttimeMain.string1"),
               textAlign: TextAlign.center, style: TextStyle(fontSize: 20.0)),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: Text(
-              "Før du kan gå i gang med at registere dine kampe skal vi lige vide et par ting om dig. Du kan altid senere ændre dine oplysninger i indstillinger.",
+              FlutterI18n.translate(context, "ranking.rankingFirsttimeMain.string2"),
               textAlign: TextAlign.center,
             ),
           ),
@@ -53,10 +54,10 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
                   },
                   validator: (String value) {
                     if (value.isEmpty)
-                      return "Du skal udfylde dit rangliste navn";
+                      return FlutterI18n.translate(context, "ranking.rankingFirsttimeMain.string3");
                   },
                   inputFormatters: [LengthLimitingTextInputFormatter(50)],
-                  decoration: InputDecoration(labelText: "Dit rangliste navn"),
+                  decoration: InputDecoration(labelText: FlutterI18n.translate(context, "ranking.rankingFirsttimeMain.string4")),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
@@ -65,7 +66,7 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
                       _rankingPlayerData.sex = value;
                     },
                     validator: (String value) {
-                      if (value.isEmpty) return "Du skal vælge dit køn";
+                      if (value.isEmpty) return FlutterI18n.translate(context, "ranking.rankingFirsttimeMain.string5");
                     },
                     initialValue: "",
                     builder: (FormFieldState<String> state) {
@@ -74,7 +75,7 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              Text("Kvinde"),
+                              Text(FlutterI18n.translate(context, "ranking.rankingFirsttimeMain.string6")),
                               Radio(
                                 onChanged: (String value) {
                                   setState(() {
@@ -88,7 +89,7 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
                           ),
                           Row(
                             children: <Widget>[
-                              Text("Mand"),
+                              Text(FlutterI18n.translate(context, "ranking.rankingFirsttimeMain.string7")),
                               Radio(
                                 onChanged: (String value) {
                                   setState(() {
@@ -117,7 +118,7 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
                 widget.onPressedValue(true);
               }
             },
-            label: Text("Gem min profil"),
+            label: Text(FlutterI18n.translate(context, "ranking.rankingFirsttimeMain.string8")),
             icon: Icon(Icons.check_circle),
           )
         ],

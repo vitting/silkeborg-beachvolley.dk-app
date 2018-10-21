@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
@@ -14,8 +15,8 @@ import '../../../helpers/confirm_dialog_functions.dart'
 void bulletinItemPopupMenu(
     BuildContext context, BulletinItemData bulletinItem) async {
   List<DialogsModalBottomSheetItem> items = [
-    DialogsModalBottomSheetItem("Rediger", Icons.edit, 0),
-    DialogsModalBottomSheetItem("Slet", Icons.delete, 1)
+    DialogsModalBottomSheetItem(FlutterI18n.translate(context, "bulletin.itemFunctions.string1"), Icons.edit, 0),
+    DialogsModalBottomSheetItem(FlutterI18n.translate(context, "bulletin.itemFunctions.string2"), Icons.delete, 1)
   ];
 
   int result = await Dialogs.modalBottomSheet(context, items);
@@ -41,7 +42,7 @@ void bulletinItemPopupMenu(
 void bulletinConfirmDialog(
     BuildContext context, BulletinItemData bulletinItem) async {
   ConfirmDialogOptionsData dialogOptions =
-      getConfimDialogOptions(bulletinItem.type);
+      getConfimDialogOptions(context, bulletinItem.type);
   ConfirmDialogAction result = await confirmDialogFunctions.confirmDialog(
       context,
       body: dialogOptions.body,
@@ -54,41 +55,41 @@ void bulletinConfirmDialog(
   }
 }
 
-ConfirmDialogOptionsData getConfimDialogOptions(BulletinType type) {
+ConfirmDialogOptionsData getConfimDialogOptions(BuildContext context, BulletinType type) {
   ConfirmDialogOptionsData dialogOptions = new ConfirmDialogOptionsData();
   switch (type) {
     case BulletinType.news:
-      dialogOptions.title = Text("Slet nyhed");
+      dialogOptions.title = Text(FlutterI18n.translate(context, "bulletin.itemFunctions.string3"));
       dialogOptions.body = [
-        Text("Er du sikker på du vil slette din nyhed?"),
+        Text(FlutterI18n.translate(context, "bulletin.itemFunctions.string4")),
         Padding(
           padding: const EdgeInsets.only(top: 10.0),
           child: Text(
-              "Du skal være opmærksom på at alle billeder og kommentarer for nyheden også vil bliver slettet"),
+              FlutterI18n.translate(context, "bulletin.itemFunctions.string5")),
         )
       ];
 
       break;
     case BulletinType.event:
-      dialogOptions.title = Text("Slet begivenhed");
+      dialogOptions.title = Text(FlutterI18n.translate(context, "bulletin.itemFunctions.string6"));
       dialogOptions.body = [
-        Text("Er du sikker på du vil slette din begivenhed?"),
+        Text(FlutterI18n.translate(context, "bulletin.itemFunctions.string7")),
         Padding(
           padding: const EdgeInsets.only(top: 10.0),
           child: Text(
-              "Du skal være opmærksom på at alle kommentarer for begivenheden også vil bliver slettet"),
+              FlutterI18n.translate(context, "bulletin.itemFunctions.string8")),
         )
       ];
 
       break;
     case BulletinType.play:
-      dialogOptions.title = Text("Slet spil");
+      dialogOptions.title = Text(FlutterI18n.translate(context, "bulletin.itemFunctions.string9"));
       dialogOptions.body = [
-        Text("Er du sikker på du vil slette dit opslag om spil?"),
+        Text(FlutterI18n.translate(context, "bulletin.itemFunctions.string10")),
         Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: Text(
-                "Du skal være opmærksom på at alle kommentarer for opsalget også vil bliver slettet"))
+                FlutterI18n.translate(context, "bulletin.itemFunctions.string11")))
       ];
 
       break;

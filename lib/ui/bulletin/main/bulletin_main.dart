@@ -41,7 +41,7 @@ class _BulletinState extends State<Bulletin> {
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
       title: bulletinMainFunctions
-          .getTitle(bulletinMainFunctions.getSelectedType(_bottombarSelected)),
+          .getTitle(context, bulletinMainFunctions.getSelectedType(_bottombarSelected)),
       body: _main(),
       showDrawer: true,
       floatingActionButton: _scaffoldFloatingActionButton(context),

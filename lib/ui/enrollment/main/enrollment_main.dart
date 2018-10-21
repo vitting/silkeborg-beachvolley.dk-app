@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/made_by_user/enrollment_made_by_user_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/form/enrollment_form.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/main/enrollment_payment.dart';
@@ -31,7 +32,7 @@ class _EnrollmentState extends State<Enrollment> {
       actions: <Widget>[_actionMenu(context)],
       bottomNavigationBar: DotBottomBar(
           showNavigationButtons: false, numberOfDot: 3, position: _position),
-      title: "Indmeldelse",
+      title: FlutterI18n.translate(context, "enrollment.enrollmentMain.title"),
       body: Card(
           child: Container(
         padding: EdgeInsets.all(10.0),
@@ -97,7 +98,7 @@ class _EnrollmentState extends State<Enrollment> {
           return [
             PopupMenuItem(
               value: 0,
-              child: Text("Vis mine indmeldelser"),
+              child: Text(FlutterI18n.translate(context, "enrollment.enrollmentMain.string1")),
             )
           ];
         },

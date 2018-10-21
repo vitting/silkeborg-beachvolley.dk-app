@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/dot_bottombar_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/ranking_create_match_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_sharedpref.dart';
@@ -42,14 +43,14 @@ class RankingState extends State<Ranking> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-        title: _getPageTitle(_position),
+        title: _getPageTitle(context, _position),
         bottomNavigationBar: DotBottomBar(
           numberOfDot: 2,
           position: _position,
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.deepOrange[700],
-          tooltip: "Registere kamp",
+          tooltip: FlutterI18n.translate(context, "ranking.rankingMain.string1"),
           onPressed: () async {
             await Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) => RankingCreateMatch(),
@@ -71,10 +72,10 @@ class RankingState extends State<Ranking> {
         ));
   }
 
-  String _getPageTitle(int page) {
+  String _getPageTitle(BuildContext context, int page) {
     String title = "";
-    if (page == 0) title = "Ranglisten";
-    if (page == 1) title = "De sidste 10 spillede kampe";
+    if (page == 0) title = FlutterI18n.translate(context, "ranking.rankingMain.title1");
+    if (page == 1) title = FlutterI18n.translate(context, "ranking.rankingMain.title2");
     return title;
   }
 

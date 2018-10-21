@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/chip_header_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
@@ -20,7 +21,7 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = [
-      Text("Der er ikke registeret nogen betalinger for det pågældende medlem.",
+      Text(FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailPayments.string1"),
           textAlign: TextAlign.center)
     ];
     if (enrollment.payment.isNotEmpty) {
@@ -43,7 +44,7 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
               trailing: Column(
                 children: <Widget>[
                   IconButton(
-                    tooltip: "Slet betaling",
+                    tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailPayments.string2"),
                     color: Colors.deepOrange,
                     icon: Icon(Icons.delete),
                     onPressed: () {
@@ -51,7 +52,7 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
                     },
                   ),
                   IconButton(
-                    tooltip: "Rediger kommentar",
+                    tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailPayments.string3"),
                     color: Colors.deepOrange,
                     icon: Icon(Icons.comment),
                     iconSize: 20.0,
@@ -67,19 +68,19 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
                     icon: Icons.calendar_today,
                     text: DateTimeHelpers.ddmmyyyyHHnn(
                         payment.createdDate.toDate()),
-                    tooltip: "Dato medlem er oprettet",
+                    tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailPayments.string4"),
                   ),
                   AdminEnrollmentDetailRow(
                     icon: FontAwesomeIcons.idCard,
                     text: payment.approvedUserId,
-                    tooltip: "Id på den person der har godkendt betalingen",
+                    tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailPayments.string5"),
                   ),
                   AdminEnrollmentDetailRow(
                     icon: Icons.comment,
                     text: payment.comment.isEmpty
-                        ? "Ingen kommentar"
+                        ? FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailPayments.string6")
                         : payment.comment,
-                    tooltip: "Kommentar fra administrator",
+                    tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailPayments.string7"),
                   )
                 ],
               ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/event_datetime_type_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/image_info_data.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -31,31 +32,31 @@ class BulletinEventFields extends StatefulWidget {
 class _BulletinEvetFieldsState extends State<BulletinEventFields> {
   @override
   Widget build(BuildContext context) {
-    return _main();
+    return _main(context);
   }
 
-  Widget _main() {
+  Widget _main(BuildContext context) {
     return Column(
       children: <Widget>[
-        _getImageWidget(),
-        _getTitleTextFieldWidget(),
+        _getImageWidget(context),
+        _getTitleTextFieldWidget(context),
         Row(
           children: <Widget>[
             Flexible(
                 child: _getDateTextFieldWidget(
                     context,
                     widget.startDateController,
-                    "Start dato",
+                    FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string1"),
                     DateTimeType.startDate,
-                    "Udfyld Start dato")),
+                    FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string2"))),
             SizedBox(width: 20.0),
             Flexible(
                 child: _getDateTextFieldWidget(
                     context,
                     widget.endDateController,
-                    "Slut dato",
+                    FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string3"),
                     DateTimeType.endDate,
-                    "Udfyld Slut dato"))
+                    FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string4")))
           ],
         ),
         Row(
@@ -64,25 +65,25 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
                 child: _getTimeTextFieldWidget(
                     context,
                     widget.startTimeController,
-                    "Start tid",
+                    FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string5"),
                     DateTimeType.startTime,
-                    "Udfyld Start tid")),
+                    FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string6"))),
             SizedBox(width: 20.0),
             Flexible(
                 child: _getTimeTextFieldWidget(
                     context,
                     widget.endTimeController,
-                    "Slut tid",
+                    FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string7"),
                     DateTimeType.endTime,
-                    "Udfyld Slut tid"))
+                    FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string8")))
           ],
         ),
-        _getLocationTextField(),
+        _getLocationTextField(context),
       ],
     );
   }
 
-  Widget _getImageWidget() {
+  Widget _getImageWidget(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Column(
@@ -94,7 +95,7 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
                 widget.onTapImage(widget.eventImage);
               },
               child: Tooltip(
-                message: "Tilføj et billede. Det er ikke påkrævet.",
+                message: FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string9"),
                 child: Container(
                   width: 200.0,
                   height: 100.0,
@@ -113,23 +114,23 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
               ),
             ),
           ),
-          Text("Plakat billede. Ikke påkrævet")
+          Text(FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string10"))
         ],
       ),
     );
   }
 
-  Widget _getTitleTextFieldWidget() {
+  Widget _getTitleTextFieldWidget(BuildContext context) {
     return TextFormField(
       initialValue: widget.itemFieldsValue.eventTitle,
       keyboardType: TextInputType.text,
       maxLength: 50,
-      decoration: InputDecoration(labelText: "Titel"),
+      decoration: InputDecoration(labelText: FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string11")),
       onSaved: (value) {
         widget.itemFieldsValue.eventTitle = value;
       },
       validator: (value) {
-        if (value.isEmpty) return "Titel skal udfyldes";
+        if (value.isEmpty) return FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string12");
       },
     );
   }
@@ -180,17 +181,17 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
         });
   }
 
-  Widget _getLocationTextField() {
+  Widget _getLocationTextField(BuildContext context) {
     return TextFormField(
       initialValue: widget.itemFieldsValue.eventLocation,
       keyboardType: TextInputType.text,
       maxLength: 100,
-      decoration: InputDecoration(labelText: "Sted"),
+      decoration: InputDecoration(labelText: FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string13")),
       onSaved: (value) {
         widget.itemFieldsValue.eventLocation = value;
       },
       validator: (value) {
-        if (value.isEmpty) return "Sted skal udfyldes";
+        if (value.isEmpty) return FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string14");
       },
     );
   }

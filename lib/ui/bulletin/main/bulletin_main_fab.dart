@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 
@@ -58,7 +59,7 @@ class _BulletinMainFabState extends State<BulletinMainFab>
     super.dispose();
   }
 
-  Widget _news() {
+  Widget _news(BuildContext context) {
     return Container(
       child: FloatingActionButton(
         backgroundColor: Colors.deepOrange[700],
@@ -67,13 +68,13 @@ class _BulletinMainFabState extends State<BulletinMainFab>
           _close();
           widget.onPressedValue(BulletinType.news);
         },
-        tooltip: 'Nyhed',
+        tooltip: FlutterI18n.translate(context, "bulletin.bulletinMainFab.string1"),
         child: Icon(FontAwesomeIcons.newspaper),
       ),
     );
   }
 
-  Widget _event() {
+  Widget _event(BuildContext context) {
     return Container(
       child: FloatingActionButton(
         backgroundColor: Colors.deepOrange[700],
@@ -82,13 +83,13 @@ class _BulletinMainFabState extends State<BulletinMainFab>
           _close();
           widget.onPressedValue(BulletinType.event);
         },
-        tooltip: 'Begivenhed',
+        tooltip: FlutterI18n.translate(context, "bulletin.bulletinMainFab.string2"),
         child: Icon(FontAwesomeIcons.calendarAlt),
       ),
     );
   }
 
-  Widget _play() {
+  Widget _play(BuildContext context) {
     return Container(
       child: FloatingActionButton(
         backgroundColor: Colors.deepOrange[700],
@@ -97,7 +98,7 @@ class _BulletinMainFabState extends State<BulletinMainFab>
           _close();
           widget.onPressedValue(BulletinType.play);
         },
-        tooltip: 'Spil',
+        tooltip: FlutterI18n.translate(context, "bulletin.bulletinMainFab.string3"),
         child: Icon(FontAwesomeIcons.volleyballBall),
       ),
     );
@@ -120,7 +121,7 @@ class _BulletinMainFabState extends State<BulletinMainFab>
           }
           isOpened = !isOpened;
         },
-        tooltip: 'Nyt opslag',
+        tooltip: FlutterI18n.translate(context, "bulletin.bulletinMainFab.string4"),
         child: Icon(Icons.add),
       ),
     );
@@ -137,7 +138,7 @@ class _BulletinMainFabState extends State<BulletinMainFab>
             _translateButton.value * 3.0,
             0.0,
           ),
-          child: _news(),
+          child: _news(context),
         ),
         Transform(
           transform: Matrix4.translationValues(
@@ -145,7 +146,7 @@ class _BulletinMainFabState extends State<BulletinMainFab>
             _translateButton.value * 2.0,
             0.0,
           ),
-          child: _event(),
+          child: _event(context),
         ),
         Transform(
           transform: Matrix4.translationValues(
@@ -153,7 +154,7 @@ class _BulletinMainFabState extends State<BulletinMainFab>
             _translateButton.value,
             0.0,
           ),
-          child: _play(),
+          child: _play(context),
         ),
         toggle(),
       ],
