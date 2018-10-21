@@ -64,7 +64,7 @@
             "string7": "Slut tid",
             "string8": "Udfyld Slut tid",
             "string9": "Tilføj et billede. Det er ikke påkrævet.",
-            "strnig10": "Plakat billede. Ikke påkrævet",
+            "string10": "Plakat billede. Ikke påkrævet",
             "string11": "Titel",
             "string12": "Titel skal udfyldes",
             "string13": "Sted",
@@ -244,11 +244,11 @@
         "adminRankingMain": {
             "string1": "Nulstiller sæsonen",
             "string2": "Vis ikke slettede spillere",
-            "string3": "Vis slettede spillere",
+            "string3": "Vis skjulte spillere",
             "string4": "Nulstil sæson",
             "string5": "Er du sikker på du vil nulstille sæsonen?\n\nVær opmærksom på at alle kampe vi blive skjult og alle spiller data (point og spillede kampe) vil blive nustillet.",
             "string6": "Administerer spillere",
-            "string7": "Administerer slettede spillere",
+            "string7": "Administerer skjulte spillere",
             "string8": "Administerer kampe"
         },
         "adminRankingMatchesMain": {
