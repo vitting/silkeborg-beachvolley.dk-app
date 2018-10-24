@@ -56,6 +56,36 @@ class Dialogs {
         barrierDismissible: true);
   }
 
+  static Future<ConfirmDialogAction> confirmSetWinner(
+      BuildContext context, String body) async {
+    return confirmFunctions.confirmDialog(context,
+        body: [Text(body)],
+        title: Text(FlutterI18n.translate(context, "setWinner")),
+        actionLeft: ConfirmDialogAction.cancel,
+        actionRight: ConfirmDialogAction.ok,
+        barrierDismissible: false);
+  }
+
+  static Future<ConfirmDialogAction> confirmMatchWinner(
+      BuildContext context, String body) async {
+    return confirmFunctions.confirmDialog(context,
+        body: [Text(body)],
+        title: Text(FlutterI18n.translate(context, "matchWinner")),
+        actionLeft: ConfirmDialogAction.cancel,
+        actionRight: ConfirmDialogAction.ok,
+        barrierDismissible: false);
+  }
+
+  static Future<ConfirmDialogAction> confirmMatchStart(
+      BuildContext context, String body) async {
+    return confirmFunctions.confirmDialog(context,
+        body: [Text(body)],
+        title: Text(FlutterI18n.translate(context, "startMatch")),
+        actionLeft: ConfirmDialogAction.cancel,
+        actionRight: ConfirmDialogAction.start,
+        barrierDismissible: false);
+  }
+
   static Future<int> modalBottomSheet(
       BuildContext context, List<DialogsModalBottomSheetItem> items) async {
     return showModalBottomSheet(

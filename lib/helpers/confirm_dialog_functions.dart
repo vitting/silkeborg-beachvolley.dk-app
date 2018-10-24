@@ -78,6 +78,9 @@ Text _getButtonText(BuildContext context, ConfirmDialogAction action) {
     case ConfirmDialogAction.reset:
       value = FlutterI18n.translate(context, "reset");
       break;
+    case ConfirmDialogAction.start:
+      value = FlutterI18n.translate(context, "start");
+      break;
     default:
       value = "";
   }

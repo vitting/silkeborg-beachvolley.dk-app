@@ -18,6 +18,7 @@ class Home extends StatefulWidget {
   static UserInfoData userInfo;
   static SettingsData settings;
   static UserMessagingData userMessaging;
+  
   @override
   _HomeState createState() => _HomeState();
 }

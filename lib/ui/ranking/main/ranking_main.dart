@@ -18,7 +18,7 @@ class Ranking extends StatefulWidget {
 
 class RankingState extends State<Ranking> {
   int _position = 0;
-  List<Widget> _widgets = [];
+  List<Widget> _pages = [];
   PageController _controller = PageController();
 
   @override
@@ -37,7 +37,7 @@ class RankingState extends State<Ranking> {
   }
 
   void _initPages() async {
-    _widgets = [RankingList(), RankingMatches()];
+    _pages = [RankingList(), RankingMatches()];
   }
 
   @override
@@ -59,10 +59,10 @@ class RankingState extends State<Ranking> {
           child: Icon(Icons.add),
         ),
         body: PageView.builder(
-          itemCount: _widgets.length,
+          itemCount: _pages.length,
           controller: _controller,
           itemBuilder: (BuildContext context, int page) {
-            return _widgets[page];
+            return _pages[page];
           },
           onPageChanged: (int page) {
             setState(() {

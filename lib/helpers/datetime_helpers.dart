@@ -2,36 +2,6 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
-// Map<int, String> months = {
-//   1: "Januar",
-//   2: "Februar",
-//   3: "Marts",
-//   4: "April",
-//   5: "Maj",
-//   6: "Juni",
-//   7: "Juli",
-//   8: "August",
-//   9: "September",
-//   10: "Oktober",
-//   11: "November",
-//   12: "December"
-// };
-
-// Map<int, String> monthsShort = {
-//   1: "jan.",
-//   2: "feb.",
-//   3: "mar.",
-//   4: "apr.",
-//   5: "maj",
-//   6: "jun.",
-//   7: "jul.",
-//   8: "aug.",
-//   9: "sept.",
-//   10: "okt.",
-//   11: "nov.",
-//   12: "dec."
-// };
-
 class DateTimeHelpers {
   static int weekInYear(DateTime date) {
     return int.parse(formatDate(date, [W]));
@@ -42,6 +12,16 @@ class DateTimeHelpers {
       return formatDate(date, [dd, "-", mm, "-", yyyy, "  ", HH, ":", nn]);  
     } catch (e) {
       print("DateTimeHelpers.ddmmyyyyHHnn : $e");
+      return "";
+    }
+    
+  }
+
+  static String ddMMyyyyHHnn(BuildContext context, DateTime date) {
+    try {
+      return formatDate(date, [dd, ". ", FlutterI18n.translate(context, "monthsShort.${date.month}"), " ", yyyy, " ", HH, ":", nn]);
+    } catch (e) {
+      print("DateTimeHelpers.ddMMyyyyHHnn : $e");
       return "";
     }
     
@@ -75,6 +55,10 @@ class DateTimeHelpers {
       dateToFormat = date;
     }
     return formatDate(dateToFormat, [HH, ":", nn]);
+  }
+
+  static Duration totalTime(DateTime date1, DateTime date2) {
+    return date1.difference(date2);
   }
 
   static bool dateCompare(DateTime date1, DateTime date2) {

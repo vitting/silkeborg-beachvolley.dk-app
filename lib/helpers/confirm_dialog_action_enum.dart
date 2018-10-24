@@ -9,5 +9,6 @@ enum ConfirmDialogAction {
   close,
   hide,
   unhide,
-  reset
+  reset,
+  start
 }

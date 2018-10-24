@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_action_enum.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_colors.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/main/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/admin/admin_ranking_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_main.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/main/livescore_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/settings_main.dart';
 import 'package:silkeborgbeachvolley/ui/tournament_calendar/main/tournament_calendar_main.dart';
 import '../../login/helpers/auth_functions.dart' as authFunctions;
@@ -47,18 +49,7 @@ class SilkeborgBeacvolleyScaffoldDrawerState
     List<Widget> widgets;
     widgets = [
       UserAccountsDrawerHeader(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [0.1, 0.5, 0.7, 0.9],
-            colors: [
-              Colors.blue[300],
-              Colors.blue[500],
-              Colors.blue[700],
-              Colors.blue[900],
-            ],
-          )),
+          decoration: SilkeborgBeachvolleyColors.gradientColorBoxDecoration,
           accountEmail: Text(_email),
           accountName: Text(_name),
           currentAccountPicture: CircleProfileImage(
@@ -80,7 +71,12 @@ class SilkeborgBeacvolleyScaffoldDrawerState
         },
       ),
       ListTile(
-          leading: Icon(Icons.album), title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string3")), onTap: () {}),
+          leading: Icon(Icons.album), 
+          title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string3")), 
+          onTap: () {
+            Navigator.of(context).popAndPushNamed(Livescore.routeName);
+          }
+        ),
       ListTile(
         leading: Icon(Icons.album),
         title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string4")),

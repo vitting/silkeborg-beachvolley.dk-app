@@ -10,6 +10,9 @@
     "show": "Show",
     "reset": "Reset",
     "error": "Error",
+    "matchWinner": "Match winner",
+    "setWinner": "Set winner",
+    "startMatch": "Start",
     "monthsLong": {
         "1": "January",
         "2": "February",
@@ -368,7 +371,8 @@
             "string8": "Ranking name",
             "string9": "Fill out ranking name",
             "string10": "Female",
-            "string11": "Male"
+            "string11": "Male",
+            "string12": "Sex"
         }
     },
     "tournamentCalendar": {

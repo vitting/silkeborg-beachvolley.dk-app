@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_colors.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/main/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'helpers/auth_functions.dart' as authFunctions;
@@ -18,18 +19,7 @@ class Login extends StatelessWidget {
 
   Widget _main(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        stops: [0.1, 0.5, 0.7, 0.9],
-        colors: [
-          Colors.blue[300],
-          Colors.blue[500],
-          Colors.blue[700],
-          Colors.blue[900],
-        ],
-      )),
+      decoration: SilkeborgBeachvolleyColors.gradientColorBoxDecoration,
       padding: EdgeInsets.only(left: 10.0, right: 10.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

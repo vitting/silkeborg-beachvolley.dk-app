@@ -238,7 +238,7 @@ class SettingsState extends State<Settings> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text("Køn", style: TextStyle(fontSize: 16.0)),
+            Text(FlutterI18n.translate(context, "settings.settingsMain.string12"), style: TextStyle(fontSize: 16.0)),
             _sexElement(FlutterI18n.translate(context, "settings.settingsMain.string10"), "female"),
             _sexElement(FlutterI18n.translate(context, "settings.settingsMain.string11"), "male")
           ],

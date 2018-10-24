@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_colors.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_overlay_widget.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
@@ -11,18 +12,7 @@ class HomeLauncherSplash extends StatelessWidget {
           child: Container(
               width: double.infinity,
               height: double.infinity,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                stops: [0.1, 0.5, 0.7, 0.9],
-                colors: [
-                  Colors.blue[300],
-                  Colors.blue[500],
-                  Colors.blue[700],
-                  Colors.blue[900],
-                ],
-              )),
+              decoration: SilkeborgBeachvolleyColors.gradientColorBoxDecoration,
               child: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints contraints) {
                   double imageHalfWidth = 105.0;

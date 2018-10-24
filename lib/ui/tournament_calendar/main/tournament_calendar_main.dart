@@ -96,13 +96,13 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
                         _launchUrl(item.link);
                       },
                     ),
-              trailing: IconButton(
+              trailing: _isAdmin ? IconButton(
                 color: Colors.deepOrange[700],
                 icon: Icon(Icons.more_horiz),
                 onPressed: () async {
                   await _menuOnPressed(context, item);
                 },
-              ),
+              ) : null,
             ),
           );
         },

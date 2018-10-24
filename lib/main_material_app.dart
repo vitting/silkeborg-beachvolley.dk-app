@@ -8,7 +8,7 @@ import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/login/login_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/admin/admin_ranking_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_main.dart';
-import 'package:silkeborgbeachvolley/ui/scoreboard/scoreboard_main.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/main/livescore_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/settings_main.dart';
 import 'package:silkeborgbeachvolley/ui/tournament_calendar/main/tournament_calendar_main.dart';
 
@@ -36,7 +36,7 @@ class _MainMaterialAppState extends State<MainMaterialApp> {
         // "/": (BuildContext context) => TestWidget(),
         Enrollment.routeName: (BuildContext context) => Enrollment(),
         AdminEnrollment.routeName: (BuildContext context) => AdminEnrollment(),
-        ScoreBoard.routeName: (BuildContext context) => ScoreBoard(),
+        Livescore.routeName: (BuildContext context) => Livescore(),
         Bulletin.routeName: (BuildContext context) => Bulletin(),
         Login.routeName: (BuildContext context) => Login(),
         Settings.routeName: (BuildContext context) => Settings(),
@@ -47,4 +47,10 @@ class _MainMaterialAppState extends State<MainMaterialApp> {
       },
     );
   }
+
+//   test() async {
+//     var connectivityResult = await (new Connectivity().checkConnectivity());
+//     print(connectivityResult == ConnectivityResult.mobile);
+//     print(connectivityResult == ConnectivityResult.wifi);
+//   }
 }
