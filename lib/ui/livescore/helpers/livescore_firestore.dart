@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_data.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_sets_played_data.dart';
 
 class LivescoreFirestore {
   static Firestore _firestore = Firestore.instance;
@@ -40,14 +41,16 @@ class LivescoreFirestore {
     return _firestore.collection(_collectionName).document(matchId).delete();
   }
 
-  static Future<void> updateSet(String matchId, int setScore, int team) {
-    return _firestore
-        .collection(_collectionName)
-        .document(matchId)
-        .updateData({"setTeam$team": setScore});
+  static Future<void> updateSet(String matchId, int setScore, int team,
+      LivescoreSetsPlayedData setPlayed) {
+    return _firestore.collection(_collectionName).document(matchId).updateData({
+      "setTeam$team": setScore,
+      "setsPlayed": FieldValue.arrayUnion([setPlayed.toMap()])
+    });
   }
 
-  static Future<void> setPointsTimeouts(String matchId, int pointsTeam1, int pointsTeam2, int timeoutsTeam1, int timeoutsTeam2) {
+  static Future<void> setPointsTimeouts(String matchId, int pointsTeam1,
+      int pointsTeam2, int timeoutsTeam1, int timeoutsTeam2) {
     return _firestore.collection(_collectionName).document(matchId).updateData({
       "pointsTeam1": pointsTeam1,
       "pointsTeam2": pointsTeam2,
@@ -60,7 +63,7 @@ class LivescoreFirestore {
     return _firestore
         .collection(_collectionName)
         .document(matchId)
-        .updateData({"pointsTeam$team": points});
+        .updateData({"pointsTeam$team": points, "activeTeam": team});
   }
 
   static Future<void> updateTimeouts(String matchId, int timeouts, int team) {
@@ -71,9 +74,11 @@ class LivescoreFirestore {
   }
 
   static Future<void> updateMatchAsStarted(
-      String matchId, DateTime matchStartedAt) {
+      String matchId, DateTime matchStartedAt, int startTeam) {
     return _firestore.collection(_collectionName).document(matchId).updateData({
       "winnerTeam": null,
+      "startTeam": startTeam,
+      "activeTeam": startTeam,
       "matchStartedAt": Timestamp.fromDate(matchStartedAt),
       "active": true
     });
@@ -83,8 +88,16 @@ class LivescoreFirestore {
       String matchId, DateTime matchEndedAt, int team) {
     return _firestore.collection(_collectionName).document(matchId).updateData({
       "winnerTeam": team,
+      "activeTeam": 0,
       "matchEndedAt": Timestamp.fromDate(matchEndedAt),
       "active": false
     });
+  }
+
+  static Future<void> updateMatchMessage(String matchId, int message) {
+    return _firestore
+        .collection(_collectionName)
+        .document(matchId)
+        .updateData({"matchMessage": message});
   }
 }

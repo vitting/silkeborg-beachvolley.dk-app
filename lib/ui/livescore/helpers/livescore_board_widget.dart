@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_data.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_message_widget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_names_widget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_points_widget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_sets_widget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_time_widget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_timeouts_widget.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_title_widget.dart';
 
 class LivescoreBoard extends StatelessWidget {
   final LivescoreData match;
@@ -14,8 +16,12 @@ class LivescoreBoard extends StatelessWidget {
   final FontWeight fontWeightTeam2;
   final Color pointsBorderColorTeam1;
   final Color pointsBorderColorTeam2;
+  final bool winnerTeam1;
+  final bool winnerTeam2;
+  final Stream<String> messageStream;
   final ValueChanged<int> onLongPressPoints;
-
+  final ValueChanged<bool> onDoubleTapMessage;
+  final bool showIsLiveIndicator;
   const LivescoreBoard(
       {Key key,
       this.match,
@@ -24,17 +30,30 @@ class LivescoreBoard extends StatelessWidget {
       this.pointsBorderColorTeam1 = Colors.white,
       this.pointsBorderColorTeam2 = Colors.white,
       this.onLongPressPoints,
+      this.onDoubleTapMessage,
       this.fontWeightTeam1 = FontWeight.normal,
-      this.fontWeightTeam2 = FontWeight.normal})
+      this.fontWeightTeam2 = FontWeight.normal,
+      this.winnerTeam1 = false,
+      this.winnerTeam2 = false,
+      this.messageStream,
+      this.showIsLiveIndicator
+    })
       : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+      padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
       color: Colors.black,
       child: Column(
         children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: LivescoreBoardTitle(
+              title: match.title,
+            ),
+          ),
           LivescoreBoardTime(
+            isLive: showIsLiveIndicator,
             matchtime: match.matchDateWithTimeFormatted(context),
             matchStartedAt: match.matchStartedAtTimeFormatted(),
             matchEndedAt: match.matchEndedAtTimeFormatted(),
@@ -72,6 +91,8 @@ class LivescoreBoard extends StatelessWidget {
               fontWeightTeam2: fontWeightTeam2,
               borderColorTeam1: pointsBorderColorTeam1,
               borderColorTeam2: pointsBorderColorTeam2,
+              winnerTeam1: winnerTeam1,
+              winnerTeam2: winnerTeam2,
               onLongPressPoints: onLongPressPoints,
             ),
           ),
@@ -83,6 +104,13 @@ class LivescoreBoard extends StatelessWidget {
               fontWeightTeam1: fontWeightTeam1,
               fontWeightTeam2: fontWeightTeam2
               ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child:LivescoreMatchMessage(
+              onDoubleTapMessage: onDoubleTapMessage,
+              messageStream: messageStream,
+            )
+          )
         ],
       ),
     );

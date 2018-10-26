@@ -19,15 +19,12 @@ class AppStateContainer extends StatefulWidget {
 
   AppStateContainer({@required this.child, this.state});
 
-  static _AppStateContainerState of(
-      [BuildContext context, bool rebuild = true]) {
+  static _AppStateContainerState of([BuildContext context, bool rebuild = true]) {
     return rebuild
         ? (context.inheritFromWidgetOfExactType(_InheritedStateContainer)
-                as _InheritedStateContainer)
-            .data
+                as _InheritedStateContainer).data
         : (context.ancestorWidgetOfExactType(_InheritedStateContainer)
-                as _InheritedStateContainer)
-            .data;
+                as _InheritedStateContainer).data;
   }
 
   @override

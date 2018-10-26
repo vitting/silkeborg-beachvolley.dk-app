@@ -27,12 +27,10 @@ class _SearchBarState extends State<SearchBar> {
       child: TextField(
         onChanged: (String value) {
           if (value.isNotEmpty && _showSearchClearButton == false) {
-            if (mounted) {
-              setState(() {
+            setState(() {
                 _showSearchClearButton = true;
                 _showSearchButton = true;
               });
-            }
           }
         },
         cursorColor: Colors.white,
@@ -69,7 +67,7 @@ class _SearchBarState extends State<SearchBar> {
                   icon: Icon(Icons.search),
                   onPressed: _showSearchButton
                       ? () {
-                          _search(_searchController.text.toLowerCase());
+                          _search(_searchController.text.trim().toLowerCase());
                         }
                       : null,
                 )

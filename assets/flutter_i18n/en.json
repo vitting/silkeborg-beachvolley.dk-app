@@ -13,6 +13,15 @@
     "matchWinner": "Match winner",
     "setWinner": "Set winner",
     "startMatch": "Start",
+    "boardMessages": {
+        "0": "Hide message",
+        "1": "Technical timeout",
+        "2": "Team [TEAM] has taken a timeout",
+        "3": "Team [TEAM] won the set",
+        "4": "Team [TEAM] won the match",
+        "5": "The match has ended",
+        "6": "Injury break to Team [TEAM]"       
+    },
     "monthsLong": {
         "1": "January",
         "2": "February",

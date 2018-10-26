@@ -9,7 +9,12 @@ class ChipHeader extends StatelessWidget {
   final Color color;
   final bool expanded;
   final bool roundedCorners;
-
+  final double paddingTop;
+  final double paddingBottom;
+  final double paddingLeft;
+  final double paddingRight;
+  final Widget child;
+  
   const ChipHeader(this.text,
       {this.fontSize = 14.0,
       this.fontWeight = FontWeight.normal,
@@ -17,7 +22,13 @@ class ChipHeader extends StatelessWidget {
       this.color = Colors.white,
       this.backgroundColor = Colors.blue,
       this.roundedCorners = true,
-      this.expanded = false});
+      this.expanded = false,
+      this.paddingBottom = 5.0,
+      this.paddingLeft = 5.0,
+      this.paddingRight = 5.0,
+      this.paddingTop = 5.0,
+      this.child
+    });
   @override
   Widget build(BuildContext context) {
     Widget widgets = Text(text,
@@ -28,15 +39,16 @@ class ChipHeader extends StatelessWidget {
     if (expanded) {
       widgets = Expanded(child: widgets);
     }
-
     return Container(
-        padding: EdgeInsets.all(5.0),
+        padding: EdgeInsets.fromLTRB(paddingLeft, paddingTop, paddingRight, paddingBottom),
         decoration: BoxDecoration(
             color: backgroundColor,
             borderRadius: roundedCorners ? BorderRadius.circular(6.0) : null),
-        child: Row(
+        child: child == null ? Row(
           mainAxisSize: MainAxisSize.min,
-          children: <Widget>[widgets],
-        ));
+          children: <Widget>[
+            widgets
+            ],
+        ) : child);
   }
 }

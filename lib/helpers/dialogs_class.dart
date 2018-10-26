@@ -102,11 +102,45 @@ class Dialogs {
             );
           }).toList();
           return Container(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: widgets,
+            child: Scrollbar(
+                          child: ListView(
+                shrinkWrap: true,
+                children: <Widget>[
+                  Column(
+                mainAxisSize: MainAxisSize.min,
+                children: widgets,
+              )
+                ],
+              ),
             ),
           );
+        });
+  }
+
+  static Future<DialogsModalBottomSheetItem> modalBottomSheetExtended(
+      BuildContext context, List<DialogsModalBottomSheetItem> items) async {
+    return showModalBottomSheet(
+        context: context,
+        builder: (BuildContext contextModal) {
+          List<Widget> widgets =
+              items.map<Widget>((DialogsModalBottomSheetItem item) {
+            return ListTile(
+              leading: Icon(item.iconData),
+              title: Text(item.title),
+              onTap: () {
+                Navigator.of(contextModal).pop(item);
+              },
+            );
+          }).toList();
+          return Container(
+              child: ListView(
+            children: <Widget>[
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: widgets,
+              ),
+            ],
+          ));
         });
   }
 }

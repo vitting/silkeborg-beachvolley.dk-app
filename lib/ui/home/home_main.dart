@@ -11,6 +11,7 @@ import 'package:silkeborgbeachvolley/ui/bulletin/main/bulletin_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_launcher_main.dart';
 import 'package:silkeborgbeachvolley/ui/login/login_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
+import 'package:vibrate/vibrate.dart';
 import './helpers/home_functions.dart' as homeFunctions;
 
 class Home extends StatefulWidget {
@@ -18,6 +19,7 @@ class Home extends StatefulWidget {
   static UserInfoData userInfo;
   static SettingsData settings;
   static UserMessagingData userMessaging;
+  static bool canVibrate;
   
   @override
   _HomeState createState() => _HomeState();
@@ -48,6 +50,7 @@ class _HomeState extends State<Home> {
       Home.loggedInUser = user;
       SettingsData settings;
       UserInfoData userInfoData;
+      bool canPhoneVibrate = await Vibrate.canVibrate;
 
       if (user != null) {
         userInfoData = await homeFunctions.loadUserInfo(user.uid);
@@ -60,6 +63,7 @@ class _HomeState extends State<Home> {
         setState(() {
           Home.userInfo = userInfoData;
           Home.settings = settings;
+          Home.canVibrate = canPhoneVibrate;
           _isLoggedIn = user == null ? false : true;
           homeWidget = _isLoggedIn
               ? Bulletin(notificationController: _notificationController)

@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/no_data_widget.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/control/livescore_control_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_data.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/main/helpers/livescore_match_row.dart';
 
 class LivescoreOverviewResults extends StatelessWidget {
   @override
@@ -20,7 +22,21 @@ class LivescoreOverviewResults extends StatelessWidget {
             DocumentSnapshot doc = snapshot.data.documents[position];
             LivescoreData match = LivescoreData.fromMap(doc.data);
 
-            return Text(match.title);
+            return LivescoreMatchRow(
+              match: match,
+              isFinished: true,
+              onLongPressRow: (LivescoreData selectedMatch) {
+                Navigator.of(context).push(MaterialPageRoute(
+                    fullscreenDialog: true,
+                    builder: (BuildContext context) => LivescoreControl(
+                          match: selectedMatch,
+                        )));
+              },
+              onTapRow: (LivescoreData selectedMatch) {
+                ///CHRISTIAN: Vis modal dialog med info
+                ///Nej vi skal ikke vi skal bruge board
+              },
+            );
           },
         );
       },

@@ -12,27 +12,24 @@ class LivescoreControls extends StatelessWidget {
   const LivescoreControls({Key key, this.onTapAddPoints, this.onTapRemovePoints, this.onTapAddTimeouts, this.onTapRemoveTimeouts}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 20.0),
-      child: Column(
-        children: <Widget>[
-          LivescoreControlsRow(
+    return Column(
+      children: <Widget>[
+        LivescoreControlsRow(
+          color: Colors.blue[700],
+          text: "points",
+          onTapAdd: onTapAddPoints,
+          onTapRemove: onTapRemovePoints,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: LivescoreControlsRow(
             color: Colors.blue[700],
-            text: "points",
-            onTapAdd: onTapAddPoints,
-            onTapRemove: onTapRemovePoints,
+            text: "timeouts",
+            onTapAdd: onTapAddTimeouts,
+            onTapRemove: onTapRemoveTimeouts,
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: LivescoreControlsRow(
-              color: Colors.blue[700],
-              text: "timeouts",
-              onTapAdd: onTapAddTimeouts,
-              onTapRemove: onTapRemoveTimeouts,
-            ),
-          )
-        ],
-      ),
+        )
+      ],
     );
   }
 }

@@ -128,7 +128,7 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                             return "Navnet på spiller 1 team 1 skal udfyldes";
                         },
                         decoration: InputDecoration(
-                            labelText: "Navn på spiller 1 team 1"),
+                            labelText: "Navn: spiller 1 team 1"),
                       ),
                       TextFormField(
                         initialValue: _match.namePlayer2Team1,
@@ -140,10 +140,10 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                         },
                         validator: (String value) {
                           if (value.isEmpty)
-                            return "Navnet på spiller 2 team 1 skal udfyldes";
+                            return "Navn: spiller 2 team 1 skal udfyldes";
                         },
                         decoration: InputDecoration(
-                            labelText: "Navn på spiller 2 team 1"),
+                            labelText: "Navn: spiller 2 team 1"),
                       ),
                       TextFormField(
                         initialValue: _match.namePlayer1Team2,
@@ -155,10 +155,10 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                         },
                         validator: (String value) {
                           if (value.isEmpty)
-                            return "Navnet på spiller 1 team 2 skal udfyldes";
+                            return "Navn: på spiller 1 team 2 skal udfyldes";
                         },
                         decoration: InputDecoration(
-                            labelText: "Navn på spiller 1 team 2"),
+                            labelText: "Navn: spiller 1 team 2"),
                       ),
                       TextFormField(
                         initialValue: _match.namePlayer2Team2,
@@ -170,7 +170,7 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                         },
                         validator: (String value) {
                           if (value.isEmpty)
-                            return "Navnet på spiller 2 team 2 skal udfyldes";
+                            return "Navn: spiller 2 team 2 skal udfyldes";
                         },
                         decoration: InputDecoration(
                             labelText: "Navn på spiller 2 team 2"),

@@ -22,7 +22,7 @@ dependencies:
   firebase_storage: ^1.0.4
   cached_network_image: ^0.4.2
   transparent_image: ^0.1.0
-  # rxdart: ^0.18.1
+  rxdart: ^0.19.0
   faker: ^1.0.0
   dots_indicator: ^0.0.4
   photo_view: ^0.0.8
