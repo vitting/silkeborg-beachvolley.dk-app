@@ -1,11 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
+import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_colors.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/chip_header_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
+import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/control/livescore_control_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_data.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/main/helpers/livescore_match_row.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/public_board/livescore_public_board_main.dart';
 
 class LivescoreOverviewMatches extends StatelessWidget {
   @override
@@ -42,17 +46,14 @@ class LivescoreOverviewMatches extends StatelessWidget {
                   match: match,
                   isLive: true,
                   onLongPressRow: (LivescoreData selectedMatch) {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        fullscreenDialog: true,
-                        builder: (BuildContext context) => LivescoreControl(
-                              match: selectedMatch,
-                            )));
+                    _onLongPressRow(context, selectedMatch);
                   },
                   onTapRow: (LivescoreData selectedMatch) {
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //   fullscreenDialog: true,
-                    //   builder: (BuildContext context) => LivescoreControl()
-                    // ));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        fullscreenDialog: true,
+                        builder: (BuildContext context) => LivescorePublicBoard(
+                              livescoreId: selectedMatch.id,
+                            )));
                   },
                 );
               },
@@ -92,17 +93,14 @@ class LivescoreOverviewMatches extends StatelessWidget {
                   match: match,
                   isLive: false,
                   onLongPressRow: (LivescoreData selectedMatch) {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        fullscreenDialog: true,
-                        builder: (BuildContext context) => LivescoreControl(
-                              match: selectedMatch,
-                            )));
+                    _onLongPressRow(context, selectedMatch);
                   },
                   onTapRow: (LivescoreData selectedMatch) {
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //   fullscreenDialog: true,
-                    //   builder: (BuildContext context) => LivescoreControl()
-                    // ));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        fullscreenDialog: true,
+                        builder: (BuildContext context) => LivescorePublicBoard(
+                              livescoreId: selectedMatch.id,
+                            )));
                   },
                 );
               },
@@ -111,5 +109,18 @@ class LivescoreOverviewMatches extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _onLongPressRow(BuildContext context, LivescoreData match) async {
+    if (Home.loggedInUser != null) {
+      ConfirmDialogAction action  = await Dialogs.confirmYesNo(context, "Vil du kontrollere kampen?");
+      if (action != null && action == ConfirmDialogAction.yes) {
+        Navigator.of(context).push(MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (BuildContext context) => LivescoreControl(
+              match: match,
+            )));
+      }
+    }
   }
 }

@@ -18,4 +18,15 @@ class SilkeborgBeachvolleyColors {
           Colors.blue[900],
         ],
       ));
+  static BoxDecoration gradientColorBoxDecorationDarkBlue2Step = BoxDecoration(
+          gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        stops: [0.1, 0.9],
+        colors: [
+          // Colors.blue[800],
+          Colors.blue[900],
+          Colors.black
+        ],
+      ));
 }

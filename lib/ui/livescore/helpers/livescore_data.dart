@@ -75,6 +75,9 @@ class LivescoreData implements BaseData {
   /// Message to show on scoreboard. 0 = no message.
   int matchMessage;
 
+  ///Team message is selected from
+  int matchMessageTeam;
+
   /// Snapshot of ended sets
   List<LivescoreSetsPlayedData> setsPlayed;
 
@@ -98,6 +101,7 @@ class LivescoreData implements BaseData {
       this.timeoutsTeam1 = 0,
       this.timeoutsTeam2 = 0,
       this.matchMessage = 0,
+      this.matchMessageTeam = 0,
       this.startTeam = 0,
       this.activeTeam = 0,
       this.active,
@@ -128,6 +132,7 @@ class LivescoreData implements BaseData {
       timeoutsTeam1: item["timeoutsTeam1"],
       timeoutsTeam2: item["timeoutsTeam2"],
       matchMessage: item["matchMessage"],
+      matchMessageTeam: item["matchMessageTeam"],
       startTeam: item["startTeam"],
       activeTeam: item["activeTeam"],
       active: item["active"],
@@ -164,6 +169,7 @@ class LivescoreData implements BaseData {
       "timeoutsTeam1": timeoutsTeam1,
       "timeoutsTeam2": timeoutsTeam2,
       "matchMessage": matchMessage,
+      "matchMessageTeam": matchMessageTeam,
       "startTeam": startTeam,
       "activeTeam": activeTeam,
       "active": active,
@@ -239,9 +245,6 @@ class LivescoreData implements BaseData {
 
     setsPlayed.add(setData);
 
-    /// CHRISTIAN: Vi skal lave det sådan at vi gemmer data
-    /// Vi skal lave det sådan at vi kan subtracte. Måske retunere den.
-    /// Kan vi satse på at List index er det samme som (setTeam1 + setTeam2) - 1
     return LivescoreFirestore.updateSet(id, setValue, team, setData);
   }
 
@@ -322,9 +325,10 @@ class LivescoreData implements BaseData {
     return LivescoreFirestore.updateMatchAsEnded(id, matchEndedAt, team);
   }
 
-  Future<void> setMatchMessage(int messageNumber) {
+  Future<void> setMatchMessage(int messageNumber, int team) {
     matchMessage = messageNumber;
-    return LivescoreFirestore.updateMatchMessage(id, matchMessage);
+    matchMessageTeam = team;
+    return LivescoreFirestore.updateMatchMessage(id, matchMessage, matchMessageTeam);
   }
 
   @override
@@ -350,5 +354,9 @@ class LivescoreData implements BaseData {
 
   static Stream<QuerySnapshot> getMatchesEnded() {
     return LivescoreFirestore.getAllEndedMatchesAsStream();
+  }
+
+  static Stream<DocumentSnapshot> getMatch(String liveScoreId) {
+    return LivescoreFirestore.getMatchAsStream(liveScoreId);
   }
 }

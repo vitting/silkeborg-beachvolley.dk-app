@@ -52,17 +52,17 @@ class LivescoreBoardPoints extends StatelessWidget {
         children: <Widget>[
           GestureDetector(
             onLongPress: () {
-              onLongPressPoints(team);
+              if (onLongPressPoints != null) onLongPressPoints(team);
             },
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 2.5),
               decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
-                  color: Colors.black,
+                  color: Colors.black26,
                   border: Border.all(
                       color: borderColor,
                       style: BorderStyle.solid,
-                      width: 2.0)),
+                      width: 1.5)),
               child: Text(points,
                   textAlign: TextAlign.center,
                   style: TextStyle(

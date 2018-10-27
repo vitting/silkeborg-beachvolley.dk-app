@@ -6,6 +6,13 @@ class LivescoreFirestore {
   static Firestore _firestore = Firestore.instance;
   static final _collectionName = "livescore_matches";
 
+  static Stream<DocumentSnapshot> getMatchAsStream(String id) {
+    return _firestore
+        .collection(_collectionName)
+        .document(id)
+        .snapshots();
+  }
+
   static Stream<QuerySnapshot> getAllUpcomingMatchesAsStream() {
     return _firestore
         .collection(_collectionName)
@@ -90,14 +97,21 @@ class LivescoreFirestore {
       "winnerTeam": team,
       "activeTeam": 0,
       "matchEndedAt": Timestamp.fromDate(matchEndedAt),
-      "active": false
+      "active": false,
+      "pointsTeam1": 0,
+      "pointsTeam2": 0,
+      "timeoutsTeam1": 0,
+      "timeoutsTeam2": 0
     });
   }
 
-  static Future<void> updateMatchMessage(String matchId, int message) {
+  static Future<void> updateMatchMessage(String matchId, int message, int matchMessageTeam) {
     return _firestore
         .collection(_collectionName)
         .document(matchId)
-        .updateData({"matchMessage": message});
+        .updateData({
+          "matchMessage": message,
+          "matchMessageTeam": matchMessageTeam
+          });
   }
 }

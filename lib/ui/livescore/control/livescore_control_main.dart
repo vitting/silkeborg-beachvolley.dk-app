@@ -36,7 +36,19 @@ class _LivescoreControlState extends State<LivescoreControl> {
   @override
   void initState() {
     super.initState();
-    _init();
+    
+  }
+
+  @override
+    void didChangeDependencies() {
+      super.didChangeDependencies();
+      _init();
+    }  
+
+  @override
+  void dispose() {
+    _messageStreamController.close();
+    super.dispose();
   }
 
   void _init() {
@@ -47,14 +59,9 @@ class _LivescoreControlState extends State<LivescoreControl> {
     if (widget.match.active != null && widget.match.active == true) {
       _opacity = 1.0;
       _setSelectedTeam(widget.match.activeTeam);
+      _setBoardMessage(widget.match.matchMessage, widget.match.matchMessageTeam, true);
       _showIsLiveIndicator = true;
     }
-  }
-
-  @override
-  void dispose() {
-    _messageStreamController.close();
-    super.dispose();
   }
 
   @override
@@ -96,7 +103,7 @@ class _LivescoreControlState extends State<LivescoreControl> {
                 },
                 onDoubleTapMessage: (bool value) {
                   if (Home.canVibrate) Vibrate.feedback(FeedbackType.success);
-                  _setBoardMessage(0, 0);
+                  _setBoardMessage(0, 0, false);
                 },
               ),
               AnimatedCrossFade(
@@ -169,7 +176,7 @@ class _LivescoreControlState extends State<LivescoreControl> {
 
     if (result != null && result == 0) {
       ConfirmDialogAction action = await Dialogs.confirmMatchStart(context,
-          "Vil du starte kampen?\nDet er Team $team som starter med serven.");
+          "Vil du starte kampen?\n\nDet er Team $team som starter med serven.");
       if (action != null && action == ConfirmDialogAction.start) {
         setState(() {
           _opacity = 1.0;
@@ -200,8 +207,8 @@ class _LivescoreControlState extends State<LivescoreControl> {
   }
 
   void _setWinner(BuildContext context, int team) async {
-    ConfirmDialogAction action = await Dialogs.confirmSetWinner(
-        context, "Vil du markere Team $team som Set vindere?");
+    ConfirmDialogAction action = await Dialogs.confirmSetWinner(context,
+        "Vil du markere Team $team som Set vindere?\n\nHvis kampen er færdig skal du ikke markere Teamet som set vindere, men i stedet markere dem som kamp vindere.");
     if (action != null && action == ConfirmDialogAction.ok) {
       int pointsTeam1 = widget.match.pointsTeam1;
       int pointsTeam2 = widget.match.pointsTeam2;
@@ -278,20 +285,20 @@ class _LivescoreControlState extends State<LivescoreControl> {
       case 0:
         _fontWeightTeam1 = FontWeight.normal;
         _fontWeightTeam2 = FontWeight.normal;
-        _pointsBorderColorTeam1 = Colors.white;
-        _pointsBorderColorTeam2 = Colors.white;
+        _pointsBorderColorTeam1 = Colors.white54;
+        _pointsBorderColorTeam2 = Colors.white54;
         break;
       case 1:
         _fontWeightTeam1 = FontWeight.bold;
         _fontWeightTeam2 = FontWeight.normal;
-        _pointsBorderColorTeam1 = Colors.blue;
-        _pointsBorderColorTeam2 = Colors.white;
+        _pointsBorderColorTeam1 = Colors.white;
+        _pointsBorderColorTeam2 = Colors.white54;
         break;
       case 2:
         _fontWeightTeam1 = FontWeight.normal;
         _fontWeightTeam2 = FontWeight.bold;
-        _pointsBorderColorTeam1 = Colors.white;
-        _pointsBorderColorTeam2 = Colors.blue;
+        _pointsBorderColorTeam1 = Colors.white54;
+        _pointsBorderColorTeam2 = Colors.white;
         break;
     }
   }
@@ -358,18 +365,21 @@ class _LivescoreControlState extends State<LivescoreControl> {
     ]);
 
     if (result != null) {
-      _setBoardMessage(result, team);
+      _setBoardMessage(result, team, false);
     }
   }
 
-  void _setBoardMessage(int messageNumber, int team) {
+  void _setBoardMessage(int messageNumber, int team, bool readOnly) {
     String message = "";
     if (messageNumber != 0) {
       message = FlutterI18n.translate(context, "boardMessages.$messageNumber");
       message = message.replaceAll("[TEAM]", team.toString());
     }
 
-    widget.match.setMatchMessage(messageNumber);
+    if (readOnly == false) {
+      widget.match.setMatchMessage(messageNumber, team);
+    }
+    
     _messageStreamController.add(message);
   }
 }

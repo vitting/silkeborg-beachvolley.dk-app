@@ -86,6 +86,16 @@ class Dialogs {
         barrierDismissible: false);
   }
 
+  static Future<ConfirmDialogAction> confirmYesNo(
+      BuildContext context, String body) async {
+    return confirmFunctions.confirmDialog(context,
+        body: [Text(body)],
+        title: Text(FlutterI18n.translate(context, "areYouSure")),
+        actionLeft: ConfirmDialogAction.no,
+        actionRight: ConfirmDialogAction.yes,
+        barrierDismissible: false);
+  }
+
   static Future<int> modalBottomSheet(
       BuildContext context, List<DialogsModalBottomSheetItem> items) async {
     return showModalBottomSheet(

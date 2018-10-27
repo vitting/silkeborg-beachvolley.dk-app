@@ -58,7 +58,7 @@ class DateTimeHelpers {
   }
 
   static Duration totalTime(DateTime date1, DateTime date2) {
-    return date1.difference(date2);
+    return date2.difference(date1);
   }
 
   static bool dateCompare(DateTime date1, DateTime date2) {

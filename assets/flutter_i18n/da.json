@@ -10,6 +10,8 @@
     "show": "Vis",
     "reset": "Nulstil",
     "error": "Fejl",
+    "start": "Start",
+    "areYouSure": "Er du sikker på",
     "matchWinner": "Kamp vinder",
     "setWinner": "Set vinder",
     "startMatch": "Start",

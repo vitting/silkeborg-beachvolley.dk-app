@@ -10,6 +10,8 @@
     "show": "Show",
     "reset": "Reset",
     "error": "Error",
+    "start": "Start",
+    "areYouSure": "Are you sure",
     "matchWinner": "Match winner",
     "setWinner": "Set winner",
     "startMatch": "Start",
