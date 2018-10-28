@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_board_widget.dart';
@@ -34,6 +35,7 @@ class LivescorePublicBoardState extends State<LivescorePublicBoard> {
                   AsyncSnapshot<DocumentSnapshot> snapshot) {
                 if (!snapshot.hasData) return LoaderSpinner();
 
+                SystemSound.play(SystemSoundType.click);
                 LivescoreData match = LivescoreData.fromMap(snapshot.data.data);
                 _setSelectedTeam(match.activeTeam);
 
