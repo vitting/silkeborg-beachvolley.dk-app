@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SilkeborgBeachvolleyColors {
+class SilkeborgBeachvolleyTheme {
   static Color headerBackground = Color(0xffaaacb5);
   static Color blueBlack = Color.fromARGB(255, 7, 15, 21);
   static Color gold = Color.fromRGBO(212, 175, 5, 1.0);
@@ -29,4 +29,5 @@ class SilkeborgBeachvolleyColors {
           Colors.black
         ],
       ));
+  static String scoreboardFont = "Scoreboard";
 }
