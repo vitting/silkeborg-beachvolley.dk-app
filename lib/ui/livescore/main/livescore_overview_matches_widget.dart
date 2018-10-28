@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
-import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_colors.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/chip_header_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
@@ -34,7 +34,7 @@ class LivescoreOverviewMatches extends StatelessWidget {
                 expanded: true,
                 roundedCorners: false,
                 textAlign: TextAlign.center,
-                backgroundColor: SilkeborgBeachvolleyColors.headerBackground,
+                backgroundColor: SilkeborgBeachvolleyTheme.headerBackground,
                 fontSize: 16.0),
             ListView.builder(
               shrinkWrap: true,
@@ -80,7 +80,7 @@ class LivescoreOverviewMatches extends StatelessWidget {
                 expanded: true,
                 roundedCorners: false,
                 textAlign: TextAlign.center,
-                backgroundColor: SilkeborgBeachvolleyColors.headerBackground,
+                backgroundColor: SilkeborgBeachvolleyTheme.headerBackground,
                 fontSize: 16.0),
             ListView.builder(
               primary: false,

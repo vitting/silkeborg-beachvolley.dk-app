@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_colors.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 
 class ListItemCard extends StatelessWidget {
   final Widget child;
@@ -13,7 +13,7 @@ class ListItemCard extends StatelessWidget {
 
     if (title != null) {
       widgets.add(Container(
-          color: SilkeborgBeachvolleyColors.headerBackground,
+          color: SilkeborgBeachvolleyTheme.headerBackground,
           padding: EdgeInsets.all(10.0),
           child: title));
     }

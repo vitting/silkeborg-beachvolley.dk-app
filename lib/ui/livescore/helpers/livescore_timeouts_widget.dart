@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 
 class LivescoreBoardTimeouts extends StatelessWidget {
   final int timeoutTeam1;
@@ -27,7 +28,7 @@ class LivescoreBoardTimeouts extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 16.0,
                     color: colorTeam1,
-                    fontFamily: "Scoreboard",
+                    fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont,
                     fontWeight: fontWeightTeam1))),
         Expanded(
             child: Text(FlutterI18n.translate(context, "livescore.livescoreTimeoutsWidget.string1"),
@@ -39,7 +40,7 @@ class LivescoreBoardTimeouts extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 16.0,
                     color: colorTeam2,
-                    fontFamily: "Scoreboard",
+                    fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont,
                     fontWeight: fontWeightTeam2))),
       ],
     );

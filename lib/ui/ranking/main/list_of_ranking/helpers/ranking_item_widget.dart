@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
-import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_colors.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 
 class RankingItem extends StatefulWidget {
@@ -117,9 +117,9 @@ class RankingItemState extends State<RankingItem>
 
   Color _getColorForPoints() {
     Color color = Colors.blueAccent;
-    if (widget.position == 0) color = SilkeborgBeachvolleyColors.gold;
-    if (widget.position == 1) color = SilkeborgBeachvolleyColors.silver;
-    if (widget.position == 2) color = SilkeborgBeachvolleyColors.bronze;
+    if (widget.position == 0) color = SilkeborgBeachvolleyTheme.gold;
+    if (widget.position == 1) color = SilkeborgBeachvolleyTheme.silver;
+    if (widget.position == 2) color = SilkeborgBeachvolleyTheme.bronze;
 
     return color;
   }

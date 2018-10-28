@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_colors.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/chip_header_widget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_data.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_live_dot_widget.dart';
@@ -86,7 +86,7 @@ class LivescoreMatchRow extends StatelessWidget {
                         ? Padding(
                             padding: const EdgeInsets.only(top: 3.0),
                             child: Icon(FontAwesomeIcons.trophy,
-                                color: SilkeborgBeachvolleyColors.gold,
+                                color: SilkeborgBeachvolleyTheme.gold,
                                 size: 16.0),
                           )
                         : Container()
@@ -115,7 +115,7 @@ class LivescoreMatchRow extends StatelessWidget {
                         ? Padding(
                             padding: const EdgeInsets.only(top: 3.0),
                             child: Icon(FontAwesomeIcons.trophy,
-                                color: SilkeborgBeachvolleyColors.gold,
+                                color: SilkeborgBeachvolleyTheme.gold,
                                 size: 16.0),
                           )
                         : Container()

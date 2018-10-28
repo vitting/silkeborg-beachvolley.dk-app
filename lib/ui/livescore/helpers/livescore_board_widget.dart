@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
-import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_colors.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_data.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_message_widget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_names_widget.dart';
@@ -52,7 +52,7 @@ class LivescoreBoard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.fromLTRB(10.0, paddingTop, 10.0, 10.0),
       decoration:
-          SilkeborgBeachvolleyColors.gradientColorBoxDecorationDarkBlue2Step,
+          SilkeborgBeachvolleyTheme.gradientColorBoxDecorationDarkBlue2Step,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[

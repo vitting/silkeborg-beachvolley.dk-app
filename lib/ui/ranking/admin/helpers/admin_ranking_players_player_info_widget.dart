@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
-import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_colors.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/chip_header_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 
@@ -59,7 +59,7 @@ class AdminRankingPlayersPlayerInfo extends StatelessWidget {
                 roundedCorners: false,
                 expanded: true,
                 textAlign: TextAlign.center,
-                backgroundColor: SilkeborgBeachvolleyColors.headerBackground,
+                backgroundColor: SilkeborgBeachvolleyTheme.headerBackground,
               ),
             ),
             Padding(
@@ -93,7 +93,7 @@ class AdminRankingPlayersPlayerInfo extends StatelessWidget {
                 roundedCorners: false,
                 expanded: true,
                 textAlign: TextAlign.center,
-                backgroundColor: SilkeborgBeachvolleyColors.headerBackground,
+                backgroundColor: SilkeborgBeachvolleyTheme.headerBackground,
               ),
             ),
             Padding(

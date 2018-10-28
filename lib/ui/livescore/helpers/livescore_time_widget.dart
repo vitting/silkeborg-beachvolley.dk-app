@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_live_dot_widget.dart';
 
 class LivescoreBoardTime extends StatelessWidget {
@@ -33,7 +34,7 @@ class LivescoreBoardTime extends StatelessWidget {
               child: Text("$matchtime",
                   style: TextStyle(
                       color: Colors.white,
-                      fontFamily: "Scoreboard",
+                      fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont,
                       fontSize: 12.0)),
             ),
           ],
@@ -53,7 +54,7 @@ class LivescoreBoardTime extends StatelessWidget {
                         Text("$matchStartedAt",
                             style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: "Scoreboard",
+                                fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont,
                                 fontSize: 12.0))
                       ],
                     ),
@@ -69,7 +70,7 @@ class LivescoreBoardTime extends StatelessWidget {
                             Text("$matchEndedAt",
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontFamily: "Scoreboard",
+                                    fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont,
                                     fontSize: 12.0))
                           ],
                         )
@@ -87,7 +88,7 @@ class LivescoreBoardTime extends StatelessWidget {
                             Text("$matchTotal",
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontFamily: "Scoreboard",
+                                    fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont,
                                     fontSize: 12.0))
                           ],
                         )

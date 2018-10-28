@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 
 class LivescoreMatchMessage extends StatefulWidget {
   final Stream<String> messageStream;
@@ -78,7 +79,7 @@ class _LivescoreMatchMessageState extends State<LivescoreMatchMessage> {
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 14.0,
-                          fontFamily: "Scoreboard")),
+                          fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont)),
                 ),
               )
             ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 
 class LivescoreBoardNames extends StatelessWidget {
   final String namePlayer1Team1;
@@ -48,14 +49,14 @@ class LivescoreBoardNames extends StatelessWidget {
               style: TextStyle(
                   fontSize: 15.0,
                   color: colorTeam,
-                  fontFamily: "Scoreboard",
+                  fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont,
                   fontWeight: fontWeightTeam)),
           Text(namePlayer2,
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 15.0,
                   color: colorTeam,
-                  fontFamily: "Scoreboard",
+                  fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont,
                   fontWeight: fontWeightTeam))
         ],
       ),

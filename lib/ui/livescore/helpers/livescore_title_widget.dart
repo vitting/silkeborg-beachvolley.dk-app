@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 
 class LivescoreBoardTitle extends StatelessWidget {
   final String title;
@@ -15,7 +16,7 @@ class LivescoreBoardTitle extends StatelessWidget {
           child: Text(title,
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontSize: 12.0, color: color, fontFamily: "Scoreboard")),
+                  fontSize: 12.0, color: color, fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont)),
         ),
       ],
     );

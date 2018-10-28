@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_action_enum.dart';
-import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_colors.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/main/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
@@ -49,7 +49,7 @@ class SilkeborgBeacvolleyScaffoldDrawerState
     List<Widget> widgets;
     widgets = [
       UserAccountsDrawerHeader(
-          decoration: SilkeborgBeachvolleyColors.gradientColorBoxDecoration,
+          decoration: SilkeborgBeachvolleyTheme.gradientColorBoxDecoration,
           accountEmail: Text(_email),
           accountName: Text(_name),
           currentAccountPicture: CircleProfileImage(

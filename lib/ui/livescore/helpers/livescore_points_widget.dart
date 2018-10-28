@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_colors.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 
 class LivescoreBoardPoints extends StatelessWidget {
   final int pointsTeam1;
@@ -71,7 +71,7 @@ class LivescoreBoardPoints extends StatelessWidget {
                       fontWeight: fontWeight,
                       fontSize: 25.0,
                       color: pointTextColor,
-                      fontFamily: "Scoreboard")),
+                      fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont)),
             ),
           ),
           teamWinner
@@ -79,7 +79,7 @@ class LivescoreBoardPoints extends StatelessWidget {
                   top: 50.0,
                   left: 42.0,
                   child: Icon(FontAwesomeIcons.trophy,
-                      color: SilkeborgBeachvolleyColors.gold),
+                      color: SilkeborgBeachvolleyTheme.gold),
                 )
               : Container()
         ],
