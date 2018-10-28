@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_set_score_row_widget.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/board/livescore_set_score_row_widget.dart';
 
 class LivescoreSetScore extends StatelessWidget {
   final List<LivescoreSetScoreRow> setRows;

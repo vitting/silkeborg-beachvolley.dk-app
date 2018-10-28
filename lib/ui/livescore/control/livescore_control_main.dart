@@ -9,7 +9,7 @@ import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/control/helpers/livescore_controls_widget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_data.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
-import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_board_widget.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/board/livescore_board_widget.dart';
 import 'package:vibrate/vibrate.dart';
 
 class LivescoreControl extends StatefulWidget {

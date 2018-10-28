@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_data.dart';
-import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_message_widget.dart';
-import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_names_widget.dart';
-import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_points_widget.dart';
-import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_set_score_row_widget.dart';
-import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_set_score_widget.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/board/livescore_message_widget.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/board/livescore_names_widget.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/board/livescore_points_widget.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/board/livescore_set_score_row_widget.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/board/livescore_set_score_widget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_sets_played_data.dart';
-import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_sets_widget.dart';
-import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_time_widget.dart';
-import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_timeouts_widget.dart';
-import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_title_widget.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/board/livescore_sets_widget.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/board/livescore_time_widget.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/board/livescore_timeouts_widget.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/board/livescore_title_widget.dart';
 
 class LivescoreBoard extends StatelessWidget {
   final LivescoreData match;
