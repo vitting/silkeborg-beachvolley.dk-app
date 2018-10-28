@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_categories_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
-import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
 import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
@@ -15,10 +14,6 @@ Future<SettingsData> initSettings(String userId, String displayName) async {
   }
 
   return settings;
-}
-
-Future<UserInfoData> loadUserInfo(String userId) {
-  return UserInfoData.get(userId);
 }
 
 Future<void> initMessaging(

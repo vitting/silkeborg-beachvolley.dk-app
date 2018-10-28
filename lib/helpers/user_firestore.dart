@@ -10,6 +10,20 @@ class UserFirestore {
   static String _collectionNameUsers = "users";
   static String _collectionNameUsersMessaging = "users_messaging";
 
+  static Future<QuerySnapshot> getAllUsers() {
+    return _firestore.collection(_collectionNameUsers).orderBy("name").getDocuments();
+  }
+
+  static Future<void> deleteUser(String userId) {
+    return _firestore.collection(_collectionNameUsers).document(userId).delete();
+  }
+
+  static Future<void> setAdminState(String userId, String adminType, bool isAdmin) {
+    return _firestore.collection(_collectionNameUsers).document(userId).updateData({
+      "$adminType": isAdmin
+    });
+  }
+
   static Future<DocumentSnapshot> getUserMessaging(String id) {
     return _firestore
         .collection(_collectionNameUsersMessaging)
@@ -57,7 +71,7 @@ class UserFirestore {
 
   static Future<void> setUserInfo(FirebaseUser user) async {
     UserInfoData userInfo;
-    UserInfoData storedUserInfo = await UserInfoData.get(user.uid);
+    UserInfoData storedUserInfo = await UserInfoData.getUserInfo(user.uid);
     if (storedUserInfo != null) {
       userInfo = storedUserInfo..updateUserInfoFromFirebaseUser(user);
     } else {

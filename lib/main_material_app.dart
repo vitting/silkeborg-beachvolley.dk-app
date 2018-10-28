@@ -11,6 +11,7 @@ import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/main/livescore_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/settings_main.dart';
 import 'package:silkeborgbeachvolley/ui/tournament_calendar/main/tournament_calendar_main.dart';
+import 'package:silkeborgbeachvolley/ui/users/admin/admin_users_main.dart';
 
 class MainMaterialApp extends StatefulWidget {
   @override
@@ -42,15 +43,10 @@ class _MainMaterialAppState extends State<MainMaterialApp> {
         Settings.routeName: (BuildContext context) => Settings(),
         Ranking.routeName: (BuildContext context) => Ranking(),
         AdminRanking.routeName: (BuildContext context) => AdminRanking(),
+        AdminUsers.routeName: (BuildContext context) => AdminUsers(),
         TournamentCalendar.routeName: (BuildContext context) =>
             TournamentCalendar()
       },
     );
   }
-
-//   test() async {
-//     var connectivityResult = await (new Connectivity().checkConnectivity());
-//     print(connectivityResult == ConnectivityResult.mobile);
-//     print(connectivityResult == ConnectivityResult.wifi);
-//   }
 }

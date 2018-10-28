@@ -2,28 +2,10 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-import "package:shared_preferences/shared_preferences.dart";
 
 class UserAuth {
-  static FirebaseAuth _firebaseAuth;
+  static FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   static FacebookLogin _facebookSignIn;
-  static Future<SharedPreferences> _sharedPrefs;
-
-  static Future<SharedPreferences> get sharedPrefs {
-    if (_sharedPrefs == null) {
-      _sharedPrefs = SharedPreferences.getInstance();
-    }
-
-    return _sharedPrefs;
-  }
-
-  static FirebaseAuth get firebaseAuth {
-    if (_firebaseAuth == null) {
-      _firebaseAuth = FirebaseAuth.instance;
-    }
-
-    return _firebaseAuth;
-  }
 
   static FacebookLogin get facebookSignIn {
     if (_facebookSignIn == null) {

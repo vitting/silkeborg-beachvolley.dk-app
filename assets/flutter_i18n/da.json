@@ -360,8 +360,9 @@
             "string4": "Stævnekalender",
             "string5": "Log af",
             "string6": "Indstillinger",
-            "string7": "Administrere medlemmer",
-            "string8": "Administrere Ranglisten"
+            "string7": "Administrere Medlemmer",
+            "string8": "Administrere Ranglisten",
+            "string9": "Administrere Brugere"
         }
     },
     "settings": {
@@ -482,6 +483,17 @@
         },
         "livescoreOverviewResultsWidget": {
             "string1": "Der blev ikke fundet nogen afsluttede kampe"
+        }
+    },
+    "users": {
+        "adminUsersMain": {
+            "title": "Administrere brugere",
+            "string1": "Kan administrere alt",
+            "string2": "Administrator 1",
+            "string3": "Kan administrere udvalgte funktioner",
+            "string4": "Administrator 2",
+            "string5": "Bruger id",
+            "string6": "Luk"
         }
     }
 }

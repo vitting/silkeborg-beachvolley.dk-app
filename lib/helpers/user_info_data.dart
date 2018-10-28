@@ -11,6 +11,8 @@ class UserInfoData implements BaseData {
   String name;
   String email;
   String photoUrl;
+
+  ///Admin1
   bool admin1;
   bool admin2;
   UserInfoData(
@@ -38,12 +40,33 @@ class UserInfoData implements BaseData {
     photoUrl = user.photoUrl;
   }
 
-  static Future<UserInfoData> get(String id) async {
+  Future<void> setAdmin1State(bool isAdmin) {
+    admin1 = isAdmin;
+    return UserFirestore.setAdminState(id, "admin1", isAdmin);
+  }
+
+  Future<void> setAdmin2State(bool isAdmin) {
+    admin2 = isAdmin;
+    return UserFirestore.setAdminState(id, "admin2", isAdmin);
+  }
+
+  static Future<UserInfoData> getUserInfo(String id) async {
     DocumentSnapshot snapshot = await UserFirestore.getUserInfo(id);
     UserInfoData userInfoData;
     if (snapshot.exists) userInfoData = UserInfoData.fromMap(snapshot.data);
 
     return userInfoData;
+  }
+
+  static Future<List<UserInfoData>> getAllUsers() async {
+    List<UserInfoData> list = [];
+    QuerySnapshot snapshot = await UserFirestore.getAllUsers();
+    if (snapshot.documents.length != null) {
+      list = snapshot.documents.map<UserInfoData>((DocumentSnapshot doc) {
+        return UserInfoData.fromMap(doc.data);
+      }).toList();
+    }
+    return list;
   }
 
   static UserInfoData fromFireBaseUser(FirebaseUser user) {
@@ -66,8 +89,8 @@ class UserInfoData implements BaseData {
   }
 
   @override
-  Future<void> delete() async {
-    // TODO: implement delete
+  Future<void> delete() {
+    return UserFirestore.deleteUser(id);
   }
 
   @override

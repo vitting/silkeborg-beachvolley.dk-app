@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
       bool canPhoneVibrate = await Vibrate.canVibrate;
 
       if (user != null) {
-        userInfoData = await homeFunctions.loadUserInfo(user.uid);
+        userInfoData = await UserInfoData.getUserInfo(user.uid);
         settings = await homeFunctions.initSettings(user.uid, user.displayName);
         await homeFunctions.initMessaging(
             user.uid, _firebaseMessaging, settings, _notificationController);

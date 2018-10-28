@@ -361,7 +361,8 @@
             "string5": "Logout",
             "string6": "Settings",
             "string7": "Manage members",
-            "string8": "Manage ranking"
+            "string8": "Manage ranking",
+            "string9": "Manage users"
         }
     },
     "settings": {
@@ -482,6 +483,17 @@
         },
         "livescoreOverviewResultsWidget": {
             "string1": "No ended matches where found"
+        }
+    },
+    "users": {
+        "adminUsersMain": {
+            "title": "Administrate users",
+            "string1": "Can manage everything",
+            "string2": "Administrator 1",
+            "string3": "Can manage selected functions",
+            "string4": "Administrator 2",
+            "string5": "User id",
+            "string6": "Close"
         }
     }
 }
