@@ -432,7 +432,7 @@
             "string11": "Team 2"
         },
         "livescoreCreateMain": {
-            "title": "Live score create match",
+            "title": "Live score match",
             "string1": "Saving the match",
             "string2": "Fill out title",
             "string3": "Title",
@@ -448,7 +448,7 @@
             "string13": "Name: player 1 team 2",
             "string14": "Fill out name Player 2 Team 2",
             "string15": "Name: player 2 team 2",
-            "string16": "Create the match"
+            "string16": "Save match"
         },
         "livescorePointsWidget": {
             "string1": "points"
@@ -475,7 +475,10 @@
         "livescoreOverviewMatchesWidget": {
             "string1": "Active matches",
             "string2": "Upcoming matches",
-            "string3": "Will you control the match?"
+            "string3": "Will you control the match?",
+            "string4": "Redigere",
+            "string5": "Slet",
+            "string6": "Do you want to delete the match?"
         },
         "livescoreOverviewResultsWidget": {
             "string1": "No ended matches where found"

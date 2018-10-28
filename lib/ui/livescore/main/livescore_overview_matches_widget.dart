@@ -8,6 +8,7 @@ import 'package:silkeborgbeachvolley/ui/helpers/chip_header_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/control/livescore_control_main.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/create/livescore_create_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_data.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/main/helpers/livescore_match_row.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/public_board/livescore_public_board_main.dart';
@@ -92,6 +93,7 @@ class LivescoreOverviewMatches extends StatelessWidget {
                 LivescoreData match = LivescoreData.fromMap(doc.data);
                 return LivescoreMatchRow(
                   match: match,
+                  isMatchAdmin: match.userId == Home.loggedInUser.uid,
                   isLive: false,
                   onLongPressRow: (LivescoreData selectedMatch) {
                     _onLongPressRow(context, selectedMatch);
@@ -103,6 +105,9 @@ class LivescoreOverviewMatches extends StatelessWidget {
                               livescoreId: selectedMatch.id,
                             )));
                   },
+                  onTapRowSettings: (LivescoreData selectedMatch) {
+                    _onTapRowSetting(context, selectedMatch);
+                  },
                 );
               },
             ),
@@ -110,6 +115,31 @@ class LivescoreOverviewMatches extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _onTapRowSetting(BuildContext context, LivescoreData match) async {
+    int result = await Dialogs.modalBottomSheet(context, [
+      DialogsModalBottomSheetItem(FlutterI18n.translate(context, "livescore.livescoreOverviewMatchesWidget.string4"), Icons.edit, 0),
+      DialogsModalBottomSheetItem(FlutterI18n.translate(context, "livescore.livescoreOverviewMatchesWidget.string5"), Icons.delete, 1)
+    ]);
+
+    ///Edit match
+    if (result != null && result == 0) {
+      Navigator.of(context).push(MaterialPageRoute(
+              fullscreenDialog: true,
+              builder: (BuildContext context) => LivescoreCreateEdit(
+                match: match,
+              )));
+    }
+
+    ///Delete match
+    if (result != null && result == 1) {
+      ConfirmDialogAction action = await Dialogs.confirmDelete(context, FlutterI18n.translate(context, "livescore.livescoreOverviewMatchesWidget.string6")); 
+
+      if (action != null && action == ConfirmDialogAction.delete) {
+        await match.delete();
+      }
+    }
   }
 
   void _onLongPressRow(BuildContext context, LivescoreData match) async {

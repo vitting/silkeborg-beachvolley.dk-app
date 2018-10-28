@@ -432,8 +432,8 @@
             "string11": "Team 2"
         },
         "livescoreCreateMain": {
-            "title": "Live score opret kamp",
-            "string1": "Opretter kampen",
+            "title": "Live score kamp",
+            "string1": "Gemmer kampen",
             "string2": "Titel skal udfyldes",
             "string3": "Titel",
             "string4": "Kamp dato",
@@ -448,7 +448,7 @@
             "string13": "Navn: spiller 1 team 2",
             "string14": "Navn: spiller 2 team 2 skal udfyldes",
             "string15": "Navn på spiller 2 team 2",
-            "string16": "Opret kampen"
+            "string16": "Gem kampen"
         },
         "livescorePointsWidget": {
             "string1": "points"
@@ -475,7 +475,10 @@
         "livescoreOverviewMatchesWidget": {
             "string1": "Aktive kampe",
             "string2": "Kommende kampe",
-            "string3": "Vil du kontrollere kampen?"
+            "string3": "Vil du kontrollere kampen?",
+            "string4": "Redigere",
+            "string5": "Slet",
+            "string6": "Vil du slette kampen?"
         },
         "livescoreOverviewResultsWidget": {
             "string1": "Der blev ikke fundet nogen afsluttede kampe"

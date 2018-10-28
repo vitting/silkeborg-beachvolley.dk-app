@@ -8,14 +8,18 @@ import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_live_dot_wid
 class LivescoreMatchRow extends StatelessWidget {
   final LivescoreData match;
   final ValueChanged<LivescoreData> onTapRow;
+  final ValueChanged<LivescoreData> onTapRowSettings;
   final ValueChanged<LivescoreData> onLongPressRow;
   final bool isLive;
   final bool isFinished;
+  final bool isMatchAdmin;
   const LivescoreMatchRow(
       {Key key,
       this.match,
       this.onTapRow,
       this.onLongPressRow,
+      this.onTapRowSettings,
+      this.isMatchAdmin = false,
       this.isLive = false,
       this.isFinished = false})
       : super(key: key);
@@ -68,6 +72,12 @@ class LivescoreMatchRow extends StatelessWidget {
             )
           ],
         ),
+        trailing: isMatchAdmin ? IconButton(
+          icon: Icon(Icons.more_vert),
+          onPressed: () {
+            onTapRowSettings(match);
+          },
+        ) : null,
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
           child: Row(
