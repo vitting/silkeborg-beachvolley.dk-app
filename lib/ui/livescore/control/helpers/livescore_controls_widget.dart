@@ -9,7 +9,13 @@ class LivescoreControls extends StatelessWidget {
   final ValueChanged<int> onTapAddTimeouts;
   final ValueChanged<int> onTapRemoveTimeouts;
 
-  const LivescoreControls({Key key, this.onTapAddPoints, this.onTapRemovePoints, this.onTapAddTimeouts, this.onTapRemoveTimeouts}) : super(key: key);
+  const LivescoreControls(
+      {Key key,
+      this.onTapAddPoints,
+      this.onTapRemovePoints,
+      this.onTapAddTimeouts,
+      this.onTapRemoveTimeouts})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(

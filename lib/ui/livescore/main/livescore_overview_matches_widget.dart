@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_colors.dart';
@@ -29,7 +30,7 @@ class LivescoreOverviewMatches extends StatelessWidget {
             snapshotStarted.data.documents.length == 0) return Container();
         return Column(
           children: <Widget>[
-            ChipHeader("Aktive kampe",
+            ChipHeader(FlutterI18n.translate(context, "livescore.livescoreOverviewMatchesWidget.string1"),
                 expanded: true,
                 roundedCorners: false,
                 textAlign: TextAlign.center,
@@ -75,7 +76,7 @@ class LivescoreOverviewMatches extends StatelessWidget {
 
         return Column(
           children: <Widget>[
-            ChipHeader("Kommende kampe",
+            ChipHeader(FlutterI18n.translate(context, "livescore.livescoreOverviewMatchesWidget.string2"),
                 expanded: true,
                 roundedCorners: false,
                 textAlign: TextAlign.center,
@@ -113,13 +114,14 @@ class LivescoreOverviewMatches extends StatelessWidget {
 
   void _onLongPressRow(BuildContext context, LivescoreData match) async {
     if (Home.loggedInUser != null) {
-      ConfirmDialogAction action  = await Dialogs.confirmYesNo(context, "Vil du kontrollere kampen?");
+      ConfirmDialogAction action =
+          await Dialogs.confirmYesNo(context, FlutterI18n.translate(context, "livescore.livescoreOverviewMatchesWidget.string3"));
       if (action != null && action == ConfirmDialogAction.yes) {
         Navigator.of(context).push(MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (BuildContext context) => LivescoreControl(
-              match: match,
-            )));
+            fullscreenDialog: true,
+            builder: (BuildContext context) => LivescoreControl(
+                  match: match,
+                )));
       }
     }
   }

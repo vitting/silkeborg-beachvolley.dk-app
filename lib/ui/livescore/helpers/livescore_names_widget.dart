@@ -38,26 +38,27 @@ class LivescoreBoardNames extends StatelessWidget {
     ]);
   }
 
-  Widget _name(String namePlayer1, String namePlayer2, Color colorTeam, FontWeight fontWeightTeam) {
+  Widget _name(String namePlayer1, String namePlayer2, Color colorTeam,
+      FontWeight fontWeightTeam) {
     return Expanded(
-          child: Column(
-            children: <Widget>[
-              Text(namePlayer1,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 15.0,
-                      color: colorTeam,
-                      fontFamily: "Scoreboard",
-                      fontWeight: fontWeightTeam)),
-              Text(namePlayer2,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 15.0,
-                      color: colorTeam,
-                      fontFamily: "Scoreboard",
-                      fontWeight: fontWeightTeam))
-            ],
-          ),
+      child: Column(
+        children: <Widget>[
+          Text(namePlayer1,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 15.0,
+                  color: colorTeam,
+                  fontFamily: "Scoreboard",
+                  fontWeight: fontWeightTeam)),
+          Text(namePlayer2,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 15.0,
+                  color: colorTeam,
+                  fontFamily: "Scoreboard",
+                  fontWeight: fontWeightTeam))
+        ],
+      ),
     );
   }
 }

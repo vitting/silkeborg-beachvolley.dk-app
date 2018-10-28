@@ -36,14 +36,13 @@ class _LivescoreControlState extends State<LivescoreControl> {
   @override
   void initState() {
     super.initState();
-    
   }
 
   @override
-    void didChangeDependencies() {
-      super.didChangeDependencies();
-      _init();
-    }  
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _init();
+  }
 
   @override
   void dispose() {
@@ -59,7 +58,8 @@ class _LivescoreControlState extends State<LivescoreControl> {
     if (widget.match.active != null && widget.match.active == true) {
       _opacity = 1.0;
       _setSelectedTeam(widget.match.activeTeam);
-      _setBoardMessage(widget.match.matchMessage, widget.match.matchMessageTeam, true);
+      _setBoardMessage(
+          widget.match.matchMessage, widget.match.matchMessageTeam, true);
       _showIsLiveIndicator = true;
     }
   }
@@ -68,7 +68,7 @@ class _LivescoreControlState extends State<LivescoreControl> {
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
         showAppBar: true,
-        title: "Silkeborg Beachvolley",
+        title: FlutterI18n.translate(context, "livescore.livescoreControlMain.title"),
         body: Builder(
           builder: (BuildContext context) {
             return _main(context);
@@ -132,7 +132,7 @@ class _LivescoreControlState extends State<LivescoreControl> {
       child: FlatButton.icon(
         textColor: Colors.blue,
         icon: Icon(FontAwesomeIcons.volleyballBall),
-        label: Text("Luk"),
+        label: Text(FlutterI18n.translate(context, "livescore.livescoreControlMain.string1")),
         onPressed: () {
           Navigator.of(context).pop();
         },
@@ -169,14 +169,14 @@ class _LivescoreControlState extends State<LivescoreControl> {
     if (Home.canVibrate) Vibrate.feedback(FeedbackType.success);
     int result = await Dialogs.modalBottomSheet(context, [
       DialogsModalBottomSheetItem(
-          "Start kampen og sæt Team $team som kamp startere",
+          FlutterI18n.translate(context, "livescore.livescoreControlMain.string2").replaceAll("[$team]", team.toString()),
           FontAwesomeIcons.volleyballBall,
           0)
     ]);
 
     if (result != null && result == 0) {
       ConfirmDialogAction action = await Dialogs.confirmMatchStart(context,
-          "Vil du starte kampen?\n\nDet er Team $team som starter med serven.");
+          FlutterI18n.translate(context, "livescore.livescoreControlMain.string3").replaceAll("[$team]", team.toString()));
       if (action != null && action == ConfirmDialogAction.start) {
         setState(() {
           _opacity = 1.0;
@@ -191,9 +191,9 @@ class _LivescoreControlState extends State<LivescoreControl> {
   void _onLongPressPointsActive(BuildContext context, int team) async {
     if (Home.canVibrate) Vibrate.feedback(FeedbackType.success);
     int result = await Dialogs.modalBottomSheet(context, [
-      DialogsModalBottomSheetItem("Markere Team $team som Set vindere",
+      DialogsModalBottomSheetItem(FlutterI18n.translate(context, "livescore.livescoreControlMain.string4").replaceAll("[$team]", team.toString()),
           FontAwesomeIcons.volleyballBall, 0),
-      DialogsModalBottomSheetItem("Markere Team $team som Kamp vindere",
+      DialogsModalBottomSheetItem(FlutterI18n.translate(context, "livescore.livescoreControlMain.string5").replaceAll("[$team]", team.toString()),
           FontAwesomeIcons.volleyballBall, 1)
     ]);
 
@@ -208,7 +208,7 @@ class _LivescoreControlState extends State<LivescoreControl> {
 
   void _setWinner(BuildContext context, int team) async {
     ConfirmDialogAction action = await Dialogs.confirmSetWinner(context,
-        "Vil du markere Team $team som Set vindere?\n\nHvis kampen er færdig skal du ikke markere Teamet som set vindere, men i stedet markere dem som kamp vindere.");
+        FlutterI18n.translate(context, "livescore.livescoreControlMain.string6").replaceAll("[$team]", team.toString()));
     if (action != null && action == ConfirmDialogAction.ok) {
       int pointsTeam1 = widget.match.pointsTeam1;
       int pointsTeam2 = widget.match.pointsTeam2;
@@ -224,9 +224,9 @@ class _LivescoreControlState extends State<LivescoreControl> {
 
       Scaffold.of(context).showSnackBar(SnackBar(
         duration: Duration(milliseconds: 3000),
-        content: Text("Vil du fortryde set vindere?"),
+        content: Text(FlutterI18n.translate(context, "livescore.livescoreControlMain.string7")),
         action: SnackBarAction(
-          label: "Fortryd",
+          label: FlutterI18n.translate(context, "livescore.livescoreControlMain.string8"),
           onPressed: () async {
             await widget.match.subtractSet(team);
             await widget.match.setPointsAndTimeouts(
@@ -243,7 +243,7 @@ class _LivescoreControlState extends State<LivescoreControl> {
 
   void _matchWinner(int team) async {
     ConfirmDialogAction action = await Dialogs.confirmMatchWinner(
-        context, "Vil du markere Team $team som Kamp vindere?");
+        context, FlutterI18n.translate(context, "livescore.livescoreControlMain.string9").replaceAll("[$team]", team.toString()));
     if (action != null && action == ConfirmDialogAction.ok) {
       await widget.match.addSet(team);
       await widget.match.markGameAsWon(team);
@@ -318,7 +318,7 @@ class _LivescoreControlState extends State<LivescoreControl> {
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0),
                   child:
-                      Text("Team 1", style: TextStyle(color: Colors.blue[700])),
+                      Text(FlutterI18n.translate(context, "livescore.livescoreControlMain.string10"), style: TextStyle(color: Colors.blue[700])),
                 )
               ],
             ),
@@ -336,7 +336,7 @@ class _LivescoreControlState extends State<LivescoreControl> {
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0),
                   child:
-                      Text("Team 2", style: TextStyle(color: Colors.blue[700])),
+                      Text(FlutterI18n.translate(context, "livescore.livescoreControlMain.string11"), style: TextStyle(color: Colors.blue[700])),
                 )
               ],
             ),
@@ -372,14 +372,15 @@ class _LivescoreControlState extends State<LivescoreControl> {
   void _setBoardMessage(int messageNumber, int team, bool readOnly) {
     String message = "";
     if (messageNumber != 0) {
-      message = FlutterI18n.translate(context, "boardMessages.$messageNumber");
+      message = FlutterI18n.translate(
+          context, "livescore.boardMessages.$messageNumber");
       message = message.replaceAll("[TEAM]", team.toString());
     }
 
     if (readOnly == false) {
       widget.match.setMatchMessage(messageNumber, team);
     }
-    
+
     _messageStreamController.add(message);
   }
 }

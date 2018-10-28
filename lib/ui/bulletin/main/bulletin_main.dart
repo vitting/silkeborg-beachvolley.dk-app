@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
@@ -95,7 +96,7 @@ class _BulletinState extends State<Bulletin> {
 
         if (snapshot.hasData) {
           if (snapshot.data.documents.length == 0) {
-            return NoData("Der er ingen opslag");
+            return NoData(FlutterI18n.translate(context, "bulletin.bulletinMain.string1"));
           } else {
             return Scrollbar(
               child: ListView.builder(
@@ -121,7 +122,7 @@ class _BulletinState extends State<Bulletin> {
                               }
                             },
                             icon: Icon(Icons.refresh),
-                            label: Text("Hent flere opslag"),
+                            label: Text(FlutterI18n.translate(context, "bulletin.bulletinMain.string2")),
                           )
                         ],
                       ),

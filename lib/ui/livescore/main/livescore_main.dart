@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/dot_bottombar_widget.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/create/livescore_create_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/main/livescore_overview_matches_widget.dart';
-import 'package:silkeborgbeachvolley/ui/livescore/main/livescore_overview_results.dart';
+import 'package:silkeborgbeachvolley/ui/livescore/main/livescore_overview_results_widget.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class Livescore extends StatefulWidget {
@@ -56,8 +57,8 @@ class _LivescoreState extends State<Livescore> {
 
   String _getPageTitle(BuildContext context, int page) {
     String title = "";
-    if (page == 0) title = "Live score kampe";
-    if (page == 1) title = "Live score resultater";
+    if (page == 0) title = FlutterI18n.translate(context, "livescore.livescoreMain.title1");
+    if (page == 1) title = FlutterI18n.translate(context, "livescore.livescoreMain.title2");
     return title;
   }
 

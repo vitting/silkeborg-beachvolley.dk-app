@@ -7,7 +7,8 @@ class LivescoreControlsRow extends StatelessWidget {
   final String text;
   final Color color;
 
-  const LivescoreControlsRow({this.text, this.color, this.onTapAdd, this.onTapRemove});
+  const LivescoreControlsRow(
+      {this.text, this.color, this.onTapAdd, this.onTapRemove});
 
   @override
   Widget build(BuildContext context) {

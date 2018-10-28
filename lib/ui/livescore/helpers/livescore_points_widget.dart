@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_colors.dart';
 
@@ -35,7 +36,7 @@ class LivescoreBoardPoints extends StatelessWidget {
         _teamPoints(pointsTeam1.toString(), 1, fontWeightTeam1, colorTeam1,
             borderColorTeam1, winnerTeam1),
         Expanded(
-            child: Text("points",
+            child: Text(FlutterI18n.translate(context, "livescore.livescorePointsWidget.string1"),
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white))),
         _teamPoints(pointsTeam2.toString(), 2, fontWeightTeam2, colorTeam2,
@@ -44,7 +45,8 @@ class LivescoreBoardPoints extends StatelessWidget {
     );
   }
 
-  Widget _teamPoints(String points, int team, FontWeight fontWeight, Color pointTextColor, Color borderColor, bool teamWinner) {
+  Widget _teamPoints(String points, int team, FontWeight fontWeight,
+      Color pointTextColor, Color borderColor, bool teamWinner) {
     return Expanded(
       child: Stack(
         overflow: Overflow.visible,
@@ -72,11 +74,14 @@ class LivescoreBoardPoints extends StatelessWidget {
                       fontFamily: "Scoreboard")),
             ),
           ),
-          teamWinner ? Positioned(
-            top: 50.0,
-            left: 42.0,
-            child: Icon(FontAwesomeIcons.trophy, color: SilkeborgBeachvolleyColors.gold),
-          ) : Container()
+          teamWinner
+              ? Positioned(
+                  top: 50.0,
+                  left: 42.0,
+                  child: Icon(FontAwesomeIcons.trophy,
+                      color: SilkeborgBeachvolleyColors.gold),
+                )
+              : Container()
         ],
       ),
     );

@@ -15,15 +15,6 @@
     "matchWinner": "Match winner",
     "setWinner": "Set winner",
     "startMatch": "Start",
-    "boardMessages": {
-        "0": "Hide message",
-        "1": "Technical timeout",
-        "2": "Team [TEAM] has taken a timeout",
-        "3": "Team [TEAM] won the set",
-        "4": "Team [TEAM] won the match",
-        "5": "The match has ended",
-        "6": "Injury break to Team [TEAM]"       
-    },
     "monthsLong": {
         "1": "January",
         "2": "February",
@@ -125,6 +116,10 @@
             "string1": "News",
             "string2": "Events",
             "string3": "Play"
+        },
+        "bulletinMain": {
+            "string1": "No bulletins found",
+            "string2": "Get more"
         }
     },
     "enrollment": {
@@ -410,6 +405,80 @@
             "string5": "Delete",
             "string6": "Edit tournament",
             "string7": "Are you sure you want to delte the tournament?"
+        }
+    },
+    "livescore": {
+        "boardMessages": {
+            "0": "Hide message",
+            "1": "Technical timeout",
+            "2": "Team [TEAM] has taken timeout",
+            "3": "Team [TEAM] won the set",
+            "4": "Team [TEAM] won the match",
+            "5": "The match has ended",
+            "6": "Injury break to Team [TEAM]"       
+        },    
+        "livescoreControlMain": {
+            "title": "Live score control",
+            "string1": "Close",
+            "string2": "Start the match and set Team [$team] as servers",
+            "string3": "Do you want to start the match?\n\nTeam [$team] starts with the serve.",
+            "string4": "Select Team [$team] as Set winners",
+            "string5": "Select Team [$team] as match winners",
+            "string6": "Do you want to mark Team [$team] as Set winners?\n\nIf the match is finished, do not mark the team as set winners, but instead mark them as match winners.",
+            "string7": "Do you want to undo winners?",
+            "string8": "Undo",
+            "string9": "Do you want to mark Team [$team] as Match winners?",
+            "string10": "Team 1",
+            "string11": "Team 2"
+        },
+        "livescoreCreateMain": {
+            "title": "Live score create match",
+            "string1": "Saving the match",
+            "string2": "Fill out title",
+            "string3": "Title",
+            "string4": "Match date",
+            "string5": "Fill out match dato",
+            "string6": "Match time",
+            "string7": "Fill out match time",
+            "string8": "Fill out name Player 1 Team 1",
+            "string9": "Name: player 1 team 1",
+            "string10": "Fill out name Player 2 Team 1",
+            "string11": "Name: player 2 team 1",
+            "string12": "Fill out name Player 1 Team 2",
+            "string13": "Name: player 1 team 2",
+            "string14": "Fill out name Player 2 Team 2",
+            "string15": "Name: player 2 team 2",
+            "string16": "Create the match"
+        },
+        "livescorePointsWidget": {
+            "string1": "points"
+        },
+        "livescoreSetScoreWidget": {
+            "string1": "Played sets"
+        },
+        "livescoreSetsWidget": {
+            "string1": "set"
+        },
+        "livescoreTimeWidget": {
+            "string1": "Match date",
+            "string2": "Started",
+            "string3": "Ended",
+            "string4": "Total min."
+        },
+        "livescoreTimeoutsWidget": {
+            "string1": "timeouts"
+        },
+        "livescoreMain": {
+            "title1": "Live score matches",
+            "title2": "Live score results"
+        },
+        "livescoreOverviewMatchesWidget": {
+            "string1": "Active matches",
+            "string2": "Upcoming matches",
+            "string3": "Will you control the match?"
+        },
+        "livescoreOverviewResultsWidget": {
+            "string1": "No ended matches where found"
         }
     }
 }

@@ -82,10 +82,14 @@ class LivescoreMatchRow extends StatelessWidget {
                         ? Text(match.pointsTeam1.toString(),
                             textAlign: TextAlign.center)
                         : Container(),
-                    isFinished && match.winnerTeam == 1 ? Padding(
-                      padding: const EdgeInsets.only(top: 3.0),
-                      child: Icon(FontAwesomeIcons.trophy, color: SilkeborgBeachvolleyColors.gold, size: 16.0),
-                    ) : Container()
+                    isFinished && match.winnerTeam == 1
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 3.0),
+                            child: Icon(FontAwesomeIcons.trophy,
+                                color: SilkeborgBeachvolleyColors.gold,
+                                size: 16.0),
+                          )
+                        : Container()
                   ],
                 ),
               ),
@@ -107,10 +111,14 @@ class LivescoreMatchRow extends StatelessWidget {
                         ? Text(match.pointsTeam2.toString(),
                             textAlign: TextAlign.center)
                         : Container(),
-                    isFinished && match.winnerTeam == 2 ? Padding(
-                      padding: const EdgeInsets.only(top: 3.0),
-                      child: Icon(FontAwesomeIcons.trophy, color: SilkeborgBeachvolleyColors.gold, size: 16.0),
-                    ) : Container()
+                    isFinished && match.winnerTeam == 2
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 3.0),
+                            child: Icon(FontAwesomeIcons.trophy,
+                                color: SilkeborgBeachvolleyColors.gold,
+                                size: 16.0),
+                          )
+                        : Container()
                   ],
                 ),
               )

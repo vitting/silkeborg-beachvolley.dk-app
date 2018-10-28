@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 class LivescoreBoardTimeouts extends StatelessWidget {
   final int timeoutTeam1;
@@ -29,7 +30,7 @@ class LivescoreBoardTimeouts extends StatelessWidget {
                     fontFamily: "Scoreboard",
                     fontWeight: fontWeightTeam1))),
         Expanded(
-            child: Text("timeouts",
+            child: Text(FlutterI18n.translate(context, "livescore.livescoreTimeoutsWidget.string1"),
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white))),
         Expanded(

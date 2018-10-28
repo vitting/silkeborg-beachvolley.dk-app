@@ -22,7 +22,7 @@ class LivescorePublicBoardState extends State<LivescorePublicBoard> {
   FontWeight _fontWeightTeam2 = FontWeight.normal;
   Color _pointsBorderColorTeam1 = Colors.white;
   Color _pointsBorderColorTeam2 = Colors.white;
-  
+
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
@@ -36,7 +36,7 @@ class LivescorePublicBoardState extends State<LivescorePublicBoard> {
 
                 LivescoreData match = LivescoreData.fromMap(snapshot.data.data);
                 _setSelectedTeam(match.activeTeam);
-                
+
                 return Stack(
                   children: <Widget>[
                     Container(
@@ -47,9 +47,12 @@ class LivescorePublicBoardState extends State<LivescorePublicBoard> {
                         fontWeightTeam2: _fontWeightTeam2,
                         pointsBorderColorTeam1: _pointsBorderColorTeam1,
                         pointsBorderColorTeam2: _pointsBorderColorTeam2,
+                        winnerTeam1: match.winnerTeam != null && match.winnerTeam == 1,
+                        winnerTeam2: match.winnerTeam != null && match.winnerTeam == 2,
                         showIsLiveIndicator:
                             match.active != null && match.active == true,
-                        message: _setBoardMessage(context, match.matchMessage, match.matchMessageTeam),
+                        message: _setBoardMessage(context, match.matchMessage,
+                            match.matchMessageTeam),
                       ),
                     ),
                     Positioned(
@@ -72,7 +75,8 @@ class LivescorePublicBoardState extends State<LivescorePublicBoard> {
   String _setBoardMessage(BuildContext context, int messageNumber, int team) {
     String message = "";
     if (messageNumber != 0) {
-      message = FlutterI18n.translate(context, "boardMessages.$messageNumber");
+      message = FlutterI18n.translate(
+          context, "livescore.boardMessages.$messageNumber");
       message = message.replaceAll("[TEAM]", team.toString());
     }
 

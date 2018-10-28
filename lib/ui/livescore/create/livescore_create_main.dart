@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_overlay_widget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_data.dart';
@@ -50,11 +51,11 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-          title: "Live score opret kamp",
-          body: LoaderSpinnerOverlay(
+      title: FlutterI18n.translate(context, "livescore.livescoreCreateMain.title"),
+      body: LoaderSpinnerOverlay(
         show: _saving,
         showModalBarrier: true,
-        text: "Opretter kampen",
+        text: FlutterI18n.translate(context, "livescore.livescoreCreateMain.string1"),
         child: Card(
           child: Container(
             padding: EdgeInsets.all(10.0),
@@ -67,15 +68,17 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                       TextFormField(
                         initialValue: _match.title,
                         keyboardType: TextInputType.text,
-                        inputFormatters: [LengthLimitingTextInputFormatter(250)],
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(250)
+                        ],
                         textInputAction: TextInputAction.next,
                         onSaved: (String value) {
                           _match.title = value;
                         },
                         validator: (String value) {
-                          if (value.isEmpty) return "Titel skal udfyldes";
+                          if (value.isEmpty) return FlutterI18n.translate(context, "livescore.livescoreCreateMain.string2");
                         },
-                        decoration: InputDecoration(labelText: "Titel"),
+                        decoration: InputDecoration(labelText: FlutterI18n.translate(context, "livescore.livescoreCreateMain.string3")),
                       ),
                       Row(
                         children: <Widget>[
@@ -85,7 +88,7 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                                   textAlign: TextAlign.center,
                                   controller: _matchDateController,
                                   decoration: InputDecoration(
-                                      labelText: "Kamp dato",
+                                      labelText: FlutterI18n.translate(context, "livescore.livescoreCreateMain.string4"),
                                       suffixIcon: IconButton(
                                         icon: Icon(Icons.calendar_today),
                                         onPressed: () async {
@@ -94,7 +97,7 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                                       )),
                                   validator: (value) {
                                     if (value.isEmpty)
-                                      return "Kamp dato skal udfyldes";
+                                      return FlutterI18n.translate(context, "livescore.livescoreCreateMain.string5");
                                   })),
                           Flexible(
                               child: TextFormField(
@@ -102,7 +105,7 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                                   textAlign: TextAlign.center,
                                   controller: _matchTimeController,
                                   decoration: InputDecoration(
-                                      labelText: "Kamp tid",
+                                      labelText: FlutterI18n.translate(context, "livescore.livescoreCreateMain.string6"),
                                       suffixIcon: IconButton(
                                         icon: Icon(Icons.access_time),
                                         onPressed: () async {
@@ -111,7 +114,7 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                                       )),
                                   validator: (value) {
                                     if (value.isEmpty)
-                                      return "Kamp tid skal udfyldes";
+                                      return FlutterI18n.translate(context, "livescore.livescoreCreateMain.string7");
                                   }))
                         ],
                       ),
@@ -125,10 +128,10 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                         },
                         validator: (String value) {
                           if (value.isEmpty)
-                            return "Navnet på spiller 1 team 1 skal udfyldes";
+                            return FlutterI18n.translate(context, "livescore.livescoreCreateMain.string8");
                         },
                         decoration: InputDecoration(
-                            labelText: "Navn: spiller 1 team 1"),
+                            labelText: FlutterI18n.translate(context, "livescore.livescoreCreateMain.string9")),
                       ),
                       TextFormField(
                         initialValue: _match.namePlayer2Team1,
@@ -140,10 +143,10 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                         },
                         validator: (String value) {
                           if (value.isEmpty)
-                            return "Navn: spiller 2 team 1 skal udfyldes";
+                            return FlutterI18n.translate(context, "livescore.livescoreCreateMain.string10");
                         },
                         decoration: InputDecoration(
-                            labelText: "Navn: spiller 2 team 1"),
+                            labelText: FlutterI18n.translate(context, "livescore.livescoreCreateMain.string11")),
                       ),
                       TextFormField(
                         initialValue: _match.namePlayer1Team2,
@@ -155,10 +158,10 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                         },
                         validator: (String value) {
                           if (value.isEmpty)
-                            return "Navn: på spiller 1 team 2 skal udfyldes";
+                            return FlutterI18n.translate(context, "livescore.livescoreCreateMain.string12");
                         },
                         decoration: InputDecoration(
-                            labelText: "Navn: spiller 1 team 2"),
+                            labelText: FlutterI18n.translate(context, "livescore.livescoreCreateMain.string13")),
                       ),
                       TextFormField(
                         initialValue: _match.namePlayer2Team2,
@@ -170,16 +173,16 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                         },
                         validator: (String value) {
                           if (value.isEmpty)
-                            return "Navn: spiller 2 team 2 skal udfyldes";
+                            return FlutterI18n.translate(context, "livescore.livescoreCreateMain.string14");
                         },
                         decoration: InputDecoration(
-                            labelText: "Navn på spiller 2 team 2"),
+                            labelText: FlutterI18n.translate(context, "livescore.livescoreCreateMain.string15")),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 20.0),
                         child: FlatButton.icon(
                           icon: Icon(Icons.save),
-                          label: Text("Opret kampen"),
+                          label: Text(FlutterI18n.translate(context, "livescore.livescoreCreateMain.string16")),
                           onPressed: () async {
                             if (_formState.currentState.validate()) {
                               setState(() {

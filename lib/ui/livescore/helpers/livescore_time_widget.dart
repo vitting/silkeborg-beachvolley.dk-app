@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_live_dot_widget.dart';
 
 class LivescoreBoardTime extends StatelessWidget {
@@ -12,7 +13,8 @@ class LivescoreBoardTime extends StatelessWidget {
       {this.matchtime,
       this.matchStartedAt,
       this.matchEndedAt,
-      this.matchTotal, this.isLive = false});
+      this.matchTotal,
+      this.isLive = false});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,18 +27,19 @@ class LivescoreBoardTime extends StatelessWidget {
               showDot: isLive,
               rightMargin: 10.0,
             ),
-            Text("Kamp dato", style: TextStyle(color: Colors.white)),
+            Text(FlutterI18n.translate(context, "livescore.livescoreTimeWidget.string1"), style: TextStyle(color: Colors.white)),
             Padding(
               padding: const EdgeInsets.only(left: 5.0),
               child: Text("$matchtime",
-                  style:
-                      TextStyle(color: Colors.white, fontFamily: "Scoreboard", fontSize: 12.0)),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "Scoreboard",
+                      fontSize: 12.0)),
             ),
-            
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(top:10.0),
+          padding: const EdgeInsets.only(top: 10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -44,10 +47,14 @@ class LivescoreBoardTime extends StatelessWidget {
                   ? Container()
                   : Column(
                       children: <Widget>[
-                        Text("Startet", style: TextStyle(color: Colors.white, fontSize: 12.0)),
+                        Text(FlutterI18n.translate(context, "livescore.livescoreTimeWidget.string2"),
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 12.0)),
                         Text("$matchStartedAt",
                             style: TextStyle(
-                                color: Colors.white, fontFamily: "Scoreboard", fontSize: 12.0))
+                                color: Colors.white,
+                                fontFamily: "Scoreboard",
+                                fontSize: 12.0))
                       ],
                     ),
               matchEndedAt == null
@@ -56,12 +63,14 @@ class LivescoreBoardTime extends StatelessWidget {
                       children: <Widget>[
                         Column(
                           children: <Widget>[
-                            Text("Sluttede",
-                                style: TextStyle(color: Colors.white, fontSize: 12.0)),
+                            Text(FlutterI18n.translate(context, "livescore.livescoreTimeWidget.string3"),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 12.0)),
                             Text("$matchEndedAt",
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontFamily: "Scoreboard", fontSize: 12.0))
+                                    fontFamily: "Scoreboard",
+                                    fontSize: 12.0))
                           ],
                         )
                       ],
@@ -72,12 +81,14 @@ class LivescoreBoardTime extends StatelessWidget {
                       children: <Widget>[
                         Column(
                           children: <Widget>[
-                            Text("Total min.",
-                                style: TextStyle(color: Colors.white, fontSize: 12.0)),
+                            Text(FlutterI18n.translate(context, "livescore.livescoreTimeWidget.string4"),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 12.0)),
                             Text("$matchTotal",
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontFamily: "Scoreboard", fontSize: 12.0))
+                                    fontFamily: "Scoreboard",
+                                    fontSize: 12.0))
                           ],
                         )
                       ],

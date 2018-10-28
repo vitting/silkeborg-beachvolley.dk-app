@@ -93,7 +93,7 @@ class LivescoreData implements BaseData {
       @required this.namePlayer2Team2,
       this.matchStartedAt,
       this.matchEndedAt,
-      this.winnerTeam,
+      this.winnerTeam = 0,
       this.setTeam1 = 0,
       this.setTeam2 = 0,
       this.pointsTeam1 = 0,
@@ -328,7 +328,8 @@ class LivescoreData implements BaseData {
   Future<void> setMatchMessage(int messageNumber, int team) {
     matchMessage = messageNumber;
     matchMessageTeam = team;
-    return LivescoreFirestore.updateMatchMessage(id, matchMessage, matchMessageTeam);
+    return LivescoreFirestore.updateMatchMessage(
+        id, matchMessage, matchMessageTeam);
   }
 
   @override

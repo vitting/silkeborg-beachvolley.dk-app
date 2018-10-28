@@ -15,15 +15,6 @@
     "matchWinner": "Kamp vinder",
     "setWinner": "Set vinder",
     "startMatch": "Start",
-    "boardMessages": {
-        "0": "Skjul besked",
-        "1": "Teknisk timeout",
-        "2": "Team [TEAM] har taget timeout",
-        "3": "Team [TEAM] vandt sættet",
-        "4": "Team [TEAM] vandt kampen",
-        "5": "Kampen er afsluttet",
-        "6": "Skades pause til Team [TEAM]"       
-    },
     "monthsLong": {
         "1": "Januar",
         "2": "Februar",
@@ -125,6 +116,10 @@
             "string1": "Nyheder",
             "string2": "Begivenheder",
             "string3": "Spil"
+        },
+        "bulletinMain": {
+            "string1": "Der er ingen opslag",
+            "string2": "Hent flere opslag"
         }
     },
     "enrollment": {
@@ -410,6 +405,80 @@
             "string5": "Slet",
             "string6": "Redigere turnering",
             "string7": "Er du sikker på du vil slette turneringen?"
+        }
+    },
+    "livescore": {
+        "boardMessages": {
+            "0": "Skjul besked",
+            "1": "Teknisk timeout",
+            "2": "Team [TEAM] har taget timeout",
+            "3": "Team [TEAM] vandt sættet",
+            "4": "Team [TEAM] vandt kampen",
+            "5": "Kampen er afsluttet",
+            "6": "Skades pause til Team [TEAM]"       
+        },    
+        "livescoreControlMain": {
+            "title": "Live score kontrol",
+            "string1": "Luk",
+            "string2": "Start kampen og sæt Team [$ team] som servere",
+            "string3": "Vil du starte kampen?\n\nDet er Team [$team] som starter med serven.",
+            "string4": "Markere Team [$team] som Set vindere",
+            "string5": "Markere Team [$team] som Kamp vindere",
+            "string6": "Vil du markere Team [$team] som Set vindere?\n\nHvis kampen er færdig skal du ikke markere Teamet som set vindere, men i stedet markere dem som kamp vindere.",
+            "string7": "Vil du fortryde set vindere?",
+            "string8": "Fortryd",
+            "string9": "Vil du markere Team [$team] som Kamp vindere?",
+            "string10": "Team 1",
+            "string11": "Team 2"
+        },
+        "livescoreCreateMain": {
+            "title": "Live score opret kamp",
+            "string1": "Opretter kampen",
+            "string2": "Titel skal udfyldes",
+            "string3": "Titel",
+            "string4": "Kamp dato",
+            "string5": "Kamp dato skal udfyldes",
+            "string6": "Kamp tid",
+            "string7": "Kamp tid skal udfyldes",
+            "string8": "Navnet på spiller 1 team 1 skal udfyldes",
+            "string9": "Navn: spiller 1 team 1",
+            "string10": "Navn: spiller 2 team 1 skal udfyldes",
+            "string11": "Navn: spiller 2 team 1",
+            "string12": "Navn: på spiller 1 team 2 skal udfyldes",
+            "string13": "Navn: spiller 1 team 2",
+            "string14": "Navn: spiller 2 team 2 skal udfyldes",
+            "string15": "Navn på spiller 2 team 2",
+            "string16": "Opret kampen"
+        },
+        "livescorePointsWidget": {
+            "string1": "points"
+        },
+        "livescoreSetScoreWidget": {
+            "string1": "Spillede sets"
+        },
+        "livescoreSetsWidget": {
+            "string1": "set"
+        },
+        "livescoreTimeWidget": {
+            "string1": "Kamp dato",
+            "string2": "Startet",
+            "string3": "Sluttede",
+            "string4": "Total min."
+        },
+        "livescoreTimeoutsWidget": {
+            "string1": "timeouts"
+        },
+        "livescoreMain": {
+            "title1": "Live score kampe",
+            "title2": "Live score resultater"
+        },
+        "livescoreOverviewMatchesWidget": {
+            "string1": "Aktive kampe",
+            "string2": "Kommende kampe",
+            "string3": "Vil du kontrollere kampen?"
+        },
+        "livescoreOverviewResultsWidget": {
+            "string1": "Der blev ikke fundet nogen afsluttede kampe"
         }
     }
 }
