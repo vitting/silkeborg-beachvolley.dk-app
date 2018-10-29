@@ -22,6 +22,7 @@ class _MainMaterialAppState extends State<MainMaterialApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      showPerformanceOverlay: false,
       title: "Silkeborg Beachvolley",
       localizationsDelegates: [
         FlutterI18nDelegate(false, "en"),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/chip_header_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/list_item_card_widget.dart';
@@ -51,7 +52,7 @@ class EnrollmentMadeByUserState extends State<EnrollmentMadeByUser> {
                         child: ListTile(
                           trailing: IconButton(
                             icon: Icon(Icons.edit),
-                            color: Colors.blueAccent,
+                            color: SilkeborgBeachvolleyTheme.buttonTextColor,
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   fullscreenDialog: true,

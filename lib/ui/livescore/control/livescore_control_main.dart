@@ -5,6 +5,7 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/control/helpers/livescore_controls_widget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_data.dart';
@@ -68,6 +69,14 @@ class _LivescoreControlState extends State<LivescoreControl> {
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
         showAppBar: true,
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {
+              _showInfoDialog(context);
+            },
+            icon: Icon(Icons.info_outline),
+          )
+        ],
         title: FlutterI18n.translate(context, "livescore.livescoreControlMain.title"),
         body: Builder(
           builder: (BuildContext context) {
@@ -169,14 +178,14 @@ class _LivescoreControlState extends State<LivescoreControl> {
     if (Home.canVibrate) Vibrate.feedback(FeedbackType.success);
     int result = await Dialogs.modalBottomSheet(context, [
       DialogsModalBottomSheetItem(
-          FlutterI18n.translate(context, "livescore.livescoreControlMain.string2").replaceAll("[$team]", team.toString()),
+          FlutterI18n.translate(context, "livescore.livescoreControlMain.string2").replaceAll("[TEAM]", team.toString()),
           FontAwesomeIcons.volleyballBall,
           0)
     ]);
 
     if (result != null && result == 0) {
       ConfirmDialogAction action = await Dialogs.confirmMatchStart(context,
-          FlutterI18n.translate(context, "livescore.livescoreControlMain.string3").replaceAll("[$team]", team.toString()));
+          FlutterI18n.translate(context, "livescore.livescoreControlMain.string3").replaceAll("[TEAM]", team.toString()));
       if (action != null && action == ConfirmDialogAction.start) {
         setState(() {
           _opacity = 1.0;
@@ -191,9 +200,9 @@ class _LivescoreControlState extends State<LivescoreControl> {
   void _onLongPressPointsActive(BuildContext context, int team) async {
     if (Home.canVibrate) Vibrate.feedback(FeedbackType.success);
     int result = await Dialogs.modalBottomSheet(context, [
-      DialogsModalBottomSheetItem(FlutterI18n.translate(context, "livescore.livescoreControlMain.string4").replaceAll("[$team]", team.toString()),
+      DialogsModalBottomSheetItem(FlutterI18n.translate(context, "livescore.livescoreControlMain.string4").replaceAll("[TEAM]", team.toString()),
           FontAwesomeIcons.volleyballBall, 0),
-      DialogsModalBottomSheetItem(FlutterI18n.translate(context, "livescore.livescoreControlMain.string5").replaceAll("[$team]", team.toString()),
+      DialogsModalBottomSheetItem(FlutterI18n.translate(context, "livescore.livescoreControlMain.string5").replaceAll("[TEAM]", team.toString()),
           FontAwesomeIcons.volleyballBall, 1)
     ]);
 
@@ -208,7 +217,7 @@ class _LivescoreControlState extends State<LivescoreControl> {
 
   void _setWinner(BuildContext context, int team) async {
     ConfirmDialogAction action = await Dialogs.confirmSetWinner(context,
-        FlutterI18n.translate(context, "livescore.livescoreControlMain.string6").replaceAll("[$team]", team.toString()));
+        FlutterI18n.translate(context, "livescore.livescoreControlMain.string6").replaceAll("[TEAM]", team.toString()));
     if (action != null && action == ConfirmDialogAction.ok) {
       int pointsTeam1 = widget.match.pointsTeam1;
       int pointsTeam2 = widget.match.pointsTeam2;
@@ -243,7 +252,7 @@ class _LivescoreControlState extends State<LivescoreControl> {
 
   void _matchWinner(int team) async {
     ConfirmDialogAction action = await Dialogs.confirmMatchWinner(
-        context, FlutterI18n.translate(context, "livescore.livescoreControlMain.string9").replaceAll("[$team]", team.toString()));
+        context, FlutterI18n.translate(context, "livescore.livescoreControlMain.string9").replaceAll("[TEAM]", team.toString()));
     if (action != null && action == ConfirmDialogAction.ok) {
       await widget.match.addSet(team);
       await widget.match.markGameAsWon(team);
@@ -349,19 +358,19 @@ class _LivescoreControlState extends State<LivescoreControl> {
   void _messageChooser(BuildContext context, int team) async {
     if (Home.canVibrate) Vibrate.feedback(FeedbackType.success);
     int result = await Dialogs.modalBottomSheet(context, [
-      DialogsModalBottomSheetItem("Skjul beskeder", Icons.visibility_off, 0),
+      DialogsModalBottomSheetItem(FlutterI18n.translate(context, "livescore.boardMessages.0"), Icons.visibility_off, 0),
       DialogsModalBottomSheetItem(
-          "Teknisk timeout", FontAwesomeIcons.clipboardList, 1),
+          FlutterI18n.translate(context, "livescore.boardMessages.1"), FontAwesomeIcons.clipboardList, 1),
       DialogsModalBottomSheetItem(
-          "Team $team har taget timeout", FontAwesomeIcons.clipboardList, 2),
+          FlutterI18n.translate(context, "livescore.boardMessages.2").replaceAll("[TEAM]", team.toString()), FontAwesomeIcons.clipboardList, 2),
       DialogsModalBottomSheetItem(
-          "Team $team vandt sættet", FontAwesomeIcons.clipboardList, 3),
+          FlutterI18n.translate(context, "livescore.boardMessages.3").replaceAll("[TEAM]", team.toString()), FontAwesomeIcons.clipboardList, 3),
       DialogsModalBottomSheetItem(
-          "Team $team vandt kampen", FontAwesomeIcons.clipboardList, 4),
+          FlutterI18n.translate(context, "livescore.boardMessages.4").replaceAll("[TEAM]", team.toString()), FontAwesomeIcons.clipboardList, 4),
       DialogsModalBottomSheetItem(
-          "Kampen er afsluttet", FontAwesomeIcons.clipboardList, 5),
+          FlutterI18n.translate(context, "livescore.boardMessages.5"), FontAwesomeIcons.clipboardList, 5),
       DialogsModalBottomSheetItem(
-          "Skades pause til Team $team", FontAwesomeIcons.clipboardList, 6)
+          FlutterI18n.translate(context, "livescore.boardMessages.6").replaceAll("[TEAM]", team.toString()), FontAwesomeIcons.clipboardList, 6)
     ]);
 
     if (result != null) {
@@ -382,5 +391,71 @@ class _LivescoreControlState extends State<LivescoreControl> {
     }
 
     _messageStreamController.add(message);
+  }
+
+  void _showInfoDialog(BuildContext context) async {
+    await showDialog<int>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext contextModal) => SimpleDialog(
+        titlePadding: EdgeInsets.only(bottom: 10.0, top: 10.0, left: 10.0),
+        contentPadding: EdgeInsets.all(10.0),
+        title: Text(FlutterI18n.translate(context, "livescore.livescoreControlMain.string12")),
+        children: <Widget>[
+          Text(FlutterI18n.translate(context, "livescore.livescoreControlMain.string13")),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: Image.asset("assets/images/livescore_01_800x266.png"),
+          ),
+          Text(FlutterI18n.translate(context, "livescore.livescoreControlMain.string14")),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: Image.asset("assets/images/livescore_02_800x137.png", height: 25.0),
+          ),
+          Text(FlutterI18n.translate(context, "livescore.livescoreControlMain.string15")),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: Image.asset("assets/images/livescore_03_800x374.png"),
+          ),
+          Text(FlutterI18n.translate(context, "livescore.livescoreControlMain.string16")),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: Image.asset("assets/images/livescore_05_800x447.png", height: 100.0),
+          ),
+          Text(FlutterI18n.translate(context, "livescore.livescoreControlMain.string17")),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: Image.asset("assets/images/livescore_06_800x87.png"),
+          ),
+          Text(FlutterI18n.translate(context, "livescore.livescoreControlMain.string18")),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5.0),
+            child: Text(FlutterI18n.translate(context, "livescore.livescoreControlMain.string19")),
+          ),
+          Text(FlutterI18n.translate(context, "livescore.livescoreControlMain.string20")),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5.0),
+            child: Text(FlutterI18n.translate(context, "livescore.livescoreControlMain.string21")),
+          ),
+          Text(FlutterI18n.translate(context, "livescore.livescoreControlMain.string22")),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: Image.asset("assets/images/livescore_04_800x237.png", height: 60.0),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FlatButton(
+                textColor: SilkeborgBeachvolleyTheme.buttonTextColor,
+                child: Text(FlutterI18n.translate(context, "livescore.livescoreControlMain.string23")),
+                onPressed: () {
+                  Navigator.of(contextModal).pop();
+                },
+              )
+            ],
+          )
+        ],
+      )
+    );
   }
 }

@@ -13,7 +13,7 @@
     "start": "Start",
     "areYouSure": "Er du sikker på",
     "matchWinner": "Kamp vinder",
-    "setWinner": "Set vinder",
+    "setWinner": "Sæt vinder",
     "startMatch": "Start",
     "monthsLong": {
         "1": "Januar",
@@ -286,7 +286,7 @@
             "string4": "Vindere",
             "string5": "Tabere",
             "string6": "Registere kampen",
-            "string7": "Du skal udfylde de felter der er røde før de kan gemme kampen."
+            "string7": "Du skal udfylde de felter der er røde før du kan gemme kampen."
         },
         "rankingDetailChartMatchesWeekWidget": {
             "string1": "Antal spillede kampe pr. uge"
@@ -421,16 +421,28 @@
         "livescoreControlMain": {
             "title": "Live score kontrol",
             "string1": "Luk",
-            "string2": "Start kampen og sæt Team [$ team] som servere",
-            "string3": "Vil du starte kampen?\n\nDet er Team [$team] som starter med serven.",
-            "string4": "Markere Team [$team] som Set vindere",
-            "string5": "Markere Team [$team] som Kamp vindere",
-            "string6": "Vil du markere Team [$team] som Set vindere?\n\nHvis kampen er færdig skal du ikke markere Teamet som set vindere, men i stedet markere dem som kamp vindere.",
-            "string7": "Vil du fortryde set vindere?",
+            "string2": "Start kampen og sæt Team [TEAM] som servere",
+            "string3": "Vil du starte kampen?\n\nDet er Team [TEAM] som starter med serven.",
+            "string4": "Markere Team [TEAM] som Sæt vindere",
+            "string5": "Markere Team [TEAM] som Kamp vindere",
+            "string6": "Vil du markere Team [TEAM] som Sæt vindere?\n\nHvis kampen er færdig skal du ikke markere Teamet som sæt vindere, men i stedet markere dem som kamp vindere.",
+            "string7": "Vil du fortryde sæt vindere?",
             "string8": "Fortryd",
-            "string9": "Vil du markere Team [$team] som Kamp vindere?",
+            "string9": "Vil du markere Team [TEAM] som Kamp vindere?",
             "string10": "Team 1",
-            "string11": "Team 2"
+            "string11": "Team 2",
+            "string12": "Vejledning",
+            "string13": "Langt tryk på point score for kontrollere kamp start/afslutning og vundet sæt.",
+            "string14": "Når du starter kampen så vælg det hold der starter med serven.",
+            "string15": "Brug kontrol knapperne til at opdatere points, timeouts og status text for et sæt.",
+            "string16": "1. Vis en status tekst til brugeren under det nuværende sæt.",
+            "string17": "Du kan dobbelt klikke på en status text for at skjule den.",
+            "string18": "2. Tilføj eller fjern points.",
+            "string19": "3. Tilføj eller fjern timeouts.",
+            "string20": "Vundet sæt/kamp",
+            "string21": "- Markere et sæt som vundet ved lang tryk på det holds points der har vundet.",
+            "string22": "- Markere kampen vundet ved lang tryk på det holds points der har vundet kampen. Du skal ikke først markere sættet som vundet.",
+            "string23": "Luk"
         },
         "livescoreCreateMain": {
             "title": "Live score kamp",
@@ -455,10 +467,10 @@
             "string1": "points"
         },
         "livescoreSetScoreWidget": {
-            "string1": "Spillede sets"
+            "string1": "Spillede sæt"
         },
         "livescoreSetsWidget": {
-            "string1": "sets"
+            "string1": "sæt"
         },
         "livescoreTimeWidget": {
             "string1": "Kamp dato",

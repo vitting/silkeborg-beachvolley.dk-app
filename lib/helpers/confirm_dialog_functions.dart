@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 
 Future<ConfirmDialogAction> confirmDialog(
   BuildContext context, {
@@ -16,6 +17,7 @@ Future<ConfirmDialogAction> confirmDialog(
 
   if (actionLeft != ConfirmDialogAction.none) {
     actions.add(FlatButton(
+        textColor: SilkeborgBeachvolleyTheme.buttonTextColor,
         child: _getButtonText(context, actionLeft),
         onPressed: () {
           Navigator.of(context).pop(actionLeft);
@@ -24,6 +26,7 @@ Future<ConfirmDialogAction> confirmDialog(
 
   if (actionRight != ConfirmDialogAction.none) {
     actions.add(FlatButton(
+        textColor: SilkeborgBeachvolleyTheme.buttonTextColor,
         child: _getButtonText(context, actionRight),
         onPressed: () {
           Navigator.of(context).pop(actionRight);
