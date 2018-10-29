@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
@@ -109,7 +110,7 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
             ),
           ),
           FlatButton.icon(
-            textColor: Colors.deepOrange[700],
+            textColor: SilkeborgBeachvolleyTheme.buttonTextColor,
             onPressed: () {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();

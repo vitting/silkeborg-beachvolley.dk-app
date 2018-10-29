@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/event_datetime_type_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/image_info_data.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
@@ -46,17 +47,21 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
                 child: _getDateTextFieldWidget(
                     context,
                     widget.startDateController,
-                    FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string1"),
+                    FlutterI18n.translate(
+                        context, "bulletin.getBulletinEventFields.string1"),
                     DateTimeType.startDate,
-                    FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string2"))),
+                    FlutterI18n.translate(
+                        context, "bulletin.getBulletinEventFields.string2"))),
             SizedBox(width: 20.0),
             Flexible(
                 child: _getDateTextFieldWidget(
                     context,
                     widget.endDateController,
-                    FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string3"),
+                    FlutterI18n.translate(
+                        context, "bulletin.getBulletinEventFields.string3"),
                     DateTimeType.endDate,
-                    FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string4")))
+                    FlutterI18n.translate(
+                        context, "bulletin.getBulletinEventFields.string4")))
           ],
         ),
         Row(
@@ -65,17 +70,21 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
                 child: _getTimeTextFieldWidget(
                     context,
                     widget.startTimeController,
-                    FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string5"),
+                    FlutterI18n.translate(
+                        context, "bulletin.getBulletinEventFields.string5"),
                     DateTimeType.startTime,
-                    FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string6"))),
+                    FlutterI18n.translate(
+                        context, "bulletin.getBulletinEventFields.string6"))),
             SizedBox(width: 20.0),
             Flexible(
                 child: _getTimeTextFieldWidget(
                     context,
                     widget.endTimeController,
-                    FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string7"),
+                    FlutterI18n.translate(
+                        context, "bulletin.getBulletinEventFields.string7"),
                     DateTimeType.endTime,
-                    FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string8")))
+                    FlutterI18n.translate(
+                        context, "bulletin.getBulletinEventFields.string8")))
           ],
         ),
         _getLocationTextField(context),
@@ -95,7 +104,8 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
                 widget.onTapImage(widget.eventImage);
               },
               child: Tooltip(
-                message: FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string9"),
+                message: FlutterI18n.translate(
+                    context, "bulletin.getBulletinEventFields.string9"),
                 child: Container(
                   width: 200.0,
                   height: 100.0,
@@ -108,13 +118,14 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
                     widget.eventImage == null
                         ? Icons.add_a_photo
                         : Icons.delete,
-                    color: Colors.white,
+                    color: SilkeborgBeachvolleyTheme.buttonTextColor,
                   ),
                 ),
               ),
             ),
           ),
-          Text(FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string10"))
+          Text(FlutterI18n.translate(
+              context, "bulletin.getBulletinEventFields.string10"))
         ],
       ),
     );
@@ -125,12 +136,16 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
       initialValue: widget.itemFieldsValue.eventTitle,
       keyboardType: TextInputType.text,
       maxLength: 50,
-      decoration: InputDecoration(labelText: FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string11")),
+      decoration: InputDecoration(
+          labelText: FlutterI18n.translate(
+              context, "bulletin.getBulletinEventFields.string11")),
       onSaved: (value) {
         widget.itemFieldsValue.eventTitle = value;
       },
       validator: (value) {
-        if (value.isEmpty) return FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string12");
+        if (value.isEmpty)
+          return FlutterI18n.translate(
+              context, "bulletin.getBulletinEventFields.string12");
       },
     );
   }
@@ -148,7 +163,8 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
         decoration: InputDecoration(
             labelText: label,
             suffixIcon: IconButton(
-              icon: Icon(Icons.calendar_today),
+              icon: Icon(Icons.calendar_today,
+                  color: SilkeborgBeachvolleyTheme.buttonTextColor),
               onPressed: () async {
                 _selectDate(context, type);
               },
@@ -171,7 +187,8 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
         decoration: InputDecoration(
             labelText: label,
             suffixIcon: IconButton(
-              icon: Icon(Icons.access_time),
+              icon: Icon(Icons.access_time,
+                  color: SilkeborgBeachvolleyTheme.buttonTextColor),
               onPressed: () async {
                 _selectTime(context, type);
               },
@@ -186,12 +203,16 @@ class _BulletinEvetFieldsState extends State<BulletinEventFields> {
       initialValue: widget.itemFieldsValue.eventLocation,
       keyboardType: TextInputType.text,
       maxLength: 100,
-      decoration: InputDecoration(labelText: FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string13")),
+      decoration: InputDecoration(
+          labelText: FlutterI18n.translate(
+              context, "bulletin.getBulletinEventFields.string13")),
       onSaved: (value) {
         widget.itemFieldsValue.eventLocation = value;
       },
       validator: (value) {
-        if (value.isEmpty) return FlutterI18n.translate(context, "bulletin.getBulletinEventFields.string14");
+        if (value.isEmpty)
+          return FlutterI18n.translate(
+              context, "bulletin.getBulletinEventFields.string14");
       },
     );
   }

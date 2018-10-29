@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/event_datetime_type_enum.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:silkeborgbeachvolley/ui/tournament_calendar/helpers/torunament_data.dart';
 import 'package:validate/validate.dart';
@@ -169,7 +170,7 @@ class _CreateTournamentItemState extends State<CreateTournamentItem> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0),
                   child: FlatButton.icon(
-                    textColor: Colors.deepOrange[700],
+                    textColor: SilkeborgBeachvolleyTheme.buttonTextColor,
                     icon: Icon(Icons.check_circle),
                     label: Text(FlutterI18n.translate(context, "tournamentCalendar.tournamentCreateMain.string12")),
                     onPressed: () {

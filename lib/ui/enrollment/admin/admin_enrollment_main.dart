@@ -57,16 +57,13 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
 
             EnrollmentUserData item = _data[position - 1];
             return GestureDetector(
-              child: _row(item),
+              child: _row(context, item),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     fullscreenDialog: true,
                     builder: (BuildContext context) =>
                         EnrollmentDetail(enrollment: item)));
-              },
-              onLongPress: () {
-                _popupMenu(context, item);
-              },
+              }
             );
           },
         ),
@@ -74,16 +71,31 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
     );
   }
 
-  Widget _row(EnrollmentUserData item) {
+  Widget _row(BuildContext context, EnrollmentUserData item) {
     return ListItemCard(
       padding: EdgeInsets.all(10.0),
-      child: Column(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(DateTimeHelpers.ddmmyyyyHHnn(item.creationDate.toDate())),
           Text(item.name, style: TextStyle(fontWeight: FontWeight.bold)),
           Text(item.street),
           Text("${item.postalCode.toString()} ${item.city}")
+        ],
+      ),
+      Row(
+        children: <Widget>[
+          IconButton(
+            icon: Icon(Icons.more_horiz),
+            onPressed: () {
+              _popupMenu(context, item);
+            },
+          )
+        ],
+      )
         ],
       ),
     );

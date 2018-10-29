@@ -6,6 +6,9 @@ class SilkeborgBeachvolleyTheme {
   static Color gold = Color.fromRGBO(212, 175, 5, 1.0);
   static Color silver = Color.fromRGBO(192, 192, 192, 1.0);
   static Color bronze = Color.fromRGBO(205, 127, 50, 1.0);
+  static Color drawerIconColor = Colors.blue[700];
+  static Color buttonTextColor = Colors.deepOrange[700];
+  static Color buttonDisabledTextColor = Colors.deepOrange[200];
   static BoxDecoration gradientColorBoxDecoration = BoxDecoration(
           gradient: LinearGradient(
         begin: Alignment.topLeft,

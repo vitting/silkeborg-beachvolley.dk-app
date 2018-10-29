@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_matches_row_element_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
@@ -55,7 +56,7 @@ class RankingMatchesRow extends StatelessWidget {
                           onPressed: () {
                             iconOnTap(match);
                           },
-                          color: Colors.deepOrange[700],
+                          color: SilkeborgBeachvolleyTheme.buttonTextColor,
                         )
                 ],
               ),

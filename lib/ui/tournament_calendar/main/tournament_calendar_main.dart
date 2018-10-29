@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/list_item_card_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/no_data_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -53,7 +54,7 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
     Widget button;
     if (_isAdmin) {
       button = FloatingActionButton(
-        backgroundColor: Colors.deepOrange[700],
+        backgroundColor: SilkeborgBeachvolleyTheme.buttonTextColor,
         onPressed: () async {
           await _showCreateDialog(null, FlutterI18n.translate(context, "tournamentCalendar.tournamentCalendarMain.string1"));
         },
@@ -90,14 +91,13 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
                   ? null
                   : FlatButton.icon(
                       label: Text(FlutterI18n.translate(context, "tournamentCalendar.tournamentCalendarMain.string3")),
-                      textColor: Colors.deepOrange[700],
+                      textColor: SilkeborgBeachvolleyTheme.buttonTextColor,
                       icon: Icon(Icons.launch),
                       onPressed: () {
                         _launchUrl(item.link);
                       },
                     ),
               trailing: _isAdmin ? IconButton(
-                color: Colors.deepOrange[700],
                 icon: Icon(Icons.more_horiz),
                 onPressed: () async {
                   await _menuOnPressed(context, item);

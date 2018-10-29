@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 
 class BulletinMainFab extends StatefulWidget {
@@ -29,8 +30,8 @@ class _BulletinMainFabState extends State<BulletinMainFab>
             setState(() {});
           });
     _buttonColor = ColorTween(
-      begin: Colors.deepOrange[700],
-      end: Colors.deepOrange[200],
+      begin: SilkeborgBeachvolleyTheme.buttonTextColor,
+      end: SilkeborgBeachvolleyTheme.buttonDisabledTextColor,
     ).animate(CurvedAnimation(
       parent: _animationController,
       curve: Interval(
@@ -62,7 +63,7 @@ class _BulletinMainFabState extends State<BulletinMainFab>
   Widget _news(BuildContext context) {
     return Container(
       child: FloatingActionButton(
-        backgroundColor: Colors.deepOrange[700],
+        backgroundColor: SilkeborgBeachvolleyTheme.buttonTextColor,
         heroTag: null,
         onPressed: () {
           _close();
@@ -77,7 +78,7 @@ class _BulletinMainFabState extends State<BulletinMainFab>
   Widget _event(BuildContext context) {
     return Container(
       child: FloatingActionButton(
-        backgroundColor: Colors.deepOrange[700],
+        backgroundColor: SilkeborgBeachvolleyTheme.buttonTextColor,
         heroTag: null,
         onPressed: () {
           _close();
@@ -92,7 +93,7 @@ class _BulletinMainFabState extends State<BulletinMainFab>
   Widget _play(BuildContext context) {
     return Container(
       child: FloatingActionButton(
-        backgroundColor: Colors.deepOrange[700],
+        backgroundColor: SilkeborgBeachvolleyTheme.buttonTextColor,
         heroTag: null,
         onPressed: () {
           _close();

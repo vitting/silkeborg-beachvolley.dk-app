@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 
 class EnrollmentReadMe extends StatelessWidget {
   final ValueChanged<bool> onTapNextPage;
@@ -39,7 +40,7 @@ class EnrollmentReadMe extends StatelessWidget {
                     FlutterI18n.translate(context, "enrollment.enrollmentReadMe.string5")),
                 IconButton(
                   padding: EdgeInsets.only(top: 40.0),
-                  color: Colors.deepOrange[700],
+                  color: SilkeborgBeachvolleyTheme.buttonTextColor,
                   icon: Icon(
                     FontAwesomeIcons.arrowAltCircleRight,
                     size: 45.0,

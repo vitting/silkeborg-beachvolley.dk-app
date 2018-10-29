@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/list_item_card_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
@@ -73,7 +74,7 @@ class RankingDetailMatches extends StatelessWidget {
                                 await rankingDetailFunctions.showMatchInfo(
                                     context, item, userId);
                               },
-                              color: Colors.deepOrange[700],
+                              color: SilkeborgBeachvolleyTheme.buttonTextColor,
                               icon: Icon(Icons.info_outline),
                             )
                           ],

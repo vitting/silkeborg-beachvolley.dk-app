@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_overlay_widget.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/helpers/choose_players_list_widget.dart';
@@ -144,7 +145,7 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0),
           child: FlatButton.icon(
-            textColor: Colors.deepOrange[700],
+            textColor: SilkeborgBeachvolleyTheme.buttonTextColor,
             label: Text(FlutterI18n.translate(context, "ranking.rankingCreateMatchMain.string6")),
             icon: Icon(Icons.check_circle),
             onPressed: () {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/dot_bottombar_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/ranking_create_match_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_sharedpref.dart';
@@ -49,7 +50,7 @@ class RankingState extends State<Ranking> {
           position: _position,
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.deepOrange[700],
+          backgroundColor: SilkeborgBeachvolleyTheme.buttonTextColor,
           tooltip: FlutterI18n.translate(context, "ranking.rankingMain.string1"),
           onPressed: () async {
             await Navigator.of(context).push(MaterialPageRoute(

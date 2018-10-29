@@ -59,28 +59,28 @@ class SilkeborgBeacvolleyScaffoldDrawerState
           )
           ),
       ListTile(
-        leading: Icon(Icons.assignment),
+        leading: Icon(Icons.assignment, color: SilkeborgBeachvolleyTheme.drawerIconColor),
         title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string1")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(Enrollment.routeName);
         },
       ),
       ListTile(
-        leading: Icon(FontAwesomeIcons.volleyballBall),
+        leading: Icon(FontAwesomeIcons.volleyballBall, color: SilkeborgBeachvolleyTheme.drawerIconColor),
         title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string2")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(Ranking.routeName);
         },
       ),
       ListTile(
-          leading: Icon(Icons.live_tv), 
+          leading: Icon(Icons.live_tv, color: SilkeborgBeachvolleyTheme.drawerIconColor), 
           title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string3")), 
           onTap: () {
             Navigator.of(context).popAndPushNamed(Livescore.routeName);
           }
         ),
       ListTile(
-        leading: Icon(Icons.calendar_today),
+        leading: Icon(Icons.calendar_today, color: SilkeborgBeachvolleyTheme.drawerIconColor),
         title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string4")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(TournamentCalendar.routeName);
@@ -88,7 +88,7 @@ class SilkeborgBeacvolleyScaffoldDrawerState
       ),
       Divider(),
       ListTile(
-        leading: Icon(FontAwesomeIcons.signOutAlt),
+        leading: Icon(FontAwesomeIcons.signOutAlt, color: SilkeborgBeachvolleyTheme.drawerIconColor),
         title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string5")),
         onTap: () async {
           Navigator.of(context).pop();
@@ -100,7 +100,7 @@ class SilkeborgBeacvolleyScaffoldDrawerState
         },
       ),
       ListTile(
-        leading: Icon(Icons.settings),
+        leading: Icon(Icons.settings, color: SilkeborgBeachvolleyTheme.drawerIconColor),
         title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string6")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(Settings.routeName);
@@ -111,7 +111,7 @@ class SilkeborgBeacvolleyScaffoldDrawerState
     if (Home.userInfo != null && Home.userInfo.admin1) {
       widgets.add(Divider());
       widgets.add(ListTile(
-        leading: Icon(Icons.people),
+        leading: Icon(Icons.people, color: SilkeborgBeachvolleyTheme.drawerIconColor),
         title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string7")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(AdminEnrollment.routeName);
@@ -119,7 +119,7 @@ class SilkeborgBeacvolleyScaffoldDrawerState
       ));
 
       widgets.add(ListTile(
-        leading: Icon(Icons.people),
+        leading: Icon(Icons.people, color: SilkeborgBeachvolleyTheme.drawerIconColor),
         title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string8")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(AdminRanking.routeName);
@@ -127,7 +127,7 @@ class SilkeborgBeacvolleyScaffoldDrawerState
       ));
 
       widgets.add(ListTile(
-        leading: Icon(Icons.people),
+        leading: Icon(Icons.people, color: SilkeborgBeachvolleyTheme.drawerIconColor),
         title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string9")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(AdminUsers.routeName);
@@ -136,8 +136,10 @@ class SilkeborgBeacvolleyScaffoldDrawerState
     }
 
     return Drawer(
-        child: ListView(
+        child: Scrollbar(
+                  child: ListView(
       children: widgets,
-    ));
+    ),
+        ));
   }
 }

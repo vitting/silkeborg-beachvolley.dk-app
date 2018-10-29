@@ -28,7 +28,7 @@ class AdminRankingPlayersRow extends StatelessWidget {
                 child: Text(name),
               ),
               IconButton(
-                icon: Icon(Icons.more_vert),
+                icon: Icon(Icons.more_horiz),
                 onPressed: () {
                   rowOnMenuTap(true);
                 },

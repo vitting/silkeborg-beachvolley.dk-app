@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 
 class BulletinTextField extends StatelessWidget {
   final Function onPressedSave;
@@ -37,12 +38,12 @@ class BulletinTextField extends StatelessWidget {
 
   List<Widget> _setButtons() {
     List<Widget> widgets = [
-      IconButton(icon: Icon(Icons.check_circle), onPressed: onPressedSave)
+      IconButton(icon: Icon(Icons.check_circle, color: SilkeborgBeachvolleyTheme.buttonTextColor), onPressed: onPressedSave)
     ];
 
     if (showPhotoButton) {
       widgets.add(
-          IconButton(icon: Icon(Icons.add_a_photo), onPressed: onPressedPhoto));
+          IconButton(icon: Icon(Icons.add_a_photo, color: SilkeborgBeachvolleyTheme.buttonTextColor), onPressed: onPressedPhoto));
     }
 
     return widgets;

@@ -67,7 +67,7 @@ class AdminRankingMatchesState extends State<AdminRankingMatches> {
   IconData _menuIcon(RankingMatchData match) {
     IconData icon;
     if (Home.userInfo.admin1) {
-      icon = Icons.more_vert;
+      icon = Icons.more_horiz;
     }
     return icon;
   }

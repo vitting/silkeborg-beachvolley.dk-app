@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 
 class EnrollmentPayment extends StatelessWidget {
   final ValueChanged<bool> onTapPreviousPage;
@@ -49,7 +50,7 @@ class EnrollmentPayment extends StatelessWidget {
                   onPressed: () {
                     onTapPreviousPage(true);
                   },
-                  color: Colors.deepOrange[700],
+                  color: SilkeborgBeachvolleyTheme.buttonTextColor,
                   icon: Icon(FontAwesomeIcons.home),
                 )
               ],

@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/postcal_codes_data.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_data_class.dart';
 import 'package:validate/validate.dart';
@@ -160,7 +161,7 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
         labelText: FlutterI18n.translate(context, "enrollment.enrollmentForm.string11"),
         hintText: FlutterI18n.translate(context, "enrollment.enrollmentForm.string12"),
         suffixIcon: IconButton(
-            color: Colors.deepOrange[700],
+            color: SilkeborgBeachvolleyTheme.buttonTextColor,
             icon: Icon(Icons.calendar_today),
             onPressed: () async {
               _selectDate(context, date: _user.birthdate);
@@ -217,7 +218,7 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
     return Padding(
       padding: const EdgeInsets.only(top: 30.0),
       child: FlatButton.icon(
-        textColor: Colors.deepOrange[700],
+        textColor: SilkeborgBeachvolleyTheme.buttonTextColor,
         icon: Icon(Icons.check_circle),
         onPressed: () async {
           if (_formKey.currentState.validate()) {

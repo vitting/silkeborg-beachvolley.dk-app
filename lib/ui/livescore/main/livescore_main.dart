@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/dot_bottombar_widget.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/create/livescore_create_main.dart';
@@ -65,7 +66,7 @@ class _LivescoreState extends State<Livescore> {
   Widget _floatingActionButton(BuildContext context) {
     if (Home.loggedInUser?.uid != null) {
       return FloatingActionButton(
-        backgroundColor: Colors.deepOrange[700],
+        backgroundColor: SilkeborgBeachvolleyTheme.buttonTextColor,
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
               fullscreenDialog: true,
