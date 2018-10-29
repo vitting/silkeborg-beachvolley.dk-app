@@ -78,6 +78,18 @@ class UserInfoData implements BaseData {
     );
   }
 
+  static Future<void> setUserInfo(FirebaseUser user) async {
+    UserInfoData userInfo;
+    UserInfoData storedUserInfo = await UserInfoData.getUserInfo(user.uid);
+    if (storedUserInfo != null) {
+      userInfo = storedUserInfo..updateUserInfoFromFirebaseUser(user);
+    } else {
+      userInfo = UserInfoData.fromFireBaseUser(user);
+    }
+
+    return UserFirestore.setUserInfo(userInfo);
+  }
+
   factory UserInfoData.fromMap(Map<String, dynamic> user) {
     return UserInfoData(
         id: user["id"] ?? "",

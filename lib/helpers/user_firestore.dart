@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
 import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
 
@@ -69,18 +68,10 @@ class UserFirestore {
     });
   }
 
-  static Future<void> setUserInfo(FirebaseUser user) async {
-    UserInfoData userInfo;
-    UserInfoData storedUserInfo = await UserInfoData.getUserInfo(user.uid);
-    if (storedUserInfo != null) {
-      userInfo = storedUserInfo..updateUserInfoFromFirebaseUser(user);
-    } else {
-      userInfo = UserInfoData.fromFireBaseUser(user);
-    }
-
+  static Future<void> setUserInfo(UserInfoData userInfo) {
     return _firestore
         .collection(_collectionNameUsers)
-        .document(user.uid)
+        .document(userInfo.id)
         .setData(userInfo.toMap());
   }
 }
