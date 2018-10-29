@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_overlay_widget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_data.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
@@ -51,11 +52,13 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: FlutterI18n.translate(context, "livescore.livescoreCreateMain.title"),
+      title:
+          FlutterI18n.translate(context, "livescore.livescoreCreateMain.title"),
       body: LoaderSpinnerOverlay(
         show: _saving,
         showModalBarrier: true,
-        text: FlutterI18n.translate(context, "livescore.livescoreCreateMain.string1"),
+        text: FlutterI18n.translate(
+            context, "livescore.livescoreCreateMain.string1"),
         child: Card(
           child: Container(
             padding: EdgeInsets.all(10.0),
@@ -76,9 +79,13 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                           _match.title = value;
                         },
                         validator: (String value) {
-                          if (value.isEmpty) return FlutterI18n.translate(context, "livescore.livescoreCreateMain.string2");
+                          if (value.isEmpty)
+                            return FlutterI18n.translate(context,
+                                "livescore.livescoreCreateMain.string2");
                         },
-                        decoration: InputDecoration(labelText: FlutterI18n.translate(context, "livescore.livescoreCreateMain.string3")),
+                        decoration: InputDecoration(
+                            labelText: FlutterI18n.translate(context,
+                                "livescore.livescoreCreateMain.string3")),
                       ),
                       Row(
                         children: <Widget>[
@@ -88,8 +95,11 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                                   textAlign: TextAlign.center,
                                   controller: _matchDateController,
                                   decoration: InputDecoration(
-                                      labelText: FlutterI18n.translate(context, "livescore.livescoreCreateMain.string4"),
+                                      labelText: FlutterI18n.translate(context,
+                                          "livescore.livescoreCreateMain.string4"),
                                       suffixIcon: IconButton(
+                                        color: SilkeborgBeachvolleyTheme
+                                            .buttonTextColor,
                                         icon: Icon(Icons.calendar_today),
                                         onPressed: () async {
                                           _selectDate(context);
@@ -97,7 +107,8 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                                       )),
                                   validator: (value) {
                                     if (value.isEmpty)
-                                      return FlutterI18n.translate(context, "livescore.livescoreCreateMain.string5");
+                                      return FlutterI18n.translate(context,
+                                          "livescore.livescoreCreateMain.string5");
                                   })),
                           Flexible(
                               child: TextFormField(
@@ -105,8 +116,11 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                                   textAlign: TextAlign.center,
                                   controller: _matchTimeController,
                                   decoration: InputDecoration(
-                                      labelText: FlutterI18n.translate(context, "livescore.livescoreCreateMain.string6"),
+                                      labelText: FlutterI18n.translate(context,
+                                          "livescore.livescoreCreateMain.string6"),
                                       suffixIcon: IconButton(
+                                        color: SilkeborgBeachvolleyTheme
+                                            .buttonTextColor,
                                         icon: Icon(Icons.access_time),
                                         onPressed: () async {
                                           _selectTime(context);
@@ -114,7 +128,8 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                                       )),
                                   validator: (value) {
                                     if (value.isEmpty)
-                                      return FlutterI18n.translate(context, "livescore.livescoreCreateMain.string7");
+                                      return FlutterI18n.translate(context,
+                                          "livescore.livescoreCreateMain.string7");
                                   }))
                         ],
                       ),
@@ -128,10 +143,12 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                         },
                         validator: (String value) {
                           if (value.isEmpty)
-                            return FlutterI18n.translate(context, "livescore.livescoreCreateMain.string8");
+                            return FlutterI18n.translate(context,
+                                "livescore.livescoreCreateMain.string8");
                         },
                         decoration: InputDecoration(
-                            labelText: FlutterI18n.translate(context, "livescore.livescoreCreateMain.string9")),
+                            labelText: FlutterI18n.translate(context,
+                                "livescore.livescoreCreateMain.string9")),
                       ),
                       TextFormField(
                         initialValue: _match.namePlayer2Team1,
@@ -143,10 +160,12 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                         },
                         validator: (String value) {
                           if (value.isEmpty)
-                            return FlutterI18n.translate(context, "livescore.livescoreCreateMain.string10");
+                            return FlutterI18n.translate(context,
+                                "livescore.livescoreCreateMain.string10");
                         },
                         decoration: InputDecoration(
-                            labelText: FlutterI18n.translate(context, "livescore.livescoreCreateMain.string11")),
+                            labelText: FlutterI18n.translate(context,
+                                "livescore.livescoreCreateMain.string11")),
                       ),
                       TextFormField(
                         initialValue: _match.namePlayer1Team2,
@@ -158,10 +177,12 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                         },
                         validator: (String value) {
                           if (value.isEmpty)
-                            return FlutterI18n.translate(context, "livescore.livescoreCreateMain.string12");
+                            return FlutterI18n.translate(context,
+                                "livescore.livescoreCreateMain.string12");
                         },
                         decoration: InputDecoration(
-                            labelText: FlutterI18n.translate(context, "livescore.livescoreCreateMain.string13")),
+                            labelText: FlutterI18n.translate(context,
+                                "livescore.livescoreCreateMain.string13")),
                       ),
                       TextFormField(
                         initialValue: _match.namePlayer2Team2,
@@ -173,16 +194,20 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                         },
                         validator: (String value) {
                           if (value.isEmpty)
-                            return FlutterI18n.translate(context, "livescore.livescoreCreateMain.string14");
+                            return FlutterI18n.translate(context,
+                                "livescore.livescoreCreateMain.string14");
                         },
                         decoration: InputDecoration(
-                            labelText: FlutterI18n.translate(context, "livescore.livescoreCreateMain.string15")),
+                            labelText: FlutterI18n.translate(context,
+                                "livescore.livescoreCreateMain.string15")),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 20.0),
                         child: FlatButton.icon(
-                          icon: Icon(Icons.save),
-                          label: Text(FlutterI18n.translate(context, "livescore.livescoreCreateMain.string16")),
+                          textColor: SilkeborgBeachvolleyTheme.buttonTextColor,
+                          icon: Icon(Icons.check_circle),
+                          label: Text(FlutterI18n.translate(context,
+                              "livescore.livescoreCreateMain.string16")),
                           onPressed: () async {
                             if (_formState.currentState.validate()) {
                               setState(() {
