@@ -32,6 +32,7 @@ dependencies:
   vibrate: ^0.0.4
   connectivity: ^0.3.2
   screen: ^0.0.4
+  # flutter_typeahead: ^0.4.1
   flutter:
     sdk: flutter
 
