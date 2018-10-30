@@ -379,7 +379,10 @@
             "string9": "Rangliste navn skal være udfyldt",
             "string10": "Kvinde",
             "string11": "Mand",
-            "string12": "Køn"
+            "string12": "Køn",
+            "string13": "Live score - Hold skærmen vågen",
+            "string14": "Scoreboard",
+            "string15": "Scoreboard kontrol"
         }
     },
     "tournamentCalendar": {

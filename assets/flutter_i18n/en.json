@@ -379,7 +379,10 @@
             "string9": "Fill out ranking name",
             "string10": "Female",
             "string11": "Male",
-            "string12": "Sex"
+            "string12": "Sex",
+            "string13": "Live score - Keep screen on",
+            "string14": "Scoreboard",
+            "string15": "Scoreboard control"
         }
     },
     "tournamentCalendar": {
