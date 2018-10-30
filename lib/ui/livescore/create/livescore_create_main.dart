@@ -21,11 +21,10 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
   TextEditingController _matchTimeController = TextEditingController();
   LivescoreData _match;
   bool _saving = false;
-
+  
   @override
   void initState() {
     super.initState();
-
     if (widget.match != null) {
       _match = widget.match;
     } else {
@@ -40,6 +39,7 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
 
     _matchDateController.text = DateTimeHelpers.ddmmyyyy(_match.matchDate);
     _matchTimeController.text = DateTimeHelpers.hhnn(_match.matchDate);
+    // _init();
   }
 
   @override
@@ -215,8 +215,10 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                               });
 
                               _formState.currentState.save();
-                              await _match.save();
 
+                              await _match.save();
+                              // await LivescoreSharedPref.setPlayerNames(
+                              //     _match.getNamesAsList());
                               Navigator.of(context).pop();
                             }
                           },

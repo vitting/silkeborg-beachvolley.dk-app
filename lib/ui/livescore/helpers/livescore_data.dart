@@ -182,6 +182,15 @@ class LivescoreData implements BaseData {
     };
   }
 
+  List<String> getNamesAsList() {
+    return [
+      namePlayer1Team1,
+      namePlayer2Team1,
+      namePlayer1Team2,
+      namePlayer2Team2
+    ];
+  }
+
   String matchDateFormatted(BuildContext context) {
     return DateTimeHelpers.ddMMyyyy(context, matchDate);
   }
