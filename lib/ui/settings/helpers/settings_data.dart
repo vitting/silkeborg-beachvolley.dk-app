@@ -12,6 +12,8 @@ class SettingsData {
   bool notificationsShowNews;
   bool notificationsShowEvent;
   bool notificationsShowPlay;
+  bool livescorePublicBoardKeepScreenOn;
+  bool livescoreControlBoardKeepScreenOn;
 
   SettingsData(
       {this.showWeather = true,
@@ -19,7 +21,9 @@ class SettingsData {
       this.sex = "male",
       this.notificationsShowNews = true,
       this.notificationsShowPlay = true,
-      this.notificationsShowEvent = true});
+      this.notificationsShowEvent = true,
+      this.livescorePublicBoardKeepScreenOn = true,
+      this.livescoreControlBoardKeepScreenOn = true});
 
   Map<String, dynamic> toMap() {
     return {
@@ -28,7 +32,9 @@ class SettingsData {
       "sex": sex,
       "notificationsShowNews": notificationsShowNews,
       "notificationsShowEvent": notificationsShowEvent,
-      "notificationsShowPlay": notificationsShowPlay
+      "notificationsShowPlay": notificationsShowPlay,
+      "livescorePublicBoardKeepScreenOn": livescorePublicBoardKeepScreenOn,
+      "livescoreControlBoardKeepScreenOn": livescoreControlBoardKeepScreenOn
     };
   }
 
@@ -39,7 +45,11 @@ class SettingsData {
         sex: item["sex"] ?? "",
         notificationsShowNews: item["notificationsShowNews"] ?? true,
         notificationsShowEvent: item["notificationsShowEvent"] ?? true,
-        notificationsShowPlay: item["notificationsShowPlay"] ?? true);
+        notificationsShowPlay: item["notificationsShowPlay"] ?? true,
+        livescorePublicBoardKeepScreenOn:
+            item["livescorePublicBoardKeepScreenOn"] ?? true,
+        livescoreControlBoardKeepScreenOn:
+            item["livescoreControlBoardKeepScreenOn"] ?? true);
   }
 
   Future<void> save() async {
@@ -57,6 +67,7 @@ class SettingsData {
           photoUrl: Home.loggedInUser.photoUrl);
     }
 
+    Home.settings = this;
     data.save();
 
     return SettingsFirestore.saveSettings(this, Home.loggedInUser.uid);

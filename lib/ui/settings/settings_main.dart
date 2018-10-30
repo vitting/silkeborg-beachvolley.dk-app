@@ -24,6 +24,8 @@ class SettingsState extends State<Settings> {
   bool _notificationsNews = false;
   bool _notificationsEvent = false;
   bool _notificationsPlay = false;
+  bool _livescorePublicBoardKeepScreenOn = true;
+  bool _livescoreControlBoardKeepScreenOn = true;
   TextEditingController _rankingNameController = TextEditingController();
   String _rankingNameError;
   Color _rankingNameColor;
@@ -54,13 +56,18 @@ class SettingsState extends State<Settings> {
         }
 
         _sexValue = _settingsData.sex;
+
+        _livescorePublicBoardKeepScreenOn = _settingsData.livescorePublicBoardKeepScreenOn;
+        _livescoreControlBoardKeepScreenOn = _settingsData.livescoreControlBoardKeepScreenOn;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SilkeborgBeachvolleyScaffold(title: FlutterI18n.translate(context, "settings.settingsMain.title"), body: _main(context));
+    return SilkeborgBeachvolleyScaffold(
+        title: FlutterI18n.translate(context, "settings.settingsMain.title"),
+        body: _main(context));
   }
 
   _main(BuildContext context) {
@@ -72,7 +79,9 @@ class SettingsState extends State<Settings> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  ChipHeader(FlutterI18n.translate(context, "settings.settingsMain.string1"),
+                  ChipHeader(
+                      FlutterI18n.translate(
+                          context, "settings.settingsMain.string1"),
                       expanded: true,
                       backgroundColor: Color(0xffaaacb5),
                       fontSize: 16.0,
@@ -87,7 +96,9 @@ class SettingsState extends State<Settings> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  ChipHeader(FlutterI18n.translate(context, "settings.settingsMain.string2"),
+                  ChipHeader(
+                      FlutterI18n.translate(
+                          context, "settings.settingsMain.string2"),
                       expanded: true,
                       backgroundColor: Color(0xffaaacb5),
                       fontSize: 16.0,
@@ -101,7 +112,9 @@ class SettingsState extends State<Settings> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                ChipHeader(FlutterI18n.translate(context, "settings.settingsMain.string3"),
+                ChipHeader(
+                    FlutterI18n.translate(
+                        context, "settings.settingsMain.string3"),
                     expanded: true,
                     backgroundColor: Color(0xffaaacb5),
                     fontSize: 16.0,
@@ -114,7 +127,24 @@ class SettingsState extends State<Settings> {
                     padding: EdgeInsets.symmetric(horizontal: 15.0)),
               ],
             ),
-          )
+          ),
+          Card(
+            child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  ChipHeader(
+                      FlutterI18n.translate(
+                          context, "settings.settingsMain.string13"),
+                      expanded: true,
+                      backgroundColor: Color(0xffaaacb5),
+                      fontSize: 16.0,
+                      roundedCorners: false),
+                  _livescore(context),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -133,7 +163,8 @@ class SettingsState extends State<Settings> {
         }
       },
       value: _showWeatherState,
-      title: Text(FlutterI18n.translate(context, "settings.settingsMain.string4")),
+      title:
+          Text(FlutterI18n.translate(context, "settings.settingsMain.string4")),
     );
   }
 
@@ -157,7 +188,8 @@ class SettingsState extends State<Settings> {
             }
           },
           value: _notificationsNews,
-          title: Text(FlutterI18n.translate(context, "settings.settingsMain.string5")),
+          title: Text(
+              FlutterI18n.translate(context, "settings.settingsMain.string5")),
         ),
         SwitchListTile(
           onChanged: (bool state) {
@@ -176,7 +208,8 @@ class SettingsState extends State<Settings> {
             }
           },
           value: _notificationsEvent,
-          title: Text(FlutterI18n.translate(context, "settings.settingsMain.string6")),
+          title: Text(
+              FlutterI18n.translate(context, "settings.settingsMain.string6")),
         ),
         SwitchListTile(
           onChanged: (bool state) {
@@ -195,7 +228,8 @@ class SettingsState extends State<Settings> {
             }
           },
           value: _notificationsPlay,
-          title: Text(FlutterI18n.translate(context, "settings.settingsMain.string7")),
+          title: Text(
+              FlutterI18n.translate(context, "settings.settingsMain.string7")),
         )
       ],
     );
@@ -208,13 +242,15 @@ class SettingsState extends State<Settings> {
       inputFormatters: [LengthLimitingTextInputFormatter(50)],
       decoration: InputDecoration(
           errorText: _rankingNameError,
-          labelText: FlutterI18n.translate(context, "settings.settingsMain.string8"),
+          labelText:
+              FlutterI18n.translate(context, "settings.settingsMain.string8"),
           suffixIcon: Icon(Icons.check_circle, color: _rankingNameColor)),
       onSubmitted: (String value) {
         String error;
         Color color = Colors.green;
         if (value.isEmpty) {
-          error = FlutterI18n.translate(context, "settings.settingsMain.string9");
+          error =
+              FlutterI18n.translate(context, "settings.settingsMain.string9");
           color = Colors.red;
         } else {
           _settingsData.rankingName = value;
@@ -238,9 +274,18 @@ class SettingsState extends State<Settings> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(FlutterI18n.translate(context, "settings.settingsMain.string12"), style: TextStyle(fontSize: 16.0)),
-            _sexElement(FlutterI18n.translate(context, "settings.settingsMain.string10"), "female"),
-            _sexElement(FlutterI18n.translate(context, "settings.settingsMain.string11"), "male")
+            Text(
+                FlutterI18n.translate(
+                    context, "settings.settingsMain.string12"),
+                style: TextStyle(fontSize: 16.0)),
+            _sexElement(
+                FlutterI18n.translate(
+                    context, "settings.settingsMain.string10"),
+                "female"),
+            _sexElement(
+                FlutterI18n.translate(
+                    context, "settings.settingsMain.string11"),
+                "male")
           ],
         ),
       ],
@@ -266,5 +311,40 @@ class SettingsState extends State<Settings> {
         Text(text),
       ],
     );
+  }
+
+  Widget _livescore(BuildContext context) {
+    return Column(children: <Widget>[
+      SwitchListTile(
+        onChanged: (bool state) {
+          _settingsData.livescorePublicBoardKeepScreenOn = state;
+          _settingsData.save();
+          
+          if (mounted) {
+            setState(() {
+              _livescorePublicBoardKeepScreenOn = state;
+            });
+          }
+        },
+        value: _livescorePublicBoardKeepScreenOn,
+        title: Text(
+            FlutterI18n.translate(context, "settings.settingsMain.string14")),
+      ),
+      SwitchListTile(
+        onChanged: (bool state) {
+          _settingsData.livescoreControlBoardKeepScreenOn = state;
+          _settingsData.save();
+          
+          if (mounted) {
+            setState(() {
+              _livescoreControlBoardKeepScreenOn = state;
+            });
+          }
+        },
+        value: _livescoreControlBoardKeepScreenOn,
+        title: Text(
+            FlutterI18n.translate(context, "settings.settingsMain.string15")),
+      )
+    ]);
   }
 }
