@@ -82,7 +82,7 @@ class _EnrollmentState extends State<Enrollment> {
   }
 
   Widget _actionMenu(BuildContext context) {
-    Widget menu;
+    Widget menu = Container();
 
     if (Home.loggedInUser != null) {
       menu = PopupMenuButton<int>(
