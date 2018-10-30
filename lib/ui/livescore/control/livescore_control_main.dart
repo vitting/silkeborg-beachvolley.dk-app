@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
+import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/control/helpers/livescore_controls_widget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_data.dart';
@@ -37,6 +38,9 @@ class _LivescoreControlState extends State<LivescoreControl> {
   @override
   void initState() {
     super.initState();
+    Home.settings.livescoreControlBoardKeepScreenOn
+        ? SystemHelpers.setScreenOn()
+        : SystemHelpers.setScreenOff();
   }
 
   @override
@@ -47,6 +51,7 @@ class _LivescoreControlState extends State<LivescoreControl> {
 
   @override
   void dispose() {
+    SystemHelpers.setScreenOff();
     _messageStreamController.close();
     super.dispose();
   }

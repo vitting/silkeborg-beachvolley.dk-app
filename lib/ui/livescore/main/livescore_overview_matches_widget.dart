@@ -55,6 +55,7 @@ class LivescoreOverviewMatches extends StatelessWidget {
                         fullscreenDialog: true,
                         builder: (BuildContext context) => LivescorePublicBoard(
                               livescoreId: selectedMatch.id,
+                              checkForScreenOn: true,
                             )));
                   },
                 );
@@ -93,7 +94,7 @@ class LivescoreOverviewMatches extends StatelessWidget {
                 LivescoreData match = LivescoreData.fromMap(doc.data);
                 return LivescoreMatchRow(
                   match: match,
-                  isMatchAdmin: match.userId == Home.loggedInUser.uid,
+                  isMatchAdmin: Home.loggedInUser != null ? match.userId == Home.loggedInUser.uid : false,
                   isLive: false,
                   onLongPressRow: (LivescoreData selectedMatch) {
                     _onLongPressRow(context, selectedMatch);
@@ -103,6 +104,7 @@ class LivescoreOverviewMatches extends StatelessWidget {
                         fullscreenDialog: true,
                         builder: (BuildContext context) => LivescorePublicBoard(
                               livescoreId: selectedMatch.id,
+                              checkForScreenOn: true,
                             )));
                   },
                   onTapRowSettings: (LivescoreData selectedMatch) {
