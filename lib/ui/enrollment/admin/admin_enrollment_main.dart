@@ -18,6 +18,7 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
   static String routeName = "admin_enrollment";
   List<EnrollmentUserData> _data = [];
   List<EnrollmentUserData> _dataCache = [];
+  CrossFadeState _showSearchState = CrossFadeState.showFirst;
 
   @override
   void initState() {
@@ -37,39 +38,90 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: FlutterI18n.translate(context, "enrollment.adminEnrollmentMain.title"),
+      title: FlutterI18n.translate(
+          context, "enrollment.adminEnrollmentMain.title"),
       body: _main(),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () {
+            setState(() {
+              if (_showSearchState == CrossFadeState.showFirst) {
+                 _showSearchState = CrossFadeState.showSecond;
+              } else {
+                 _showSearchState = CrossFadeState.showFirst;
+              }
+              
+            });
+          },
+        )
+      ],
     );
   }
 
   Widget _main() {
     return Container(
-      child: Scrollbar(
-        child: ListView.builder(
-          shrinkWrap: false,
-          itemCount: _data.length + 1,
-          itemBuilder: (BuildContext context, int position) {
-            if (position == 0) {
-              return SearchBar(
-                searchValue: _search,
-              );
-            }
-
-            EnrollmentUserData item = _data[position - 1];
-            return GestureDetector(
-              child: _row(context, item),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    fullscreenDialog: true,
-                    builder: (BuildContext context) =>
-                        EnrollmentDetail(enrollment: item)));
-              }
-            );
-          },
-        ),
+      child: ListView(
+        children: <Widget>[
+          AnimatedCrossFade(
+            crossFadeState: _showSearchState,
+            duration: Duration(milliseconds: 400),
+            firstChild: Container(),
+            secondChild: SearchBar(
+            searchValue: _search,
+          ),
+          ),
+          Scrollbar(
+            child: ListView.builder(
+              primary: false,
+              shrinkWrap: true,
+              itemCount: _data.length,
+              itemBuilder: (BuildContext context, int position) {
+                EnrollmentUserData item = _data[position];
+                return GestureDetector(
+                    child: _row(context, item),
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          fullscreenDialog: true,
+                          builder: (BuildContext context) =>
+                              EnrollmentDetail(enrollment: item)));
+                    });
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
+
+  // Widget _main() {
+  //   return Container(
+  //     child: Scrollbar(
+  //       child: ListView.builder(
+  //         shrinkWrap: false,
+  //         itemCount: _data.length + 1,
+  //         itemBuilder: (BuildContext context, int position) {
+  //           if (position == 0) {
+  //             return SearchBar(
+  //               searchValue: _search,
+  //             );
+  //           }
+
+  //           EnrollmentUserData item = _data[position - 1];
+  //           return GestureDetector(
+  //             child: _row(context, item),
+  //             onTap: () {
+  //               Navigator.of(context).push(MaterialPageRoute(
+  //                   fullscreenDialog: true,
+  //                   builder: (BuildContext context) =>
+  //                       EnrollmentDetail(enrollment: item)));
+  //             }
+  //           );
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _row(BuildContext context, EnrollmentUserData item) {
     return ListItemCard(
@@ -78,24 +130,24 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(DateTimeHelpers.ddmmyyyyHHnn(item.creationDate.toDate())),
-          Text(item.name, style: TextStyle(fontWeight: FontWeight.bold)),
-          Text(item.street),
-          Text("${item.postalCode.toString()} ${item.city}")
-        ],
-      ),
-      Row(
-        children: <Widget>[
-          IconButton(
-            icon: Icon(Icons.more_horiz),
-            onPressed: () {
-              _popupMenu(context, item);
-            },
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(DateTimeHelpers.ddmmyyyyHHnn(item.creationDate.toDate())),
+              Text(item.name, style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(item.street),
+              Text("${item.postalCode.toString()} ${item.city}")
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.more_horiz),
+                onPressed: () {
+                  _popupMenu(context, item);
+                },
+              )
+            ],
           )
-        ],
-      )
         ],
       ),
     );
@@ -128,7 +180,8 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     ListTile(
-                      title: Text(FlutterI18n.translate(context, "enrollment.adminEnrollmentMain.string1")),
+                      title: Text(FlutterI18n.translate(
+                          context, "enrollment.adminEnrollmentMain.string1")),
                       leading: Icon(Icons.edit),
                       onTap: () {
                         Navigator.of(contextModal)

@@ -13,6 +13,7 @@ import 'package:silkeborgbeachvolley/ui/settings/settings_main.dart';
 import 'package:silkeborgbeachvolley/ui/test.dart';
 import 'package:silkeborgbeachvolley/ui/tournament_calendar/main/tournament_calendar_main.dart';
 import 'package:silkeborgbeachvolley/ui/users/admin/admin_users_main.dart';
+import 'package:silkeborgbeachvolley/ui/write_to_sbv/write_to_main.dart';
 
 class MainMaterialApp extends StatefulWidget {
   @override
@@ -44,6 +45,7 @@ class _MainMaterialAppState extends State<MainMaterialApp> {
         Login.routeName: (BuildContext context) => Login(),
         Settings.routeName: (BuildContext context) => Settings(),
         Ranking.routeName: (BuildContext context) => Ranking(),
+        WriteTo.routeName: (BuildContext context) => WriteTo(),
         AdminRanking.routeName: (BuildContext context) => AdminRanking(),
         AdminUsers.routeName: (BuildContext context) => AdminUsers(),
         TournamentCalendar.routeName: (BuildContext context) =>
