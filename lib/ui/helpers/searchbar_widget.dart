@@ -25,6 +25,11 @@ class _SearchBarState extends State<SearchBar> {
     return Container(
       padding: EdgeInsets.all(10.0),
       child: TextField(
+        onSubmitted: (String value) {
+          _search(_searchController.text.trim().toLowerCase());
+        },
+        textInputAction: TextInputAction.search,
+        keyboardType: TextInputType.text,
         onChanged: (String value) {
           if (value.isNotEmpty && _showSearchClearButton == false) {
             setState(() {
@@ -39,7 +44,6 @@ class _SearchBarState extends State<SearchBar> {
           color: Colors.white
         ),
         decoration: InputDecoration(
-
           fillColor: Colors.blueAccent,
           filled: true,
             suffixIcon: Row(
