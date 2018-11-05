@@ -1,4 +1,4 @@
-# silkeborgbeachvolley
+# Demo App for Silkeborg Beachvolley
 
 A new Flutter project.
 

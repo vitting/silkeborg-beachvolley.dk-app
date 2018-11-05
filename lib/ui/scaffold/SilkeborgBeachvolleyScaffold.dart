@@ -9,12 +9,14 @@ class SilkeborgBeachvolleyScaffold extends StatefulWidget {
   final List<Widget> actions;
   final bool showDrawer;
   final bool showAppBar;
+  final Color appBarBackgroundColor;
   const SilkeborgBeachvolleyScaffold(
       {this.title,
       @required this.body,
       this.floatingActionButton,
       this.bottomNavigationBar,
       this.showDrawer = false,
+      this.appBarBackgroundColor,
       this.actions = const [],
       this.showAppBar = true});
   @override
@@ -29,6 +31,7 @@ class _SilkeborgBeachvolleyScaffoldState
     return Scaffold(
         appBar: widget.showAppBar
             ? AppBar(
+                backgroundColor: widget.appBarBackgroundColor,
                 title: Text(widget.title),
                 centerTitle: false,
                 actions: widget.actions)

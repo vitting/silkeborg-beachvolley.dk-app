@@ -363,7 +363,8 @@
             "string7": "Administrere Medlemmer",
             "string8": "Administrere Ranglisten",
             "string9": "Administrere Brugere",
-            "string10": "Kontakt os"
+            "string10": "Kontakt os",
+            "string11": "Administrere beskeder til os"
         }
     },
     "settings": {

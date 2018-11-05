@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:screen/screen.dart';
@@ -26,5 +26,26 @@ class SystemHelpers {
     if (isScreenOn == true) {
       Screen.keepOn(false);
     }
+  }
+
+  static Future<Null> showNavigationButtons(bool show) {
+    if (show) {
+      return SystemChrome.setEnabledSystemUIOverlays(
+          [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    } else {
+      return SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
+    }
+  }
+
+  static Future<Map<String, dynamic>> getConfig(BuildContext context) async {
+    Map<String, dynamic> config;
+    try {
+      String data = await DefaultAssetBundle.of(context).loadString("assets/files/config.json");
+      config = json.decode(data);
+    } catch (e) {
+      print(e);
+    }
+
+    return config;
   }
 }

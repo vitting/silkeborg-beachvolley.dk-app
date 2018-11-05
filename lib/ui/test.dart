@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/ui/livescore/create/helpers/livescore_sharedpref.dart';
+import 'dart:convert';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 List<String> names = [
@@ -17,16 +17,11 @@ class TestWidget extends StatefulWidget {
 }
 
 class _TestWidgetState extends State<TestWidget> {
-  GlobalKey<FormState> _formState = GlobalKey<FormState>();
+  // GlobalKey<FormState> _formState = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
-    _init();
-  }
-
-  _init() async {
-    List<String> names2 = await LivescoreSharedPref.getPlayerNames();
-    print(names2);
+  
   }
 
   @override
@@ -36,29 +31,18 @@ class _TestWidgetState extends State<TestWidget> {
         body: Column(
           children: <Widget>[
             RaisedButton(
-              onPressed: () {},
+              onPressed: () async {
+                try {
+                String data = await DefaultAssetBundle.of(context).loadString("assets/files/config2.json");
+                Map<String, dynamic> jsonData = json.decode(data);
+                print(jsonData["mail"]);  
+                } catch (e) {
+                  print(e);
+                }
+                
+              },
               child: Text("TEST"),
-            ),
-           Form(
-             key: _formState,
-             child: Column(
-               children: <Widget>[
-                 Stack(
-               children: <Widget>[
-                 TextFormField(
-                   initialValue: "",
-                   onSaved: (String value) {
-                     print("SAVE: $value");
-                   },
-                   validator: (String value) {
-                     if (value.isEmpty) return "Der er en fejl";
-                   },
-                 )
-               ],
-             ),
-               ],
-             )
-           )
+            )
           ],
         ));
   }

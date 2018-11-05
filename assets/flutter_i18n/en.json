@@ -363,7 +363,8 @@
             "string7": "Manage members",
             "string8": "Manage ranking",
             "string9": "Manage users",
-            "string10": "Contact us"
+            "string10": "Contact us",
+            "string11": "Manage messages"
         }
     },
     "settings": {

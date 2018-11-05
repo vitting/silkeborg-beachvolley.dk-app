@@ -30,9 +30,9 @@ dependencies:
   http: ^0.11.3+17
   url_launcher: ^4.0.1
   vibrate: ^0.0.4
-  connectivity: ^0.3.2
+  # connectivity: ^0.3.2
   screen: ^0.0.4
-  # flutter_typeahead: ^0.4.1
+  mailer: ^2.0.2
   flutter:
     sdk: flutter
 
@@ -66,6 +66,7 @@ flutter:
   assets:
    - assets/images/
    - assets/flutter_i18n/
+   - assets/files/config.json
    
   #  - images/a_dot_ham.jpeg
 
