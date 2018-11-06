@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/main_material_app.dart';
 
 void main() async {
@@ -13,5 +14,8 @@ void main() async {
   final Firestore firestore = Firestore(app: app);
   await firestore.settings(timestampsInSnapshotsEnabled: true);
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(MainMaterialApp());
+  runApp(MainInherited(
+    child: MainMaterialApp(),
+    mode: SystemMode.debug,
+  ));
 }
