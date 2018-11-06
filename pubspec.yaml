@@ -3,31 +3,31 @@ description: A Silkeborg Beachvolley project.
  
 dependencies:
   validate: ^1.7.0
-  flutter_i18n: ^0.2.0
+  flutter_i18n: ^0.4.0
   # intl: ^0.15.7
   flutter_facebook_login: ^1.1.1
   # google_sign_in: ^3.2.1
   firebase_auth: ^0.6.2+1
   firebase_core: ^0.2.5+1
-  cloud_firestore: ^0.8.1+1
-  cloud_functions: ^0.0.4
-  firebase_messaging: ^2.0.1
+  cloud_firestore: ^0.8.2+1
+  cloud_functions: ^0.0.4+1
+  firebase_messaging: ^2.0.3
   shared_preferences: ^0.4.3
   uuid: ^1.0.3
   date_format: ^1.0.5
-  font_awesome_flutter: ^8.0.1
+  font_awesome_flutter: ^8.1.0
   image: ^2.0.4
   image_picker: ^0.4.10
   path_provider: ^0.4.1
   firebase_storage: ^1.0.4
-  cached_network_image: ^0.4.2
+  cached_network_image: ^0.5.0
   transparent_image: ^0.1.0
   rxdart: ^0.19.0
   faker: ^1.0.0
   dots_indicator: ^0.0.4
-  photo_view: ^0.0.8
-  charts_flutter: ^0.4.0
-  http: ^0.11.3+17
+  photo_view: ^0.0.10
+  charts_flutter: ^0.5.0
+  http: ^0.12.0
   url_launcher: ^4.0.1
   vibrate: ^0.0.4
   # connectivity: ^0.3.2

@@ -3,10 +3,9 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
-import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/user_firestore.dart';
 
-class UserInfoData implements BaseData {
+class UserInfoData {
   String id;
   String name;
   String email;
@@ -100,13 +99,7 @@ class UserInfoData implements BaseData {
         admin2: user["admin2"] ?? false);
   }
 
-  @override
   Future<void> delete() {
     return UserFirestore.deleteUser(id);
-  }
-
-  @override
-  Future<void> save() async {
-    // TODO: implement save
   }
 }
