@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
@@ -33,17 +34,19 @@ class WriteToCreateState extends State<WriteToCreate> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: "Skriv til os",
+      title: FlutterI18n.translate(context, "writeTo.writeToCreateMain.title"),
       body: Card(
           child: Container(
         padding: EdgeInsets.all(10.0),
-        child: Form(
+        child: ListView(
+          children: <Widget>[
+            Form(
           key: _formKey,
-          child: ListView(
+          child: Column(
             children: <Widget>[
               TextFormField(
                 initialValue: _writeToData.fromName,
-                decoration: InputDecoration(labelText: "Dit navn"),
+                decoration: InputDecoration(labelText: FlutterI18n.translate(context, "writeTo.writeToCreateMain.string1")),
                 inputFormatters: [LengthLimitingTextInputFormatter(50)],
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
@@ -51,13 +54,13 @@ class WriteToCreateState extends State<WriteToCreate> {
                   _writeToData.fromName = value;
                 },
                 validator: (String value) {
-                  if (value.isEmpty) return "Udfyld dit navn";
+                  if (value.isEmpty) return FlutterI18n.translate(context, "writeTo.writeToCreateMain.string2");
                 },
               ),
               Home.loggedInUser == null
                   ? TextFormField(
                       initialValue: _writeToData.fromEmail,
-                      decoration: InputDecoration(labelText: "E-mail"),
+                      decoration: InputDecoration(labelText: FlutterI18n.translate(context, "writeTo.writeToCreateMain.string3")),
                       inputFormatters: [LengthLimitingTextInputFormatter(50)],
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
@@ -65,11 +68,11 @@ class WriteToCreateState extends State<WriteToCreate> {
                         _writeToData.fromEmail = value;
                       },
                       validator: (String value) {
-                        if (value.isEmpty) return "Udfyld e-mail";
+                        if (value.isEmpty) return FlutterI18n.translate(context, "writeTo.writeToCreateMain.string4");
                         try {
                           Validate.isEmail(value.trim());
                         } catch (e) {
-                          return "E-mail er ikke valid";
+                          return FlutterI18n.translate(context, "writeTo.writeToCreateMain.string5");
                         }
                       },
                     )
@@ -77,19 +80,19 @@ class WriteToCreateState extends State<WriteToCreate> {
               TextFormField(
                 maxLines: 10,
                 initialValue: _writeToData.message,
-                decoration: InputDecoration(labelText: "Din besked"),
+                decoration: InputDecoration(labelText: FlutterI18n.translate(context, "writeTo.writeToCreateMain.string6")),
                 maxLength: 1000,
                 onSaved: (String value) {
                   _writeToData.message = value;
                 },
                 validator: (String value) {
-                  if (value.isEmpty) return "Udfyld besked";
+                  if (value.isEmpty) return FlutterI18n.translate(context, "writeTo.writeToCreateMain.string7");
                 },
               ),
               FlatButton.icon(
                 textColor: SilkeborgBeachvolleyTheme.buttonTextColor,
                 icon: Icon(Icons.send),
-                label: Text("Send besked"),
+                label: Text(FlutterI18n.translate(context, "writeTo.writeToCreateMain.string8")),
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
@@ -100,7 +103,9 @@ class WriteToCreateState extends State<WriteToCreate> {
               )
             ],
           ),
-        ),
+        )
+          ],
+        )
       )),
     );
   }

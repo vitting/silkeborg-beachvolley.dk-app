@@ -129,7 +129,7 @@
             "string3": "Date member is created",
             "string4": "Member name",
             "string5": "Member address",
-            "string6": "Member e-mail address",
+            "string6": "Member email address",
             "string7": "Member mobile number",
             "string8": "Year",
             "string9": "Member date and age",
@@ -164,7 +164,7 @@
             "string3": "It has already been created",
             "string4": "more members",
             "string5": "one member",
-            "string6": "with the specified e-mail address",
+            "string6": "with the specified email address",
             "string7": " and ",
             "string8": " with the specified mobile number"
         },
@@ -183,9 +183,9 @@
             "string12": "Press the button and use the calendar",
             "string13": "Fill out date of birth",
             "string14": "Fill out date of birth in the format dd-mm-yyyy",
-            "string15": "E-mail",
-            "string16": "Fill out e-mail addresse",
-            "string17": "Enter a valid e-mail address",
+            "string15": "Email",
+            "string16": "Fill out email addresse",
+            "string17": "Enter a valid email address",
             "string18": "Mobile number",
             "string19": "Fill out mobile number"
         },
@@ -198,7 +198,7 @@
             "string2": "Creation date",
             "string3": "Name",
             "string4": "Address",
-            "string5": "E-mail",
+            "string5": "Email",
             "string6": "Mobile phone",
             "string7": "Date of birth"
         },
@@ -237,7 +237,8 @@
             "string2": "Sign in with Facebook",
             "string3": "The fine print - You must log in with your Facebook account to be able to use this app. We do not ask for any special permissions from Facebook as we only need your name and profile picture. We can post anything on your behalf and don't have access to your photos and friends.",
             "string4": "If you only want to use this app to enroll in Silkeborg Beachvolley then press below.",
-            "string5": "Enrollment in Silkeborg Beachvolley"
+            "string5": "Enrollment in Silkeborg Beachvolley",
+            "string6": "Contact us"
         }
     },
     "ranking": {
@@ -511,6 +512,68 @@
             "string4": "Administrator 2",
             "string5": "User id",
             "string6": "Close"
+        }
+    },
+    "writeTo": {
+        "adminWriteToCreateMain": {
+            "title1": "Write email",
+            "title2": "Write message",
+            "string1": "Send message",
+            "string2": "Name",
+            "string3": "Fill out name",
+            "string4": "Subject",
+            "string5": "Fill out subject",
+            "string6": "Email",
+            "string7": "Fill out email",
+            "string8": "Enter a valid email address",
+            "string9": "Message",
+            "string10": "Fill out message",
+            "string11": "Send email",
+            "string12": "Send message",
+            "string13": "Choose user"
+        },
+        "adminWriteToDetailMain": {
+            "title1": "Send message",
+            "title2": "Send email",
+            "string1": "Ups! An error occurred.",
+            "string2": "Answer from Silkeborg Beachvolley"
+        },
+        "adminWriteToMain": {
+            "title": "Messages",
+            "string1": "No messages were found",
+            "string2": "Delete",
+            "string3": "Do you want to delete the message?"
+        },
+        "writeToCreateMain": {
+            "title": "Contact us",
+            "string1": "Your name",
+            "string2": "Fill out name",
+            "string3": "Email",
+            "string4": "Fill out email",
+            "string5": "Enter a valid email address",
+            "string6": "Message",
+            "string7": "Fill out message",
+            "string8": "Send message"
+        },
+        "writeToDetailMain": {
+            "title": "Message"
+        },
+        "writeToCreateFabWidget": {
+            "string1": "New message",
+            "string2": "New email",
+            "string3": "New message"
+        },
+        "writeToRow": {
+            "string1": "Email to",
+            "string2": "Message to",
+            "string3": "Message from"
+        },
+        "writeToTextfieldWidget": {
+            "string1": "Message"
+        },
+        "writeToMain": {
+            "title": "Your messages",
+            "string1": "No messages were found"
         }
     }
 }

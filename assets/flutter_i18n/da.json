@@ -237,7 +237,8 @@
             "string2": "Log ind med Facebook",
             "string3": "Det med småt - Du skal logge ind med din Facebook konto for at kunne bruge denne app. Vi beder ikke om nogen specille tilladelser fra Facebook da vi kun skal bruge dit navn og profil billede. Dvs. vi kan ikke slå noget op på vegne af dig eller har adgang til dine billeder og venner.",
             "string4": "Hvis du kun vil bruge denne app til at melde dig ind i Silkeborg Beachvolley så tryk herunder.",
-            "string5": "Indmeldelse i Silkeborg Beachvolley"
+            "string5": "Indmeldelse i Silkeborg Beachvolley",
+            "string6": "Skriv til os"
         }
     },
     "ranking": {
@@ -511,6 +512,68 @@
             "string4": "Administrator 2",
             "string5": "Bruger id",
             "string6": "Luk"
+        }
+    },
+    "writeTo": {
+        "adminWriteToCreateMain": {
+            "title1": "Skriv e-mail",
+            "title2": "Skriv besked",
+            "string1": "Sender besked",
+            "string2": "Navn",
+            "string3": "Udfyld navn",
+            "string4": "Emne",
+            "string5": "Udfyld emne",
+            "string6": "E-mail",
+            "string7": "Udfyld e-mail",
+            "string8": "E-mail er ikke valid",
+            "string9": "Din besked",
+            "string10": "Udfyld besked",
+            "string11": "Send e-mail",
+            "string12": "Send besked",
+            "string13": "Vælg bruger"
+        },
+        "adminWriteToDetailMain": {
+            "title1": "Send besked",
+            "title2": "Send e-mail",
+            "string1": "Ups der skete en fejl.",
+            "string2": "Svar fra Silkeborg Beachvolley"
+        },
+        "adminWriteToMain": {
+            "title": "Beskeder",
+            "string1": "Der blev ikke fundet nogen beskeder",
+            "string2": "Slet",
+            "string3": "Vil du slette beskeden?"
+        },
+        "writeToCreateMain": {
+            "title": "Skriv til os",
+            "string1": "Dit navn",
+            "string2": "Udfyld dit navn",
+            "string3": "E-mail",
+            "string4": "Udfyld e-mail",
+            "string5": "E-mail er ikke valid",
+            "string6": "Din besked",
+            "string7": "Udfyld besked",
+            "string8": "Send besked"
+        },
+        "writeToDetailMain": {
+            "title": "Besked"
+        },
+        "writeToCreateFabWidget": {
+            "string1": "Ny besked",
+            "string2": "Ny e-mail",
+            "string3": "Ny besked"
+        },
+        "writeToRow": {
+            "string1": "E-mail til",
+            "string2": "Besked til",
+            "string3": "Besked fra"
+        },
+        "writeToTextfieldWidget": {
+            "string1": "Besked"
+        },
+        "writeToMain": {
+            "title": "Mine beskeder",
+            "string1": "Der blev ikke fundet nogen beskeder"
         }
     }
 }

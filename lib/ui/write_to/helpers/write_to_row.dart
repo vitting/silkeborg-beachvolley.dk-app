@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_data.dart';
@@ -26,7 +27,7 @@ class WriteToRow extends StatelessWidget {
         onRowTap(item);
       },
       title: Column(
-        children: <Widget>[_title(), _titleStatusIcons()],
+        children: <Widget>[_title(), _titleStatusIcons(context)],
       ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,13 +108,13 @@ class WriteToRow extends StatelessWidget {
     );
   }
 
-  Widget _titleStatusIcons() {
+  Widget _titleStatusIcons(BuildContext context) {
     final double fontSize = 14.0;
     Widget value = Container();
     if (showStatusIcons) {
       if (item.type == "mail") {
         return Tooltip(
-          message: "E-mail til",
+          message: FlutterI18n.translate(context, "writeTo.writeToRow.string1"),
           child: Row(
             children: <Widget>[
               Icon(Icons.arrow_forward, size: fontSize, color: Colors.blueGrey),
@@ -125,7 +126,7 @@ class WriteToRow extends StatelessWidget {
 
       if (item.type == "message") {
         return Tooltip(
-          message: "Besked til",
+          message: FlutterI18n.translate(context, "writeTo.writeToRow.string2"),
           child: Row(
             children: <Widget>[
               Icon(Icons.arrow_forward, size: fontSize, color: Colors.blueGrey),
@@ -137,7 +138,7 @@ class WriteToRow extends StatelessWidget {
 
       if (item.type == "public") {
         return Tooltip(
-          message: "Besked fra",
+          message: FlutterI18n.translate(context, "writeTo.writeToRow.string3"),
           child: Row(
             children: <Widget>[
               Icon(Icons.arrow_back, size: fontSize, color: Colors.blueGrey),

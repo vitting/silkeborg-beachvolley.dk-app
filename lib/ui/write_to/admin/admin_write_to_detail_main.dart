@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
@@ -22,14 +23,12 @@ class AdminWriteToDetail extends StatefulWidget {
   }
 }
 
-/// Kan laves om til stateless
-///CHRISTIAN: ANSWER TO public is mail. If fromUserId is not empty then message else mail
 class AdminWriteToDetailState extends State<AdminWriteToDetail> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
         appBarBackgroundColor: Colors.blueGrey[800],
-        title: "Besked",
+        title: _getTitle(),
         body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             return Stack(
@@ -47,7 +46,7 @@ class AdminWriteToDetailState extends State<AdminWriteToDetail> {
                               AsyncSnapshot<QuerySnapshot> snapshotReply) {
                             if (snapshotReply.hasError) {
                               print(snapshotReply.hasError);
-                              return NoData("Ups der skete en fejl.");
+                              return NoData(FlutterI18n.translate(context, "writeTo.adminWriteToDetailMain.string1"));
                             }
                             if (!snapshotReply.hasData) return LoaderSpinner();
 
@@ -114,7 +113,7 @@ class AdminWriteToDetailState extends State<AdminWriteToDetail> {
       final Map<String, dynamic> config =
           await SystemHelpers.getConfig(context);
       WriteToData replyItem = await _save(message, item, config);
-      if (item.fromUserId == null) {
+      if (item.sendToUserId == null) {
         bool sendMailResult = await _sendMail(context, replyItem, config);
         replyItem.setSendEmailStatus(sendMailResult);
       }
@@ -133,7 +132,7 @@ class AdminWriteToDetailState extends State<AdminWriteToDetail> {
       fromPhotoUrl: "locale",
       sendToEmail: item.fromEmail,
       sendToName: item.fromName,
-      sendToEmailSubject: "Svar fra Silkeborg Beachvolley",
+      sendToEmailSubject: FlutterI18n.translate(context, "writeTo.adminWriteToDetailMain.string2"),
       sendToUserId: item.fromUserId,
       message: message.trim(),
     );
@@ -153,7 +152,7 @@ class AdminWriteToDetailState extends State<AdminWriteToDetail> {
     final Address sendToAddress =
         MainInherited.of(context).modeProfile == SystemMode.release
             ? Address(replyItem.sendToEmail)
-            : "cvn_vitting@hotmail.com";
+            : Address("cvn_vitting@hotmail.com");
     final smtpServer = gmail(emailUsername, emailPassword);
     final Message message = Message()
       ..from = fromAddress
@@ -173,6 +172,15 @@ class AdminWriteToDetailState extends State<AdminWriteToDetail> {
               .forEach((problem) => print(problem.msg));
         }
       }
+    }
+
+    return value;
+  }
+
+  String _getTitle() {
+    String value = FlutterI18n.translate(context, "writeTo.adminWriteToDetailMain.title1");
+    if (widget.item.fromUserId == null) {
+      value = FlutterI18n.translate(context, "writeTo.adminWriteToDetailMain.title2");
     }
 
     return value;

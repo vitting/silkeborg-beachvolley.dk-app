@@ -72,7 +72,7 @@ class _WriteToCreateFabState extends State<WriteToCreateFab>
           _close();
           widget.onPressedValue(WriteToCreateFabType.people);
         },
-        tooltip: "Ny besked",
+        tooltip: FlutterI18n.translate(context, "writeTo.writeToCreateFabWidget.string1"),
         child: Icon(Icons.message),
       ),
     );
@@ -87,7 +87,7 @@ class _WriteToCreateFabState extends State<WriteToCreateFab>
           _close();
           widget.onPressedValue(WriteToCreateFabType.mail);
         },
-        tooltip: "Ny e-mail",
+        tooltip: FlutterI18n.translate(context, "writeTo.writeToCreateFabWidget.string2"),
         child: Icon(Icons.mail),
       ),
     );
@@ -110,7 +110,7 @@ class _WriteToCreateFabState extends State<WriteToCreateFab>
           }
           isOpened = !isOpened;
         },
-        tooltip: "Ny besked",
+        tooltip: FlutterI18n.translate(context, "writeTo.writeToCreateFabWidget.string3"),
         child: Icon(Icons.add),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
@@ -24,7 +25,7 @@ class AdminWriteToState extends State<AdminWriteTo> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: "Beskeder",
+      title: FlutterI18n.translate(context, "writeTo.adminWriteToMain.title"),
       floatingActionButton: WriteToCreateFab(
         onPressedValue: (WriteToCreateFabType type) {
           Navigator.of(context).push(MaterialPageRoute(
@@ -38,7 +39,7 @@ class AdminWriteToState extends State<AdminWriteTo> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return LoaderSpinner();
           if (snapshot.hasData && snapshot.data.documents.length == 0)
-            return NoData("Der blev ikke fundet nogen beskeder");
+            return NoData(FlutterI18n.translate(context, "writeTo.adminWriteToMain.string1"));
 
           return ListView.builder(
             itemCount: snapshot.data.documents.length,
@@ -76,11 +77,11 @@ class AdminWriteToState extends State<AdminWriteTo> {
   Future<bool> _deleteMessage(BuildContext context) async {
     bool value = false;
     int result = await Dialogs.modalBottomSheet(
-        context, [DialogsModalBottomSheetItem("Slet", Icons.delete, 0)]);
+        context, [DialogsModalBottomSheetItem(FlutterI18n.translate(context, "writeTo.adminWriteToMain.string2"), Icons.delete, 0)]);
 
     if (result != null && result == 0) {
       ConfirmDialogAction action =
-          await Dialogs.confirmDelete(context, "Vil du slette beskeden?");
+          await Dialogs.confirmDelete(context, FlutterI18n.translate(context, "writeTo.adminWriteToMain.string3"));
 
       if (action != null && action == ConfirmDialogAction.delete) {
         value = true;

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/no_data_widget.dart';
@@ -28,7 +29,7 @@ class WriteToState extends State<WriteTo> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: "Mine beskeder",
+      title: FlutterI18n.translate(context, "writeTo.writeToMain.title"),
       floatingActionButton: FloatingActionButton(
         backgroundColor: SilkeborgBeachvolleyTheme.buttonTextColor,
         onPressed: () {
@@ -43,7 +44,8 @@ class WriteToState extends State<WriteTo> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return LoaderSpinner();
           if (snapshot.hasData && snapshot.data.documents.length == 0)
-            return NoData("Der blev ikke fundet nogen beskeder");
+            return NoData(
+                FlutterI18n.translate(context, "writeTo.writeToMain.string1"));
 
           return ListView.builder(
             itemCount: snapshot.data.documents.length,
@@ -55,13 +57,11 @@ class WriteToState extends State<WriteTo> {
                 item: doc,
                 onRowTap: (WriteToData item) {
                   Navigator.of(context).push(MaterialPageRoute(
-                    fullscreenDialog: true,
-                    builder: (BuildContext context) => WriteToDetail(
-                      item: item,
-                    )
-                  ));
+                      fullscreenDialog: true,
+                      builder: (BuildContext context) => WriteToDetail(
+                            item: item,
+                          )));
                 },
-                
               );
             },
           );

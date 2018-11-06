@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
 
@@ -53,7 +54,7 @@ class WriteToTextfieldState extends State<WriteToTextfield> {
             border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.black, width: 2.0),
             ),
-            hintText: "Besked"
+            hintText: FlutterI18n.translate(context, "writeTo.writeToTextfieldWidget.string1")
             ),
       ),
     );
