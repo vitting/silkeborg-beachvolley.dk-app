@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 enum SystemMode {
   release,
-  debug
+  develop
 }
 
 class MainInherited extends StatefulWidget {

@@ -44,8 +44,8 @@ class SystemHelpers {
     try {
       String data = "";
       switch (MainInherited.of(context).modeProfile) {
-        case SystemMode.debug:
-          data = await DefaultAssetBundle.of(context).loadString("assets/files/config_debug.json");          
+        case SystemMode.develop:
+          data = await DefaultAssetBundle.of(context).loadString("assets/files/config_develop.json");          
           break;
         case SystemMode.release:
           data = await DefaultAssetBundle.of(context).loadString("assets/files/config_release.json");          

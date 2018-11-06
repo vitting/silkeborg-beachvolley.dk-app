@@ -16,6 +16,6 @@ void main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(MainInherited(
     child: MainMaterialApp(),
-    mode: SystemMode.debug,
+    mode: SystemMode.develop,
   ));
 }
