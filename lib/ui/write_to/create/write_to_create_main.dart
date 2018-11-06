@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
-import 'package:silkeborgbeachvolley/ui/write_to_sbv/helpers/write_to_data.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_data.dart';
 import 'package:validate/validate.dart';
 
 class WriteToCreate extends StatefulWidget {
@@ -25,7 +25,8 @@ class WriteToCreateState extends State<WriteToCreate> {
         type: "public",
         fromEmail: Home.loggedInUser != null ? Home.loggedInUser.email : "",
         message: "",
-        fromName: Home.loggedInUser != null ? Home.loggedInUser.displayName : "",
+        fromName:
+            Home.loggedInUser != null ? Home.loggedInUser.displayName : "",
         messageRepliedToId: null);
   }
 

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
-import 'package:silkeborgbeachvolley/ui/write_to_sbv/helpers/write_to_firestore.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_firestore.dart';
 
 class WriteToData implements BaseData {
   String id;

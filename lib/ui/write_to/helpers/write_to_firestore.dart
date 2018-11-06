@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:silkeborgbeachvolley/ui/write_to_sbv/helpers/write_to_data.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_data.dart';
 
 class WriteToFirestore {
   static final _collectionName = "write_to_sbv";

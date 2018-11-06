@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
-import 'package:silkeborgbeachvolley/ui/write_to_sbv/helpers/write_to_data.dart';
-import 'package:silkeborgbeachvolley/ui/write_to_sbv/helpers/write_to_row.dart';
-import 'package:silkeborgbeachvolley/ui/write_to_sbv/helpers/write_to_textfield_widget.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_data.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_row.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_textfield_widget.dart';
 
 class WriteToDetail extends StatefulWidget {
   final WriteToData item;
@@ -65,7 +64,9 @@ class WriteToDetailState extends State<WriteToDetail> {
 
                                 WriteToData docReply = WriteToData.fromMap(snapshotReply.data.documents[position].data);
                                 return Padding(
-                                  padding: docReply.fromUserId == Home.loggedInUser.uid ? const EdgeInsets.only(left: 20.0) : const EdgeInsets.only(right: 20.0),
+                      
+                      
+                                  padding: docReply.type != "reply_locale" ? const EdgeInsets.only(left: 20.0) : const EdgeInsets.only(right: 20.0),
                                   child: WriteToRow(
                                     item: docReply,
                                   ),
@@ -83,8 +84,10 @@ class WriteToDetailState extends State<WriteToDetail> {
                   child: Align(
                       child: WriteToTextfield(
                     backgroundColor: Colors.blueGrey.withAlpha(140),
-                    onTextFieldSubmit: (String value) {
-                      _save(value);
+                    onTextFieldSubmit: (String value) async {
+                      if(value.trim().isNotEmpty) {
+                       await _save(value);
+                      }
                     },
                   )),
                 )
@@ -94,15 +97,15 @@ class WriteToDetailState extends State<WriteToDetail> {
         ));
   }
 
-  void _save(String message) async {
-    if (message != null && message.trim().isNotEmpty) {
-      WriteToData replyData = WriteToData(
+  Future<WriteToData> _save(String message) async {
+    WriteToData replyData = WriteToData(
         type: "reply",
         messageRepliedToId: widget.item.id,
-        message: message.trim(),
+        message: message.trim()
       );
-
-      replyData.save();
-    }
+      
+      await replyData.save();
+      
+      return replyData; 
   }
 }

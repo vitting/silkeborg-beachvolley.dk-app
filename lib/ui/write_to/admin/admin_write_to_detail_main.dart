@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
+import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/no_data_widget.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
-import 'package:silkeborgbeachvolley/ui/write_to_sbv/helpers/write_to_data.dart';
-import 'package:silkeborgbeachvolley/ui/write_to_sbv/helpers/write_to_row.dart';
-import 'package:silkeborgbeachvolley/ui/write_to_sbv/helpers/write_to_textfield_widget.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_data.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_row.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_textfield_widget.dart';
 
 class AdminWriteToDetail extends StatefulWidget {
   final WriteToData item;
@@ -18,12 +22,9 @@ class AdminWriteToDetail extends StatefulWidget {
   }
 }
 
+/// Kan laves om til stateless
+///CHRISTIAN: ANSWER TO public is mail. If fromUserId is not empty then message else mail
 class AdminWriteToDetailState extends State<AdminWriteToDetail> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
@@ -96,8 +97,8 @@ class AdminWriteToDetailState extends State<AdminWriteToDetail> {
                   child: Align(
                       child: WriteToTextfield(
                     backgroundColor: Colors.blueGrey.withAlpha(140),
-                    onTextFieldSubmit: (String value) {
-                      _save(value);
+                    onTextFieldSubmit: (String value) async {
+                      await _saveMain(context, value, widget.item);
                     },
                   )),
                 )
@@ -107,16 +108,73 @@ class AdminWriteToDetailState extends State<AdminWriteToDetail> {
         ));
   }
 
-  void _save(String message) async {
+  Future<bool> _saveMain(
+      BuildContext context, String message, WriteToData item) async {
     if (message.trim().isNotEmpty) {
-      WriteToData replyData = WriteToData(
-        type: "reply",
-        messageRepliedToId: widget.item.id,
-        fromEmail: "silkeborgbeachvolley@gmail.com",
-        message: message.trim(),
-      );
-
-      replyData.save();
+      final Map<String, dynamic> config =
+          await SystemHelpers.getConfig(context);
+      WriteToData replyItem = await _save(message, item, config);
+      if (item.fromUserId == null) {
+        bool sendMailResult = await _sendMail(context, replyItem, config);
+        replyItem.setSendEmailStatus(sendMailResult);
+      }
     }
+
+    return true;
+  }
+
+  Future<WriteToData> _save(
+      String message, WriteToData item, Map<String, dynamic> config) async {
+    WriteToData replyData = WriteToData(
+      type: "reply_locale",
+      messageRepliedToId: widget.item.id,
+      fromEmail: config["emailFromMail"],
+      fromName: config["emailFromName"],
+      fromPhotoUrl: "locale",
+      sendToEmail: item.fromEmail,
+      sendToName: item.fromName,
+      sendToEmailSubject: "Svar fra Silkeborg Beachvolley",
+      sendToUserId: item.fromUserId,
+      message: message.trim(),
+    );
+
+    await replyData.save();
+
+    return replyData;
+  }
+
+  Future<bool> _sendMail(BuildContext context, WriteToData replyItem,
+      Map<String, dynamic> config) async {
+    bool value = false;
+    final String emailFromName = config["emailFromName"];
+    final String emailUsername = config["emailUsername"];
+    final String emailPassword = config["emailPassword"];
+    final Address fromAddress = Address(emailUsername, emailFromName);
+    final Address sendToAddress =
+        MainInherited.of(context).modeProfile == SystemMode.release
+            ? Address(replyItem.sendToEmail)
+            : "cvn_vitting@hotmail.com";
+    final smtpServer = gmail(emailUsername, emailPassword);
+    final Message message = Message()
+      ..from = fromAddress
+      ..recipients.add(sendToAddress)
+      ..subject = replyItem.sendToEmailSubject
+      ..text = replyItem.message;
+
+    List<SendReport> sendReport = await send(message, smtpServer);
+
+    if (sendReport != null && sendReport.length != 0) {
+      if (sendReport[0].sent) {
+        value = true;
+      } else {
+        if (sendReport[0].validationProblems != null) {
+          sendReport[0]
+              .validationProblems
+              .forEach((problem) => print(problem.msg));
+        }
+      }
+    }
+
+    return value;
   }
 }

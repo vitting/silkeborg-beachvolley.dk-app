@@ -13,9 +13,9 @@ import 'package:silkeborgbeachvolley/ui/settings/settings_main.dart';
 import 'package:silkeborgbeachvolley/ui/test.dart';
 import 'package:silkeborgbeachvolley/ui/tournament_calendar/main/tournament_calendar_main.dart';
 import 'package:silkeborgbeachvolley/ui/users/admin/admin_users_main.dart';
-import 'package:silkeborgbeachvolley/ui/write_to_sbv/admin/admin_write_to_main.dart';
-import 'package:silkeborgbeachvolley/ui/write_to_sbv/create/write_to_create_main.dart';
-import 'package:silkeborgbeachvolley/ui/write_to_sbv/write_to_main.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/admin/admin_write_to_main.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/create/write_to_create_main.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/write_to_main.dart';
 
 class MainMaterialApp extends StatefulWidget {
   @override

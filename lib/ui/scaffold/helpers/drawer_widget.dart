@@ -13,8 +13,8 @@ import 'package:silkeborgbeachvolley/ui/livescore/main/livescore_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/settings_main.dart';
 import 'package:silkeborgbeachvolley/ui/tournament_calendar/main/tournament_calendar_main.dart';
 import 'package:silkeborgbeachvolley/ui/users/admin/admin_users_main.dart';
-import 'package:silkeborgbeachvolley/ui/write_to_sbv/admin/admin_write_to_main.dart';
-import 'package:silkeborgbeachvolley/ui/write_to_sbv/write_to_main.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/admin/admin_write_to_main.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/write_to_main.dart';
 import '../../login/helpers/auth_functions.dart' as authFunctions;
 
 class SilkeborgBeacvolleyScaffoldDrawer extends StatefulWidget {

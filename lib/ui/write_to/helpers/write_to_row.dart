@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
-import 'package:silkeborgbeachvolley/ui/write_to_sbv/helpers/write_to_data.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_data.dart';
 
 class WriteToRow extends StatelessWidget {
   final WriteToData item;
@@ -28,7 +28,6 @@ class WriteToRow extends StatelessWidget {
       title: Column(
         children: <Widget>[_title(), _titleStatusIcons()],
       ),
-      // title: _title(),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -68,6 +67,9 @@ class WriteToRow extends StatelessWidget {
         value = _titleText(item.fromName);
         break;
       case "reply":
+        value = _titleText(item.fromName);
+        break;
+      case "reply_locale":
         value = _titleText(item.fromName);
         break;
     }

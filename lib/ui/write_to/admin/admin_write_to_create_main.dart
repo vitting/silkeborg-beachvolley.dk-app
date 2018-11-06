@@ -10,8 +10,8 @@ import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_overlay_widget.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
-import 'package:silkeborgbeachvolley/ui/write_to_sbv/helpers/write_to_create_fab_widget.dart';
-import 'package:silkeborgbeachvolley/ui/write_to_sbv/helpers/write_to_data.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_create_fab_widget.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_data.dart';
 import 'package:validate/validate.dart';
 
 class AdminWriteToCreate extends StatefulWidget {
@@ -84,7 +84,7 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
                     setState(() {
                       _saving = false;
                     });
-                    
+
                     Navigator.of(context).pop();
                   },
                 )
