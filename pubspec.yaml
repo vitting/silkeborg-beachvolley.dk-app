@@ -66,7 +66,7 @@ flutter:
   assets:
    - assets/images/
    - assets/flutter_i18n/
-   - assets/files/config.json
+   - assets/files/
    
   #  - images/a_dot_ham.jpeg
 

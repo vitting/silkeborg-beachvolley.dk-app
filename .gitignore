@@ -13,4 +13,5 @@ google-services.json
 .vscode/temp.sql
 
 lib/ui/test.dart
-assets/files/config.json
+assets/files/config_debug.json
+assets/files/config_release.json
