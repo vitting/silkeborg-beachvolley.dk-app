@@ -20,7 +20,7 @@ class CircleProfileImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return url != null
         ? ClipOval(
-            child: CachedNetworkImage(
+            child: url == "public" ? Image.asset("assets/images/no_profile_picture_120x120.png") : CachedNetworkImage(
               fit: BoxFit.cover,
               imageUrl: url,
               errorWidget: errorWidget ??
