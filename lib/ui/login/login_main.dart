@@ -4,6 +4,7 @@ import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/main/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/main/livescore_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/create/write_to_create_main.dart';
 import 'helpers/auth_functions.dart' as authFunctions;
 
 class Login extends StatelessWidget {
@@ -88,9 +89,19 @@ class Login extends StatelessWidget {
             label: Text("Live score"),
             icon: Icon(Icons.live_tv),
             textColor: Colors.white
+          ),
+          FlatButton.icon(
+            textColor: Colors.white,
+            icon: Icon(Icons.mail),
+            label: Text(FlutterI18n.translate(context, "login.loginMain.string6")),
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+              fullscreenDialog: true,
+              builder: (BuildContext context) => WriteToCreate()));
+            }
           )
-        ],
-      ),
+        ]
+      )
     );
   }
 }

@@ -7,6 +7,7 @@ import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
 import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/main/bulletin_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_launcher_main.dart';
 import 'package:silkeborgbeachvolley/ui/login/login_main.dart';
@@ -47,6 +48,7 @@ class _HomeState extends State<Home> {
 
   _init(BuildContext context) {
     UserAuth.firebaseAuth.onAuthStateChanged.listen((user) async {
+      // MainInherited.of(context).loggedInUser = user;
       Home.loggedInUser = user;
       SettingsData settings;
       UserInfoData userInfoData;
