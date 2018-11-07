@@ -54,13 +54,13 @@ class LoginState extends State<Login> {
                   padding: EdgeInsets.all(10.0),
                   onPressed: () async {
                     setState(() {
-                      _showSpinner = true;                                          
+                      _showSpinner = true;
                     });
 
                     await authFunctions.signInWithFacebook();
 
                     setState(() {
-                      _showSpinner = false;                                          
+                      _showSpinner = false;
                     });
                   },
                   child: Row(
