@@ -6,16 +6,6 @@ import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
 
-Future<SettingsData> initSettings(String userId, String displayName) async {
-  SettingsData settings = await SettingsData.getSettings(userId);
-  if (settings == null) {
-    settings = SettingsData(rankingName: displayName);
-    settings.save();
-  }
-
-  return settings;
-}
-
 Future<void> initMessaging(
     String userId,
     FirebaseMessaging firebaseMessaging,

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/config_data.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
 import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
@@ -56,7 +57,7 @@ class _HomeState extends State<Home> {
 
       if (user != null) {
         userInfoData = await UserInfoData.getUserInfo(user.uid);
-        settings = await homeFunctions.initSettings(user.uid, user.displayName);
+        settings = await SettingsData.initSettings(user.uid, user.displayName);
         await homeFunctions.initMessaging(
             user.uid, _firebaseMessaging, settings, _notificationController);
       }

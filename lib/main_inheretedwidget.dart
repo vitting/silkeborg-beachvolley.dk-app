@@ -70,35 +70,6 @@ class MainInheritedState extends State<MainInherited> {
       config = await ConfigData.getConfig(context, modeProfile);
     }
 
-  // _init(BuildContext context) {
-  //   UserAuth.firebaseAuth.onAuthStateChanged.listen((user) async {
-  //     // MainInherited.of(context).loggedInUser = user;
-  //     Home.loggedInUser = user;
-  //     SettingsData settings;
-  //     UserInfoData userInfoData;
-  //     bool canPhoneVibrate = await Vibrate.canVibrate;
-
-  //     if (user != null) {
-  //       userInfoData = await UserInfoData.getUserInfo(user.uid);
-  //       settings = await homeFunctions.initSettings(user.uid, user.displayName);
-  //       await homeFunctions.initMessaging(
-  //           user.uid, _firebaseMessaging, settings, _notificationController);
-  //     }
-
-  //     if (mounted) {
-  //       setState(() {
-  //         Home.userInfo = userInfoData;
-  //         Home.settings = settings;
-  //         Home.canVibrate = canPhoneVibrate;
-  //         _isLoggedIn = user == null ? false : true;
-  //         homeWidget = _isLoggedIn
-  //             ? Bulletin(notificationController: _notificationController)
-  //             : Login();
-  //       });
-  //     }
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return new _MainInherited(
