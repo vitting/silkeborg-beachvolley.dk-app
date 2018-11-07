@@ -2,14 +2,12 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
-import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_player_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 
-class RankingMatchData implements BaseData {
+class RankingMatchData {
   String id;
   String userId;
   DateTime matchDate;
@@ -37,9 +35,9 @@ class RankingMatchData implements BaseData {
     return RankingPlayerData.getPlayer(userId);
   }
 
-  Future<void> save() async {
+  Future<void> save(String userId) async {
     id = id ?? UuidHelpers.generateUuid();
-    userId = userId ?? Home.loggedInUser.uid;
+    userId = userId ?? userId;
     createdDate = createdDate ?? Timestamp.now();
     year = year ?? matchDate.year;
 

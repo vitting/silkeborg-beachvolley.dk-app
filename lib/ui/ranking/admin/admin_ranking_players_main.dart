@@ -33,7 +33,8 @@ class _AdminRankingPlayersState extends State<AdminRankingPlayers> {
         }
         if (!snapshot.hasData) return LoaderSpinner();
         if (snapshot.hasData && snapshot.data.documents.length == 0)
-          return NoData(FlutterI18n.translate(context, "ranking.adminRankingPlayersMain.string1"));
+          return NoData(FlutterI18n.translate(
+              context, "ranking.adminRankingPlayersMain.string1"));
         return Container(
           child: ListView.builder(
             itemCount: snapshot.data.documents.length,
@@ -59,10 +60,17 @@ class _AdminRankingPlayersState extends State<AdminRankingPlayers> {
 
   Future<void> rowOnMenuTap(
       BuildContext context, RankingPlayerData player) async {
-    DialogsModalBottomSheetItem item =
-        DialogsModalBottomSheetItem(FlutterI18n.translate(context, "ranking.adminRankingPlayersMain.string2"), FontAwesomeIcons.eyeSlash, 0);
+    DialogsModalBottomSheetItem item = DialogsModalBottomSheetItem(
+        FlutterI18n.translate(
+            context, "ranking.adminRankingPlayersMain.string2"),
+        FontAwesomeIcons.eyeSlash,
+        0);
     if (widget.showDeletedPlayers) {
-      item = DialogsModalBottomSheetItem(FlutterI18n.translate(context, "ranking.adminRankingPlayersMain.string3"), FontAwesomeIcons.eye, 0);
+      item = DialogsModalBottomSheetItem(
+          FlutterI18n.translate(
+              context, "ranking.adminRankingPlayersMain.string3"),
+          FontAwesomeIcons.eye,
+          0);
     }
 
     int result = await Dialogs.modalBottomSheet(context, [item]);
@@ -71,10 +79,14 @@ class _AdminRankingPlayersState extends State<AdminRankingPlayers> {
     if (result != null && result == 0) {
       if (widget.showDeletedPlayers) {
         action = await Dialogs.confirmUnHide(
-            context, FlutterI18n.translate(context, "ranking.adminRankingPlayersMain.string4"));
+            context,
+            FlutterI18n.translate(
+                context, "ranking.adminRankingPlayersMain.string4"));
       } else {
-        action = await Dialogs.confirmHide(context,
-            FlutterI18n.translate(context, "ranking.adminRankingPlayersMain.string5"));
+        action = await Dialogs.confirmHide(
+            context,
+            FlutterI18n.translate(
+                context, "ranking.adminRankingPlayersMain.string5"));
       }
 
       if (action != null && action == ConfirmDialogAction.unhide) {

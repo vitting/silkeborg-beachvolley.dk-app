@@ -11,7 +11,8 @@ class EnrollmentEdit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: FlutterI18n.translate(context, "enrollment.enrollmentEditMain.title"),
+      title:
+          FlutterI18n.translate(context, "enrollment.enrollmentEditMain.title"),
       body: Card(
         child: Container(
           padding: EdgeInsets.all(10.0),

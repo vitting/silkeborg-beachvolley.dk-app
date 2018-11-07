@@ -39,7 +39,8 @@ class AdminWriteToState extends State<AdminWriteTo> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return LoaderSpinner();
           if (snapshot.hasData && snapshot.data.documents.length == 0)
-            return NoData(FlutterI18n.translate(context, "writeTo.adminWriteToMain.string1"));
+            return NoData(FlutterI18n.translate(
+                context, "writeTo.adminWriteToMain.string1"));
 
           return ListView.builder(
             itemCount: snapshot.data.documents.length,
@@ -76,12 +77,16 @@ class AdminWriteToState extends State<AdminWriteTo> {
 
   Future<bool> _deleteMessage(BuildContext context) async {
     bool value = false;
-    int result = await Dialogs.modalBottomSheet(
-        context, [DialogsModalBottomSheetItem(FlutterI18n.translate(context, "writeTo.adminWriteToMain.string2"), Icons.delete, 0)]);
+    int result = await Dialogs.modalBottomSheet(context, [
+      DialogsModalBottomSheetItem(
+          FlutterI18n.translate(context, "writeTo.adminWriteToMain.string2"),
+          Icons.delete,
+          0)
+    ]);
 
     if (result != null && result == 0) {
-      ConfirmDialogAction action =
-          await Dialogs.confirmDelete(context, FlutterI18n.translate(context, "writeTo.adminWriteToMain.string3"));
+      ConfirmDialogAction action = await Dialogs.confirmDelete(context,
+          FlutterI18n.translate(context, "writeTo.adminWriteToMain.string3"));
 
       if (action != null && action == ConfirmDialogAction.delete) {
         value = true;

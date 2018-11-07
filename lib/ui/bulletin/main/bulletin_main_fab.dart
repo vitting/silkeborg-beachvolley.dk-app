@@ -69,7 +69,8 @@ class _BulletinMainFabState extends State<BulletinMainFab>
           _close();
           widget.onPressedValue(BulletinType.news);
         },
-        tooltip: FlutterI18n.translate(context, "bulletin.bulletinMainFab.string1"),
+        tooltip:
+            FlutterI18n.translate(context, "bulletin.bulletinMainFab.string1"),
         child: Icon(FontAwesomeIcons.newspaper),
       ),
     );
@@ -84,7 +85,8 @@ class _BulletinMainFabState extends State<BulletinMainFab>
           _close();
           widget.onPressedValue(BulletinType.event);
         },
-        tooltip: FlutterI18n.translate(context, "bulletin.bulletinMainFab.string2"),
+        tooltip:
+            FlutterI18n.translate(context, "bulletin.bulletinMainFab.string2"),
         child: Icon(FontAwesomeIcons.calendarAlt),
       ),
     );
@@ -99,7 +101,8 @@ class _BulletinMainFabState extends State<BulletinMainFab>
           _close();
           widget.onPressedValue(BulletinType.play);
         },
-        tooltip: FlutterI18n.translate(context, "bulletin.bulletinMainFab.string3"),
+        tooltip:
+            FlutterI18n.translate(context, "bulletin.bulletinMainFab.string3"),
         child: Icon(FontAwesomeIcons.volleyballBall),
       ),
     );
@@ -122,7 +125,8 @@ class _BulletinMainFabState extends State<BulletinMainFab>
           }
           isOpened = !isOpened;
         },
-        tooltip: FlutterI18n.translate(context, "bulletin.bulletinMainFab.string4"),
+        tooltip:
+            FlutterI18n.translate(context, "bulletin.bulletinMainFab.string4"),
         child: Icon(Icons.add),
       ),
     );

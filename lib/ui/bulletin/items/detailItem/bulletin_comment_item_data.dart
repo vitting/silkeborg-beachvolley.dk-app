@@ -1,13 +1,12 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
-class BulletinCommentItemData implements BaseData {
+class BulletinCommentItemData {
   String id;
   String bulletinId;
   String body;
@@ -39,11 +38,11 @@ class BulletinCommentItemData implements BaseData {
     };
   }
 
-  Future<void> save() {
+  Future<void> save(FirebaseUser user) {
     id = id ?? UuidHelpers.generateUuid();
-    authorId = authorId ?? Home.loggedInUser.uid;
-    authorName = authorName ?? Home.loggedInUser.displayName;
-    authorPhotoUrl = authorPhotoUrl ?? Home.loggedInUser.photoUrl;
+    authorId = authorId ?? user.uid;
+    authorName = authorName ?? user.displayName;
+    authorPhotoUrl = authorPhotoUrl ?? user.photoUrl;
 
     return BulletinFirestore.saveCommentItem(this);
   }
@@ -62,7 +61,6 @@ class BulletinCommentItemData implements BaseData {
   String get creationDateFormatted =>
       DateTimeHelpers.ddmmyyyyHHnn(creationDate.toDate());
 
-  @override
   Future<void> delete() {
     return BulletinFirestore.deleteComment(id);
   }

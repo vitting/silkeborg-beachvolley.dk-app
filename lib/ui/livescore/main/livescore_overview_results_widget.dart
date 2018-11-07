@@ -16,7 +16,8 @@ class LivescoreOverviewResults extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (!snapshot.hasData) return LoaderSpinner();
         if (snapshot.hasData && snapshot.data.documents.length == 0)
-          return NoData(FlutterI18n.translate(context, "livescore.livescoreOverviewResultsWidget.string1"));
+          return NoData(FlutterI18n.translate(
+              context, "livescore.livescoreOverviewResultsWidget.string1"));
 
         return ListView.builder(
           itemCount: snapshot.data.documents.length,

@@ -14,7 +14,7 @@ class ChipHeader extends StatelessWidget {
   final double paddingLeft;
   final double paddingRight;
   final Widget child;
-  
+
   const ChipHeader(this.text,
       {this.fontSize = 14.0,
       this.fontWeight = FontWeight.normal,
@@ -27,8 +27,7 @@ class ChipHeader extends StatelessWidget {
       this.paddingLeft = 5.0,
       this.paddingRight = 5.0,
       this.paddingTop = 5.0,
-      this.child
-    });
+      this.child});
   @override
   Widget build(BuildContext context) {
     Widget widgets = Text(text,
@@ -40,15 +39,16 @@ class ChipHeader extends StatelessWidget {
       widgets = Expanded(child: widgets);
     }
     return Container(
-        padding: EdgeInsets.fromLTRB(paddingLeft, paddingTop, paddingRight, paddingBottom),
+        padding: EdgeInsets.fromLTRB(
+            paddingLeft, paddingTop, paddingRight, paddingBottom),
         decoration: BoxDecoration(
             color: backgroundColor,
             borderRadius: roundedCorners ? BorderRadius.circular(6.0) : null),
-        child: child == null ? Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            widgets
-            ],
-        ) : child);
+        child: child == null
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[widgets],
+              )
+            : child);
   }
 }

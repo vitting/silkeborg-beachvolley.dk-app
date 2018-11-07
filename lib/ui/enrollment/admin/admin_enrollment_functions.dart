@@ -10,7 +10,8 @@ Future<String> editComment(BuildContext context, String text) async {
   String comment;
   TextEditingController _commentController = TextEditingController(text: text);
   ConfirmDialogAction result = await confirmActions.confirmDialog(context,
-      title: Text(FlutterI18n.translate(context, "enrollment.adminEnrollmentFuncstions.string1")),
+      title: Text(FlutterI18n.translate(
+          context, "enrollment.adminEnrollmentFuncstions.string1")),
       barrierDismissible: false,
       actionRight: ConfirmDialogAction.close,
       body: <Widget>[
@@ -20,7 +21,8 @@ Future<String> editComment(BuildContext context, String text) async {
             maxLength: 500,
             maxLines: 4,
             decoration: InputDecoration(
-                labelText: FlutterI18n.translate(context, "enrollment.adminEnrollmentFuncstions.string2"),
+                labelText: FlutterI18n.translate(
+                    context, "enrollment.adminEnrollmentFuncstions.string2"),
                 suffixIcon: IconButton(
                   icon: Icon(Icons.send),
                   onPressed: () {
@@ -41,11 +43,15 @@ Future<String> editComment(BuildContext context, String text) async {
 Future<bool> deletePayment(
     BuildContext context, EnrollmentPaymentData payment) async {
   ConfirmDialogAction result = await confirmActions.confirmDialog(context,
-      title: Text(FlutterI18n.translate(context, "enrollment.adminEnrollmentFuncstions.string3")),
+      title: Text(FlutterI18n.translate(
+          context, "enrollment.adminEnrollmentFuncstions.string3")),
       barrierDismissible: false,
       actionLeft: ConfirmDialogAction.cancel,
       actionRight: ConfirmDialogAction.delete,
-      body: <Widget>[Text("${FlutterI18n.translate(context, "enrollment.adminEnrollmentFuncstions.string4")} ${payment.year}")]);
+      body: <Widget>[
+        Text(
+            "${FlutterI18n.translate(context, "enrollment.adminEnrollmentFuncstions.string4")} ${payment.year}")
+      ]);
 
   if (result != null && result == ConfirmDialogAction.delete) {
     return true;

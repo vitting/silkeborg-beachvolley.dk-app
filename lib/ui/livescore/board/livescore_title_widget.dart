@@ -16,7 +16,9 @@ class LivescoreBoardTitle extends StatelessWidget {
           child: Text(title,
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontSize: 12.0, color: color, fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont)),
+                  fontSize: 12.0,
+                  color: color,
+                  fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont)),
         ),
       ],
     );

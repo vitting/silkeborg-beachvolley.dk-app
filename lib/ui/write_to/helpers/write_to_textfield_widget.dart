@@ -8,7 +8,9 @@ class WriteToTextfield extends StatefulWidget {
   final ValueChanged<String> onTextFieldSubmit;
   final Color backgroundColor;
 
-  const WriteToTextfield({Key key, this.onTextFieldSubmit, this.backgroundColor = Colors.white70}) : super(key: key);
+  const WriteToTextfield(
+      {Key key, this.onTextFieldSubmit, this.backgroundColor = Colors.white70})
+      : super(key: key);
 
   @override
   WriteToTextfieldState createState() {
@@ -54,8 +56,8 @@ class WriteToTextfieldState extends State<WriteToTextfield> {
             border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.black, width: 2.0),
             ),
-            hintText: FlutterI18n.translate(context, "writeTo.writeToTextfieldWidget.string1")
-            ),
+            hintText: FlutterI18n.translate(
+                context, "writeTo.writeToTextfieldWidget.string1")),
       ),
     );
   }

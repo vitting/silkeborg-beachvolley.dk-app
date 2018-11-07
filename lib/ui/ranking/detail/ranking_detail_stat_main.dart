@@ -28,12 +28,14 @@ class RankingDetailStat extends StatelessWidget {
                   photoUrl: player.photoUrl,
                 ),
                 RankingDetailStatRow(
-                    title: FlutterI18n.translate(context, "ranking.rankingDetailStatMain.string1"),
+                    title: FlutterI18n.translate(
+                        context, "ranking.rankingDetailStatMain.string1"),
                     total: player.points.total,
                     won: player.points.won,
                     lost: player.points.lost),
                 RankingDetailStatRow(
-                    title: FlutterI18n.translate(context, "ranking.rankingDetailStatMain.string2"),
+                    title: FlutterI18n.translate(
+                        context, "ranking.rankingDetailStatMain.string2"),
                     total: player.numberOfPlayedMatches.total,
                     won: player.numberOfPlayedMatches.won,
                     lost: player.numberOfPlayedMatches.lost),

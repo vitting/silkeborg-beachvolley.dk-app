@@ -1,16 +1,15 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:silkeborgbeachvolley/helpers/image_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
-class BulletinNewsItemData extends BulletinItemData implements BaseData {
+class BulletinNewsItemData extends BulletinItemData {
   List<BulletinImageData> images;
   BulletinNewsItemData(
       {String id,
@@ -57,12 +56,12 @@ class BulletinNewsItemData extends BulletinItemData implements BaseData {
     }
   }
 
-  Future<void> save() async {
+  Future<void> save(FirebaseUser user) async {
     id = id ?? UuidHelpers.generateUuid();
     creationDate = creationDate ?? Timestamp.now();
-    authorId = Home.loggedInUser.uid;
-    authorName = Home.loggedInUser.displayName;
-    authorPhotoUrl = Home.loggedInUser.photoUrl;
+    authorId = user.uid;
+    authorName = user.displayName;
+    authorPhotoUrl = user.photoUrl;
     images = images ?? [];
     return BulletinFirestore.saveBulletinItem(this);
   }

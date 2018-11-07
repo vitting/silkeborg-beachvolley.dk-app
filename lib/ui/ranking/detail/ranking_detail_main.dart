@@ -76,8 +76,12 @@ class RankingDetailState extends State<RankingDetail> {
 
   String _getPageTitle(BuildContext context, int page) {
     String title = "";
-    if (page == 0) title = FlutterI18n.translate(context, "ranking.rankingDetailMain.title1");
-    if (page == 1) title = FlutterI18n.translate(context, "ranking.rankingDetailMain.title2");
+    if (page == 0)
+      title =
+          FlutterI18n.translate(context, "ranking.rankingDetailMain.title1");
+    if (page == 1)
+      title =
+          FlutterI18n.translate(context, "ranking.rankingDetailMain.title2");
     return title;
   }
 

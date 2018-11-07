@@ -3,9 +3,9 @@ import "package:flutter/material.dart";
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/no_data_widget.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_matches_row_widget.dart';
 
@@ -21,7 +21,8 @@ class RankingMatches extends StatelessWidget {
         }
         if (!snapshot.hasData) return LoaderSpinner();
         if (snapshot.hasData && snapshot.data.documents.length == 0) {
-          return NoData(FlutterI18n.translate(context, "ranking.rankingMatchesMain.string1"));
+          return NoData(FlutterI18n.translate(
+              context, "ranking.rankingMatchesMain.string1"));
         }
         List<RankingMatchData> list = snapshot.data.documents
             .map<RankingMatchData>((DocumentSnapshot doc) {
@@ -44,8 +45,8 @@ class RankingMatches extends StatelessWidget {
             RankingMatchData item = list[position];
             return RankingMatchesRow(
               match: item,
-              userId: Home.loggedInUser.uid,
-              icon: _menuIcon(item),
+              userId: MainInherited.of(context).loggedInUser.uid,
+              icon: _menuIcon(context, item),
               iconOnTap: (RankingMatchData match) {
                 _showDelete(context, match);
               },
@@ -56,9 +57,9 @@ class RankingMatches extends StatelessWidget {
     );
   }
 
-  IconData _menuIcon(RankingMatchData match) {
+  IconData _menuIcon(BuildContext context, RankingMatchData match) {
     IconData icon;
-    if (Home.loggedInUser.uid == match.userId) {
+    if (MainInherited.of(context).loggedInUser.uid == match.userId) {
       icon = Icons.more_horiz;
     }
     return icon;
@@ -69,8 +70,8 @@ class RankingMatches extends StatelessWidget {
         context, [DialogsModalBottomSheetItem("Slet", Icons.delete, 0)]);
 
     if (result != null) {
-      ConfirmDialogAction action = await Dialogs.confirmDelete(
-          context, FlutterI18n.translate(context, "ranking.rankingMatchesMain.string2"));
+      ConfirmDialogAction action = await Dialogs.confirmDelete(context,
+          FlutterI18n.translate(context, "ranking.rankingMatchesMain.string2"));
 
       if (action != null && action == ConfirmDialogAction.delete) {
         match.delete();

@@ -16,15 +16,21 @@ class EnrollmentReadMe extends StatelessWidget {
           children: <Widget>[
             Column(
               children: <Widget>[
-                _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentReadMe.string1"), 16.0),
-                _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentReadMe.string2"), 16.0),
+                _textEnrollment(
+                    FlutterI18n.translate(
+                        context, "enrollment.enrollmentReadMe.string1"),
+                    16.0),
+                _textEnrollment(
+                    FlutterI18n.translate(
+                        context, "enrollment.enrollmentReadMe.string2"),
+                    16.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 30.0),
                   child: Image.asset("assets/images/logo_dark_blue_250x250.png",
                       width: 60.0),
                 ),
-                _textEnrollment(
-                    FlutterI18n.translate(context, "enrollment.enrollmentReadMe.string3")),
+                _textEnrollment(FlutterI18n.translate(
+                    context, "enrollment.enrollmentReadMe.string3")),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 30.0),
                   child: Row(
@@ -32,12 +38,13 @@ class EnrollmentReadMe extends StatelessWidget {
                     children: <Widget>[
                       Image.asset("assets/images/mobilepay_horisontal_blue.png",
                           height: 50.0),
-                      _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentReadMe.string4"))
+                      _textEnrollment(FlutterI18n.translate(
+                          context, "enrollment.enrollmentReadMe.string4"))
                     ],
                   ),
                 ),
-                _textEnrollment(
-                    FlutterI18n.translate(context, "enrollment.enrollmentReadMe.string5")),
+                _textEnrollment(FlutterI18n.translate(
+                    context, "enrollment.enrollmentReadMe.string5")),
                 IconButton(
                   padding: EdgeInsets.only(top: 40.0),
                   color: SilkeborgBeachvolleyTheme.buttonTextColor,

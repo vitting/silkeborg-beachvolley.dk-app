@@ -7,7 +7,9 @@ class EnrollmentPayment extends StatelessWidget {
   final ValueChanged<bool> onTapPreviousPage;
   final ValueChanged<bool> onTapMobilePayUrl;
 
-  const EnrollmentPayment({Key key, this.onTapPreviousPage, this.onTapMobilePayUrl}) : super(key: key);
+  const EnrollmentPayment(
+      {Key key, this.onTapPreviousPage, this.onTapMobilePayUrl})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,15 +20,27 @@ class EnrollmentPayment extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentPayment.string1"), 16.0),
-                _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentPayment.string2"), 16.0),
-                _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentPayment.string3"), 16.0),
+                _textEnrollment(
+                    FlutterI18n.translate(
+                        context, "enrollment.enrollmentPayment.string1"),
+                    16.0),
+                _textEnrollment(
+                    FlutterI18n.translate(
+                        context, "enrollment.enrollmentPayment.string2"),
+                    16.0),
+                _textEnrollment(
+                    FlutterI18n.translate(
+                        context, "enrollment.enrollmentPayment.string3"),
+                    16.0),
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0),
-                  child: _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentPayment.string4")),
+                  child: _textEnrollment(FlutterI18n.translate(
+                      context, "enrollment.enrollmentPayment.string4")),
                 ),
-                _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentPayment.string5")),
-                _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentPayment.string6")),
+                _textEnrollment(FlutterI18n.translate(
+                    context, "enrollment.enrollmentPayment.string5")),
+                _textEnrollment(FlutterI18n.translate(
+                    context, "enrollment.enrollmentPayment.string6")),
                 InkWell(
                   onTap: () async {
                     onTapMobilePayUrl(true);
@@ -38,12 +52,14 @@ class EnrollmentPayment extends StatelessWidget {
                         height: 100.0),
                   ),
                 ),
-                _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentPayment.string7")),
-                _textEnrollment(FlutterI18n.translate(context, "enrollment.enrollmentPayment.string8")),
+                _textEnrollment(FlutterI18n.translate(
+                    context, "enrollment.enrollmentPayment.string7")),
+                _textEnrollment(FlutterI18n.translate(
+                    context, "enrollment.enrollmentPayment.string8")),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: _textEnrollment(
-                      FlutterI18n.translate(context, "enrollment.enrollmentPayment.string9")),
+                  child: _textEnrollment(FlutterI18n.translate(
+                      context, "enrollment.enrollmentPayment.string9")),
                 ),
                 IconButton(
                   iconSize: 45.0,

@@ -9,22 +9,30 @@ class DateTimeHelpers {
 
   static String ddmmyyyyHHnn(DateTime date) {
     try {
-      return formatDate(date, [dd, "-", mm, "-", yyyy, "  ", HH, ":", nn]);  
+      return formatDate(date, [dd, "-", mm, "-", yyyy, "  ", HH, ":", nn]);
     } catch (e) {
       print("DateTimeHelpers.ddmmyyyyHHnn : $e");
       return "";
     }
-    
   }
 
   static String ddMMyyyyHHnn(BuildContext context, DateTime date) {
     try {
-      return formatDate(date, [dd, ". ", FlutterI18n.translate(context, "monthsShort.${date.month}"), " ", yyyy, " ", HH, ":", nn]);
+      return formatDate(date, [
+        dd,
+        ". ",
+        FlutterI18n.translate(context, "monthsShort.${date.month}"),
+        " ",
+        yyyy,
+        " ",
+        HH,
+        ":",
+        nn
+      ]);
     } catch (e) {
       print("DateTimeHelpers.ddMMyyyyHHnn : $e");
       return "";
     }
-    
   }
 
   static String ddmmyyyy(DateTime date) {
@@ -33,17 +41,33 @@ class DateTimeHelpers {
 
   static String ddMMyyyy(BuildContext context, DateTime date) {
     // return formatDate(date, [dd, ". ", monthsShort[date.month], " ", yyyy]);
-    return formatDate(date, [dd, ". ", FlutterI18n.translate(context, "monthsShort.${date.month}"), " ", yyyy]);
+    return formatDate(date, [
+      dd,
+      ". ",
+      FlutterI18n.translate(context, "monthsShort.${date.month}"),
+      " ",
+      yyyy
+    ]);
   }
 
   static String dMMyyyy(BuildContext context, DateTime date) {
     // return formatDate(date, [d, ". ", monthsShort[date.month], " ", yyyy]);
-    return formatDate(date, [d, ". ", FlutterI18n.translate(context, "monthsShort.${date.month}"), " ", yyyy]);
+    return formatDate(date, [
+      d,
+      ". ",
+      FlutterI18n.translate(context, "monthsShort.${date.month}"),
+      " ",
+      yyyy
+    ]);
   }
 
   static String ddMM(BuildContext context, DateTime date) {
     // return formatDate(date, [dd, ". ", monthsShort[date.month]]);
-    return formatDate(date, [dd, ". ", FlutterI18n.translate(context, "monthsShort.${date.month}")]);
+    return formatDate(date, [
+      dd,
+      ". ",
+      FlutterI18n.translate(context, "monthsShort.${date.month}")
+    ]);
   }
 
   static String hhnn(dynamic date) {
@@ -70,7 +94,7 @@ class DateTimeHelpers {
 
   static int getAge(DateTime birthdate) {
     if (birthdate == null) return 0;
-    
+
     DateTime today = DateTime.now();
     int years = today.year - birthdate.year;
     int age;

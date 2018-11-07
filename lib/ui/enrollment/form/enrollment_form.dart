@@ -6,6 +6,7 @@ import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/postcal_codes_data.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_data_class.dart';
 import 'package:validate/validate.dart';
 import './enrollment_form_functions.dart' as formFunctions;
@@ -65,9 +66,11 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
   @override
   Widget build(BuildContext context) {
     if (widget.item != null) {
-      _saveButtonText = FlutterI18n.translate(context, "enrollment.enrollmentForm.string2");
+      _saveButtonText =
+          FlutterI18n.translate(context, "enrollment.enrollmentForm.string2");
     } else {
-      _saveButtonText = FlutterI18n.translate(context, "enrollment.enrollmentForm.string1");
+      _saveButtonText =
+          FlutterI18n.translate(context, "enrollment.enrollmentForm.string1");
     }
     return _main(context);
   }
@@ -96,9 +99,13 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
   Widget _nameField(BuildContext context) {
     return TextFormField(
       controller: _nameController,
-      decoration: InputDecoration(labelText: FlutterI18n.translate(context, "enrollment.enrollmentForm.string3")),
+      decoration: InputDecoration(
+          labelText: FlutterI18n.translate(
+              context, "enrollment.enrollmentForm.string3")),
       validator: (String value) {
-        if (value.isEmpty) return FlutterI18n.translate(context, "enrollment.enrollmentForm.string4");
+        if (value.isEmpty)
+          return FlutterI18n.translate(
+              context, "enrollment.enrollmentForm.string4");
       },
       keyboardType: TextInputType.text,
       inputFormatters: [LengthLimitingTextInputFormatter(50)],
@@ -111,9 +118,13 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
   Widget _adressField(BuildContext context) {
     return TextFormField(
       controller: _adressController,
-      decoration: InputDecoration(labelText: FlutterI18n.translate(context, "enrollment.enrollmentForm.string5")),
+      decoration: InputDecoration(
+          labelText: FlutterI18n.translate(
+              context, "enrollment.enrollmentForm.string5")),
       validator: (String value) {
-        if (value.isEmpty) return FlutterI18n.translate(context, "enrollment.enrollmentForm.string6");
+        if (value.isEmpty)
+          return FlutterI18n.translate(
+              context, "enrollment.enrollmentForm.string6");
       },
       keyboardType: TextInputType.text,
       inputFormatters: [LengthLimitingTextInputFormatter(50)],
@@ -127,13 +138,16 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
     return TextFormField(
       controller: _postalCodeController,
       decoration: InputDecoration(
-        labelText: FlutterI18n.translate(context, "enrollment.enrollmentForm.string7"),
+        labelText:
+            FlutterI18n.translate(context, "enrollment.enrollmentForm.string7"),
       ),
       validator: (String value) {
         if (value.isEmpty || int.tryParse(value.trim()) == null)
-          return FlutterI18n.translate(context, "enrollment.enrollmentForm.string8");
+          return FlutterI18n.translate(
+              context, "enrollment.enrollmentForm.string8");
         if (!_isPostalCodeValid)
-          return FlutterI18n.translate(context, "enrollment.enrollmentForm.string9");
+          return FlutterI18n.translate(
+              context, "enrollment.enrollmentForm.string9");
       },
       keyboardType: TextInputType.number,
       inputFormatters: [LengthLimitingTextInputFormatter(4)],
@@ -148,7 +162,8 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
         enabled: false,
         controller: _cityController,
         decoration: InputDecoration(
-          labelText: FlutterI18n.translate(context, "enrollment.enrollmentForm.string10"),
+          labelText: FlutterI18n.translate(
+              context, "enrollment.enrollmentForm.string10"),
         ),
         onSaved: (String value) {
           _user.city = value;
@@ -158,8 +173,10 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
   Widget _birthdayField(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
-        labelText: FlutterI18n.translate(context, "enrollment.enrollmentForm.string11"),
-        hintText: FlutterI18n.translate(context, "enrollment.enrollmentForm.string12"),
+        labelText: FlutterI18n.translate(
+            context, "enrollment.enrollmentForm.string11"),
+        hintText: FlutterI18n.translate(
+            context, "enrollment.enrollmentForm.string12"),
         suffixIcon: IconButton(
             color: SilkeborgBeachvolleyTheme.buttonTextColor,
             icon: Icon(Icons.calendar_today),
@@ -169,9 +186,12 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
       ),
       controller: _birtdateController,
       validator: (String value) {
-        if (value.isEmpty) return FlutterI18n.translate(context, "enrollment.enrollmentForm.string13");
+        if (value.isEmpty)
+          return FlutterI18n.translate(
+              context, "enrollment.enrollmentForm.string13");
         if (!DateTimeHelpers.isVvalidDateFormat(value))
-          return FlutterI18n.translate(context, "enrollment.enrollmentForm.string14");
+          return FlutterI18n.translate(
+              context, "enrollment.enrollmentForm.string14");
       },
       keyboardType: TextInputType.datetime,
       inputFormatters: [LengthLimitingTextInputFormatter(10)],
@@ -181,13 +201,18 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
   Widget _emailField(BuildContext context) {
     return TextFormField(
       controller: _emailController,
-      decoration: InputDecoration(labelText: FlutterI18n.translate(context, "enrollment.enrollmentForm.string15")),
+      decoration: InputDecoration(
+          labelText: FlutterI18n.translate(
+              context, "enrollment.enrollmentForm.string15")),
       validator: (String value) {
-        if (value.isEmpty) return FlutterI18n.translate(context, "enrollment.enrollmentForm.string16");
+        if (value.isEmpty)
+          return FlutterI18n.translate(
+              context, "enrollment.enrollmentForm.string16");
         try {
           Validate.isEmail(value.trim());
         } catch (e) {
-          return FlutterI18n.translate(context, "enrollment.enrollmentForm.string17");
+          return FlutterI18n.translate(
+              context, "enrollment.enrollmentForm.string17");
         }
       },
       keyboardType: TextInputType.emailAddress,
@@ -201,10 +226,13 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
   Widget _mobilenumberField(BuildContext context) {
     return TextFormField(
       controller: _mobilenumberController,
-      decoration: InputDecoration(labelText: FlutterI18n.translate(context, "enrollment.enrollmentForm.string18")),
+      decoration: InputDecoration(
+          labelText: FlutterI18n.translate(
+              context, "enrollment.enrollmentForm.string18")),
       validator: (String value) {
         if (value.isEmpty || int.tryParse(value.trim()) == null)
-          return FlutterI18n.translate(context, "enrollment.enrollmentForm.string19");
+          return FlutterI18n.translate(
+              context, "enrollment.enrollmentForm.string19");
       },
       keyboardType: TextInputType.phone,
       inputFormatters: [LengthLimitingTextInputFormatter(8)],
@@ -230,7 +258,7 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
 
             SystemHelpers.hideKeyboardWithNoFocus(context);
 
-            await _user.save();
+            await _user.save(MainInherited.of(context).loggedInUser.uid);
 
             if (widget.onFormSaved != null) {
               widget.onFormSaved(true);

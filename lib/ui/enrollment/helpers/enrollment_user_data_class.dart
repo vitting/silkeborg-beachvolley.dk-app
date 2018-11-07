@@ -8,7 +8,6 @@ import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollmentExists.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_payment_data.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
 class EnrollmentUserData {
   String id;
@@ -38,7 +37,7 @@ class EnrollmentUserData {
       this.payment,
       this.comment = ""});
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toMap(String userId) {
     return {
       "id": id,
       "addedByUserId": addedByUserId,
@@ -54,7 +53,7 @@ class EnrollmentUserData {
       "payment": payment == null
           ? []
           : payment.map<Map<String, dynamic>>((EnrollmentPaymentData data) {
-              return data.toMap();
+              return data.toMap(userId);
             }).toList()
     };
   }
@@ -126,13 +125,13 @@ class EnrollmentUserData {
     return EnrollmentFirestore.checkIfExists(email, phone);
   }
 
-  Future<void> save() {
+  Future<void> save(String userId) {
     id = id ?? UuidHelpers.generateUuid();
-    addedByUserId = Home.loggedInUser?.uid;
+    addedByUserId = userId;
     creationDate = creationDate ?? Timestamp.now();
     payment = payment ?? [];
     comment = comment ?? "";
-    return EnrollmentFirestore.saveEnrollment(this);
+    return EnrollmentFirestore.saveEnrollment(userId, this);
   }
 
   Future<void> delete() {
@@ -157,10 +156,10 @@ class EnrollmentUserData {
     }).toList();
   }
 
-  static Future<List<EnrollmentUserData>> getAllAddedByUser() async {
+  static Future<List<EnrollmentUserData>> getAllAddedByUser(
+      String userId) async {
     QuerySnapshot snapshot =
-        await EnrollmentFirestore.getAllEnrollmentsAddedByUserId(
-            Home.loggedInUser.uid);
+        await EnrollmentFirestore.getAllEnrollmentsAddedByUserId(userId);
     return snapshot.documents.map<EnrollmentUserData>((DocumentSnapshot doc) {
       return EnrollmentUserData.fromMap(doc.data);
     }).toList();

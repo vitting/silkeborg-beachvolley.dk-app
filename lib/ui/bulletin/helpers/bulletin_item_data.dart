@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_committed_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
 class BulletinItemData {
   String id;
@@ -44,14 +44,12 @@ class BulletinItemData {
     };
   }
 
-  Future<void> hide() {
-    return BulletinFirestore.addUserHidesBulletinItem(
-        id, Home.loggedInUser.uid);
+  Future<void> hide(String userId) {
+    return BulletinFirestore.addUserHidesBulletinItem(id, userId);
   }
 
-  Future<void> unhide() {
-    return BulletinFirestore.removeUserHidesBulletinItem(
-        id, Home.loggedInUser.uid);
+  Future<void> unhide(String userId) {
+    return BulletinFirestore.removeUserHidesBulletinItem(id, userId);
   }
 
   ///Deletes all images, comments and the news item.
@@ -86,16 +84,16 @@ class BulletinItemData {
     }).toList();
   }
 
-  Future<bool> isCommitted() async {
-    return BulletinFirestore.checkIsCommited(id, Home.loggedInUser.uid);
+  Future<bool> isCommitted(String userId) async {
+    return BulletinFirestore.checkIsCommited(id, userId);
   }
 
-  Future<void> setAsCommitted() async {
+  Future<void> setAsCommitted(FirebaseUser user) async {
     CommittedData playerCommitted = CommittedData(
         bulletinId: id,
-        name: Home.loggedInUser.displayName,
-        photoUrl: Home.loggedInUser.photoUrl,
-        userId: Home.loggedInUser.uid,
+        name: user.displayName,
+        photoUrl: user.photoUrl,
+        userId: user.uid,
         type: type);
 
     return BulletinFirestore.saveCommitted(playerCommitted);

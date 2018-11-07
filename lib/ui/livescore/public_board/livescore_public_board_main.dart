@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/board/livescore_board_widget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_data.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
@@ -13,7 +13,9 @@ class LivescorePublicBoard extends StatefulWidget {
   final String livescoreId;
   final bool checkForScreenOn;
 
-  const LivescorePublicBoard({Key key, this.livescoreId, this.checkForScreenOn = false}) : super(key: key);
+  const LivescorePublicBoard(
+      {Key key, this.livescoreId, this.checkForScreenOn = false})
+      : super(key: key);
 
   @override
   LivescorePublicBoardState createState() {
@@ -28,13 +30,14 @@ class LivescorePublicBoardState extends State<LivescorePublicBoard> {
   Color _pointsBorderColorTeam2 = Colors.white;
 
   @override
-  void initState() {
-    super.initState();
-    if (Home.settings != null) {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (MainInherited.of(context).settings != null) {
       if (widget.checkForScreenOn) {
-        Home.settings.livescorePublicBoardKeepScreenOn
-          ? SystemHelpers.setScreenOn()
-          : SystemHelpers.setScreenOff();
+        MainInherited.of(context).settings.livescorePublicBoardKeepScreenOn
+            ? SystemHelpers.setScreenOn()
+            : SystemHelpers.setScreenOff();
       }
     } else {
       if (widget.checkForScreenOn) {

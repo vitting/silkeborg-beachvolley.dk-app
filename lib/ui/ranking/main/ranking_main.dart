@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/dot_bottombar_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/ranking_create_match_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_sharedpref.dart';
@@ -51,7 +52,8 @@ class RankingState extends State<Ranking> {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: SilkeborgBeachvolleyTheme.buttonTextColor,
-          tooltip: FlutterI18n.translate(context, "ranking.rankingMain.string1"),
+          tooltip:
+              FlutterI18n.translate(context, "ranking.rankingMain.string1"),
           onPressed: () async {
             await Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) => RankingCreateMatch(),
@@ -75,13 +77,16 @@ class RankingState extends State<Ranking> {
 
   String _getPageTitle(BuildContext context, int page) {
     String title = "";
-    if (page == 0) title = FlutterI18n.translate(context, "ranking.rankingMain.title1");
-    if (page == 1) title = FlutterI18n.translate(context, "ranking.rankingMain.title2");
+    if (page == 0)
+      title = FlutterI18n.translate(context, "ranking.rankingMain.title1");
+    if (page == 1)
+      title = FlutterI18n.translate(context, "ranking.rankingMain.title2");
     return title;
   }
 
   void _checkIfPlayerExists(BuildContext context) async {
-    if (await RankingSharedPref.isItfirstTime()) {
+    if (await RankingSharedPref.isItfirstTime(
+        MainInherited.of(context).loggedInUser.uid)) {
       _showFirstTimeSetup(context);
     }
   }

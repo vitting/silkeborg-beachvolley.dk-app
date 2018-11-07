@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/image_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/image_info_data.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_overlay_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/build_build_item.dart';
@@ -56,9 +57,12 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
 
   String _getTitle(BuildContext context, BulletinType type) {
     String title = "";
-    if (type == BulletinType.news) title = FlutterI18n.translate(context, "bulletin.createItemMain.title1");
-    if (type == BulletinType.event) title = FlutterI18n.translate(context, "bulletin.createItemMain.title2");
-    if (type == BulletinType.play) title = FlutterI18n.translate(context, "bulletin.createItemMain.title3");
+    if (type == BulletinType.news)
+      title = FlutterI18n.translate(context, "bulletin.createItemMain.title1");
+    if (type == BulletinType.event)
+      title = FlutterI18n.translate(context, "bulletin.createItemMain.title2");
+    if (type == BulletinType.play)
+      title = FlutterI18n.translate(context, "bulletin.createItemMain.title3");
     return title;
   }
 
@@ -69,7 +73,8 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
         body: LoaderSpinnerOverlay(
           show: _saving,
           child: _main(),
-          text: FlutterI18n.translate(context, "bulletin.createItemMain.string1"),
+          text:
+              FlutterI18n.translate(context, "bulletin.createItemMain.string1"),
         ));
   }
 
@@ -114,9 +119,9 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
     List<Widget> widgets = [];
     if (widget.bulletinType == BulletinType.event) {
       widgets.add(_eventFields());
-      widgets.add(_textField());
+      widgets.add(_textField(context));
     } else {
-      widgets.add(_textField());
+      widgets.add(_textField(context));
     }
 
     return widgets;
@@ -140,7 +145,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
     );
   }
 
-  Widget _textField() {
+  Widget _textField(BuildContext context) {
     return BulletinTextField(
         onPressedSave: () async {
           if (_formKey.currentState.validate()) {
@@ -151,7 +156,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
                 _saving = true;
               });
             }
-            await _saveBulletinItem();
+            await _saveBulletinItem(context);
             if (mounted) {
               setState(() {
                 _saving = false;
@@ -169,7 +174,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
         showPhotoButton: widget.bulletinType == BulletinType.news);
   }
 
-  Future<void> _saveBulletinItem() async {
+  Future<void> _saveBulletinItem(BuildContext context) async {
     var data;
     if (itemFieldsValue.type == BulletinType.news) {
       data = BuildBulletinItem.buildNewsItem(itemFieldsValue, _imageFiles);
@@ -184,7 +189,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
     }
 
     _imageFiles.clear();
-    return data.save();
+    return data.save(MainInherited.of(context).loggedInUser);
   }
 
   void _addPhoto() async {

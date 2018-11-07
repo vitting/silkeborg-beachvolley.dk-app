@@ -7,7 +7,7 @@ import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/control/helpers/livescore_controls_widget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_data.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
@@ -36,17 +36,9 @@ class _LivescoreControlState extends State<LivescoreControl> {
       StreamController<String>.broadcast();
 
   @override
-  void initState() {
-    super.initState();
-    Home.settings.livescoreControlBoardKeepScreenOn
-        ? SystemHelpers.setScreenOn()
-        : SystemHelpers.setScreenOff();
-  }
-
-  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _init();
+    _init(context);
   }
 
   @override
@@ -56,7 +48,11 @@ class _LivescoreControlState extends State<LivescoreControl> {
     super.dispose();
   }
 
-  void _init() {
+  void _init(BuildContext context) {
+    MainInherited.of(context).settings.livescoreControlBoardKeepScreenOn
+        ? SystemHelpers.setScreenOn()
+        : SystemHelpers.setScreenOff();
+
     if (widget.match.active != null && widget.match.active == false) {
       _fadeState = CrossFadeState.showSecond;
     }
@@ -117,7 +113,8 @@ class _LivescoreControlState extends State<LivescoreControl> {
                   }
                 },
                 onDoubleTapMessage: (bool value) {
-                  if (Home.canVibrate) Vibrate.feedback(FeedbackType.success);
+                  if (MainInherited.of(context).canVibrate)
+                    Vibrate.feedback(FeedbackType.success);
                   _setBoardMessage(0, 0, false);
                 },
               ),
@@ -182,7 +179,8 @@ class _LivescoreControlState extends State<LivescoreControl> {
   }
 
   void _onLongPressPointsMatchStart(BuildContext context, int team) async {
-    if (Home.canVibrate) Vibrate.feedback(FeedbackType.success);
+    if (MainInherited.of(context).canVibrate)
+      Vibrate.feedback(FeedbackType.success);
     int result = await Dialogs.modalBottomSheet(context, [
       DialogsModalBottomSheetItem(
           FlutterI18n.translate(
@@ -210,7 +208,8 @@ class _LivescoreControlState extends State<LivescoreControl> {
   }
 
   void _onLongPressPointsActive(BuildContext context, int team) async {
-    if (Home.canVibrate) Vibrate.feedback(FeedbackType.success);
+    if (MainInherited.of(context).canVibrate)
+      Vibrate.feedback(FeedbackType.success);
     int result = await Dialogs.modalBottomSheet(context, [
       DialogsModalBottomSheetItem(
           FlutterI18n.translate(
@@ -293,7 +292,8 @@ class _LivescoreControlState extends State<LivescoreControl> {
   }
 
   void _setPoint(LivescoreControlAction action, int team) {
-    if (Home.canVibrate) Vibrate.feedback(FeedbackType.success);
+    if (MainInherited.of(context).canVibrate)
+      Vibrate.feedback(FeedbackType.success);
     setState(() {
       if (action == LivescoreControlAction.add) {
         _setSelectedTeam(team);
@@ -306,7 +306,8 @@ class _LivescoreControlState extends State<LivescoreControl> {
   }
 
   void _setTimeout(LivescoreControlAction action, int team) {
-    if (Home.canVibrate) Vibrate.feedback(FeedbackType.success);
+    if (MainInherited.of(context).canVibrate)
+      Vibrate.feedback(FeedbackType.success);
     setState(() {
       if (action == LivescoreControlAction.add) widget.match.addTimeouts(team);
       if (action == LivescoreControlAction.remove)
@@ -386,7 +387,8 @@ class _LivescoreControlState extends State<LivescoreControl> {
   }
 
   void _messageChooser(BuildContext context, int team) async {
-    if (Home.canVibrate) Vibrate.feedback(FeedbackType.success);
+    if (MainInherited.of(context).canVibrate)
+      Vibrate.feedback(FeedbackType.success);
     int result = await Dialogs.modalBottomSheet(context, [
       DialogsModalBottomSheetItem(
           FlutterI18n.translate(context, "livescore.boardMessages.0"),

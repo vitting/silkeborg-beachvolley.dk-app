@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
 
@@ -16,10 +16,16 @@ class RankingFirstTime extends StatefulWidget {
 
 class _RankingFirstTimeState extends State<RankingFirstTime> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  RankingPlayerData _rankingPlayerData = RankingPlayerData(
-      userId: Home.loggedInUser.uid,
-      photoUrl: Home.loggedInUser.photoUrl,
-      name: Home.loggedInUser.displayName);
+  RankingPlayerData _rankingPlayerData;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _rankingPlayerData = RankingPlayerData(
+        userId: MainInherited.of(context).loggedInUser.uid,
+        photoUrl: MainInherited.of(context).loggedInUser.photoUrl,
+        name: MainInherited.of(context).loggedInUser.displayName);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,21 +33,23 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
       padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
       child: Column(
         children: <Widget>[
-          Text(FlutterI18n.translate(context, "ranking.rankingFirsttimeMain.string1"),
-              textAlign: TextAlign.center, style: TextStyle(fontSize: 20.0)),
+          Text(
+              FlutterI18n.translate(
+                  context, "ranking.rankingFirsttimeMain.string1"),
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20.0)),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: Text(
-              FlutterI18n.translate(context, "ranking.rankingFirsttimeMain.string2"),
+              FlutterI18n.translate(
+                  context, "ranking.rankingFirsttimeMain.string2"),
               textAlign: TextAlign.center,
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: CircleProfileImage(
-              url: _rankingPlayerData.photoUrl,
-              size: 60.0
-            ),
+                url: _rankingPlayerData.photoUrl, size: 60.0),
           ),
           Form(
             key: _formKey,
@@ -54,10 +62,13 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
                   },
                   validator: (String value) {
                     if (value.isEmpty)
-                      return FlutterI18n.translate(context, "ranking.rankingFirsttimeMain.string3");
+                      return FlutterI18n.translate(
+                          context, "ranking.rankingFirsttimeMain.string3");
                   },
                   inputFormatters: [LengthLimitingTextInputFormatter(50)],
-                  decoration: InputDecoration(labelText: FlutterI18n.translate(context, "ranking.rankingFirsttimeMain.string4")),
+                  decoration: InputDecoration(
+                      labelText: FlutterI18n.translate(
+                          context, "ranking.rankingFirsttimeMain.string4")),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
@@ -66,7 +77,9 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
                       _rankingPlayerData.sex = value;
                     },
                     validator: (String value) {
-                      if (value.isEmpty) return FlutterI18n.translate(context, "ranking.rankingFirsttimeMain.string5");
+                      if (value.isEmpty)
+                        return FlutterI18n.translate(
+                            context, "ranking.rankingFirsttimeMain.string5");
                     },
                     initialValue: "",
                     builder: (FormFieldState<String> state) {
@@ -75,7 +88,8 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              Text(FlutterI18n.translate(context, "ranking.rankingFirsttimeMain.string6")),
+                              Text(FlutterI18n.translate(context,
+                                  "ranking.rankingFirsttimeMain.string6")),
                               Radio(
                                 onChanged: (String value) {
                                   setState(() {
@@ -89,7 +103,8 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
                           ),
                           Row(
                             children: <Widget>[
-                              Text(FlutterI18n.translate(context, "ranking.rankingFirsttimeMain.string7")),
+                              Text(FlutterI18n.translate(context,
+                                  "ranking.rankingFirsttimeMain.string7")),
                               Radio(
                                 onChanged: (String value) {
                                   setState(() {
@@ -114,11 +129,12 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
             onPressed: () {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
-                _savePlayer();
+                _savePlayer(context);
                 widget.onPressedValue(true);
               }
             },
-            label: Text(FlutterI18n.translate(context, "ranking.rankingFirsttimeMain.string8")),
+            label: Text(FlutterI18n.translate(
+                context, "ranking.rankingFirsttimeMain.string8")),
             icon: Icon(Icons.check_circle),
           )
         ],
@@ -126,13 +142,14 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
     );
   }
 
-  void _savePlayer() async {
+  void _savePlayer(BuildContext context) async {
     SettingsData settings =
         await SettingsData.getSettings(_rankingPlayerData.userId);
     if (settings != null) {
       settings.rankingName = _rankingPlayerData.name;
       settings.sex = _rankingPlayerData.sex;
-      settings.save();
+      MainInherited.of(context).settings =
+          await settings.save(MainInherited.of(context).loggedInUser);
     }
     await _rankingPlayerData.save();
     Navigator.of(context).pop();

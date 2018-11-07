@@ -3,8 +3,8 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/detailItem/bulletin_comment_item_data.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
 class BulletinCommentItemRow extends StatelessWidget {
   final BulletinCommentItemData bulletinItem;
@@ -31,26 +31,31 @@ class BulletinCommentItemRow extends StatelessWidget {
             )
           ],
         ),
-        leading: CircleProfileImage(
-          url: bulletinItem.authorPhotoUrl
-        ),
+        leading: CircleProfileImage(url: bulletinItem.authorPhotoUrl),
         subtitle: Text(bulletinItem.body),
         trailing: _getButton(context, bulletinItem.authorId));
   }
 
   Widget _getButton(BuildContext context, String authorId) {
     Widget widgets;
-    if (authorId == Home.loggedInUser.uid) {
+    if (authorId == MainInherited.of(context).loggedInUser.uid) {
       widgets = IconButton(
         icon: Icon(Icons.more_vert),
         onPressed: () async {
           ConfirmDialogAction action = ConfirmDialogAction.none;
-          int resultModalBottomSheet = await Dialogs.modalBottomSheet(
-              context, [DialogsModalBottomSheetItem(FlutterI18n.translate(context, "bulletin.bulletinCommentItemRowWidget.string1"), Icons.delete, 0)]);
+          int resultModalBottomSheet = await Dialogs.modalBottomSheet(context, [
+            DialogsModalBottomSheetItem(
+                FlutterI18n.translate(
+                    context, "bulletin.bulletinCommentItemRowWidget.string1"),
+                Icons.delete,
+                0)
+          ]);
 
           if (resultModalBottomSheet != null) {
             action = await Dialogs.confirmDelete(
-                context, FlutterI18n.translate(context, "bulletin.bulletinCommentItemRowWidget.string2"));
+                context,
+                FlutterI18n.translate(
+                    context, "bulletin.bulletinCommentItemRowWidget.string2"));
           }
 
           onTapMenu(action);

@@ -40,7 +40,8 @@ class _RankingDetailChartMatchesWeekState
                   width: widget.width,
                   height: widget.height,
                   child: BarChart(snapshot.data, animate: true)),
-              Text(FlutterI18n.translate(context, "ranking.rankingDetailChartMatchesWeekWidget.string1"))
+              Text(FlutterI18n.translate(context,
+                  "ranking.rankingDetailChartMatchesWeekWidget.string1"))
             ],
           );
         },

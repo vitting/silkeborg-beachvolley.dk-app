@@ -25,24 +25,29 @@ Future<ConfirmAction> logoutConfirm(BuildContext context) async {
       barrierDismissible: false,
       builder: (BuildContext context) => SimpleDialog(
             contentPadding: EdgeInsets.all(10.0),
-            title: Text(FlutterI18n.translate(context, "login.authFunctions.string1")),
+            title: Text(
+                FlutterI18n.translate(context, "login.authFunctions.string1")),
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Text(FlutterI18n.translate(context, "login.authFunctions.string2"),
+                child: Text(
+                    FlutterI18n.translate(
+                        context, "login.authFunctions.string2"),
                     textAlign: TextAlign.center),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   SimpleDialogOption(
-                    child: Text(FlutterI18n.translate(context, "login.authFunctions.string3")),
+                    child: Text(FlutterI18n.translate(
+                        context, "login.authFunctions.string3")),
                     onPressed: () {
                       Navigator.of(context).pop(ConfirmAction.yes);
                     },
                   ),
                   SimpleDialogOption(
-                    child: Text(FlutterI18n.translate(context, "login.authFunctions.string4")),
+                    child: Text(FlutterI18n.translate(
+                        context, "login.authFunctions.string4")),
                     onPressed: () {
                       Navigator.of(context).pop(ConfirmAction.no);
                     },

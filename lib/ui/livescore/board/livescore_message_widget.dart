@@ -79,7 +79,8 @@ class _LivescoreMatchMessageState extends State<LivescoreMatchMessage> {
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 14.0,
-                          fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont)),
+                          fontFamily:
+                              SilkeborgBeachvolleyTheme.scoreboardFont)),
                 ),
               )
             ],

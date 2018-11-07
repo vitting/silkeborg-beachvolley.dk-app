@@ -1,14 +1,13 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
-class BulletinPlayItemData extends BulletinItemData implements BaseData {
+class BulletinPlayItemData extends BulletinItemData {
   BulletinPlayItemData(
       {String id,
       BulletinType type = BulletinType.none,
@@ -42,26 +41,26 @@ class BulletinPlayItemData extends BulletinItemData implements BaseData {
     }
   }
 
-  Future<void> save() async {
+  Future<void> save(FirebaseUser user) async {
     id = id ?? UuidHelpers.generateUuid();
     creationDate = creationDate ?? Timestamp.now();
-    authorId = Home.loggedInUser.uid;
-    authorName = Home.loggedInUser.displayName;
-    authorPhotoUrl = Home.loggedInUser.photoUrl;
+    authorId = user.uid;
+    authorName = user.displayName;
+    authorPhotoUrl = user.photoUrl;
     return BulletinFirestore.saveBulletinItem(this);
   }
 
   factory BulletinPlayItemData.fromMap(Map<String, dynamic> item) {
     return new BulletinPlayItemData(
-        id: item["id"] ?? "",
-        type: BulletinTypeHelper.getBulletinTypeStringAsType(item["type"]),
-        authorId: item["author"]["id"] ?? "",
-        authorName: item["author"]["name"] ?? "",
-        authorPhotoUrl: item["author"]["photoUrl"] ?? "",
-        body: item["body"] ?? "",
-        creationDate: item["creationDate"],
-        numberOfcomments: item["numberOfcomments"] ?? 0,
-        numberOfCommits: item["numberOfCommits"] ?? 0,
-        );
+      id: item["id"] ?? "",
+      type: BulletinTypeHelper.getBulletinTypeStringAsType(item["type"]),
+      authorId: item["author"]["id"] ?? "",
+      authorName: item["author"]["name"] ?? "",
+      authorPhotoUrl: item["author"]["photoUrl"] ?? "",
+      body: item["body"] ?? "",
+      creationDate: item["creationDate"],
+      numberOfcomments: item["numberOfcomments"] ?? 0,
+      numberOfCommits: item["numberOfCommits"] ?? 0,
+    );
   }
 }

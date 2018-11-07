@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class AdminUsers extends StatefulWidget {
@@ -101,8 +101,7 @@ class _AdminUsersState extends State<AdminUsers> {
                             Switch(
                               value: user.admin1,
                               onChanged: (bool value) {
-                                if (Home.userInfo != null &&
-                                    Home.userInfo.admin1) {
+                                if (MainInherited.of(context).isAdmin1) {
                                   setState(() {
                                     user.setAdmin1State(value);
                                   });
@@ -131,8 +130,7 @@ class _AdminUsersState extends State<AdminUsers> {
                             Switch(
                               value: user.admin2,
                               onChanged: (bool value) {
-                                if (Home.userInfo != null &&
-                                    Home.userInfo.admin1) {
+                                if (MainInherited.of(context).isAdmin1) {
                                   setState(() {
                                     user.setAdmin2State(value);
                                   });

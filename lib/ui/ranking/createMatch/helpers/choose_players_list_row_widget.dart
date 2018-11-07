@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 
 class ChoosePlayerListRow extends StatefulWidget {
@@ -49,16 +49,15 @@ class ChoosePlayerListRowState extends State<ChoosePlayerListRow> {
       },
       leading: GestureDetector(
           onLongPress: () {
-            if (widget.player.userId != Home.loggedInUser.uid) {
+            if (widget.player.userId !=
+                MainInherited.of(context).loggedInUser.uid) {
               widget.onLongPress(widget.isFavorite);
             }
           },
           child: Stack(
             overflow: Overflow.visible,
             children: <Widget>[
-              CircleProfileImage(
-                url: widget.player.photoUrl
-              ),
+              CircleProfileImage(url: widget.player.photoUrl),
               Positioned(
                   bottom: -6.0,
                   right: -6.0,

@@ -4,9 +4,9 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/chip_header_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/control/livescore_control_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/create/livescore_create_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_data.dart';
@@ -31,7 +31,9 @@ class LivescoreOverviewMatches extends StatelessWidget {
             snapshotStarted.data.documents.length == 0) return Container();
         return Column(
           children: <Widget>[
-            ChipHeader(FlutterI18n.translate(context, "livescore.livescoreOverviewMatchesWidget.string1"),
+            ChipHeader(
+                FlutterI18n.translate(context,
+                    "livescore.livescoreOverviewMatchesWidget.string1"),
                 expanded: true,
                 roundedCorners: false,
                 textAlign: TextAlign.center,
@@ -78,7 +80,9 @@ class LivescoreOverviewMatches extends StatelessWidget {
 
         return Column(
           children: <Widget>[
-            ChipHeader(FlutterI18n.translate(context, "livescore.livescoreOverviewMatchesWidget.string2"),
+            ChipHeader(
+                FlutterI18n.translate(context,
+                    "livescore.livescoreOverviewMatchesWidget.string2"),
                 expanded: true,
                 roundedCorners: false,
                 textAlign: TextAlign.center,
@@ -94,7 +98,10 @@ class LivescoreOverviewMatches extends StatelessWidget {
                 LivescoreData match = LivescoreData.fromMap(doc.data);
                 return LivescoreMatchRow(
                   match: match,
-                  isMatchAdmin: Home.loggedInUser != null ? match.userId == Home.loggedInUser.uid : false,
+                  isMatchAdmin: MainInherited.of(context).loggedInUser != null
+                      ? match.userId ==
+                          MainInherited.of(context).loggedInUser.uid
+                      : false,
                   isLive: false,
                   onLongPressRow: (LivescoreData selectedMatch) {
                     _onLongPressRow(context, selectedMatch);
@@ -121,22 +128,33 @@ class LivescoreOverviewMatches extends StatelessWidget {
 
   void _onTapRowSetting(BuildContext context, LivescoreData match) async {
     int result = await Dialogs.modalBottomSheet(context, [
-      DialogsModalBottomSheetItem(FlutterI18n.translate(context, "livescore.livescoreOverviewMatchesWidget.string4"), Icons.edit, 0),
-      DialogsModalBottomSheetItem(FlutterI18n.translate(context, "livescore.livescoreOverviewMatchesWidget.string5"), Icons.delete, 1)
+      DialogsModalBottomSheetItem(
+          FlutterI18n.translate(
+              context, "livescore.livescoreOverviewMatchesWidget.string4"),
+          Icons.edit,
+          0),
+      DialogsModalBottomSheetItem(
+          FlutterI18n.translate(
+              context, "livescore.livescoreOverviewMatchesWidget.string5"),
+          Icons.delete,
+          1)
     ]);
 
     ///Edit match
     if (result != null && result == 0) {
       Navigator.of(context).push(MaterialPageRoute(
-              fullscreenDialog: true,
-              builder: (BuildContext context) => LivescoreCreateEdit(
+          fullscreenDialog: true,
+          builder: (BuildContext context) => LivescoreCreateEdit(
                 match: match,
               )));
     }
 
     ///Delete match
     if (result != null && result == 1) {
-      ConfirmDialogAction action = await Dialogs.confirmDelete(context, FlutterI18n.translate(context, "livescore.livescoreOverviewMatchesWidget.string6")); 
+      ConfirmDialogAction action = await Dialogs.confirmDelete(
+          context,
+          FlutterI18n.translate(
+              context, "livescore.livescoreOverviewMatchesWidget.string6"));
 
       if (action != null && action == ConfirmDialogAction.delete) {
         await match.delete();
@@ -145,9 +163,11 @@ class LivescoreOverviewMatches extends StatelessWidget {
   }
 
   void _onLongPressRow(BuildContext context, LivescoreData match) async {
-    if (Home.loggedInUser != null) {
-      ConfirmDialogAction action =
-          await Dialogs.confirmYesNo(context, FlutterI18n.translate(context, "livescore.livescoreOverviewMatchesWidget.string3"));
+    if (MainInherited.of(context).loggedInUser != null) {
+      ConfirmDialogAction action = await Dialogs.confirmYesNo(
+          context,
+          FlutterI18n.translate(
+              context, "livescore.livescoreOverviewMatchesWidget.string3"));
       if (action != null && action == ConfirmDialogAction.yes) {
         Navigator.of(context).push(MaterialPageRoute(
             fullscreenDialog: true,

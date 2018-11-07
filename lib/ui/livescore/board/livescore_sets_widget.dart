@@ -31,8 +31,11 @@ class LivescoreBoardSets extends StatelessWidget {
                 fontWeight: fontWeightTeam1)),
       ),
       Expanded(
-        child: Text(FlutterI18n.translate(context, "livescore.livescoreSetsWidget.string1"),
-            textAlign: TextAlign.center, style: TextStyle(color: Colors.white)),
+        child: Text(
+            FlutterI18n.translate(
+                context, "livescore.livescoreSetsWidget.string1"),
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white)),
       ),
       Expanded(
           child: Text(setTeam2.toString(),

@@ -1,14 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_sets_played_data.dart';
 
-class LivescoreData implements BaseData {
+class LivescoreData {
   /// Id of match.
   String id;
 
@@ -145,7 +143,6 @@ class LivescoreData implements BaseData {
     );
   }
 
-  @override
   Map<String, dynamic> toMap() {
     return {
       "id": id,
@@ -341,15 +338,13 @@ class LivescoreData implements BaseData {
         id, matchMessage, matchMessageTeam);
   }
 
-  @override
-  Future<void> save() {
+  Future<void> save(String userId) {
     id = id ?? UuidHelpers.generateUuid();
-    userId = userId ?? Home.loggedInUser.uid;
+    userId = userId ?? userId;
     createdDate = createdDate ?? Timestamp.now();
     return LivescoreFirestore.saveMatch(this);
   }
 
-  @override
   Future<void> delete() {
     return LivescoreFirestore.deleteMatch(id);
   }

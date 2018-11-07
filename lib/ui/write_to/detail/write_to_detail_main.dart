@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_data.dart';
@@ -27,7 +28,8 @@ class WriteToDetailState extends State<WriteToDetail> {
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
         appBarBackgroundColor: Colors.blueGrey[800],
-        title: FlutterI18n.translate(context, "writeTo.writeToDetailMain.title"),
+        title:
+            FlutterI18n.translate(context, "writeTo.writeToDetailMain.title"),
         body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             return Stack(
@@ -63,11 +65,13 @@ class WriteToDetailState extends State<WriteToDetail> {
                                   );
                                 }
 
-                                WriteToData docReply = WriteToData.fromMap(snapshotReply.data.documents[position].data);
+                                WriteToData docReply = WriteToData.fromMap(
+                                    snapshotReply
+                                        .data.documents[position].data);
                                 return Padding(
-                      
-                      
-                                  padding: docReply.type != "reply_locale" ? const EdgeInsets.only(left: 20.0) : const EdgeInsets.only(right: 20.0),
+                                  padding: docReply.type != "reply_locale"
+                                      ? const EdgeInsets.only(left: 20.0)
+                                      : const EdgeInsets.only(right: 20.0),
                                   child: WriteToRow(
                                     item: docReply,
                                   ),
@@ -86,8 +90,8 @@ class WriteToDetailState extends State<WriteToDetail> {
                       child: WriteToTextfield(
                     backgroundColor: Colors.blueGrey.withAlpha(140),
                     onTextFieldSubmit: (String value) async {
-                      if(value.trim().isNotEmpty) {
-                       await _save(value);
+                      if (value.trim().isNotEmpty) {
+                        await _save(context, value);
                       }
                     },
                   )),
@@ -98,15 +102,14 @@ class WriteToDetailState extends State<WriteToDetail> {
         ));
   }
 
-  Future<WriteToData> _save(String message) async {
+  Future<WriteToData> _save(BuildContext context, String message) async {
     WriteToData replyData = WriteToData(
         type: "reply",
         messageRepliedToId: widget.item.id,
-        message: message.trim()
-      );
-      
-      await replyData.save();
-      
-      return replyData; 
+        message: message.trim());
+
+    await replyData.save(MainInherited.of(context).loggedInUser);
+
+    return replyData;
   }
 }

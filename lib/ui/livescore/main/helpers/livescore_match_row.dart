@@ -72,12 +72,14 @@ class LivescoreMatchRow extends StatelessWidget {
             )
           ],
         ),
-        trailing: isMatchAdmin ? IconButton(
-          icon: Icon(Icons.more_vert),
-          onPressed: () {
-            onTapRowSettings(match);
-          },
-        ) : null,
+        trailing: isMatchAdmin
+            ? IconButton(
+                icon: Icon(Icons.more_vert),
+                onPressed: () {
+                  onTapRowSettings(match);
+                },
+              )
+            : null,
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
           child: Row(

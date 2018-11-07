@@ -185,7 +185,7 @@ class RankingFirestore {
   }
 
 //CHRISTIAN: Only for testing
-  static createFakeMatches(int numbertoCreate) async {
+  static createFakeMatches(String userId, int numbertoCreate) async {
     Faker faker = Faker();
     QuerySnapshot playersSnap = await getAllPlayers();
     List<RankingPlayerData> players =
@@ -247,7 +247,7 @@ class RankingFirestore {
               photoUrl: loser2.photoUrl,
               points: 0));
 
-      await match.save();
+      await match.save(userId);
     }
   }
 }

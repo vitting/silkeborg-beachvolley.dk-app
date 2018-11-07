@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/no_data_widget.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/create/write_to_create_main.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_data.dart';
@@ -40,7 +40,8 @@ class WriteToState extends State<WriteTo> {
         child: Icon(Icons.add),
       ),
       body: StreamBuilder(
-        stream: WriteToData.getAllMessagesByUserId(Home.loggedInUser.uid),
+        stream: WriteToData.getAllMessagesByUserId(
+            MainInherited.of(context).loggedInUser.uid),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return LoaderSpinner();
           if (snapshot.hasData && snapshot.data.documents.length == 0)

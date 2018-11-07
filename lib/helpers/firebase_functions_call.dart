@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_items_count_data.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
 class FirebaseFunctions {
   static Future<BulletinItemsCount> getBulletinsItemCount(
@@ -30,10 +29,11 @@ class FirebaseFunctions {
     return bulletinItemsCount;
   }
 
-  static Future<String> resetRanking() async {
+  static Future<String> resetRanking(String userId) async {
     String result = "";
     try {
-      final dynamic response = await CloudFunctions.instance.call(functionName: "resetRanking", parameters: {"resetUserId": Home.loggedInUser.uid});
+      final dynamic response = await CloudFunctions.instance.call(
+          functionName: "resetRanking", parameters: {"resetUserId": userId});
       result = response["result"];
     } on CloudFunctionsException catch (e) {
       print("caught firebase functions exception");

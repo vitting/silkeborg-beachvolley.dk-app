@@ -15,8 +15,14 @@ import '../../../helpers/confirm_dialog_functions.dart'
 void bulletinItemPopupMenu(
     BuildContext context, BulletinItemData bulletinItem) async {
   List<DialogsModalBottomSheetItem> items = [
-    DialogsModalBottomSheetItem(FlutterI18n.translate(context, "bulletin.itemFunctions.string1"), Icons.edit, 0),
-    DialogsModalBottomSheetItem(FlutterI18n.translate(context, "bulletin.itemFunctions.string2"), Icons.delete, 1)
+    DialogsModalBottomSheetItem(
+        FlutterI18n.translate(context, "bulletin.itemFunctions.string1"),
+        Icons.edit,
+        0),
+    DialogsModalBottomSheetItem(
+        FlutterI18n.translate(context, "bulletin.itemFunctions.string2"),
+        Icons.delete,
+        1)
   ];
 
   int result = await Dialogs.modalBottomSheet(context, items);
@@ -55,11 +61,13 @@ void bulletinConfirmDialog(
   }
 }
 
-ConfirmDialogOptionsData getConfimDialogOptions(BuildContext context, BulletinType type) {
+ConfirmDialogOptionsData getConfimDialogOptions(
+    BuildContext context, BulletinType type) {
   ConfirmDialogOptionsData dialogOptions = new ConfirmDialogOptionsData();
   switch (type) {
     case BulletinType.news:
-      dialogOptions.title = Text(FlutterI18n.translate(context, "bulletin.itemFunctions.string3"));
+      dialogOptions.title = Text(
+          FlutterI18n.translate(context, "bulletin.itemFunctions.string3"));
       dialogOptions.body = [
         Text(FlutterI18n.translate(context, "bulletin.itemFunctions.string4")),
         Padding(
@@ -71,7 +79,8 @@ ConfirmDialogOptionsData getConfimDialogOptions(BuildContext context, BulletinTy
 
       break;
     case BulletinType.event:
-      dialogOptions.title = Text(FlutterI18n.translate(context, "bulletin.itemFunctions.string6"));
+      dialogOptions.title = Text(
+          FlutterI18n.translate(context, "bulletin.itemFunctions.string6"));
       dialogOptions.body = [
         Text(FlutterI18n.translate(context, "bulletin.itemFunctions.string7")),
         Padding(
@@ -83,13 +92,14 @@ ConfirmDialogOptionsData getConfimDialogOptions(BuildContext context, BulletinTy
 
       break;
     case BulletinType.play:
-      dialogOptions.title = Text(FlutterI18n.translate(context, "bulletin.itemFunctions.string9"));
+      dialogOptions.title = Text(
+          FlutterI18n.translate(context, "bulletin.itemFunctions.string9"));
       dialogOptions.body = [
         Text(FlutterI18n.translate(context, "bulletin.itemFunctions.string10")),
         Padding(
             padding: const EdgeInsets.only(top: 10.0),
-            child: Text(
-                FlutterI18n.translate(context, "bulletin.itemFunctions.string11")))
+            child: Text(FlutterI18n.translate(
+                context, "bulletin.itemFunctions.string11")))
       ];
 
       break;

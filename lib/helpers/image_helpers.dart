@@ -53,21 +53,22 @@ class ImageHelpers {
   static Future<ImageInfoData> processImageIsolate(ImageParamData param) async {
     ImageInfoData imageInfo;
     try {
-      _ResizeImageResult resizedImage = await compute(_reziseImage, _ResizeImageParam(await param.file.readAsBytes(), param.imageSize));
-      
+      _ResizeImageResult resizedImage = await compute(_reziseImage,
+          _ResizeImageParam(await param.file.readAsBytes(), param.imageSize));
+
       if (resizedImage != null) {
         final File tempFile =
-          await File("${param.tempDir.path}/${param.fileName}")
-              .writeAsBytes(resizedImage.fileAsByte);
+            await File("${param.tempDir.path}/${param.fileName}")
+                .writeAsBytes(resizedImage.fileAsByte);
 
-      imageInfo = ImageInfoData(
-          height: resizedImage.height,
-          width: resizedImage.width,
-          type: "jpg",
-          imageFile: tempFile,
-          filename: param.fileName);
+        imageInfo = ImageInfoData(
+            height: resizedImage.height,
+            width: resizedImage.width,
+            type: "jpg",
+            imageFile: tempFile,
+            filename: param.fileName);
       }
-    
+
       return imageInfo;
     } catch (e) {
       print("processImage error: $e");

@@ -4,9 +4,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/main/enrollment_main.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/admin/admin_ranking_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/main/livescore_main.dart';
@@ -31,18 +31,18 @@ class SilkeborgBeacvolleyScaffoldDrawerState
   String _name = "";
 
   @override
-  void initState() {
-    super.initState();
-    _setUserInfo();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _setUserInfo(context);
   }
 
-  void _setUserInfo() {
-    if (Home.loggedInUser != null) {
+  void _setUserInfo(BuildContext context) {
+    if (MainInherited.of(context).loggedInUser.uid != null) {
       if (mounted) {
         setState(() {
-          _photoUrl = Home.loggedInUser.photoUrl;
-          _email = Home.loggedInUser.email;
-          _name = Home.loggedInUser.displayName;
+          _photoUrl = MainInherited.of(context).loggedInUser.photoUrl;
+          _email = MainInherited.of(context).loggedInUser.email;
+          _name = MainInherited.of(context).loggedInUser.displayName;
         });
       }
     }
@@ -58,47 +58,57 @@ class SilkeborgBeacvolleyScaffoldDrawerState
           accountName: Text(_name),
           currentAccountPicture: CircleProfileImage(
             url: _photoUrl,
-          )
-          ),
+          )),
       ListTile(
-        leading: Icon(Icons.assignment, color: SilkeborgBeachvolleyTheme.drawerIconColor),
-        title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string1")),
+        leading: Icon(Icons.assignment,
+            color: SilkeborgBeachvolleyTheme.drawerIconColor),
+        title: Text(
+            FlutterI18n.translate(context, "scaffold.drawerWidget.string1")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(Enrollment.routeName);
         },
       ),
       ListTile(
-        leading: Icon(FontAwesomeIcons.volleyballBall, color: SilkeborgBeachvolleyTheme.drawerIconColor),
-        title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string2")),
+        leading: Icon(FontAwesomeIcons.volleyballBall,
+            color: SilkeborgBeachvolleyTheme.drawerIconColor),
+        title: Text(
+            FlutterI18n.translate(context, "scaffold.drawerWidget.string2")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(Ranking.routeName);
         },
       ),
       ListTile(
-          leading: Icon(Icons.live_tv, color: SilkeborgBeachvolleyTheme.drawerIconColor), 
-          title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string3")), 
+          leading: Icon(Icons.live_tv,
+              color: SilkeborgBeachvolleyTheme.drawerIconColor),
+          title: Text(
+              FlutterI18n.translate(context, "scaffold.drawerWidget.string3")),
           onTap: () {
             Navigator.of(context).popAndPushNamed(Livescore.routeName);
-          }
-        ),
+          }),
       ListTile(
-        leading: Icon(Icons.calendar_today, color: SilkeborgBeachvolleyTheme.drawerIconColor),
-        title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string4")),
+        leading: Icon(Icons.calendar_today,
+            color: SilkeborgBeachvolleyTheme.drawerIconColor),
+        title: Text(
+            FlutterI18n.translate(context, "scaffold.drawerWidget.string4")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(TournamentCalendar.routeName);
         },
       ),
       ListTile(
-        leading: Icon(Icons.mail, color: SilkeborgBeachvolleyTheme.drawerIconColor),
-        title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string10")),
+        leading:
+            Icon(Icons.mail, color: SilkeborgBeachvolleyTheme.drawerIconColor),
+        title: Text(
+            FlutterI18n.translate(context, "scaffold.drawerWidget.string10")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(WriteTo.routeName);
         },
       ),
       Divider(),
       ListTile(
-        leading: Icon(FontAwesomeIcons.signOutAlt, color: SilkeborgBeachvolleyTheme.drawerIconColor),
-        title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string5")),
+        leading: Icon(FontAwesomeIcons.signOutAlt,
+            color: SilkeborgBeachvolleyTheme.drawerIconColor),
+        title: Text(
+            FlutterI18n.translate(context, "scaffold.drawerWidget.string5")),
         onTap: () async {
           Navigator.of(context).pop();
           ConfirmAction logoutAction =
@@ -109,43 +119,53 @@ class SilkeborgBeacvolleyScaffoldDrawerState
         },
       ),
       ListTile(
-        leading: Icon(Icons.settings, color: SilkeborgBeachvolleyTheme.drawerIconColor),
-        title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string6")),
+        leading: Icon(Icons.settings,
+            color: SilkeborgBeachvolleyTheme.drawerIconColor),
+        title: Text(
+            FlutterI18n.translate(context, "scaffold.drawerWidget.string6")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(Settings.routeName);
         },
       )
     ];
 
-    if (Home.userInfo != null && Home.userInfo.admin1) {
+    if (MainInherited.of(context).isAdmin1) {
       widgets.add(Divider());
       widgets.add(ListTile(
-        leading: Icon(Icons.people, color: SilkeborgBeachvolleyTheme.drawerIconColor),
-        title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string7")),
+        leading: Icon(Icons.people,
+            color: SilkeborgBeachvolleyTheme.drawerIconColor),
+        title: Text(
+            FlutterI18n.translate(context, "scaffold.drawerWidget.string7")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(AdminEnrollment.routeName);
         },
       ));
 
       widgets.add(ListTile(
-        leading: Icon(Icons.people, color: SilkeborgBeachvolleyTheme.drawerIconColor),
-        title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string8")),
+        leading: Icon(Icons.people,
+            color: SilkeborgBeachvolleyTheme.drawerIconColor),
+        title: Text(
+            FlutterI18n.translate(context, "scaffold.drawerWidget.string8")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(AdminRanking.routeName);
         },
       ));
 
       widgets.add(ListTile(
-        leading: Icon(Icons.people, color: SilkeborgBeachvolleyTheme.drawerIconColor),
-        title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string9")),
+        leading: Icon(Icons.people,
+            color: SilkeborgBeachvolleyTheme.drawerIconColor),
+        title: Text(
+            FlutterI18n.translate(context, "scaffold.drawerWidget.string9")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(AdminUsers.routeName);
         },
       ));
 
       widgets.add(ListTile(
-        leading: Icon(Icons.people, color: SilkeborgBeachvolleyTheme.drawerIconColor),
-        title: Text(FlutterI18n.translate(context, "scaffold.drawerWidget.string11")),
+        leading: Icon(Icons.people,
+            color: SilkeborgBeachvolleyTheme.drawerIconColor),
+        title: Text(
+            FlutterI18n.translate(context, "scaffold.drawerWidget.string11")),
         onTap: () {
           Navigator.of(context).popAndPushNamed(AdminWriteTo.routeName);
         },
@@ -154,9 +174,9 @@ class SilkeborgBeacvolleyScaffoldDrawerState
 
     return Drawer(
         child: Scrollbar(
-                  child: ListView(
-      children: widgets,
-    ),
-        ));
+      child: ListView(
+        children: widgets,
+      ),
+    ));
   }
 }

@@ -35,7 +35,8 @@ class RankingDetailMatches extends StatelessWidget {
         if (!snapshot.hasData) return LoaderSpinner();
         if (snapshot.hasData && snapshot.data.length == 0) {
           return Center(
-            child: Text(FlutterI18n.translate(context, "ranking.rankingDetailMatchesMain.string1")),
+            child: Text(FlutterI18n.translate(
+                context, "ranking.rankingDetailMatchesMain.string1")),
           );
         }
         return Container(
@@ -59,13 +60,14 @@ class RankingDetailMatches extends StatelessWidget {
                             Row(
                               children: <Widget>[
                                 Tooltip(
-                                  message: FlutterI18n.translate(context, "ranking.rankingDetailMatchesMain.string2"),
+                                  message: FlutterI18n.translate(context,
+                                      "ranking.rankingDetailMatchesMain.string2"),
                                   child: Icon(Icons.calendar_today, size: 12.0),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 5.0),
-                                  child: Text(
-                                      DateTimeHelpers.dMMyyyy(context, item.matchDate)),
+                                  child: Text(DateTimeHelpers.dMMyyyy(
+                                      context, item.matchDate)),
                                 ),
                               ],
                             ),

@@ -113,13 +113,13 @@ class Dialogs {
           }).toList();
           return Container(
             child: Scrollbar(
-                          child: ListView(
+              child: ListView(
                 shrinkWrap: true,
                 children: <Widget>[
                   Column(
-                mainAxisSize: MainAxisSize.min,
-                children: widgets,
-              )
+                    mainAxisSize: MainAxisSize.min,
+                    children: widgets,
+                  )
                 ],
               ),
             ),

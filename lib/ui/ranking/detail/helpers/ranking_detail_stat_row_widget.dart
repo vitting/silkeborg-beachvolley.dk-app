@@ -37,7 +37,8 @@ class RankingDetailStatRow extends StatelessWidget {
                   children: <Widget>[
                     Column(
                       children: <Widget>[
-                        Text(FlutterI18n.translate(context, "ranking.rankingDetailStatRowWidget.string1")),
+                        Text(FlutterI18n.translate(context,
+                            "ranking.rankingDetailStatRowWidget.string1")),
                         Text(total.toString())
                       ],
                     )
@@ -50,7 +51,11 @@ class RankingDetailStatRow extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Column(
-                      children: <Widget>[Text(FlutterI18n.translate(context, "ranking.rankingDetailStatRowWidget.string2")), Text(won.toString())],
+                      children: <Widget>[
+                        Text(FlutterI18n.translate(context,
+                            "ranking.rankingDetailStatRowWidget.string2")),
+                        Text(won.toString())
+                      ],
                     )
                   ],
                 ),
@@ -61,7 +66,11 @@ class RankingDetailStatRow extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Column(
-                      children: <Widget>[Text(FlutterI18n.translate(context, "ranking.rankingDetailStatRowWidget.string3")), Text(lost.toString())],
+                      children: <Widget>[
+                        Text(FlutterI18n.translate(context,
+                            "ranking.rankingDetailStatRowWidget.string3")),
+                        Text(lost.toString())
+                      ],
                     )
                   ],
                 ),

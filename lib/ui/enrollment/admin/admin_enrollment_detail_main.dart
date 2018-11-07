@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_detail_payments.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_detail_row.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_payment_data.dart';
@@ -24,7 +25,10 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
   int _selectedYear = DateTime.now().year;
   @override
   Widget build(BuildContext context) {
-    return SilkeborgBeachvolleyScaffold(title: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string1"), body: _main());
+    return SilkeborgBeachvolleyScaffold(
+        title: FlutterI18n.translate(
+            context, "enrollment.adminEnrollmentDetailMain.string1"),
+        body: _main());
   }
 
   Widget _main() {
@@ -59,40 +63,47 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
         AdminEnrollmentDetailRow(
           icon: FontAwesomeIcons.idCard,
           text: widget.enrollment.id,
-          tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string2"),
+          tooltip: FlutterI18n.translate(
+              context, "enrollment.adminEnrollmentDetailMain.string2"),
         ),
         AdminEnrollmentDetailRow(
           icon: Icons.calendar_today,
           text: DateTimeHelpers.ddmmyyyyHHnn(
               widget.enrollment.creationDate.toDate()),
-          tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string3"),
+          tooltip: FlutterI18n.translate(
+              context, "enrollment.adminEnrollmentDetailMain.string3"),
         ),
         AdminEnrollmentDetailRow(
           icon: Icons.person,
           text: widget.enrollment.name,
-          tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string4"),
+          tooltip: FlutterI18n.translate(
+              context, "enrollment.adminEnrollmentDetailMain.string4"),
         ),
         AdminEnrollmentDetailRow(
           icon: Icons.location_city,
           text:
               "${widget.enrollment.street}\n${widget.enrollment.postalCode} ${widget.enrollment.city}",
-          tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string5"),
+          tooltip: FlutterI18n.translate(
+              context, "enrollment.adminEnrollmentDetailMain.string5"),
         ),
         AdminEnrollmentDetailRow(
           icon: Icons.email,
           text: widget.enrollment.email,
-          tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string6"),
+          tooltip: FlutterI18n.translate(
+              context, "enrollment.adminEnrollmentDetailMain.string6"),
         ),
         AdminEnrollmentDetailRow(
           icon: Icons.phone,
           text: widget.enrollment.phone.toString(),
-          tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string7"),
+          tooltip: FlutterI18n.translate(
+              context, "enrollment.adminEnrollmentDetailMain.string7"),
         ),
         AdminEnrollmentDetailRow(
           icon: Icons.cake,
           text:
               "${DateTimeHelpers.ddmmyyyy(widget.enrollment.birthdate)} / ${widget.enrollment.age} ${FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string8")}",
-          tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string9"),
+          tooltip: FlutterI18n.translate(
+              context, "enrollment.adminEnrollmentDetailMain.string9"),
         ),
         Row(
           children: <Widget>[
@@ -100,9 +111,11 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
               child: AdminEnrollmentDetailRow(
                 icon: Icons.comment,
                 text: widget.enrollment.comment.isEmpty
-                    ? FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string10")
+                    ? FlutterI18n.translate(context,
+                        "enrollment.adminEnrollmentDetailMain.string10")
                     : widget.enrollment.comment,
-                tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string11"),
+                tooltip: FlutterI18n.translate(
+                    context, "enrollment.adminEnrollmentDetailMain.string11"),
               ),
             ),
             IconButton(
@@ -131,7 +144,8 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
                 onPressed: () async {
                   if (!widget.enrollment.paymentExists(_selectedYear)) {
                     widget.enrollment.addPayment(_selectedYear);
-                    await widget.enrollment.save();
+                    await widget.enrollment
+                        .save(MainInherited.of(context).loggedInUser.uid);
                     await widget.enrollment.refresh();
                     if (mounted) {
                       setState(() {});
@@ -145,10 +159,12 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
                   }
                 },
                 icon: Icon(Icons.add_circle),
-                label: Text("${FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string13")} $_selectedYear"),
+                label: Text(
+                    "${FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string13")} $_selectedYear"),
               ),
               IconButton(
-                tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailMain.string14"),
+                tooltip: FlutterI18n.translate(
+                    context, "enrollment.adminEnrollmentDetailMain.string14"),
                 color: Colors.deepOrange[800],
                 icon: Icon(FontAwesomeIcons.calendarAlt),
                 onPressed: () {
@@ -195,7 +211,7 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
       if (mounted) {
         setState(() {
           widget.enrollment.payment.remove(payment);
-          widget.enrollment.save();
+          widget.enrollment.save(MainInherited.of(context).loggedInUser.uid);
         });
       }
     }
@@ -207,7 +223,7 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
         await adminEnrollmentFunctions.editComment(context, item.comment);
     if (result != null) {
       item.comment = result;
-      widget.enrollment.save();
+      widget.enrollment.save(MainInherited.of(context).loggedInUser.uid);
     }
   }
 }

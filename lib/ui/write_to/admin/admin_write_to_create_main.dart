@@ -10,7 +10,6 @@ import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
 import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_overlay_widget.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_create_fab_widget.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_data.dart';
@@ -50,10 +49,10 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
   }
 
   @override
-    void didChangeDependencies() {
-      super.didChangeDependencies();
-      _config = MainInherited.of(context).config;
-    }
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _config = MainInherited.of(context).config;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,53 +61,53 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
     }
 
     return SilkeborgBeachvolleyScaffold(
-      title: _getTitle(context),
-      body: Builder(
-        builder: (BuildContext context) {
-          return LoaderSpinnerOverlay(
-        text: _savingText,
-        show: _saving,
-        child: Card(
-            child: Container(
-          padding: EdgeInsets.all(10.0),
-          child: Form(
-            key: _formKey,
-            child: ListView(
-              children: <Widget>[
-                _getFormFields(),
-                FlatButton.icon(
-                  textColor: SilkeborgBeachvolleyTheme.buttonTextColor,
-                  icon: const Icon(Icons.send),
-                  label: Text(_getButtonText()),
-                  onPressed: () async {
-                    setState(() {
-                      _savingText = FlutterI18n.translate(context, "writeTo.adminWriteToCreateMain.string1");
-                      _saving = true;
-                    });
+        title: _getTitle(context),
+        body: Builder(
+          builder: (BuildContext context) {
+            return LoaderSpinnerOverlay(
+              text: _savingText,
+              show: _saving,
+              child: Card(
+                  child: Container(
+                padding: EdgeInsets.all(10.0),
+                child: Form(
+                  key: _formKey,
+                  child: ListView(
+                    children: <Widget>[
+                      _getFormFields(),
+                      FlatButton.icon(
+                        textColor: SilkeborgBeachvolleyTheme.buttonTextColor,
+                        icon: const Icon(Icons.send),
+                        label: Text(_getButtonText()),
+                        onPressed: () async {
+                          setState(() {
+                            _savingText = FlutterI18n.translate(context,
+                                "writeTo.adminWriteToCreateMain.string1");
+                            _saving = true;
+                          });
 
-                    final bool saveResult = await _save(context);
+                          final bool saveResult = await _save(context);
 
-                    if (saveResult &&
-                        widget.type == WriteToCreateFabType.mail) {
-                      final bool sendResult = await _sendMail(context);
-                      _writeToData.setSendEmailStatus(sendResult);
-                    }
+                          if (saveResult &&
+                              widget.type == WriteToCreateFabType.mail) {
+                            final bool sendResult = await _sendMail(context);
+                            _writeToData.setSendEmailStatus(sendResult);
+                          }
 
-                    setState(() {
-                      _saving = false;
-                    });
+                          setState(() {
+                            _saving = false;
+                          });
 
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
-            ),
-          ),
-        )),
-      );
-        },
-      ) 
-    );
+                          Navigator.of(context).pop();
+                        },
+                      )
+                    ],
+                  ),
+                ),
+              )),
+            );
+          },
+        ));
   }
 
   Widget _getFormFields() {
@@ -134,7 +133,8 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
     return TextFormField(
       controller: _nameController,
       decoration: InputDecoration(
-          labelText: FlutterI18n.translate(context, "writeTo.adminWriteToCreateMain.string2"),
+          labelText: FlutterI18n.translate(
+              context, "writeTo.adminWriteToCreateMain.string2"),
           suffixIcon: IconButton(
             color: SilkeborgBeachvolleyTheme.buttonTextColor,
             icon: Icon(Icons.person),
@@ -149,7 +149,9 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
         _writeToData.sendToName = value;
       },
       validator: (String value) {
-        if (value.isEmpty) return FlutterI18n.translate(context, "writeTo.adminWriteToCreateMain.string3");
+        if (value.isEmpty)
+          return FlutterI18n.translate(
+              context, "writeTo.adminWriteToCreateMain.string3");
       },
     );
   }
@@ -157,7 +159,8 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
   TextFormField _subjectField() {
     return TextFormField(
       decoration: InputDecoration(
-        labelText: FlutterI18n.translate(context, "writeTo.adminWriteToCreateMain.string4"),
+        labelText: FlutterI18n.translate(
+            context, "writeTo.adminWriteToCreateMain.string4"),
       ),
       inputFormatters: [LengthLimitingTextInputFormatter(50)],
       keyboardType: TextInputType.text,
@@ -166,7 +169,9 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
         _writeToData.sendToEmailSubject = value;
       },
       validator: (String value) {
-        if (value.isEmpty) return FlutterI18n.translate(context, "writeTo.adminWriteToCreateMain.string5");
+        if (value.isEmpty)
+          return FlutterI18n.translate(
+              context, "writeTo.adminWriteToCreateMain.string5");
       },
     );
   }
@@ -174,7 +179,9 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
   TextFormField _emailField() {
     return TextFormField(
       initialValue: _writeToData.sendToEmail,
-      decoration: InputDecoration(labelText: FlutterI18n.translate(context, "writeTo.adminWriteToCreateMain.string6")),
+      decoration: InputDecoration(
+          labelText: FlutterI18n.translate(
+              context, "writeTo.adminWriteToCreateMain.string6")),
       inputFormatters: [LengthLimitingTextInputFormatter(50)],
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
@@ -182,11 +189,14 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
         _writeToData.sendToEmail = value;
       },
       validator: (String value) {
-        if (value.isEmpty) return FlutterI18n.translate(context, "writeTo.adminWriteToCreateMain.string7");
+        if (value.isEmpty)
+          return FlutterI18n.translate(
+              context, "writeTo.adminWriteToCreateMain.string7");
         try {
           Validate.isEmail(value.trim());
         } catch (e) {
-          return FlutterI18n.translate(context, "writeTo.adminWriteToCreateMain.string8");
+          return FlutterI18n.translate(
+              context, "writeTo.adminWriteToCreateMain.string8");
         }
       },
     );
@@ -196,20 +206,24 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
     return TextFormField(
       maxLines: 10,
       initialValue: _writeToData.message,
-      decoration: InputDecoration(labelText: FlutterI18n.translate(context, "writeTo.adminWriteToCreateMain.string9")),
+      decoration: InputDecoration(
+          labelText: FlutterI18n.translate(
+              context, "writeTo.adminWriteToCreateMain.string9")),
       maxLength: 1000,
       onSaved: (String value) {
         _writeToData.message = value;
       },
       validator: (String value) {
-        if (value.isEmpty) return FlutterI18n.translate(context, "writeTo.adminWriteToCreateMain.string10");
+        if (value.isEmpty)
+          return FlutterI18n.translate(
+              context, "writeTo.adminWriteToCreateMain.string10");
       },
     );
   }
 
   Future<bool> _sendMail(BuildContext context) async {
     bool value = false;
-    
+
     final String emailFromName = _config.emailFromName;
     final String emailUsername = _config.emailUsername;
     final String emailPassword = _config.emailPassword;
@@ -242,7 +256,7 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
     if (_formKey.currentState.validate()) {
       value = true;
       _formKey.currentState.save();
-      await _writeToData.save();
+      await _writeToData.save(MainInherited.of(context).loggedInUser);
     }
 
     return value;
@@ -250,15 +264,23 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
 
   String _getTitle(BuildContext context) {
     String value = "";
-    if (widget.type == WriteToCreateFabType.mail) value = FlutterI18n.translate(context, "writeTo.adminWriteToCreateMain.title1");
-    if (widget.type == WriteToCreateFabType.people) value = FlutterI18n.translate(context, "writeTo.adminWriteToCreateMain.title2");
+    if (widget.type == WriteToCreateFabType.mail)
+      value = FlutterI18n.translate(
+          context, "writeTo.adminWriteToCreateMain.title1");
+    if (widget.type == WriteToCreateFabType.people)
+      value = FlutterI18n.translate(
+          context, "writeTo.adminWriteToCreateMain.title2");
     return value;
   }
 
   String _getButtonText() {
     String value = "";
-    if (widget.type == WriteToCreateFabType.mail) value = FlutterI18n.translate(context, "writeTo.adminWriteToCreateMain.string11");
-    if (widget.type == WriteToCreateFabType.people) value = FlutterI18n.translate(context, "writeTo.adminWriteToCreateMain.string12");
+    if (widget.type == WriteToCreateFabType.mail)
+      value = FlutterI18n.translate(
+          context, "writeTo.adminWriteToCreateMain.string11");
+    if (widget.type == WriteToCreateFabType.people)
+      value = FlutterI18n.translate(
+          context, "writeTo.adminWriteToCreateMain.string12");
     return value;
   }
 
@@ -268,9 +290,11 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
         context: context,
         barrierDismissible: true,
         builder: (BuildContext contextModal) => SimpleDialog(
-              title: Text(FlutterI18n.translate(context, "writeTo.adminWriteToCreateMain.string13")),
+              title: Text(FlutterI18n.translate(
+                  context, "writeTo.adminWriteToCreateMain.string13")),
               children: users.map<Widget>((UserInfoData user) {
-                if (user.id == Home.loggedInUser.uid) return Container();
+                if (user.id == MainInherited.of(context).loggedInUser.uid)
+                  return Container();
                 return ListTile(
                   onTap: () {
                     Navigator.of(contextModal).pop(user);

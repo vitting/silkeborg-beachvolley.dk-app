@@ -17,9 +17,7 @@ class AdminRankingPlayersRow extends StatelessWidget {
           onTap: () {
             rowOnTap(true);
           },
-          leading: CircleProfileImage(
-            url: photoUrl
-          ),
+          leading: CircleProfileImage(url: photoUrl),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[

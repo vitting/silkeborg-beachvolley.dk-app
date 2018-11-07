@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_commit_button_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_title_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data.dart';
@@ -31,16 +32,17 @@ class BulletinPlayItem extends StatefulWidget {
 
 class BulletinPlayItemState extends State<BulletinPlayItem> {
   ButtonState _isCommitted;
-  
+
   @override
-  void initState() {
-    super.initState();
-    _initCommitted();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _initCommitted(context);
   }
 
-  _initCommitted() async {
+  _initCommitted(BuildContext context) async {
     if (widget.isDetailMode) {
-      bool commited = await widget.bulletinItem.isCommitted();
+      bool commited = await widget.bulletinItem
+          .isCommitted(MainInherited.of(context).loggedInUser.uid);
       if (mounted) {
         setState(() {
           if (commited) {
@@ -75,20 +77,22 @@ class BulletinPlayItemState extends State<BulletinPlayItem> {
             ),
             DateTimeNumberOfCommentsAndCommits(
               bulletinItem: widget.bulletinItem,
-              numberOfCommits:
-                  widget.bulletinItem.numberOfCommits,
+              numberOfCommits: widget.bulletinItem.numberOfCommits,
               onTapPlayerCount: () {
-                committedFunctions.showCommittedDialog(context, widget.bulletinItem);
+                committedFunctions.showCommittedDialog(
+                    context, widget.bulletinItem);
               },
             ),
           ],
         ),
-        trailing: widget.isDetailMode ? ConfirmButton(
-          buttonState: _isCommitted,
-          onPress: (ButtonState state) {
-            _onPressedCommit(state);
-          },
-        ) : null,
+        trailing: widget.isDetailMode
+            ? ConfirmButton(
+                buttonState: _isCommitted,
+                onPress: (ButtonState state) {
+                  _onPressedCommit(context, state);
+                },
+              )
+            : null,
         onTap: widget.onTap,
       )
     ];
@@ -96,10 +100,11 @@ class BulletinPlayItemState extends State<BulletinPlayItem> {
     return ListBody(children: widgets);
   }
 
-  _onPressedCommit(ButtonState state) async {
+  _onPressedCommit(BuildContext context, ButtonState state) async {
     ButtonState newState;
     if (state == ButtonState.add) {
-      widget.bulletinItem.setAsCommitted();
+      widget.bulletinItem
+          .setAsCommitted(MainInherited.of(context).loggedInUser);
       widget.bulletinItem.numberOfCommits++;
       newState = ButtonState.remove;
     } else {
@@ -107,7 +112,7 @@ class BulletinPlayItemState extends State<BulletinPlayItem> {
       widget.bulletinItem.numberOfCommits--;
       newState = ButtonState.add;
     }
-    
+
     if (mounted) {
       setState(() {
         _isCommitted = newState;

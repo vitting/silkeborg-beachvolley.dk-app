@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_overlay_widget.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/helpers/choose_players_list_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/helpers/create_player_choose_date_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/helpers/create_player_chooser_widget.dart';
@@ -39,16 +39,16 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
   bool _saving = false;
 
   @override
-  void initState() {
-    _getPlayers();
-    super.initState();
+  void didChangeDependencies() {
+    _getPlayers(context);
+    super.didChangeDependencies();
   }
 
-  void _getPlayers() async {
+  void _getPlayers(BuildContext context) async {
     List<dynamic> playerFavorites = [];
 
-    DocumentSnapshot doc =
-        await RankingFirestore.getPlayer(Home.loggedInUser.uid);
+    DocumentSnapshot doc = await RankingFirestore.getPlayer(
+        MainInherited.of(context).loggedInUser.uid);
     QuerySnapshot snapshot = await RankingFirestore.getAllPlayers();
 
     if (doc.exists) {
@@ -86,12 +86,15 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
 
   @override
   Widget build(BuildContext context) {
-    _noPlayerChoosenText = FlutterI18n.translate(context, "ranking.rankingCreateMatchMain.string1");
+    _noPlayerChoosenText = FlutterI18n.translate(
+        context, "ranking.rankingCreateMatchMain.string1");
     return SilkeborgBeachvolleyScaffold(
-        title: FlutterI18n.translate(context, "ranking.rankingCreateMatchMain.string2"),
+        title: FlutterI18n.translate(
+            context, "ranking.rankingCreateMatchMain.string2"),
         body: LoaderSpinnerOverlay(
           show: _saving,
-          text: FlutterI18n.translate(context, "ranking.rankingCreateMatchMain.string3"),
+          text: FlutterI18n.translate(
+              context, "ranking.rankingCreateMatchMain.string3"),
           child: Builder(builder: (BuildContext context) {
             return Card(
                 child: ListView(
@@ -104,7 +107,8 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
                   player1Item: _winner1Item,
                   player2Item: _winner2Item,
                   noChoosenText: _noPlayerChoosenText,
-                  title: FlutterI18n.translate(context, "ranking.rankingCreateMatchMain.string4"),
+                  title: FlutterI18n.translate(
+                      context, "ranking.rankingCreateMatchMain.string4"),
                   chooserOnTap: (PlayerChooserType type) {
                     _showPlayers(context, type);
                   },
@@ -117,7 +121,8 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
                   player1Item: _loser1Item,
                   player2Item: _loser2Item,
                   noChoosenText: _noPlayerChoosenText,
-                  title: FlutterI18n.translate(context, "ranking.rankingCreateMatchMain.string5"),
+                  title: FlutterI18n.translate(
+                      context, "ranking.rankingCreateMatchMain.string5"),
                   chooserOnTap: (PlayerChooserType type) {
                     _showPlayers(context, type);
                   },
@@ -146,7 +151,8 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
           padding: const EdgeInsets.symmetric(vertical: 20.0),
           child: FlatButton.icon(
             textColor: SilkeborgBeachvolleyTheme.buttonTextColor,
-            label: Text(FlutterI18n.translate(context, "ranking.rankingCreateMatchMain.string6")),
+            label: Text(FlutterI18n.translate(
+                context, "ranking.rankingCreateMatchMain.string6")),
             icon: Icon(Icons.check_circle),
             onPressed: () {
               _saveMatch(context);
@@ -234,7 +240,7 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
           _saving = true;
         });
       }
-      await match.save();
+      await match.save(MainInherited.of(context).loggedInUser.uid);
       if (mounted) {
         setState(() {
           _saving = false;
@@ -244,8 +250,8 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
     } else {
       setState(() {});
       Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(
-            FlutterI18n.translate(context, "ranking.rankingCreateMatchMain.string7")),
+        content: Text(FlutterI18n.translate(
+            context, "ranking.rankingCreateMatchMain.string7")),
         duration: Duration(seconds: 3),
       ));
     }

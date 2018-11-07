@@ -12,9 +12,7 @@ class RankingDetailStatTitle extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        CircleProfileImage(
-          url: photoUrl
-        ),
+        CircleProfileImage(url: photoUrl),
         Padding(
           padding: const EdgeInsets.only(left: 10.0),
           child: Text(name),

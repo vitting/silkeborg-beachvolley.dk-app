@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_commit_button_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_image_viewer_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_pictures_widget.dart';
@@ -35,14 +36,15 @@ class BulletinEventItemState extends State<BulletinEventItem> {
   ButtonState _isCommitted;
 
   @override
-  void initState() {
-    super.initState();
-    _initCommitted();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _initCommitted(context);
   }
 
-  _initCommitted() async {
+  _initCommitted(BuildContext context) async {
     if (widget.isDetailMode) {
-      bool commited = await widget.bulletinItem.isCommitted();
+      bool commited = await widget.bulletinItem
+          .isCommitted(MainInherited.of(context).loggedInUser.uid);
       if (mounted) {
         setState(() {
           if (commited) {
@@ -89,7 +91,8 @@ class BulletinEventItemState extends State<BulletinEventItem> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0),
-                  child: Text(DateTimeHelpers.ddMMyyyy(context, widget.bulletinItem.eventStartDate)),
+                  child: Text(DateTimeHelpers.ddMMyyyy(
+                      context, widget.bulletinItem.eventStartDate)),
                 ),
                 DateTimeHelpers.dateCompare(widget.bulletinItem.eventStartDate,
                         widget.bulletinItem.eventEndDate)
@@ -101,7 +104,8 @@ class BulletinEventItemState extends State<BulletinEventItem> {
                                 const EdgeInsets.symmetric(horizontal: 10.0),
                             child: Text("-"),
                           ),
-                          Text(DateTimeHelpers.ddMMyyyy(context, widget.bulletinItem.eventEndDate))
+                          Text(DateTimeHelpers.ddMMyyyy(
+                              context, widget.bulletinItem.eventEndDate))
                         ],
                       )
               ],
@@ -159,7 +163,7 @@ class BulletinEventItemState extends State<BulletinEventItem> {
             ? ConfirmButton(
                 buttonState: _isCommitted,
                 onPress: (ButtonState state) {
-                  _onPressedCommit(state);
+                  _onPressedCommit(context, state);
                 },
               )
             : null,
@@ -186,10 +190,11 @@ class BulletinEventItemState extends State<BulletinEventItem> {
     return ListBody(children: widgets);
   }
 
-  _onPressedCommit(ButtonState state) async {
+  _onPressedCommit(BuildContext context, ButtonState state) async {
     ButtonState newState;
     if (state == ButtonState.add) {
-      widget.bulletinItem.setAsCommitted();
+      widget.bulletinItem
+          .setAsCommitted(MainInherited.of(context).loggedInUser);
       widget.bulletinItem.numberOfCommits++;
       newState = ButtonState.remove;
     } else {

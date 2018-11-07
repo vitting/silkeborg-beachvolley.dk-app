@@ -15,7 +15,8 @@ class RankingMatchesHeader extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 2.0),
                   color: Colors.blue,
                   child: Text(
-                    FlutterI18n.translate(context, "ranking.rankingMatchesHeaderWidget.string1"),
+                    FlutterI18n.translate(
+                        context, "ranking.rankingMatchesHeaderWidget.string1"),
                     style: TextStyle(color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
@@ -26,7 +27,8 @@ class RankingMatchesHeader extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 2.0),
                   color: Colors.blue[700],
                   child: Text(
-                    FlutterI18n.translate(context, "ranking.rankingMatchesHeaderWidget.string2"),
+                    FlutterI18n.translate(
+                        context, "ranking.rankingMatchesHeaderWidget.string2"),
                     style: TextStyle(color: Colors.white),
                     textAlign: TextAlign.center,
                   ),

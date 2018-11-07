@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/helpers/choose_players_list_row_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/createMatch/helpers/create_player_chooser_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
@@ -33,15 +33,15 @@ class _ChoosePlayersListState extends State<ChoosePlayersList> {
   List<Widget> _playerFavoriteListWidgets = [];
 
   @override
-  void initState() {
-    _generatePlayerWidgets();
-    super.initState();
+  void didChangeDependencies() {
+    _generatePlayerWidgets(context);
+    super.didChangeDependencies();
   }
 
-  _generatePlayerWidgets() {
+  void _generatePlayerWidgets(BuildContext context) {
     setState(() {
-      _playerFavoriteListWidgets = _generatePlayerFavoritesList();
-      _playerListWidgets = _generatePlayerList();
+      _playerFavoriteListWidgets = _generatePlayerFavoritesList(context);
+      _playerListWidgets = _generatePlayerList(context);
     });
   }
 
@@ -68,25 +68,26 @@ class _ChoosePlayersListState extends State<ChoosePlayersList> {
     return false;
   }
 
-  List<Widget> _generatePlayerFavoritesList() {
+  List<Widget> _generatePlayerFavoritesList(BuildContext context) {
     List<Widget> favorites =
         widget.listOfFavoritePlayers.map<Widget>((RankingPlayerData player) {
-      return _generatePlayerListTile(player, true);
+      return _generatePlayerListTile(context, player, true);
     }).toList();
 
     return favorites;
   }
 
-  List<Widget> _generatePlayerList() {
+  List<Widget> _generatePlayerList(BuildContext context) {
     List<Widget> players =
         widget.listOfPlayers.map<Widget>((RankingPlayerData player) {
-      return _generatePlayerListTile(player, false);
+      return _generatePlayerListTile(context, player, false);
     }).toList();
 
     return players;
   }
 
-  Widget _generatePlayerListTile(RankingPlayerData player, bool favorite) {
+  Widget _generatePlayerListTile(
+      BuildContext context, RankingPlayerData player, bool favorite) {
     return ChoosePlayerListRow(
         isFavorite: favorite,
         isPlayerSelected: _isPlayerSelected(player),
@@ -98,7 +99,7 @@ class _ChoosePlayersListState extends State<ChoosePlayersList> {
         onLongPress: (bool isFavoerite) {
           if (isFavoerite) {
             RankingFirestore.removePlayerAsFavorite(
-                Home.loggedInUser.uid, player.userId);
+                MainInherited.of(context).loggedInUser.uid, player.userId);
             widget.listOfFavoritePlayers.remove(player);
 
             widget.listOfPlayers.add(player);
@@ -108,7 +109,7 @@ class _ChoosePlayersListState extends State<ChoosePlayersList> {
             });
           } else {
             RankingFirestore.addPlayerAsFavorite(
-                Home.loggedInUser.uid, player.userId);
+                MainInherited.of(context).loggedInUser.uid, player.userId);
             widget.listOfPlayers.remove(player);
 
             widget.listOfFavoritePlayers.add(player);
@@ -117,15 +118,17 @@ class _ChoosePlayersListState extends State<ChoosePlayersList> {
               return item1.name.compareTo(item2.name);
             });
           }
-          _generatePlayerWidgets();
+          _generatePlayerWidgets(context);
         });
   }
 
   String _getDialogTitle(BuildContext context, PlayerChooserType type) {
     if (type == PlayerChooserType.winner1 || type == PlayerChooserType.winner2)
-      return FlutterI18n.translate(context, "ranking.choosePlayersListWidget.string1");
+      return FlutterI18n.translate(
+          context, "ranking.choosePlayersListWidget.string1");
     if (type == PlayerChooserType.loser1 || type == PlayerChooserType.loser2)
-      return FlutterI18n.translate(context, "ranking.choosePlayersListWidget.string2");
+      return FlutterI18n.translate(
+          context, "ranking.choosePlayersListWidget.string2");
     return "";
   }
 }

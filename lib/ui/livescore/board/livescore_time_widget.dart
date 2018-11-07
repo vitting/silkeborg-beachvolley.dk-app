@@ -28,7 +28,10 @@ class LivescoreBoardTime extends StatelessWidget {
               showDot: isLive,
               rightMargin: 10.0,
             ),
-            Text(FlutterI18n.translate(context, "livescore.livescoreTimeWidget.string1"), style: TextStyle(color: Colors.white)),
+            Text(
+                FlutterI18n.translate(
+                    context, "livescore.livescoreTimeWidget.string1"),
+                style: TextStyle(color: Colors.white)),
             Padding(
               padding: const EdgeInsets.only(left: 5.0),
               child: Text("$matchtime",
@@ -48,13 +51,16 @@ class LivescoreBoardTime extends StatelessWidget {
                   ? Container()
                   : Column(
                       children: <Widget>[
-                        Text(FlutterI18n.translate(context, "livescore.livescoreTimeWidget.string2"),
+                        Text(
+                            FlutterI18n.translate(context,
+                                "livescore.livescoreTimeWidget.string2"),
                             style:
                                 TextStyle(color: Colors.white, fontSize: 12.0)),
                         Text("$matchStartedAt",
                             style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont,
+                                fontFamily:
+                                    SilkeborgBeachvolleyTheme.scoreboardFont,
                                 fontSize: 12.0))
                       ],
                     ),
@@ -64,13 +70,16 @@ class LivescoreBoardTime extends StatelessWidget {
                       children: <Widget>[
                         Column(
                           children: <Widget>[
-                            Text(FlutterI18n.translate(context, "livescore.livescoreTimeWidget.string3"),
+                            Text(
+                                FlutterI18n.translate(context,
+                                    "livescore.livescoreTimeWidget.string3"),
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 12.0)),
                             Text("$matchEndedAt",
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont,
+                                    fontFamily: SilkeborgBeachvolleyTheme
+                                        .scoreboardFont,
                                     fontSize: 12.0))
                           ],
                         )
@@ -82,13 +91,16 @@ class LivescoreBoardTime extends StatelessWidget {
                       children: <Widget>[
                         Column(
                           children: <Widget>[
-                            Text(FlutterI18n.translate(context, "livescore.livescoreTimeWidget.string4"),
+                            Text(
+                                FlutterI18n.translate(context,
+                                    "livescore.livescoreTimeWidget.string4"),
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 12.0)),
                             Text("$matchTotal",
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont,
+                                    fontFamily: SilkeborgBeachvolleyTheme
+                                        .scoreboardFont,
                                     fontSize: 12.0))
                           ],
                         )

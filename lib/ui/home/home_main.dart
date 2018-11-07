@@ -1,28 +1,18 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/helpers/config_data.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
-import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
 import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
-import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/main/bulletin_main.dart';
 import 'package:silkeborgbeachvolley/ui/home/home_launcher_main.dart';
 import 'package:silkeborgbeachvolley/ui/login/login_main.dart';
-import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
-import 'package:vibrate/vibrate.dart';
 import './helpers/home_functions.dart' as homeFunctions;
 
 class Home extends StatefulWidget {
-  static FirebaseUser loggedInUser;
-  static UserInfoData userInfo;
-  static SettingsData settings;
   static UserMessagingData userMessaging;
-  static bool canVibrate;
-  
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -31,7 +21,6 @@ class _HomeState extends State<Home> {
   final FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
   final StreamController<NotificationData> _notificationController =
       StreamController<NotificationData>.broadcast();
-  bool _isLoggedIn = false;
   Widget homeWidget = HomeLauncherSplash();
 
   @override
@@ -41,38 +30,24 @@ class _HomeState extends State<Home> {
   }
 
   @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => _init(context));
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _init(context);
   }
 
-  _init(BuildContext context) {
-    UserAuth.firebaseAuth.onAuthStateChanged.listen((user) async {
-      // MainInherited.of(context).loggedInUser = user;
-      Home.loggedInUser = user;
-      SettingsData settings;
-      UserInfoData userInfoData;
-      bool canPhoneVibrate = await Vibrate.canVibrate;
+  void _init(BuildContext context) async {
+    if (MainInherited.of(context).loggedInUser != null) {
+      await homeFunctions.initMessaging(
+          MainInherited.of(context).loggedInUser,
+          _firebaseMessaging,
+          MainInherited.of(context).settings,
+          _notificationController);
+    }
 
-      if (user != null) {
-        userInfoData = await UserInfoData.getUserInfo(user.uid);
-        settings = await SettingsData.initSettings(user.uid, user.displayName);
-        await homeFunctions.initMessaging(
-            user.uid, _firebaseMessaging, settings, _notificationController);
-      }
-
-      if (mounted) {
-        setState(() {
-          Home.userInfo = userInfoData;
-          Home.settings = settings;
-          Home.canVibrate = canPhoneVibrate;
-          _isLoggedIn = user == null ? false : true;
-          homeWidget = _isLoggedIn
-              ? Bulletin(notificationController: _notificationController)
-              : Login();
-        });
-      }
+    setState(() {
+      homeWidget = MainInherited.of(context).isLoggedIn
+          ? Bulletin(notificationController: _notificationController)
+          : Login();
     });
   }
 

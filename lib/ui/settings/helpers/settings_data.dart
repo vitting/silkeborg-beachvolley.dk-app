@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_firestore.dart';
 
@@ -52,25 +52,24 @@ class SettingsData {
             item["livescoreControlBoardKeepScreenOn"] ?? true);
   }
 
-  Future<void> save() async {
-    RankingPlayerData data =
-        await RankingPlayerData.getPlayer(Home.loggedInUser.uid);
+  Future<SettingsData> save(FirebaseUser user) async {
+    RankingPlayerData data = await RankingPlayerData.getPlayer(user.uid);
 
     if (data != null) {
       data.name = rankingName;
       data.sex = sex;
     } else {
       data = RankingPlayerData(
-          userId: Home.loggedInUser.uid,
+          userId: user.uid,
           name: rankingName,
           sex: sex,
-          photoUrl: Home.loggedInUser.photoUrl);
+          photoUrl: user.photoUrl);
     }
 
-    Home.settings = this;
-    data.save();
+    await data.save();
+    await SettingsFirestore.saveSettings(this, user.uid);
 
-    return SettingsFirestore.saveSettings(this, Home.loggedInUser.uid);
+    return this;
   }
 
   static Future<SettingsData> getSettings(String userId) async {
@@ -83,13 +82,12 @@ class SettingsData {
     return data;
   }
 
-  static Future<SettingsData> initSettings(String userId, String displayName) async {
-    SettingsData settings = await getSettings(userId);
+  static Future<SettingsData> initSettings(FirebaseUser user) async {
+    SettingsData settings = await getSettings(user.uid);
     if (settings == null) {
-      settings = SettingsData(rankingName: displayName);
-      await settings.save();
+      settings = SettingsData(rankingName: user.displayName);
     }
 
-    return settings;
+    return settings.save(user);
   }
 }

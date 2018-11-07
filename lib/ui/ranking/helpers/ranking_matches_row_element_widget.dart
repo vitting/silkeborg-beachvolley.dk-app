@@ -54,9 +54,7 @@ class RankingMatchesRowElement extends StatelessWidget {
         ),
         Positioned(
           top: 5.0,
-          child: CircleProfileImage(
-            url: photoUrl
-          ),
+          child: CircleProfileImage(url: photoUrl),
         ),
       ],
     );

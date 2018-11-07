@@ -71,9 +71,15 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
 
   String _getTitle(BuildContext context, BulletinType type) {
     String title = "";
-    if (type == BulletinType.news) title = FlutterI18n.translate(context, "bulletin.bulletinEdititemMain.title1");
-    if (type == BulletinType.event) title = FlutterI18n.translate(context, "bulletin.bulletinEdititemMain.title2");
-    if (type == BulletinType.play) title = FlutterI18n.translate(context, "bulletin.bulletinEdititemMain.title3");
+    if (type == BulletinType.news)
+      title = FlutterI18n.translate(
+          context, "bulletin.bulletinEdititemMain.title1");
+    if (type == BulletinType.event)
+      title = FlutterI18n.translate(
+          context, "bulletin.bulletinEdititemMain.title2");
+    if (type == BulletinType.play)
+      title = FlutterI18n.translate(
+          context, "bulletin.bulletinEdititemMain.title3");
     return title;
   }
 

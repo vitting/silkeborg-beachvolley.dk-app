@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
@@ -12,7 +13,6 @@ import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/create_item_ma
 import 'package:silkeborgbeachvolley/ui/bulletin/main/bulletin_bottom_navigationbar_main.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/main/bulletin_main_fab.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/no_data_widget.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:silkeborgbeachvolley/ui/weather/weather_widget.dart';
 import './bulletin_main_functions.dart' as bulletinMainFunctions;
@@ -33,16 +33,18 @@ class _BulletinState extends State<Bulletin> {
   int _listNumberOfItemsToLoad = 20;
 
   @override
-    void initState() {
-      super.initState();
-      _weatherCache = Home.settings.showWeather ? Weather.withWind() : Container();
-    }
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _weatherCache = MainInherited.of(context).settings.showWeather
+        ? Weather.withWind()
+        : Container();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-      title: bulletinMainFunctions
-          .getTitle(context, bulletinMainFunctions.getSelectedType(_bottombarSelected)),
+      title: bulletinMainFunctions.getTitle(
+          context, bulletinMainFunctions.getSelectedType(_bottombarSelected)),
       body: _main(),
       showDrawer: true,
       floatingActionButton: _scaffoldFloatingActionButton(context),
@@ -63,7 +65,9 @@ class _BulletinState extends State<Bulletin> {
           child: _weatherCache,
           onTap: () {
             setState(() {
-              _weatherCache = Home.settings.showWeather ? Weather.withWind() : Container();              
+              _weatherCache = MainInherited.of(context).settings.showWeather
+                  ? Weather.withWind()
+                  : Container();
             });
           },
         )
@@ -96,7 +100,8 @@ class _BulletinState extends State<Bulletin> {
 
         if (snapshot.hasData) {
           if (snapshot.data.documents.length == 0) {
-            return NoData(FlutterI18n.translate(context, "bulletin.bulletinMain.string1"));
+            return NoData(FlutterI18n.translate(
+                context, "bulletin.bulletinMain.string1"));
           } else {
             return Scrollbar(
               child: ListView.builder(
@@ -122,7 +127,8 @@ class _BulletinState extends State<Bulletin> {
                               }
                             },
                             icon: Icon(Icons.refresh),
-                            label: Text(FlutterI18n.translate(context, "bulletin.bulletinMain.string2")),
+                            label: Text(FlutterI18n.translate(
+                                context, "bulletin.bulletinMain.string2")),
                           )
                         ],
                       ),

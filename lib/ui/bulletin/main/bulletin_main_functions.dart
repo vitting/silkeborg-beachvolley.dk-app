@@ -4,9 +4,15 @@ import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart
 
 String getTitle(BuildContext context, BulletinType type) {
   String title;
-  if (type == BulletinType.news) title = FlutterI18n.translate(context, "bulletin.bulletinMainFunctions.string1");
-  if (type == BulletinType.event) title = FlutterI18n.translate(context, "bulletin.bulletinMainFunctions.string2");
-  if (type == BulletinType.play) title = FlutterI18n.translate(context, "bulletin.bulletinMainFunctions.string3");
+  if (type == BulletinType.news)
+    title = FlutterI18n.translate(
+        context, "bulletin.bulletinMainFunctions.string1");
+  if (type == BulletinType.event)
+    title = FlutterI18n.translate(
+        context, "bulletin.bulletinMainFunctions.string2");
+  if (type == BulletinType.play)
+    title = FlutterI18n.translate(
+        context, "bulletin.bulletinMainFunctions.string3");
   return title;
 }
 

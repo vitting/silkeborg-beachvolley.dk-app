@@ -69,20 +69,23 @@ class _BulletinBottomNavigationBarState
       },
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-            title: Text(bulletinMainFunctions.getTitle(context, BulletinType.news)),
+            title: Text(
+                bulletinMainFunctions.getTitle(context, BulletinType.news)),
             icon: IconCounter(
               icon: FontAwesomeIcons.newspaper,
               counter: _newsCount,
             )),
         BottomNavigationBarItem(
-          title: Text(bulletinMainFunctions.getTitle(context, BulletinType.event)),
+          title:
+              Text(bulletinMainFunctions.getTitle(context, BulletinType.event)),
           icon: IconCounter(
             icon: FontAwesomeIcons.calendarAlt,
             counter: _eventCount,
           ),
         ),
         BottomNavigationBarItem(
-          title: Text(bulletinMainFunctions.getTitle(context, BulletinType.play)),
+          title:
+              Text(bulletinMainFunctions.getTitle(context, BulletinType.play)),
           icon: IconCounter(
               icon: FontAwesomeIcons.volleyballBall, counter: _playCount),
         )
@@ -94,7 +97,7 @@ class _BulletinBottomNavigationBarState
     int newsCount = _newsCount;
     int eventCount = _eventCount;
     int playCount = _playCount;
-    
+
     if (value != null &&
         value.state == NotificationState.message &&
         value.bulletinType.isNotEmpty) {
@@ -110,13 +113,16 @@ class _BulletinBottomNavigationBarState
           break;
       }
     } else {
-      int dateInMilliSeconds = await BulletinSharedPref.getLastCheckedDateInMilliSeconds();
-      BulletinItemsCount bulletinItemsCount = await FirebaseFunctions.getBulletinsItemCount(dateInMilliSeconds);
+      int dateInMilliSeconds =
+          await BulletinSharedPref.getLastCheckedDateInMilliSeconds();
+      BulletinItemsCount bulletinItemsCount =
+          await FirebaseFunctions.getBulletinsItemCount(dateInMilliSeconds);
       newsCount = bulletinItemsCount.newsCount;
       eventCount = bulletinItemsCount.eventCount;
       playCount = bulletinItemsCount.playCount;
 
-      BulletinSharedPref.setLastCheckedDateInMilliSeconds(DateTime.now().millisecondsSinceEpoch);
+      BulletinSharedPref.setLastCheckedDateInMilliSeconds(
+          DateTime.now().millisecondsSinceEpoch);
     }
 
     if (mounted) {

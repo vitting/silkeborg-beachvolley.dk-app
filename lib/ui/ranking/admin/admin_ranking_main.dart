@@ -3,6 +3,7 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/helpers/firebase_functions_call.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/dot_bottombar_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_overlay_widget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/admin/admin_ranking_matches_main.dart';
@@ -41,7 +42,8 @@ class AdminRankingState extends State<AdminRanking> {
         ),
         body: LoaderSpinnerOverlay(
           show: _showLoader,
-          text: FlutterI18n.translate(context, "ranking.adminRankingMain.string1"),
+          text: FlutterI18n.translate(
+              context, "ranking.adminRankingMain.string1"),
           child: PageView.builder(
             itemCount: _numberOfPages,
             controller: _controller,
@@ -69,10 +71,15 @@ class AdminRankingState extends State<AdminRanking> {
                 PopupMenuItem(
                   value: 0,
                   child: _showDeletedPlayers
-                      ? Text(FlutterI18n.translate(context, "ranking.adminRankingMain.string2"))
-                      : Text(FlutterI18n.translate(context, "ranking.adminRankingMain.string3")),
+                      ? Text(FlutterI18n.translate(
+                          context, "ranking.adminRankingMain.string2"))
+                      : Text(FlutterI18n.translate(
+                          context, "ranking.adminRankingMain.string3")),
                 ),
-                PopupMenuItem(value: 1, child: Text(FlutterI18n.translate(context, "ranking.adminRankingMain.string4")))
+                PopupMenuItem(
+                    value: 1,
+                    child: Text(FlutterI18n.translate(
+                        context, "ranking.adminRankingMain.string4")))
               ]);
 
           if (result != null && result == 0) {
@@ -95,13 +102,14 @@ class AdminRankingState extends State<AdminRanking> {
 
     if (result != null && result == ConfirmDialogAction.reset) {
       setState(() {
-        _showLoader = true;              
+        _showLoader = true;
       });
-      
-      await FirebaseFunctions.resetRanking();
-      
+
+      await FirebaseFunctions.resetRanking(
+          MainInherited.of(context).loggedInUser.uid);
+
       setState(() {
-        _showLoader = false;              
+        _showLoader = false;
       });
     }
   }
@@ -109,10 +117,14 @@ class AdminRankingState extends State<AdminRanking> {
   String _getPageTitle(BuildContext context, int page) {
     String title = "";
     if (page == 0 && _showDeletedPlayers == false)
-      title = FlutterI18n.translate(context, "ranking.adminRankingMain.string6");
+      title =
+          FlutterI18n.translate(context, "ranking.adminRankingMain.string6");
     if (page == 0 && _showDeletedPlayers)
-      title = FlutterI18n.translate(context, "ranking.adminRankingMain.string7");
-    if (page == 1) title = FlutterI18n.translate(context, "ranking.adminRankingMain.string8");
+      title =
+          FlutterI18n.translate(context, "ranking.adminRankingMain.string7");
+    if (page == 1)
+      title =
+          FlutterI18n.translate(context, "ranking.adminRankingMain.string8");
     return title;
   }
 

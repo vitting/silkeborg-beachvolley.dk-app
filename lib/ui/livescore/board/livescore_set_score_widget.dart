@@ -19,7 +19,9 @@ class LivescoreSetScore extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5.0),
-                  child: Text(FlutterI18n.translate(context, "livescore.livescoreSetScoreWidget.string1"),
+                  child: Text(
+                      FlutterI18n.translate(
+                          context, "livescore.livescoreSetScoreWidget.string1"),
                       style: TextStyle(color: color, fontSize: fontSize)),
                 ),
                 Column(

@@ -31,7 +31,9 @@ class LivescoreBoardTimeouts extends StatelessWidget {
                     fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont,
                     fontWeight: fontWeightTeam1))),
         Expanded(
-            child: Text(FlutterI18n.translate(context, "livescore.livescoreTimeoutsWidget.string1"),
+            child: Text(
+                FlutterI18n.translate(
+                    context, "livescore.livescoreTimeoutsWidget.string1"),
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white))),
         Expanded(

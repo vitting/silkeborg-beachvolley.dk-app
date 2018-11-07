@@ -1,3 +1,1 @@
-class SilkeborgBeachvolleyConfig {
-  
-}
+class SilkeborgBeachvolleyConfig {}

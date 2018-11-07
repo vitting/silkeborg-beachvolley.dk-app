@@ -33,19 +33,17 @@ class _SearchBarState extends State<SearchBar> {
         onChanged: (String value) {
           if (value.isNotEmpty && _showSearchClearButton == false) {
             setState(() {
-                _showSearchClearButton = true;
-                _showSearchButton = true;
-              });
+              _showSearchClearButton = true;
+              _showSearchButton = true;
+            });
           }
         },
         cursorColor: Colors.white,
         controller: _searchController,
-        style: TextStyle(
-          color: Colors.white
-        ),
+        style: TextStyle(color: Colors.white),
         decoration: InputDecoration(
-          fillColor: Colors.blueAccent,
-          filled: true,
+            fillColor: Colors.blueAccent,
+            filled: true,
             suffixIcon: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -80,10 +78,7 @@ class _SearchBarState extends State<SearchBar> {
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(16.0)),
             hintText: "Søg",
-            hintStyle: TextStyle(
-              color: Colors.white
-            )
-          ),
+            hintStyle: TextStyle(color: Colors.white)),
       ),
     );
   }

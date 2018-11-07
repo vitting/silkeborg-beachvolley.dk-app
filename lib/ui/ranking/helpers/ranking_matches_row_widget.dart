@@ -37,13 +37,15 @@ class RankingMatchesRow extends StatelessWidget {
                     child: Row(
                       children: <Widget>[
                         Tooltip(
-                          message: FlutterI18n.translate(context, "ranking.rankingMatchesRowWidget.string1"),
+                          message: FlutterI18n.translate(context,
+                              "ranking.rankingMatchesRowWidget.string1"),
                           child: Icon(Icons.calendar_today,
                               size: 12.0, color: Colors.black),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 5.0),
-                          child: Text(DateTimeHelpers.dMMyyyy(context, match.matchDate),
+                          child: Text(
+                              DateTimeHelpers.dMMyyyy(context, match.matchDate),
                               style: TextStyle(color: Colors.black)),
                         ),
                       ],
@@ -137,7 +139,8 @@ class RankingMatchesRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          Text("${FlutterI18n.translate(context, "ranking.rankingMatchesRowWidget.string2")} $name",
+          Text(
+              "${FlutterI18n.translate(context, "ranking.rankingMatchesRowWidget.string2")} $name",
               style: TextStyle(fontSize: 10.0, fontStyle: FontStyle.italic))
         ],
       ),

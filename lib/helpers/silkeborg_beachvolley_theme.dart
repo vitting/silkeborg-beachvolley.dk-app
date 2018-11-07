@@ -10,27 +10,27 @@ class SilkeborgBeachvolleyTheme {
   static Color buttonTextColor = Colors.deepOrange[700];
   static Color buttonDisabledTextColor = Colors.deepOrange[200];
   static BoxDecoration gradientColorBoxDecoration = BoxDecoration(
-          gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        stops: [0.1, 0.5, 0.7, 0.9],
-        colors: [
-          Colors.blue[300],
-          Colors.blue[500],
-          Colors.blue[700],
-          Colors.blue[900],
-        ],
-      ));
+      gradient: LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    stops: [0.1, 0.5, 0.7, 0.9],
+    colors: [
+      Colors.blue[300],
+      Colors.blue[500],
+      Colors.blue[700],
+      Colors.blue[900],
+    ],
+  ));
   static BoxDecoration gradientColorBoxDecorationDarkBlue2Step = BoxDecoration(
-          gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        stops: [0.1, 0.9],
-        colors: [
-          // Colors.blue[800],
-          Colors.blue[900],
-          Colors.black
-        ],
-      ));
+      gradient: LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    stops: [0.1, 0.9],
+    colors: [
+      // Colors.blue[800],
+      Colors.blue[900],
+      Colors.black
+    ],
+  ));
   static String scoreboardFont = "Scoreboard";
 }

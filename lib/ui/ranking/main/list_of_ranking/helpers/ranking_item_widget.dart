@@ -63,10 +63,7 @@ class RankingItemState extends State<RankingItem>
         padding: EdgeInsets.all(10.0),
         child: Row(
           children: <Widget>[
-            CircleProfileImage(
-              size: 50.0,
-              url: widget.player.photoUrl
-            ),
+            CircleProfileImage(size: 50.0, url: widget.player.photoUrl),
             Container(
               width: 50.0,
               padding: EdgeInsets.only(left: 10.0, right: 10.0),

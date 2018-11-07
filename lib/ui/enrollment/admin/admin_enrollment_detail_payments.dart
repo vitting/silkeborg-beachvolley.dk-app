@@ -21,7 +21,9 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = [
-      Text(FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailPayments.string1"),
+      Text(
+          FlutterI18n.translate(
+              context, "enrollment.adminEnrollmentDetailPayments.string1"),
           textAlign: TextAlign.center)
     ];
     if (enrollment.payment.isNotEmpty) {
@@ -44,7 +46,8 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
               trailing: Column(
                 children: <Widget>[
                   IconButton(
-                    tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailPayments.string2"),
+                    tooltip: FlutterI18n.translate(context,
+                        "enrollment.adminEnrollmentDetailPayments.string2"),
                     color: Colors.deepOrange,
                     icon: Icon(Icons.delete),
                     onPressed: () {
@@ -52,7 +55,8 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
                     },
                   ),
                   IconButton(
-                    tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailPayments.string3"),
+                    tooltip: FlutterI18n.translate(context,
+                        "enrollment.adminEnrollmentDetailPayments.string3"),
                     color: Colors.deepOrange,
                     icon: Icon(Icons.comment),
                     iconSize: 20.0,
@@ -68,19 +72,23 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
                     icon: Icons.calendar_today,
                     text: DateTimeHelpers.ddmmyyyyHHnn(
                         payment.createdDate.toDate()),
-                    tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailPayments.string4"),
+                    tooltip: FlutterI18n.translate(context,
+                        "enrollment.adminEnrollmentDetailPayments.string4"),
                   ),
                   AdminEnrollmentDetailRow(
                     icon: FontAwesomeIcons.idCard,
                     text: payment.approvedUserId,
-                    tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailPayments.string5"),
+                    tooltip: FlutterI18n.translate(context,
+                        "enrollment.adminEnrollmentDetailPayments.string5"),
                   ),
                   AdminEnrollmentDetailRow(
                     icon: Icons.comment,
                     text: payment.comment.isEmpty
-                        ? FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailPayments.string6")
+                        ? FlutterI18n.translate(context,
+                            "enrollment.adminEnrollmentDetailPayments.string6")
                         : payment.comment,
-                    tooltip: FlutterI18n.translate(context, "enrollment.adminEnrollmentDetailPayments.string7"),
+                    tooltip: FlutterI18n.translate(context,
+                        "enrollment.adminEnrollmentDetailPayments.string7"),
                   )
                 ],
               ),

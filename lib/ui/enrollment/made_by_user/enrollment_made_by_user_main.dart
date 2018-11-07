@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/chip_header_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/list_item_card_widget.dart';
@@ -20,9 +21,11 @@ class EnrollmentMadeByUserState extends State<EnrollmentMadeByUser> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-        title: FlutterI18n.translate(context, "enrollment.enrollmentMadeByUser.title"),
+        title: FlutterI18n.translate(
+            context, "enrollment.enrollmentMadeByUser.title"),
         body: FutureBuilder(
-          future: EnrollmentUserData.getAllAddedByUser(),
+          future: EnrollmentUserData.getAllAddedByUser(
+              MainInherited.of(context).loggedInUser.uid),
           builder: (BuildContext context,
               AsyncSnapshot<List<EnrollmentUserData>> snapshot) {
             if (snapshot.hasError) {
@@ -36,7 +39,8 @@ class EnrollmentMadeByUserState extends State<EnrollmentMadeByUser> {
               return Card(
                 child: Center(
                   child: ChipHeader(
-                    FlutterI18n.translate(context, "enrollment.enrollmentMadeByUser.string1"),
+                    FlutterI18n.translate(
+                        context, "enrollment.enrollmentMadeByUser.string1"),
                     fontSize: 15.0,
                   ),
                 ),
@@ -66,19 +70,33 @@ class EnrollmentMadeByUserState extends State<EnrollmentMadeByUser> {
                                   Icons.calendar_today,
                                   DateTimeHelpers.ddmmyyyyHHnn(
                                       item.creationDate.toDate()),
-                                  FlutterI18n.translate(context, "enrollment.enrollmentMadeByUser.string2")),
-                              _row(Icons.person, item.name, FlutterI18n.translate(context, "enrollment.enrollmentMadeByUser.string3")),
+                                  FlutterI18n.translate(context,
+                                      "enrollment.enrollmentMadeByUser.string2")),
+                              _row(
+                                  Icons.person,
+                                  item.name,
+                                  FlutterI18n.translate(context,
+                                      "enrollment.enrollmentMadeByUser.string3")),
                               _row(
                                   Icons.location_city,
                                   "${item.street}\n${item.postalCode} ${item.city}",
-                                  FlutterI18n.translate(context, "enrollment.enrollmentMadeByUser.string4")),
-                              _row(Icons.email, item.email, FlutterI18n.translate(context, "enrollment.enrollmentMadeByUser.string5")),
-                              _row(Icons.phone, item.phone.toString(),
-                                  FlutterI18n.translate(context, "enrollment.enrollmentMadeByUser.string6")),
+                                  FlutterI18n.translate(context,
+                                      "enrollment.enrollmentMadeByUser.string4")),
+                              _row(
+                                  Icons.email,
+                                  item.email,
+                                  FlutterI18n.translate(context,
+                                      "enrollment.enrollmentMadeByUser.string5")),
+                              _row(
+                                  Icons.phone,
+                                  item.phone.toString(),
+                                  FlutterI18n.translate(context,
+                                      "enrollment.enrollmentMadeByUser.string6")),
                               _row(
                                   Icons.cake,
                                   DateTimeHelpers.ddmmyyyy(item.birthdate),
-                                  FlutterI18n.translate(context, "enrollment.enrollmentMadeByUser.string7")),
+                                  FlutterI18n.translate(context,
+                                      "enrollment.enrollmentMadeByUser.string7")),
                             ],
                           ),
                         ),

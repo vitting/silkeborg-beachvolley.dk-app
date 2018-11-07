@@ -21,9 +21,7 @@ Future<List> _buildCommittedDialogItems(BulletinItemData item) async {
   return data.map((CommittedData committed) {
     return ListTile(
       title: Text(committed.name),
-      leading: CircleProfileImage(
-        url: committed.photoUrl
-      ),
+      leading: CircleProfileImage(url: committed.photoUrl),
     );
   }).toList();
 }

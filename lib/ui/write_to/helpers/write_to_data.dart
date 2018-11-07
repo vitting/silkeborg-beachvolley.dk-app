@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
-import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_firestore.dart';
 
-class WriteToData implements BaseData {
+class WriteToData {
   String id;
   String fromUserId;
   String sendToUserId;
@@ -53,29 +52,26 @@ class WriteToData implements BaseData {
         fromPhotoUrl: item["fromPhotoUrl"],
         sendToEmailStatus: item["sendToEmailStatus"],
         sendToEmail: item["sendToEmail"],
-        sendToName: item["sendToName"], 
+        sendToName: item["sendToName"],
         sendToEmailSubject: item["sendToEmailSubject"],
-        deleted: item["deleted"]
-        );
+        deleted: item["deleted"]);
   }
 
-  @override
   Future<void> delete() {
     return WriteToFirestore.deleteMessage(id);
   }
 
-  @override
-  Future<void> save() {
+  Future<void> save(FirebaseUser user) {
     id = UuidHelpers.generateUuid();
     createdDate = Timestamp.now();
-    fromEmail = fromEmail != null
-        ? fromEmail
-        : Home.loggedInUser != null ? Home.loggedInUser.email : null;
-    fromUserId = Home.loggedInUser != null ? Home.loggedInUser.uid : null;
-    fromPhotoUrl = fromPhotoUrl != null ? fromPhotoUrl : Home.loggedInUser != null ? Home.loggedInUser.photoUrl : null;
-    fromName = fromName != null
-        ? fromName
-        : Home.loggedInUser != null ? Home.loggedInUser.displayName : null;
+    fromEmail =
+        fromEmail != null ? fromEmail : user != null ? user.email : null;
+    fromUserId = user != null ? user.uid : null;
+    fromPhotoUrl = fromPhotoUrl != null
+        ? fromPhotoUrl
+        : user != null ? user.photoUrl : null;
+    fromName =
+        fromName != null ? fromName : user != null ? user.displayName : null;
     if (messageRepliedToId == null) {
       return WriteToFirestore.saveMessage(this);
     } else {
@@ -87,7 +83,6 @@ class WriteToData implements BaseData {
     return WriteToFirestore.setSendEmailStatus(id, status);
   }
 
-  @override
   Map<String, dynamic> toMap() {
     return {
       "id": id,

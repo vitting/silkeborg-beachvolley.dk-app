@@ -5,7 +5,6 @@ import 'package:silkeborgbeachvolley/ui/enrollment/made_by_user/enrollment_made_
 import 'package:silkeborgbeachvolley/ui/enrollment/form/enrollment_form.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/main/enrollment_payment.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/main/enrollment_readme.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/dot_bottombar_widget.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/silkeborgBeachvolleyScaffold.dart';
@@ -85,7 +84,7 @@ class _EnrollmentState extends State<Enrollment> {
   Widget _actionMenu(BuildContext context) {
     Widget menu = Container();
 
-    if (Home.loggedInUser != null) {
+    if (MainInherited.of(context).loggedInUser != null) {
       menu = PopupMenuButton<int>(
         onSelected: (int value) {
           if (value == 0)
@@ -99,7 +98,8 @@ class _EnrollmentState extends State<Enrollment> {
           return [
             PopupMenuItem(
               value: 0,
-              child: Text(FlutterI18n.translate(context, "enrollment.enrollmentMain.string1")),
+              child: Text(FlutterI18n.translate(
+                  context, "enrollment.enrollmentMain.string1")),
             )
           ];
         },

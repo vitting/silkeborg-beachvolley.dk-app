@@ -117,10 +117,7 @@ Widget _infoPlayerRow(
     children: <Widget>[
       Row(
         children: <Widget>[
-          CircleProfileImage(
-            url: player.photoUrl,
-            size: 30.0
-          ),
+          CircleProfileImage(url: player.photoUrl, size: 30.0),
           Padding(
             padding: const EdgeInsets.only(left: 10.0),
             child: Text(player.name,

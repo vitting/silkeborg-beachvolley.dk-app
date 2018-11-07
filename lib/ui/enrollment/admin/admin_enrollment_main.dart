@@ -47,11 +47,10 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
           onPressed: () {
             setState(() {
               if (_showSearchState == CrossFadeState.showFirst) {
-                 _showSearchState = CrossFadeState.showSecond;
+                _showSearchState = CrossFadeState.showSecond;
               } else {
-                 _showSearchState = CrossFadeState.showFirst;
+                _showSearchState = CrossFadeState.showFirst;
               }
-              
             });
           },
         )
@@ -68,8 +67,8 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
             duration: Duration(milliseconds: 400),
             firstChild: Container(),
             secondChild: SearchBar(
-            searchValue: _search,
-          ),
+              searchValue: _search,
+            ),
           ),
           Scrollbar(
             child: ListView.builder(

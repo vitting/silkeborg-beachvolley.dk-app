@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/image_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
@@ -9,9 +9,8 @@ import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 
-class BulletinEventItemData extends BulletinItemData implements BaseData {
+class BulletinEventItemData extends BulletinItemData {
   DateTime eventStartDate;
   DateTime eventEndDate;
   dynamic eventStartTime;
@@ -90,12 +89,12 @@ class BulletinEventItemData extends BulletinItemData implements BaseData {
     }
   }
 
-  Future<void> save() {
+  Future<void> save(FirebaseUser user) {
     id = id ?? UuidHelpers.generateUuid();
     creationDate = creationDate ?? Timestamp.now();
-    authorId = Home.loggedInUser.uid;
-    authorName = Home.loggedInUser.displayName;
-    authorPhotoUrl = Home.loggedInUser.photoUrl;
+    authorId = user.uid;
+    authorName = user.displayName;
+    authorPhotoUrl = user.photoUrl;
     DateTime start = DateTime(eventStartDate.year, eventStartDate.month,
         eventStartDate.day, eventStartTime.hour, eventStartTime.minute);
 

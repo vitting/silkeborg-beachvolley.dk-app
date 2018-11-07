@@ -3,9 +3,9 @@ import "package:flutter/material.dart";
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/no_data_widget.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_data.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_matches_row_widget.dart';
 
@@ -29,7 +29,8 @@ class AdminRankingMatchesState extends State<AdminRankingMatches> {
         }
         if (!snapshot.hasData) return LoaderSpinner();
         if (snapshot.hasData && snapshot.data.documents.length == 0) {
-          return NoData(FlutterI18n.translate(context, "ranking.adminRankingMatchesMain.string1"));
+          return NoData(FlutterI18n.translate(
+              context, "ranking.adminRankingMatchesMain.string1"));
         }
         List<RankingMatchData> list = snapshot.data.documents
             .map<RankingMatchData>((DocumentSnapshot doc) {
@@ -52,8 +53,8 @@ class AdminRankingMatchesState extends State<AdminRankingMatches> {
             RankingMatchData item = list[position];
             return RankingMatchesRow(
               match: item,
-              userId: Home.loggedInUser.uid,
-              icon: _menuIcon(item),
+              userId: MainInherited.of(context).loggedInUser.uid,
+              icon: _menuIcon(context, item),
               iconOnTap: (RankingMatchData match) {
                 _showDelete(context, match);
               },
@@ -64,21 +65,28 @@ class AdminRankingMatchesState extends State<AdminRankingMatches> {
     );
   }
 
-  IconData _menuIcon(RankingMatchData match) {
+  IconData _menuIcon(BuildContext context, RankingMatchData match) {
     IconData icon;
-    if (Home.userInfo.admin1) {
+    if (MainInherited.of(context).isAdmin1) {
       icon = Icons.more_horiz;
     }
     return icon;
   }
 
   Future<void> _showDelete(BuildContext context, RankingMatchData match) async {
-    int result = await Dialogs.modalBottomSheet(
-        context, [DialogsModalBottomSheetItem(FlutterI18n.translate(context, "ranking.adminRankingMatchesMain.string2"), Icons.delete, 0)]);
+    int result = await Dialogs.modalBottomSheet(context, [
+      DialogsModalBottomSheetItem(
+          FlutterI18n.translate(
+              context, "ranking.adminRankingMatchesMain.string2"),
+          Icons.delete,
+          0)
+    ]);
 
     if (result != null) {
       ConfirmDialogAction action = await Dialogs.confirmDelete(
-          context, FlutterI18n.translate(context, "ranking.adminRankingMatchesMain.string3"));
+          context,
+          FlutterI18n.translate(
+              context, "ranking.adminRankingMatchesMain.string3"));
 
       if (action != null && action == ConfirmDialogAction.delete) {
         match.delete();

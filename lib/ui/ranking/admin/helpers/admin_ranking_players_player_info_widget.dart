@@ -22,10 +22,7 @@ class AdminRankingPlayersPlayerInfo extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                CircleProfileImage(
-                  size: 60.0,
-                  url: player.photoUrl
-                ),
+                CircleProfileImage(size: 60.0, url: player.photoUrl),
               ],
             ),
             Padding(

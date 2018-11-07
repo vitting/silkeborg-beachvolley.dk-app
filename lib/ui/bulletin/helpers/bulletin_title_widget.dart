@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 
 class BulletinTitle extends StatelessWidget {
   final String name;
@@ -25,17 +25,13 @@ class BulletinTitle extends StatelessWidget {
 
     if (showImage) {
       widgets.add(Padding(
-        padding: const EdgeInsets.only(right: 10.0),
-        child:
-        CircleProfileImage(
-          url: photoUrl
-        )
-      ));
+          padding: const EdgeInsets.only(right: 10.0),
+          child: CircleProfileImage(url: photoUrl)));
     }
 
     widgets.add(Expanded(child: Text(name, overflow: TextOverflow.ellipsis)));
 
-    if (!isDetailMode && Home.loggedInUser.uid == userId) {
+    if (!isDetailMode && MainInherited.of(context).loggedInUser.uid == userId) {
       widgets.add(
         IconButton(
           icon: Icon(Icons.more_horiz),

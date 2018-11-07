@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/chip_header_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_categories_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
@@ -32,13 +33,13 @@ class SettingsState extends State<Settings> {
   String _sexValue;
 
   @override
-  void initState() {
-    super.initState();
-    _getSettings();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _getSettings(context);
   }
 
-  Future<Null> _getSettings() async {
-    _settingsData = Home.settings;
+  Future<Null> _getSettings(BuildContext context) async {
+    _settingsData = MainInherited.of(context).settings;
     _messagingData = Home.userMessaging;
 
     if (mounted) {
@@ -51,14 +52,16 @@ class SettingsState extends State<Settings> {
           _rankingNameController.value =
               TextEditingValue(text: _settingsData.rankingName);
         } else {
-          _rankingNameController.value =
-              TextEditingValue(text: Home.loggedInUser.displayName);
+          _rankingNameController.value = TextEditingValue(
+              text: MainInherited.of(context).loggedInUser.displayName);
         }
 
         _sexValue = _settingsData.sex;
 
-        _livescorePublicBoardKeepScreenOn = _settingsData.livescorePublicBoardKeepScreenOn;
-        _livescoreControlBoardKeepScreenOn = _settingsData.livescoreControlBoardKeepScreenOn;
+        _livescorePublicBoardKeepScreenOn =
+            _settingsData.livescorePublicBoardKeepScreenOn;
+        _livescoreControlBoardKeepScreenOn =
+            _settingsData.livescoreControlBoardKeepScreenOn;
       });
     }
   }
@@ -154,7 +157,8 @@ class SettingsState extends State<Settings> {
     return SwitchListTile(
       onChanged: (bool state) async {
         _settingsData.showWeather = state;
-        _settingsData.save();
+        MainInherited.of(context).settings =
+            await _settingsData.save(MainInherited.of(context).loggedInUser);
 
         if (mounted) {
           setState(() {
@@ -172,9 +176,10 @@ class SettingsState extends State<Settings> {
     return Column(
       children: <Widget>[
         SwitchListTile(
-          onChanged: (bool state) {
+          onChanged: (bool state) async {
             _settingsData.notificationsShowNews = state;
-            _settingsData.save();
+            MainInherited.of(context).settings = await _settingsData
+                .save(MainInherited.of(context).loggedInUser);
             if (state) {
               _messagingData.addSubscription(NotificationCategory.news);
             } else {
@@ -192,9 +197,10 @@ class SettingsState extends State<Settings> {
               FlutterI18n.translate(context, "settings.settingsMain.string5")),
         ),
         SwitchListTile(
-          onChanged: (bool state) {
+          onChanged: (bool state) async {
             _settingsData.notificationsShowEvent = state;
-            _settingsData.save();
+            MainInherited.of(context).settings = await _settingsData
+                .save(MainInherited.of(context).loggedInUser);
             if (state) {
               _messagingData.addSubscription(NotificationCategory.event);
             } else {
@@ -212,9 +218,10 @@ class SettingsState extends State<Settings> {
               FlutterI18n.translate(context, "settings.settingsMain.string6")),
         ),
         SwitchListTile(
-          onChanged: (bool state) {
+          onChanged: (bool state) async {
             _settingsData.notificationsShowPlay = state;
-            _settingsData.save();
+            MainInherited.of(context).settings = await _settingsData
+                .save(MainInherited.of(context).loggedInUser);
             if (state) {
               _messagingData.addSubscription(NotificationCategory.play);
             } else {
@@ -245,7 +252,7 @@ class SettingsState extends State<Settings> {
           labelText:
               FlutterI18n.translate(context, "settings.settingsMain.string8"),
           suffixIcon: Icon(Icons.check_circle, color: _rankingNameColor)),
-      onSubmitted: (String value) {
+      onSubmitted: (String value) async {
         String error;
         Color color = Colors.green;
         if (value.isEmpty) {
@@ -254,7 +261,8 @@ class SettingsState extends State<Settings> {
           color = Colors.red;
         } else {
           _settingsData.rankingName = value;
-          _settingsData.save();
+          MainInherited.of(context).settings =
+              await _settingsData.save(MainInherited.of(context).loggedInUser);
         }
 
         if (mounted) {
@@ -279,10 +287,12 @@ class SettingsState extends State<Settings> {
                     context, "settings.settingsMain.string12"),
                 style: TextStyle(fontSize: 16.0)),
             _sexElement(
+                context,
                 FlutterI18n.translate(
                     context, "settings.settingsMain.string10"),
                 "female"),
             _sexElement(
+                context,
                 FlutterI18n.translate(
                     context, "settings.settingsMain.string11"),
                 "male")
@@ -292,7 +302,7 @@ class SettingsState extends State<Settings> {
     );
   }
 
-  Widget _sexElement(String text, String radioValue) {
+  Widget _sexElement(BuildContext context, String text, String radioValue) {
     return Row(
       children: <Widget>[
         Radio(
@@ -300,7 +310,8 @@ class SettingsState extends State<Settings> {
           value: radioValue,
           onChanged: (String value) async {
             _settingsData.sex = value;
-            _settingsData.save();
+            MainInherited.of(context).settings = await _settingsData
+                .save(MainInherited.of(context).loggedInUser);
             if (mounted) {
               setState(() {
                 _sexValue = value;
@@ -316,10 +327,11 @@ class SettingsState extends State<Settings> {
   Widget _livescore(BuildContext context) {
     return Column(children: <Widget>[
       SwitchListTile(
-        onChanged: (bool state) {
+        onChanged: (bool state) async {
           _settingsData.livescorePublicBoardKeepScreenOn = state;
-          _settingsData.save();
-          
+          MainInherited.of(context).settings =
+              await _settingsData.save(MainInherited.of(context).loggedInUser);
+
           if (mounted) {
             setState(() {
               _livescorePublicBoardKeepScreenOn = state;
@@ -331,10 +343,11 @@ class SettingsState extends State<Settings> {
             FlutterI18n.translate(context, "settings.settingsMain.string14")),
       ),
       SwitchListTile(
-        onChanged: (bool state) {
+        onChanged: (bool state) async {
           _settingsData.livescoreControlBoardKeepScreenOn = state;
-          _settingsData.save();
-          
+          MainInherited.of(context).settings =
+              await _settingsData.save(MainInherited.of(context).loggedInUser);
+
           if (mounted) {
             setState(() {
               _livescoreControlBoardKeepScreenOn = state;

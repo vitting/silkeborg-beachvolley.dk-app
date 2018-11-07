@@ -21,14 +21,13 @@ class CreatePlayerChooser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        onTapPlayer(type);
-      },
-      child: CircleProfileImage(
-        size: 80.0,
-        url: playerItem?.photoUrl,
-        child: Icon(Icons.add, color: Colors.white),
-      )
-    );
+        onTap: () {
+          onTapPlayer(type);
+        },
+        child: CircleProfileImage(
+          size: 80.0,
+          url: playerItem?.photoUrl,
+          child: Icon(Icons.add, color: Colors.white),
+        ));
   }
 }

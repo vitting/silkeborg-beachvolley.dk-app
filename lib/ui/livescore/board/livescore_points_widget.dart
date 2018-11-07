@@ -36,7 +36,9 @@ class LivescoreBoardPoints extends StatelessWidget {
         _teamPoints(pointsTeam1.toString(), 1, fontWeightTeam1, colorTeam1,
             borderColorTeam1, winnerTeam1),
         Expanded(
-            child: Text(FlutterI18n.translate(context, "livescore.livescorePointsWidget.string1"),
+            child: Text(
+                FlutterI18n.translate(
+                    context, "livescore.livescorePointsWidget.string1"),
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white))),
         _teamPoints(pointsTeam2.toString(), 2, fontWeightTeam2, colorTeam2,

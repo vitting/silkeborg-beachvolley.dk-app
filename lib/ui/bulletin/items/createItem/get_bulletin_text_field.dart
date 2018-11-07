@@ -26,11 +26,14 @@ class BulletinTextField extends StatelessWidget {
       maxLines: 6,
       initialValue: initalValue,
       decoration: new InputDecoration(
-          labelText: FlutterI18n.translate(context, "bulletin.getBulletinTextField.string1"),
+          labelText: FlutterI18n.translate(
+              context, "bulletin.getBulletinTextField.string1"),
           suffixIcon:
               Column(mainAxisSize: MainAxisSize.min, children: _setButtons())),
       validator: (String value) {
-        if (value.isEmpty) return FlutterI18n.translate(context, "bulletin.getBulletinTextField.string2");
+        if (value.isEmpty)
+          return FlutterI18n.translate(
+              context, "bulletin.getBulletinTextField.string2");
       },
       onSaved: onSave,
     );
@@ -38,12 +41,17 @@ class BulletinTextField extends StatelessWidget {
 
   List<Widget> _setButtons() {
     List<Widget> widgets = [
-      IconButton(icon: Icon(Icons.check_circle, color: SilkeborgBeachvolleyTheme.buttonTextColor), onPressed: onPressedSave)
+      IconButton(
+          icon: Icon(Icons.check_circle,
+              color: SilkeborgBeachvolleyTheme.buttonTextColor),
+          onPressed: onPressedSave)
     ];
 
     if (showPhotoButton) {
-      widgets.add(
-          IconButton(icon: Icon(Icons.add_a_photo, color: SilkeborgBeachvolleyTheme.buttonTextColor), onPressed: onPressedPhoto));
+      widgets.add(IconButton(
+          icon: Icon(Icons.add_a_photo,
+              color: SilkeborgBeachvolleyTheme.buttonTextColor),
+          onPressed: onPressedPhoto));
     }
 
     return widgets;

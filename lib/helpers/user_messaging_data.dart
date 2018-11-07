@@ -1,11 +1,10 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:silkeborgbeachvolley/helpers/base_data_class.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_categories_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/user_firestore.dart';
 
-class UserMessagingData implements BaseData {
+class UserMessagingData {
   String userId;
   String token;
   List<NotificationCategory> subscriptions;
@@ -26,17 +25,14 @@ class UserMessagingData implements BaseData {
             subscription));
   }
 
-  @override
   Future<void> delete() async {
     return UserFirestore.deleteUserMessaging(userId);
   }
 
-  @override
   Future<void> save() {
     return UserFirestore.setUserMessaging(this);
   }
 
-  @override
   Map<String, dynamic> toMap() {
     return {
       "userId": userId,

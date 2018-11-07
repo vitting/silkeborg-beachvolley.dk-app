@@ -8,11 +8,11 @@ class EnrollmentFirestore {
   static final _collectionName = "members";
   static Firestore _firestore = Firestore.instance;
 
-  static Future<void> saveEnrollment(EnrollmentUserData user) {
+  static Future<void> saveEnrollment(String userId, EnrollmentUserData user) {
     return _firestore
         .collection(_collectionName)
         .document(user.id)
-        .setData(user.toMap());
+        .setData(user.toMap(userId));
   }
 
   static Future<void> deleteEnrollment(String id) {

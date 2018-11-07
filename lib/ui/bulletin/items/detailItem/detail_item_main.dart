@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/list_item_card_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
@@ -33,14 +35,15 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-        title: FlutterI18n.translate(context, "bulletin.detailItemMain.title"), body: _main());
+        title: FlutterI18n.translate(context, "bulletin.detailItemMain.title"),
+        body: _main(context));
   }
 
-  Widget _main() {
+  Widget _main(BuildContext context) {
     return ListView(
       children: <Widget>[
         _createBulletinMainItem(),
-        _addComment(),
+        _addComment(context),
         StreamBuilder(
           stream: widget.bulletinItem.getCommentsAsStream(),
           builder:
@@ -108,7 +111,7 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
     return Card(child: item);
   }
 
-  Widget _addComment() {
+  Widget _addComment(BuildContext context) {
     BulletinCommentItemData bulletinCommentItem =
         new BulletinCommentItemData(bulletinId: widget.bulletinItem.id);
     return ListBody(
@@ -122,17 +125,22 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
                 bulletinCommentItem.body = value;
               },
               validator: (String value) {
-                if (value.isEmpty) return FlutterI18n.translate(context, "bulletin.detailItemMain.string1");
+                if (value.isEmpty)
+                  return FlutterI18n.translate(
+                      context, "bulletin.detailItemMain.string1");
               },
               decoration: InputDecoration(
-                  labelText: FlutterI18n.translate(context, "bulletin.detailItemMain.string2"),
+                  labelText: FlutterI18n.translate(
+                      context, "bulletin.detailItemMain.string2"),
                   suffixIcon: IconButton(
                       icon: Icon(Icons.send),
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
                           _formKey.currentState.reset();
-                          await _saveBulletinCommentItem(bulletinCommentItem);
+                          await _saveBulletinCommentItem(
+                              MainInherited.of(context).loggedInUser,
+                              bulletinCommentItem);
                           SystemHelpers.hideKeyboardWithNoFocus(context);
                         }
                       })),
@@ -143,7 +151,8 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
     );
   }
 
-  Future<void> _saveBulletinCommentItem(BulletinCommentItemData item) async {
-    await item.save();
+  Future<void> _saveBulletinCommentItem(
+      FirebaseUser user, BulletinCommentItemData item) async {
+    await item.save(user);
   }
 }

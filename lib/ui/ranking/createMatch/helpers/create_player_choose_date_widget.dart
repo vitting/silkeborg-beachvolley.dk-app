@@ -23,7 +23,8 @@ class CreatePlayerChooseDateState extends State<CreatePlayerChooseDate> {
 
   @override
   Widget build(BuildContext context) {
-    _dateText = FlutterI18n.translate(context, "ranking.createPlayerChooseDateWidget.string1");
+    _dateText = FlutterI18n.translate(
+        context, "ranking.createPlayerChooseDateWidget.string1");
     return Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(

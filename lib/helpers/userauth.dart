@@ -16,8 +16,8 @@ class UserAuth {
   }
 
   // If user is logged into Firebase.
-  static Future<FirebaseUser> get currentUser async {
-    return await firebaseAuth.currentUser();
+  static Future<FirebaseUser> get currentUser {
+    return firebaseAuth.currentUser();
   }
 
   //SignIn with Facebook credentials and signin user in Firebase Auth

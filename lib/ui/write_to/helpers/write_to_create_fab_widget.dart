@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 
-enum WriteToCreateFabType {
-  people,
-  mail
-}
+enum WriteToCreateFabType { people, mail }
 
 class WriteToCreateFab extends StatefulWidget {
   final ValueChanged<WriteToCreateFabType> onPressedValue;
@@ -72,7 +69,8 @@ class _WriteToCreateFabState extends State<WriteToCreateFab>
           _close();
           widget.onPressedValue(WriteToCreateFabType.people);
         },
-        tooltip: FlutterI18n.translate(context, "writeTo.writeToCreateFabWidget.string1"),
+        tooltip: FlutterI18n.translate(
+            context, "writeTo.writeToCreateFabWidget.string1"),
         child: Icon(Icons.message),
       ),
     );
@@ -87,7 +85,8 @@ class _WriteToCreateFabState extends State<WriteToCreateFab>
           _close();
           widget.onPressedValue(WriteToCreateFabType.mail);
         },
-        tooltip: FlutterI18n.translate(context, "writeTo.writeToCreateFabWidget.string2"),
+        tooltip: FlutterI18n.translate(
+            context, "writeTo.writeToCreateFabWidget.string2"),
         child: Icon(Icons.mail),
       ),
     );
@@ -110,7 +109,8 @@ class _WriteToCreateFabState extends State<WriteToCreateFab>
           }
           isOpened = !isOpened;
         },
-        tooltip: FlutterI18n.translate(context, "writeTo.writeToCreateFabWidget.string3"),
+        tooltip: FlutterI18n.translate(
+            context, "writeTo.writeToCreateFabWidget.string3"),
         child: Icon(Icons.add),
       ),
     );

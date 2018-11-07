@@ -29,24 +29,34 @@ class LivescoreSetScoreRow extends StatelessWidget {
         children: <Widget>[
           Text(setTeam1.toString(),
               style: TextStyle(
-                  color: color, fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont, fontSize: fontSize)),
+                  color: color,
+                  fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont,
+                  fontSize: fontSize)),
           Text("  (", style: TextStyle(color: color, fontSize: fontSize)),
           Text(pointsTeam1.toString().padLeft(2, "0"),
               style: TextStyle(
-                  color: color, fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont, fontSize: fontSize)),
+                  color: color,
+                  fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont,
+                  fontSize: fontSize)),
           Text(")  [", style: TextStyle(color: color, fontSize: fontSize)),
           Text(setTime.toString(),
               style: TextStyle(
-                  color: color, fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont, fontSize: fontSize)),
+                  color: color,
+                  fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont,
+                  fontSize: fontSize)),
           Text(" min", style: TextStyle(color: color, fontSize: fontSize)),
           Text("]  (", style: TextStyle(color: color, fontSize: fontSize)),
           Text(pointsTeam2.toString().padLeft(2, "0"),
               style: TextStyle(
-                  color: color, fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont, fontSize: fontSize)),
+                  color: color,
+                  fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont,
+                  fontSize: fontSize)),
           Text(")  ", style: TextStyle(color: color, fontSize: fontSize)),
           Text(setTeam2.toString(),
               style: TextStyle(
-                  color: color, fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont, fontSize: fontSize)),
+                  color: color,
+                  fontFamily: SilkeborgBeachvolleyTheme.scoreboardFont,
+                  fontSize: fontSize)),
         ],
       ),
     );

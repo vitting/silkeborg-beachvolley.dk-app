@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_categories_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
@@ -7,7 +8,7 @@ import 'package:silkeborgbeachvolley/ui/home/home_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
 
 Future<void> initMessaging(
-    String userId,
+    FirebaseUser user,
     FirebaseMessaging firebaseMessaging,
     SettingsData settings,
     StreamController<NotificationData> notificationController) async {
@@ -56,9 +57,9 @@ Future<void> initMessaging(
   });
 
   firebaseMessaging.onTokenRefresh.listen((token) {
-    if (Home.loggedInUser != null) {
+    if (user != null) {
       UserMessagingData userMessagingData =
-          _createUserMessaging(settings, userId, token);
+          _createUserMessaging(settings, user.uid, token);
 
       userMessagingData.save();
       Home.userMessaging = userMessagingData;

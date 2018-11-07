@@ -34,7 +34,8 @@ class RankingDetailChartPointsWeek extends StatelessWidget {
                   width: width,
                   height: height,
                   child: BarChart(snapshot.data, animate: true)),
-              Text(FlutterI18n.translate(context, "ranking.rankingDetailChartPointsWeekWidget.string1"))
+              Text(FlutterI18n.translate(context,
+                  "ranking.rankingDetailChartPointsWeekWidget.string1"))
             ],
           );
         },

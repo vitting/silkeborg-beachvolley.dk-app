@@ -26,7 +26,8 @@ class _RankingListState extends State<RankingList> {
           if (!snapshot.hasData) return LoaderSpinner();
 
           if (snapshot.data.documents.length == 0)
-            return NoData(FlutterI18n.translate(context, "ranking.rankingListMain.string1"));
+            return NoData(FlutterI18n.translate(
+                context, "ranking.rankingListMain.string1"));
 
           int counter = -1;
           return Scrollbar(

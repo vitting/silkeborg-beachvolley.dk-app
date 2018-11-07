@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
+import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_overlay_widget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_data.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
@@ -21,7 +22,7 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
   TextEditingController _matchTimeController = TextEditingController();
   LivescoreData _match;
   bool _saving = false;
-  
+
   @override
   void initState() {
     super.initState();
@@ -216,7 +217,8 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
 
                               _formState.currentState.save();
 
-                              await _match.save();
+                              await _match.save(
+                                  MainInherited.of(context).loggedInUser.uid);
                               // await LivescoreSharedPref.setPlayerNames(
                               //     _match.getNamesAsList());
                               Navigator.of(context).pop();
