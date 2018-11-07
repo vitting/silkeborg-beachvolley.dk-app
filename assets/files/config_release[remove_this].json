@@ -2,5 +2,6 @@
     "emailFromName": "Silkeborg Beachvolley",
     "emailFromMail": "put your email address here",
     "emailUsername": "put your smtp username here",
-    "emailPassword": "put your smtp password here"
+    "emailPassword": "put your smtp password here",
+    "emailDebug": ""
 }

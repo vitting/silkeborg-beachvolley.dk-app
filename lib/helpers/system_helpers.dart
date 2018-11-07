@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:screen/screen.dart';
+import 'package:silkeborgbeachvolley/helpers/config_data.dart';
 import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 
 class SystemHelpers {
@@ -38,9 +39,31 @@ class SystemHelpers {
     }
   }
 
-  static Future<Map<String, dynamic>> getConfig(BuildContext context) async {
+  // static Future<Map<String, dynamic>> getConfig(BuildContext context) async {
     
-    Map<String, dynamic> config;
+  //   Map<String, dynamic> config;
+  //   try {
+  //     String data = "";
+  //     switch (MainInherited.of(context).modeProfile) {
+  //       case SystemMode.develop:
+  //         data = await DefaultAssetBundle.of(context).loadString("assets/files/config_develop.json");          
+  //         break;
+  //       case SystemMode.release:
+  //         data = await DefaultAssetBundle.of(context).loadString("assets/files/config_release.json");          
+  //         break;
+  //     }
+
+  //     config = json.decode(data);
+  //   } catch (e) {
+  //     print(e);
+  //   }
+
+  //   return config;
+  // }
+
+  static Future<ConfigData> getConfig(BuildContext context) async {
+    ConfigData config;
+    
     try {
       String data = "";
       switch (MainInherited.of(context).modeProfile) {
@@ -52,7 +75,8 @@ class SystemHelpers {
           break;
       }
 
-      config = json.decode(data);
+      Map<String, dynamic> jsonDecoded = json.decode(data);
+      config = ConfigData.fromMap(jsonDecoded);
     } catch (e) {
       print(e);
     }

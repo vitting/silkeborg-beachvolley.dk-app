@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
-import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
+import 'package:silkeborgbeachvolley/helpers/config_data.dart';
 import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/no_data_widget.dart';
@@ -24,6 +24,14 @@ class AdminWriteToDetail extends StatefulWidget {
 }
 
 class AdminWriteToDetailState extends State<AdminWriteToDetail> {
+  ConfigData _config;
+
+  @override
+    void didChangeDependencies() async {
+      super.didChangeDependencies();
+      _config = MainInherited.of(context).config;
+    }
+
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
@@ -107,14 +115,11 @@ class AdminWriteToDetailState extends State<AdminWriteToDetail> {
         ));
   }
 
-  Future<bool> _saveMain(
-      BuildContext context, String message, WriteToData item) async {
+  Future<bool> _saveMain(BuildContext context, String message, WriteToData item) async {
     if (message.trim().isNotEmpty) {
-      final Map<String, dynamic> config =
-          await SystemHelpers.getConfig(context);
-      WriteToData replyItem = await _save(message, item, config);
+      WriteToData replyItem = await _save(message, item);
       if (item.sendToUserId == null) {
-        bool sendMailResult = await _sendMail(context, replyItem, config);
+        bool sendMailResult = await _sendMail(context, replyItem);
         replyItem.setSendEmailStatus(sendMailResult);
       }
     }
@@ -123,12 +128,12 @@ class AdminWriteToDetailState extends State<AdminWriteToDetail> {
   }
 
   Future<WriteToData> _save(
-      String message, WriteToData item, Map<String, dynamic> config) async {
+      String message, WriteToData item) async {
     WriteToData replyData = WriteToData(
       type: "reply_locale",
       messageRepliedToId: widget.item.id,
-      fromEmail: config["emailFromMail"],
-      fromName: config["emailFromName"],
+      fromEmail: _config.emailFromMail,
+      fromName: _config.emailFromName,
       fromPhotoUrl: "locale",
       sendToEmail: item.fromEmail,
       sendToName: item.fromName,
@@ -142,17 +147,16 @@ class AdminWriteToDetailState extends State<AdminWriteToDetail> {
     return replyData;
   }
 
-  Future<bool> _sendMail(BuildContext context, WriteToData replyItem,
-      Map<String, dynamic> config) async {
+  Future<bool> _sendMail(BuildContext context, WriteToData replyItem) async {
     bool value = false;
-    final String emailFromName = config["emailFromName"];
-    final String emailUsername = config["emailUsername"];
-    final String emailPassword = config["emailPassword"];
+    final String emailFromName = _config.emailFromName;
+    final String emailUsername = _config.emailUsername;
+    final String emailPassword = _config.emailPassword;
     final Address fromAddress = Address(emailUsername, emailFromName);
     final Address sendToAddress =
         MainInherited.of(context).modeProfile == SystemMode.release
             ? Address(replyItem.sendToEmail)
-            : Address("cvn_vitting@hotmail.com");
+            : Address(_config.emailDebug);
     final smtpServer = gmail(emailUsername, emailPassword);
     final Message message = Message()
       ..from = fromAddress

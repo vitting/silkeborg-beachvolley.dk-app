@@ -82,4 +82,14 @@ class SettingsData {
 
     return data;
   }
+
+  static Future<SettingsData> initSettings(String userId, String displayName) async {
+    SettingsData settings = await getSettings(userId);
+    if (settings == null) {
+      settings = SettingsData(rankingName: displayName);
+      await settings.save();
+    }
+
+    return settings;
+  }
 }

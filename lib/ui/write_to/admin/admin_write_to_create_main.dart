@@ -4,9 +4,9 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
+import 'package:silkeborgbeachvolley/helpers/config_data.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_constant.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
-import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
 import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_overlay_widget.dart';
@@ -30,6 +30,7 @@ class AdminWriteToCreate extends StatefulWidget {
 class AdminWriteToCreateState extends State<AdminWriteToCreate> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
+  ConfigData _config;
   bool _saving = false;
   String _savingText = "";
   WriteToData _writeToData;
@@ -49,9 +50,15 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
   }
 
   @override
+    void didChangeDependencies() {
+      super.didChangeDependencies();
+      _config = MainInherited.of(context).config;
+    }
+
+  @override
   Widget build(BuildContext context) {
     if (MainInherited.of(context).modeProfile == SystemMode.develop) {
-      _writeToData.sendToEmail = "cvn_vitting@hotmail.com";
+      _writeToData.sendToEmail = _config.emailDebug;
     }
 
     return SilkeborgBeachvolleyScaffold(
@@ -202,10 +209,10 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
 
   Future<bool> _sendMail(BuildContext context) async {
     bool value = false;
-    final Map<String, dynamic> config = await SystemHelpers.getConfig(context);
-    final String emailFromName = config["emailFromName"];
-    final String emailUsername = config["emailUsername"];
-    final String emailPassword = config["emailPassword"];
+    
+    final String emailFromName = _config.emailFromName;
+    final String emailUsername = _config.emailUsername;
+    final String emailPassword = _config.emailPassword;
     final Address fromAddress = Address(emailUsername, emailFromName);
     final smtpServer = gmail(emailUsername, emailPassword);
     final Message message = Message()
