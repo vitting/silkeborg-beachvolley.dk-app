@@ -36,7 +36,7 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
   RankingPlayerData _loggedInPlayer;
   List<RankingPlayerData> _listOfPlayers = [];
   List<RankingPlayerData> _listOfFavoritePlayers = [];
-  bool _saving = false;
+  bool _showSaving = false;
 
   @override
   void didChangeDependencies() {
@@ -86,13 +86,29 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
 
   @override
   Widget build(BuildContext context) {
-    _noPlayerChoosenText = FlutterI18n.translate(
-        context, "ranking.rankingCreateMatchMain.string1");
+    _noPlayerChoosenText = FlutterI18n.translate(context, "ranking.rankingCreateMatchMain.string1");
     return SilkeborgBeachvolleyScaffold(
+        actions: <Widget>[IconButton(
+          icon: Icon(Icons.help),
+          onPressed: () async {
+            await showDialog(
+              context: context,
+              barrierDismissible: true,
+              builder: (BuildContext context) => SimpleDialog(
+                titlePadding: EdgeInsets.all(10.0),
+                contentPadding: EdgeInsets.all(20.0),
+                title: Text("Hjælp"),
+                children: <Widget>[
+                  Text(FlutterI18n.translate(context, "ranking.rankingCreateMatchMain.string8"))
+                ],
+              )
+            );
+          },
+        )],
         title: FlutterI18n.translate(
             context, "ranking.rankingCreateMatchMain.string2"),
         body: LoaderSpinnerOverlay(
-          show: _saving,
+          show: _showSaving,
           text: FlutterI18n.translate(
               context, "ranking.rankingCreateMatchMain.string3"),
           child: Builder(builder: (BuildContext context) {
@@ -237,13 +253,13 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
               points: 0));
       if (mounted) {
         setState(() {
-          _saving = true;
+          _showSaving = true;
         });
       }
       await match.save(MainInherited.of(context).loggedInUser.uid);
       if (mounted) {
         setState(() {
-          _saving = false;
+          _showSaving = false;
         });
       }
       Navigator.of(context).pop();

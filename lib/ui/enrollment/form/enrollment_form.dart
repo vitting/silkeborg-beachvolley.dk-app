@@ -6,6 +6,7 @@ import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/postcal_codes_data.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_overlay_widget.dart';
 import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/helpers/enrollment_user_data_class.dart';
 import 'package:validate/validate.dart';
@@ -31,6 +32,7 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
   final _formKey = GlobalKey<FormState>();
   bool _isPostalCodeValid = false;
   bool _checkIfMemberExists = true;
+  bool _showSaving = false;
   String _saveButtonText;
   @override
   void initState() {
@@ -72,7 +74,11 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
       _saveButtonText =
           FlutterI18n.translate(context, "enrollment.enrollmentForm.string1");
     }
-    return _main(context);
+    return LoaderSpinnerOverlay(
+      show: _showSaving,
+      text: FlutterI18n.translate(context, "enrollment.enrollmentForm.string20"),
+      child: _main(context),
+    );
   }
 
   Widget _main(BuildContext context) {
@@ -250,16 +256,25 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
         icon: Icon(Icons.check_circle),
         onPressed: () async {
           if (_formKey.currentState.validate()) {
+            setState(() {
+              _showSaving = true;              
+            });
             _formKey.currentState.save();
 
-            if (_checkIfMemberExists &&
-                !await formFunctions.checkIfMemberExistsAndSave(context, _user))
-              return;
+            if (_checkIfMemberExists && !await formFunctions.checkIfMemberExistsAndSave(context, _user)) {
+              setState(() {
+                _showSaving = false;              
+              });
+              return null;
+            }
+              
 
             SystemHelpers.hideKeyboardWithNoFocus(context);
-
+            
             await _user.save(MainInherited.of(context).loggedInUser.uid);
-
+            setState(() {
+              _showSaving = false;              
+            });
             if (widget.onFormSaved != null) {
               widget.onFormSaved(true);
             } else {

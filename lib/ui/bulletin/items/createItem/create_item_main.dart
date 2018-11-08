@@ -147,7 +147,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
 
   Widget _textField(BuildContext context) {
     return BulletinTextField(
-        onPressedSave: () async {
+        onPressedSave: (_) async {
           if (_formKey.currentState.validate()) {
             SystemHelpers.hideKeyboardWithFocus();
             _formKey.currentState.save();

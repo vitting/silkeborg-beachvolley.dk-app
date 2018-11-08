@@ -91,7 +91,8 @@
         "bulletinEdititemMain": {
             "title1": "Rediger nyhed",
             "title2": "Rediger begivenhed",
-            "title3": "Rediger spil"
+            "title3": "Rediger spil",
+            "string1": "Gemmer opsalg"
         },
         "itemFunctions": {
             "string1": "Rediger",
@@ -187,7 +188,8 @@
             "string16": "Indtast din e-mail addresse",
             "string17": "Indtast en gyldig e-mail addresse",
             "string18": "Mobilnummer",
-            "string19": "Indtast dit mobilnummer"
+            "string19": "Indtast dit mobilnummer",
+            "string20": "Gemmer indmeldelse"
         },
         "enrollmentEditMain": {
             "title": "Rediger medlem"
@@ -287,7 +289,8 @@
             "string4": "Vindere",
             "string5": "Tabere",
             "string6": "Registere kampen",
-            "string7": "Du skal udfylde de felter der er røde før du kan gemme kampen."
+            "string7": "Du skal udfylde de felter der er røde før du kan gemme kampen.",
+            "string8": "- Når du vælger en vinder/taber så kan du trykke på profil billedet af spilleren for at tilføje/fjerne personen som favorit."
         },
         "rankingDetailChartMatchesWeekWidget": {
             "string1": "Antal spillede kampe pr. uge"

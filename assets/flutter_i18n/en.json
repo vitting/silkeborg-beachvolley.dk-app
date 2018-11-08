@@ -91,7 +91,8 @@
         "bulletinEdititemMain": {
             "title1": "Edit news",
             "title2": "Edit event",
-            "title3": "Edit play"
+            "title3": "Edit play",
+            "string1": "Saving bulletin"
         },
         "itemFunctions": {
             "string1": "Edit",
@@ -187,7 +188,8 @@
             "string16": "Fill out email addresse",
             "string17": "Enter a valid email address",
             "string18": "Mobile number",
-            "string19": "Fill out mobile number"
+            "string19": "Fill out mobile number",
+            "string20": "Saving enrollment"
         },
         "enrollmentEditMain": {
             "title": "Edit member"
@@ -287,7 +289,8 @@
             "string4": "Winners",
             "string5": "Losers",
             "string6": "Save the match",
-            "string7": "You must fill in the fields with red before saving the match."
+            "string7": "You must fill in the fields with red before saving the match.",
+            "string8": "- When you select a winner / loser, you can tap the profile image of the player to add / remove the person as favorite."
         },
         "rankingDetailChartMatchesWeekWidget": {
             "string1": "Number of games played per. week"

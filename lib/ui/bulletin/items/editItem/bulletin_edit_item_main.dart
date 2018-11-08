@@ -16,6 +16,8 @@ import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_t
 import 'package:silkeborgbeachvolley/ui/bulletin/items/eventItem/event_item_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/newsItem/news_item_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/get_bulletin_event_fields.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_overlay_widget.dart';
+import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import '../../helpers/photo_functions.dart' as photoFunctions;
 
@@ -39,6 +41,7 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
   ItemFieldsCreate itemFieldsValue;
   List<ImageInfoData> _imageFiles = [];
   List<ImageInfoData> _imageFilesDelete = [];
+  bool _showSaving = false;
 
   @override
   void initState() {
@@ -78,15 +81,20 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
       title = FlutterI18n.translate(
           context, "bulletin.bulletinEdititemMain.title2");
     if (type == BulletinType.play)
-      title = FlutterI18n.translate(
-          context, "bulletin.bulletinEdititemMain.title3");
+      title = FlutterI18n.translate(context, "bulletin.bulletinEdititemMain.title3");
     return title;
   }
 
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
-        title: _getTitle(context, itemFieldsValue.type), body: _main());
+        title: _getTitle(context, itemFieldsValue.type), 
+        body: LoaderSpinnerOverlay(
+          show: _showSaving,
+          text: FlutterI18n.translate(context, "bulletin.bulletinEdititemMain.string1"),
+          child: _main(),
+        )
+      );
   }
 
   Widget _main() {
@@ -162,13 +170,8 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
   Widget _textField() {
     return BulletinTextField(
         initalValue: itemFieldsValue.body,
-        onPressedSave: () async {
-          if (_formKey.currentState.validate()) {
-            _formKey.currentState.save();
-
-            await _saveBulletinItem();
-            Navigator.of(context).pop();
-          }
+        onPressedSave: (_) {
+          _saveMain();
         },
         onPressedPhoto:
             itemFieldsValue.type == BulletinType.news ? _addPhoto : null,
@@ -176,6 +179,21 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
           itemFieldsValue.body = value;
         },
         showPhotoButton: itemFieldsValue.type == BulletinType.news);
+  }
+
+  void _saveMain() async {
+    if (_formKey.currentState.validate()) {
+      setState(() {
+        _showSaving = true;              
+      });
+      _formKey.currentState.save();
+
+      await _saveBulletinItem();
+      setState(() {
+        _showSaving = false;              
+      });
+      Navigator.of(context).pop();
+    }
   }
 
   Future<void> _saveBulletinItem() async {
@@ -195,7 +213,7 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
     await _removeExistingPhotosOnSave();
     _imageFilesDelete.clear();
     _imageFiles.clear();
-    return data.save();
+    return data.save(MainInherited.of(context).loggedInUser);
   }
 
   void _addPhoto() async {
