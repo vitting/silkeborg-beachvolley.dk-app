@@ -88,7 +88,7 @@ class WriteToRow extends StatelessWidget {
         ),
       ));
     }
-
+    
     titleRow.add(Expanded(child: Text(text)));
 
     if (showSettings) {

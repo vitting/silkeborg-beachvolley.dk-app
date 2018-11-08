@@ -20,28 +20,9 @@ class CircleProfileImage extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return url != null
-        ? ClipOval(
-            child: url == "public"
-                ? Image.asset("assets/images/no_profile_picture_120x120.png")
-                : CachedNetworkImage(
-                    fit: BoxFit.cover,
-                    imageUrl: url,
-                    errorWidget: errorWidget ??
-                        Image.asset(
-                            "assets/images/no_profile_picture_120x120.png",
-                            width: size,
-                            height: size),
-                    placeholder: placeHolder ??
-                        Image.asset(
-                            "assets/images/no_profile_picture_120x120.png",
-                            width: size,
-                            height: size),
-                    width: size,
-                    height: size,
-                  ),
-          )
-        : Stack(
+    Widget value;
+    if (url == null) {
+      value = Stack(
             children: <Widget>[
               Container(
                 height: size,
@@ -60,5 +41,35 @@ class CircleProfileImage extends StatelessWidget {
                     )
             ],
           );
+    } else if (url == "public") {
+      value = ClipOval(
+        child: Image.asset("assets/images/no_profile_picture_120x120.png"),
+      );
+    } else if (url == "locale") {
+      value = CircleAvatar(
+        backgroundImage: AssetImage("assets/images/silkeborg_beachvolley_100x100.png"),
+      );
+    } else {
+      value = ClipOval(
+        child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    imageUrl: url,
+                    errorWidget: errorWidget ??
+                        Image.asset(
+                            "assets/images/no_profile_picture_120x120.png",
+                            width: size,
+                            height: size),
+                    placeholder: placeHolder ??
+                        Image.asset(
+                            "assets/images/no_profile_picture_120x120.png",
+                            width: size,
+                            height: size),
+                    width: size,
+                    height: size,
+                  )
+      );
+    }
+
+    return value;
   }
 }
