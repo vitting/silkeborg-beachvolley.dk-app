@@ -4,7 +4,6 @@ import "package:flutter/material.dart";
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
-import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data.dart';
@@ -19,9 +18,6 @@ import './bulletin_main_functions.dart' as bulletinMainFunctions;
 
 class Bulletin extends StatefulWidget {
   static final routeName = "/bulletin";
-  final StreamController<NotificationData> notificationController;
-
-  const Bulletin({Key key, this.notificationController}) : super(key: key);
   @override
   _BulletinState createState() => _BulletinState();
 }
@@ -49,7 +45,6 @@ class _BulletinState extends State<Bulletin> {
       showDrawer: true,
       floatingActionButton: _scaffoldFloatingActionButton(context),
       bottomNavigationBar: BulletinBottomNavigationBar(
-        updateCounter: widget.notificationController.stream,
         initValue: _bottombarSelected,
         selectedItem: (int value) {
           if (mounted) {

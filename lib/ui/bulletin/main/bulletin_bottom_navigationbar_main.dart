@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/firebase_functions_call.dart';
@@ -8,18 +6,18 @@ import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_items_count_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_sharedpref.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_type_enum.dart';
+import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
 import './bulletin_main_functions.dart' as bulletinMainFunctions;
 
 class BulletinBottomNavigationBar extends StatefulWidget {
   final ValueChanged<int> selectedItem;
   final int initValue;
-  final Stream<NotificationData> updateCounter;
-
+ 
   const BulletinBottomNavigationBar(
       {Key key,
       @required this.initValue,
       @required this.selectedItem,
-      this.updateCounter})
+      })
       : super(key: key);
   @override
   _BulletinBottomNavigationBarState createState() =>
@@ -38,10 +36,16 @@ class _BulletinBottomNavigationBarState
     super.initState();
     _bottombarSelected = widget.initValue;
     _setBulletinItemsCount(null);
-    widget.updateCounter.listen((NotificationData value) {
-      _setBulletinItemsCount(value);
-    });
   }
+
+  @override
+    void didChangeDependencies() {
+      super.didChangeDependencies();
+
+      MainInherited.of(context, false).notificationsAsStream.listen((NotificationData value) {
+        _setBulletinItemsCount(value);
+      });
+    }
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,11 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/config_data.dart';
+import 'package:silkeborgbeachvolley/helpers/notification_categories_enum.dart';
+import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
 import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
@@ -51,16 +56,24 @@ class MainInherited extends StatefulWidget {
   MainInheritedState createState() => new MainInheritedState();
 
   static MainInheritedState of([BuildContext context, bool rebuild = true]) {
-    return (rebuild ? context.inheritFromWidgetOfExactType(_MainInherited) as _MainInherited
-                    : context.ancestorWidgetOfExactType(_MainInherited) as _MainInherited).data;
+    return (rebuild
+            ? context.inheritFromWidgetOfExactType(_MainInherited)
+                as _MainInherited
+            : context.ancestorWidgetOfExactType(_MainInherited)
+                as _MainInherited)
+        .data;
   }
 }
 
 class MainInheritedState extends State<MainInherited> {
+  final FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
+  final StreamController<NotificationData> _notificationController =
+      StreamController<NotificationData>.broadcast();
+  UserMessagingData userMessaging;
   FirebaseUser loggedInUser;
   UserInfoData userInfoData;
   SettingsData settings;
-  UserMessagingData userMessaging;
+  
   ConfigData config;
   bool canVibrate;
   bool isAdmin1 = false;
@@ -70,13 +83,33 @@ class MainInheritedState extends State<MainInherited> {
 
   SystemMode get modeProfile => widget.mode;
 
+  Stream<NotificationData> get notificationsAsStream => _notificationController.stream;
+
+  void addNotification(NotificationData data) {
+    _notificationController.add(data);
+  }
+
   @override
   void initState() {
     super.initState();
-    _init();
+    _initProperties();
+    _initUserAuth();
+    _initMessaging();
   }
 
-  void _init() async {
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    config = await ConfigData.getConfig(context, modeProfile);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _notificationController.close();
+  }
+
+  void _initProperties() async {
     isStartup = widget.isStartup;
     canVibrate = widget.canVibrate;
     settings = widget.settings;
@@ -85,7 +118,9 @@ class MainInheritedState extends State<MainInherited> {
     isAdmin1 = widget.isAdmin1;
     isAdmin2 = widget.isAdmin2;
     userInfoData = widget.userInfoData;
+  }
 
+  void _initUserAuth() {
     UserAuth.firebaseAuth.onAuthStateChanged.listen((user) async {
       if (!isStartup && user != null) {
         userInfoData = await UserInfoData.getUserInfo(user.uid);
@@ -105,10 +140,81 @@ class MainInheritedState extends State<MainInherited> {
     });
   }
 
-  @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    config = await ConfigData.getConfig(context, modeProfile);
+  void _initMessaging() async {
+    _firebaseMessaging.requestNotificationPermissions(
+        IosNotificationSettings(alert: true, badge: true, sound: true));
+
+    _firebaseMessaging.configure(
+
+        ///OnLaunch er der ikke body og titel med. Bliver executed når appen er termineret
+        onLaunch: (Map<String, dynamic> message) {
+      NotificationData data;
+      if (message != null) {
+        data = NotificationData(
+            type: message["dataType"] ?? "",
+            bulletinType: message["bulletinType"] ?? "",
+            state: NotificationState.launch);
+      }
+
+      addNotification(data);
+    },
+
+        ///OnMessage er der body og titel med. Bliver executed når appen er aktiv
+        onMessage: (Map<String, dynamic> message) {
+      NotificationData data;
+      if (message != null && message["data"] != null) {
+        data = NotificationData(
+            type: message["data"]["dataType"] ?? "",
+            bulletinType: message["data"]["bulletinType"] ?? "",
+            state: NotificationState.message);
+      }
+
+      addNotification(data);
+    },
+
+        ///OnResume er der ikke body og titel med. Bliver executed når appen er minimeret
+        onResume: (Map<String, dynamic> message) {
+      NotificationData data;
+      if (message != null) {
+        data = NotificationData(
+            type: message["dataType"] ?? "",
+            bulletinType: message["bulletinType"] ?? "",
+            state: NotificationState.resume);
+      }
+
+      addNotification(data);
+    });
+
+    _firebaseMessaging.onTokenRefresh.listen((token) {
+      if (loggedInUser != null) {
+        UserMessagingData userMessagingData = _createUserMessaging(token);
+        userMessagingData.save();
+        userMessaging = userMessagingData;
+      }
+    });
+
+    await _firebaseMessaging.getToken();
+  }
+
+  UserMessagingData _createUserMessaging(String token) {
+    UserMessagingData userMessagingData = UserMessagingData(userId: loggedInUser.uid, token: token);
+
+    List<NotificationCategory> categories = [];
+    if (settings.notificationsShowNews) {
+      categories.add(NotificationCategory.news);
+    }
+
+    if (settings.notificationsShowEvent) {
+      categories.add(NotificationCategory.event);
+    }
+
+    if (settings.notificationsShowPlay) {
+      categories.add(NotificationCategory.play);
+    }
+
+    userMessagingData.subscriptions = categories;
+
+    return userMessagingData;
   }
 
   @override
