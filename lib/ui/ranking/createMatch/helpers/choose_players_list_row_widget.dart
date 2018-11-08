@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
-import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
+import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 
 class ChoosePlayerListRow extends StatefulWidget {

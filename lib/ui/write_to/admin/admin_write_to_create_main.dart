@@ -8,7 +8,7 @@ import 'package:silkeborgbeachvolley/helpers/config_data.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_constant.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
-import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
+import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_overlay_widget.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_create_fab_widget.dart';

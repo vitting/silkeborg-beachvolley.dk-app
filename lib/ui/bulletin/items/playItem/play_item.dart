@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
+import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_commit_button_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_title_widget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/items/playItem/play_item_data.dart';

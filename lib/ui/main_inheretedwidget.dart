@@ -50,10 +50,9 @@ class MainInherited extends StatefulWidget {
   @override
   MainInheritedState createState() => new MainInheritedState();
 
-  static MainInheritedState of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(_MainInherited)
-            as _MainInherited)
-        .data;
+  static MainInheritedState of([BuildContext context, bool rebuild = true]) {
+    return (rebuild ? context.inheritFromWidgetOfExactType(_MainInherited) as _MainInherited
+                    : context.ancestorWidgetOfExactType(_MainInherited) as _MainInherited).data;
   }
 }
 

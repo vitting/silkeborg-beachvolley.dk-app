@@ -6,8 +6,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
-import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
-import 'package:silkeborgbeachvolley/main_material_app.dart';
+import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
+import 'package:silkeborgbeachvolley/ui/main_material_app.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
 import 'package:vibrate/vibrate.dart';
 

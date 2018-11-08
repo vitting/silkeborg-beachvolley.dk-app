@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
-import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
+import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/main/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/admin/admin_ranking_main.dart';

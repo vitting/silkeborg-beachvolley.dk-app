@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
-import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
+import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
 
 class BulletinTitle extends StatelessWidget {
   final String name;

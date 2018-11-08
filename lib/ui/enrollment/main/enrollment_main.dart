@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:silkeborgbeachvolley/main_inheretedwidget.dart';
+import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/made_by_user/enrollment_made_by_user_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/form/enrollment_form.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/main/enrollment_payment.dart';
