@@ -12,16 +12,9 @@ import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_create_fab_wid
 import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_data.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_row.dart';
 
-class AdminWriteTo extends StatefulWidget {
+class AdminWriteTo extends StatelessWidget {
   static final String routeName = "/adminwriteto";
 
-  @override
-  AdminWriteToState createState() {
-    return new AdminWriteToState();
-  }
-}
-
-class AdminWriteToState extends State<AdminWriteTo> {
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
