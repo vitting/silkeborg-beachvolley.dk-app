@@ -47,6 +47,9 @@
         "string1": "Search"
     },
     "bulletin": {
+        "photoFunctions": {
+            "string1": "Remove picture"
+        },
         "photoAddPhotoWidget": {
             "title": "Insert picture from",
             "string1": "Gallery",
@@ -56,8 +59,10 @@
             "title1": "Create news",
             "title2": "Create event",
             "title3": "Create play",
-            "string1": "Saveing bulletin...",
-            "string2": "Processing the image..."
+            "string1": "Saveing bulletin",
+            "string2": "Choose a image",
+            "string3": "Processing the image",
+            "string4": "Remove the image"
         },
         "getBulletinEventFields": {
             "string1": "Start date",
@@ -92,7 +97,10 @@
             "title1": "Edit news",
             "title2": "Edit event",
             "title3": "Edit play",
-            "string1": "Saving bulletin"
+            "string1": "Saving bulletin",
+            "string2": "Choose a image",
+            "string3": "Processing the image",
+            "string4": "Remove the image"
         },
         "itemFunctions": {
             "string1": "Edit",

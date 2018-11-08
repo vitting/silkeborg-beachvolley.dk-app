@@ -5,11 +5,18 @@ import 'package:silkeborgbeachvolley/helpers/notification_categories_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/user_firestore.dart';
 
 class UserMessagingData {
-  String userId;
-  String token;
-  List<NotificationCategory> subscriptions;
+  final String userId;
+  final String token;
+  final bool isAdmin1;
+  final bool isAdmin2;
+  final List<NotificationCategory> subscriptions;
 
-  UserMessagingData({this.userId, this.token, this.subscriptions});
+  const UserMessagingData(
+      {this.userId,
+      this.token,
+      this.subscriptions,
+      this.isAdmin1 = false,
+      this.isAdmin2 = false});
 
   Future<void> addSubscription(NotificationCategory subscription) {
     return UserFirestore.addSubscriptionUserMessaging(
@@ -37,6 +44,8 @@ class UserMessagingData {
     return {
       "userId": userId,
       "token": token,
+      "isAdmin1": isAdmin1,
+      "isAdmin2": isAdmin2,
       "subscriptions": subscriptions == null
           ? []
           : subscriptions.map<String>((NotificationCategory category) {
@@ -50,6 +59,8 @@ class UserMessagingData {
     return UserMessagingData(
         userId: item["userId"] ?? "",
         token: item["token"] ?? "",
+        isAdmin1: item["isAdmin1"],
+        isAdmin2: item["isAdmin2"],
         subscriptions: item["subscriptions"] == null
             ? []
             : (item["subscriptions"] as List<dynamic>)

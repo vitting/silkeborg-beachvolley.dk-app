@@ -10,8 +10,9 @@ class BulletinFireStorage {
           .ref()
           .child("${imageInfo.imagesStoreageFolder}/${imageInfo.filename}")
           .putFile(imageInfo.imageFile);
-
+      
       final StorageTaskSnapshot snapshot = await uploadTask.onComplete;
+      
       String downloadUrl = await snapshot.ref.getDownloadURL();
       imageInfo.linkFirebaseStorage = downloadUrl;
       return imageInfo;

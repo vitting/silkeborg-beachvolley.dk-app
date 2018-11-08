@@ -69,7 +69,7 @@ class WriteToDetailState extends State<WriteToDetail> {
                                     snapshotReply
                                         .data.documents[position].data);
                                 return Padding(
-                                  padding: docReply.type != "reply_locale"
+                                  padding: docReply.type != "reply_locale" || docReply.type != "reply_locale_mail"
                                       ? const EdgeInsets.only(left: 20.0)
                                       : const EdgeInsets.only(right: 20.0),
                                   child: WriteToRow(

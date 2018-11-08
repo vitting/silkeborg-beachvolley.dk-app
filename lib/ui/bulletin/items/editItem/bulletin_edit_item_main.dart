@@ -41,7 +41,8 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
   ItemFieldsCreate itemFieldsValue;
   List<ImageInfoData> _imageFiles = [];
   List<ImageInfoData> _imageFilesDelete = [];
-  bool _showSaving = false;
+  bool _showOverlay = false;
+  String _overlayText = "";
 
   @override
   void initState() {
@@ -90,8 +91,8 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
     return SilkeborgBeachvolleyScaffold(
         title: _getTitle(context, itemFieldsValue.type), 
         body: LoaderSpinnerOverlay(
-          show: _showSaving,
-          text: FlutterI18n.translate(context, "bulletin.bulletinEdititemMain.string1"),
+          show: _showOverlay,
+          text: _overlayText,
           child: _main(),
         )
       );
@@ -184,13 +185,14 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
   void _saveMain() async {
     if (_formKey.currentState.validate()) {
       setState(() {
-        _showSaving = true;              
+        _overlayText = FlutterI18n.translate(context, "bulletin.bulletinEdititemMain.string1");
+        _showOverlay = true;              
       });
       _formKey.currentState.save();
 
       await _saveBulletinItem();
       setState(() {
-        _showSaving = false;              
+        _showOverlay = false;              
       });
       Navigator.of(context).pop();
     }
@@ -217,40 +219,50 @@ class _EditBulletinItemState extends State<EditBulletinItem> {
   }
 
   void _addPhoto() async {
-    ImageInfoData imageInfo =
-        await photoFunctions.addPhoto(context, itemFieldsValue.type);
+    setState(() {
+      _overlayText = FlutterI18n.translate(context, "bulletin.createItemMain.string2");
+      _showOverlay = true;
+    });
 
-    if (imageInfo.linkFirebaseStorage.isNotEmpty) {
-      if (mounted) {
-        setState(() {
-          _imageFiles.add(imageInfo);
-        });
-      }
+    ImageInfoData imageInfo =
+        await photoFunctions.addPhoto(context, itemFieldsValue.type, imageStartProcessing);
+
+    if (imageInfo != null && imageInfo.linkFirebaseStorage.isNotEmpty) {
+      _imageFiles.add(imageInfo);
     }
+
+    setState(() {
+      _showOverlay = false;
+    });
+  }
+
+  void imageStartProcessing(bool value) {
+    setState(() {
+      _overlayText = FlutterI18n.translate(context, "bulletin.bulletinEdititemMain.string3");          
+    });
   }
 
   Future<void> _removePhoto(ImageInfoData image) async {
+    setState(() {
+      _overlayText = FlutterI18n.translate(context, "bulletin.bulletinEdititemMain.string4");          
+      _showOverlay = true;
+    });
+
     PhotoAction action = await photoFunctions.removePhoto(context);
 
     if (action != null && action == PhotoAction.delete) {
       if (image.state == ImageInfoState.exists) {
-        if (mounted) {
-          setState(() {
-            _imageFilesDelete.add(image);
-            _imageFiles.remove(image);
-          });
-        }
-
-        return;
-      }
-
-      await ImageHelpers.deleteImageFromCacheAndStorage(image);
-      if (mounted) {
-        setState(() {
-          _imageFiles.remove(image);
-        });
+        _imageFilesDelete.add(image);
+        _imageFiles.remove(image);
+      } else {
+        await ImageHelpers.deleteImageFromCacheAndStorage(image);
+        _imageFiles.remove(image);
       }
     }
+
+    setState(() {
+      _showOverlay = false;
+    });
   }
 
   Future<void> _removeExistingPhotosOnSave() async {

@@ -23,10 +23,19 @@ class UserFirestore {
         .delete();
   }
 
-  static Future<void> setAdminState(
-      String userId, String adminType, bool isAdmin) {
+  static Future<void> setAdminState(String userId, String adminType, bool isAdmin) {
+    String messagingAdminType = adminType == "admin1" ? "isAdmin1" : "isAdmin2";
+    setUserMessagingAdminState(userId, messagingAdminType, isAdmin);
+    
     return _firestore
         .collection(_collectionNameUsers)
+        .document(userId)
+        .updateData({"$adminType": isAdmin});
+  }
+
+  static Future<void> setUserMessagingAdminState(String userId, String adminType, bool isAdmin) {
+    return _firestore
+        .collection(_collectionNameUsersMessaging)
         .document(userId)
         .updateData({"$adminType": isAdmin});
   }

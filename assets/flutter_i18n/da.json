@@ -47,6 +47,9 @@
         "string1": "Søg"
     },
     "bulletin": {
+        "photoFunctions": {
+            "string1": "Fjern billede"
+        },
         "photoAddPhotoWidget": {
             "title": "Indsæt billede fra",
             "string1": "Galleri",
@@ -56,8 +59,10 @@
             "title1": "Opret nyhed",
             "title2": "Opret begivenhed",
             "title3": "Opret spil",
-            "string1": "Gemmer opslag...",
-            "string2": "Behandler billedet..."
+            "string1": "Gemmer opslag",
+            "string2": "Vælg et billede",
+            "string3": "Behandler billedet",
+            "string4": "Fjern billedet"
         },
         "getBulletinEventFields": {
             "string1": "Start dato",
@@ -92,7 +97,10 @@
             "title1": "Rediger nyhed",
             "title2": "Rediger begivenhed",
             "title3": "Rediger spil",
-            "string1": "Gemmer opsalg"
+            "string1": "Gemmer opsalg",
+            "string2": "Vælg et billede",
+            "string3": "Behandler billedet",
+            "string4": "Fjern billedet"
         },
         "itemFunctions": {
             "string1": "Rediger",

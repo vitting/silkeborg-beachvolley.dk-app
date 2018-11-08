@@ -38,10 +38,10 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
   List<ImageInfoData> _imageFiles = [];
   bool _saving = false;
   bool _loadingImage = false;
+  String _loadOverlayText = "";
   @override
   void initState() {
     super.initState();
-
     itemFieldsValue.type = widget.bulletinType;
   }
 
@@ -73,8 +73,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
         body: LoaderSpinnerOverlay(
           show: _saving,
           child: _main(),
-          text:
-              FlutterI18n.translate(context, "bulletin.createItemMain.string1"),
+          text: FlutterI18n.translate(context, "bulletin.createItemMain.string1"),
         ));
   }
 
@@ -87,7 +86,7 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
       widgets.add(LoaderSpinnerOverlay(
         show: _loadingImage,
         showModalBarrier: false,
-        text: FlutterI18n.translate(context, "bulletin.createItemMain.string2"),
+        text: _loadOverlayText,
         child: BulletinItemPictures(
           type: BulletinImageType.file,
           useSquareOnOddImageCount: true,
@@ -193,52 +192,45 @@ class _CreateBulletinItemState extends State<CreateBulletinItem> {
   }
 
   void _addPhoto() async {
-    if (mounted) {
-      setState(() {
-        _loadingImage = true;
-      });
-    }
-    ImageInfoData imageInfo =
-        await photoFunctions.addPhoto(context, itemFieldsValue.type);
+    setState(() {
+      _loadOverlayText = FlutterI18n.translate(context, "bulletin.createItemMain.string2");
+      _loadingImage = true;
+    });
+
+    ImageInfoData imageInfo = await photoFunctions.addPhoto(context, itemFieldsValue.type, imageStartProcessing);
 
     if (imageInfo != null && imageInfo.linkFirebaseStorage.isNotEmpty) {
-      if (mounted) {
-        setState(() {
-          _loadingImage = false;
-          _imageFiles.add(imageInfo);
-        });
-      }
+      setState(() {
+        _loadingImage = false;
+        _imageFiles.add(imageInfo);
+      });
     } else {
-      if (mounted) {
-        setState(() {
-          _loadingImage = false;
-        });
-      }
+      setState(() {
+        _loadingImage = false;
+      });
     }
   }
 
+  void imageStartProcessing(_) {
+    setState(() {
+      _loadOverlayText = FlutterI18n.translate(context, "bulletin.createItemMain.string3");          
+    });
+  }
+
   void _removePhoto(ImageInfoData image) async {
-    if (mounted) {
-      setState(() {
-        _loadingImage = true;
-      });
-    }
+    setState(() {
+      _loadOverlayText = FlutterI18n.translate(context, "bulletin.createItemMain.string4");          
+      _loadingImage = true;
+    });
     PhotoAction action = await photoFunctions.removePhoto(context);
 
     if (action != null && action == PhotoAction.delete) {
       await ImageHelpers.deleteImageFromCacheAndStorage(image);
-      if (mounted) {
-        setState(() {
-          _loadingImage = false;
-          _imageFiles.remove(image);
-        });
-      }
-    } else {
-      if (mounted) {
-        setState(() {
-          _loadingImage = false;
-        });
-      }
-    }
+      _imageFiles.remove(image);
+    } 
+
+    setState(() {
+      _loadingImage = false;
+    });
   }
 }

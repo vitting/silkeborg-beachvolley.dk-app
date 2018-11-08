@@ -73,7 +73,7 @@ class MainInheritedState extends State<MainInherited> {
   FirebaseUser loggedInUser;
   UserInfoData userInfoData;
   SettingsData settings;
-  
+
   ConfigData config;
   bool canVibrate;
   bool isAdmin1 = false;
@@ -83,7 +83,8 @@ class MainInheritedState extends State<MainInherited> {
 
   SystemMode get modeProfile => widget.mode;
 
-  Stream<NotificationData> get notificationsAsStream => _notificationController.stream;
+  Stream<NotificationData> get notificationsAsStream =>
+      _notificationController.stream;
 
   void addNotification(NotificationData data) {
     _notificationController.add(data);
@@ -197,8 +198,7 @@ class MainInheritedState extends State<MainInherited> {
   }
 
   UserMessagingData _createUserMessaging(String token) {
-    UserMessagingData userMessagingData = UserMessagingData(userId: loggedInUser.uid, token: token);
-
+    ///Default categories
     List<NotificationCategory> categories = [];
     if (settings.notificationsShowNews) {
       categories.add(NotificationCategory.news);
@@ -212,7 +212,12 @@ class MainInheritedState extends State<MainInherited> {
       categories.add(NotificationCategory.play);
     }
 
-    userMessagingData.subscriptions = categories;
+    UserMessagingData userMessagingData = UserMessagingData(
+        userId: loggedInUser.uid,
+        token: token,
+        subscriptions: categories,
+        isAdmin1: isAdmin1,
+        isAdmin2: isAdmin2);
 
     return userMessagingData;
   }

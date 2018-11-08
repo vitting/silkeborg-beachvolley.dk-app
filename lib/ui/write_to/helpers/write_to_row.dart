@@ -73,6 +73,9 @@ class WriteToRow extends StatelessWidget {
       case "reply_locale":
         value = _titleText(item.fromName);
         break;
+      case "reply_locale_mail":
+        value = _titleText(item.fromName);
+        break;
     }
 
     return value;

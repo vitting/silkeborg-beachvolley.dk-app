@@ -133,7 +133,7 @@ class AdminWriteToDetailState extends State<AdminWriteToDetail> {
   Future<WriteToData> _save(
       BuildContext context, String message, WriteToData item) async {
     WriteToData replyData = WriteToData(
-      type: "reply_locale",
+      type: item.sendToUserId != null ? "reply_locale" : "reply_locale_mail",
       messageRepliedToId: widget.item.id,
       fromEmail: _config.emailFromMail,
       fromName: _config.emailFromName,
