@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
-import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
+import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 
 class AdminUsers extends StatefulWidget {
@@ -101,11 +101,10 @@ class _AdminUsersState extends State<AdminUsers> {
                             Switch(
                               value: user.admin1,
                               onChanged: (bool value) {
-                                if (MainInherited.of(context).isAdmin1) {
-                                  setState(() {
-                                    user.setAdmin1State(value);
-                                  });
-                                }
+                                MainInherited.of(context).isAdmin1 = value;
+                                setState(() {
+                                  user.setAdmin1State(value);
+                                });
                               },
                             )
                           ],
@@ -130,11 +129,10 @@ class _AdminUsersState extends State<AdminUsers> {
                             Switch(
                               value: user.admin2,
                               onChanged: (bool value) {
-                                if (MainInherited.of(context).isAdmin1) {
-                                  setState(() {
-                                    user.setAdmin2State(value);
-                                  });
-                                }
+                                MainInherited.of(context).isAdmin2 = value;
+                                setState(() {
+                                  user.setAdmin2State(value);
+                                });
                               },
                             )
                           ],

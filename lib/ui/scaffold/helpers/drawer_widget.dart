@@ -129,7 +129,7 @@ class SilkeborgBeacvolleyScaffoldDrawerState
       )
     ];
 
-    if (MainInherited.of(context).isAdmin1) {
+    if (MainInherited.of(context).isAdmin1 || MainInherited.of(context).isAdmin2) {
       widgets.add(Divider());
       widgets.add(ListTile(
         leading: Icon(Icons.people,
@@ -151,15 +151,17 @@ class SilkeborgBeacvolleyScaffoldDrawerState
         },
       ));
 
-      widgets.add(ListTile(
-        leading: Icon(Icons.people,
-            color: SilkeborgBeachvolleyTheme.drawerIconColor),
-        title: Text(
-            FlutterI18n.translate(context, "scaffold.drawerWidget.string9")),
-        onTap: () {
-          Navigator.of(context).popAndPushNamed(AdminUsers.routeName);
-        },
-      ));
+      if (MainInherited.of(context).isAdmin1) {
+        widgets.add(ListTile(
+          leading: Icon(Icons.people,
+              color: SilkeborgBeachvolleyTheme.drawerIconColor),
+          title: Text(
+              FlutterI18n.translate(context, "scaffold.drawerWidget.string9")),
+          onTap: () {
+            Navigator.of(context).popAndPushNamed(AdminUsers.routeName);
+          },
+        ));
+      }
 
       widgets.add(ListTile(
         leading: Icon(Icons.people,

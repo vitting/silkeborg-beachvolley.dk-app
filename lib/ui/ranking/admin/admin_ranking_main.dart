@@ -76,10 +76,10 @@ class AdminRankingState extends State<AdminRanking> {
                       : Text(FlutterI18n.translate(
                           context, "ranking.adminRankingMain.string3")),
                 ),
-                PopupMenuItem(
+                MainInherited.of(context).isAdmin1 ? PopupMenuItem(
                     value: 1,
                     child: Text(FlutterI18n.translate(
-                        context, "ranking.adminRankingMain.string4")))
+                        context, "ranking.adminRankingMain.string4"))) : null
               ]);
 
           if (result != null && result == 0) {

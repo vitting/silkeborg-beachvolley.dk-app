@@ -67,7 +67,7 @@ class AdminRankingMatchesState extends State<AdminRankingMatches> {
 
   IconData _menuIcon(BuildContext context, RankingMatchData match) {
     IconData icon;
-    if (MainInherited.of(context).isAdmin1) {
+    if (MainInherited.of(context).isAdmin1 || MainInherited.of(context).isAdmin2) {
       icon = Icons.more_horiz;
     }
     return icon;

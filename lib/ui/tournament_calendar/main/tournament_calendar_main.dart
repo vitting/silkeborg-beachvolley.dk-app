@@ -28,7 +28,7 @@ class _TournamentCalendarState extends State<TournamentCalendar> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    if (MainInherited.of(context).isAdmin1) {
+    if (MainInherited.of(context).isAdmin1 || MainInherited.of(context).isAdmin2) {
       _isAdmin = true;
     }
   }

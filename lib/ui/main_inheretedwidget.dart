@@ -73,7 +73,6 @@ class MainInheritedState extends State<MainInherited> {
   FirebaseUser loggedInUser;
   UserInfoData userInfoData;
   SettingsData settings;
-
   ConfigData config;
   bool canVibrate;
   bool isAdmin1 = false;
