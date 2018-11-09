@@ -102,8 +102,14 @@ class _AdminUsersState extends State<AdminUsers> {
                               value: user.admin1,
                               onChanged: (bool value) {
                                 MainInherited.of(context).isAdmin1 = value;
+
                                 setState(() {
                                   user.setAdmin1State(value);
+
+                                  if (value == true) {
+                                    user.setAdmin2State(value);
+                                    MainInherited.of(context).isAdmin2 = value;
+                                  }
                                 });
                               },
                             )
@@ -129,10 +135,12 @@ class _AdminUsersState extends State<AdminUsers> {
                             Switch(
                               value: user.admin2,
                               onChanged: (bool value) {
-                                MainInherited.of(context).isAdmin2 = value;
-                                setState(() {
-                                  user.setAdmin2State(value);
-                                });
+                                if (!user.admin1) {
+                                  MainInherited.of(context).isAdmin2 = value;
+                                  setState(() {
+                                    user.setAdmin2State(value);
+                                  });
+                                }
                               },
                             )
                           ],
