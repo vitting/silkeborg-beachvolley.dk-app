@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl_standalone.dart';
 import 'package:screen/screen.dart';
 
 class SystemHelpers {
@@ -34,5 +35,31 @@ class SystemHelpers {
     } else {
       return SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
     }
+  }
+
+  static Future<String> systemLanguageCode() async {
+    String value = "en";
+    String systemLocale = await findSystemLocale();
+    if (systemLocale != null) {
+      List<String> locale = systemLocale.split("_");  
+      if (locale.length != 0) {
+        value = locale[0];
+      }
+    }
+  
+    return value;
+  }
+
+  static Future<String> systemContryCode() async {
+    String value = "US";
+    String systemLocale = await findSystemLocale();
+    if (systemLocale != null) {
+      List<String> locale = systemLocale.split("_");  
+      if (locale.length != 0) {
+        value = locale[1];
+      }
+    }
+  
+    return value;
   }
 }

@@ -9,11 +9,13 @@ class UserMessagingData {
   final String token;
   final bool isAdmin1;
   final bool isAdmin2;
+  final String languageCode;
   final List<NotificationCategory> subscriptions;
-
+  
   const UserMessagingData(
       {this.userId,
       this.token,
+      this.languageCode,
       this.subscriptions,
       this.isAdmin1 = false,
       this.isAdmin2 = false});
@@ -36,7 +38,7 @@ class UserMessagingData {
     return UserFirestore.deleteUserMessaging(userId);
   }
 
-  Future<void> save() {
+  Future<void> save() async {
     return UserFirestore.setUserMessaging(this);
   }
 
@@ -46,6 +48,7 @@ class UserMessagingData {
       "token": token,
       "isAdmin1": isAdmin1,
       "isAdmin2": isAdmin2,
+      "languageCode": languageCode,
       "subscriptions": subscriptions == null
           ? []
           : subscriptions.map<String>((NotificationCategory category) {
@@ -61,6 +64,7 @@ class UserMessagingData {
         token: item["token"] ?? "",
         isAdmin1: item["isAdmin1"],
         isAdmin2: item["isAdmin2"],
+        languageCode: item["languageCode"],
         subscriptions: item["subscriptions"] == null
             ? []
             : (item["subscriptions"] as List<dynamic>)

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/config_data.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_categories_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
+import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
 import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
@@ -79,6 +80,7 @@ class MainInheritedState extends State<MainInherited> {
   bool isAdmin2 = false;
   bool isLoggedIn;
   bool isStartup = false;
+  String systemLanguageCode = "en";
 
   SystemMode get modeProfile => widget.mode;
 
@@ -141,9 +143,8 @@ class MainInheritedState extends State<MainInherited> {
   }
 
   void _initMessaging() async {
-    _firebaseMessaging.requestNotificationPermissions(
-        IosNotificationSettings(alert: true, badge: true, sound: true));
-
+    systemLanguageCode = await SystemHelpers.systemLanguageCode();
+    _firebaseMessaging.requestNotificationPermissions(IosNotificationSettings(alert: true, badge: true, sound: true));
     _firebaseMessaging.configure(
 
         ///OnLaunch er der ikke body og titel med. Bliver executed når appen er termineret
@@ -215,6 +216,7 @@ class MainInheritedState extends State<MainInherited> {
         userId: loggedInUser.uid,
         token: token,
         subscriptions: categories,
+        languageCode: systemLanguageCode,
         isAdmin1: isAdmin1,
         isAdmin2: isAdmin2);
 
