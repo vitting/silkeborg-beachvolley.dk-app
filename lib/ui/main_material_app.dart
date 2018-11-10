@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -17,6 +19,7 @@ import 'package:silkeborgbeachvolley/ui/write_to/create/write_to_create_main.dar
 import 'package:silkeborgbeachvolley/ui/write_to/write_to_main.dart';
 
 class MainMaterialApp extends StatefulWidget {
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
   @override
   _MainMaterialAppState createState() => _MainMaterialAppState();
 }
@@ -36,6 +39,9 @@ class _MainMaterialAppState extends State<MainMaterialApp> {
       theme: ThemeData(
           // primaryColor: Colors.yellow
           ),
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: MainMaterialApp.analytics),
+      ],
       initialRoute: "/",
       routes: <String, WidgetBuilder>{
         "/": (BuildContext context) => Home(),
