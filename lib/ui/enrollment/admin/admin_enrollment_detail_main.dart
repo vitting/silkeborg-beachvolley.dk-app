@@ -145,7 +145,7 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
                   if (!widget.enrollment.paymentExists(_selectedYear)) {
                     widget.enrollment.addPayment(_selectedYear);
                     await widget.enrollment
-                        .save(MainInherited.of(context).loggedInUser.uid);
+                        .save(MainInherited.of(context).userId);
                     await widget.enrollment.refresh();
                     if (mounted) {
                       setState(() {});
@@ -211,7 +211,7 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
       if (mounted) {
         setState(() {
           widget.enrollment.payment.remove(payment);
-          widget.enrollment.save(MainInherited.of(context).loggedInUser.uid);
+          widget.enrollment.save(MainInherited.of(context).userId);
         });
       }
     }
@@ -223,7 +223,7 @@ class EnrollmentDetailState extends State<EnrollmentDetail> {
         await adminEnrollmentFunctions.editComment(context, item.comment);
     if (result != null) {
       item.comment = result;
-      widget.enrollment.save(MainInherited.of(context).loggedInUser.uid);
+      widget.enrollment.save(MainInherited.of(context).userId);
     }
   }
 }

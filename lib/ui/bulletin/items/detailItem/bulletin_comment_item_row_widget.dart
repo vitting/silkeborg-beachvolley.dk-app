@@ -38,7 +38,7 @@ class BulletinCommentItemRow extends StatelessWidget {
 
   Widget _getButton(BuildContext context, String authorId) {
     Widget widgets;
-    if (authorId == MainInherited.of(context).loggedInUser.uid) {
+    if (authorId == MainInherited.of(context).userId) {
       widgets = IconButton(
         icon: Icon(Icons.more_vert),
         onPressed: () async {

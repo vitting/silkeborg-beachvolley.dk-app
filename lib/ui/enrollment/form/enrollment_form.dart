@@ -271,7 +271,7 @@ class _EnrollmentFormState extends State<EnrollmentForm> {
 
             SystemHelpers.hideKeyboardWithNoFocus(context);
             
-            await _user.save(MainInherited.of(context).loggedInUser.uid);
+            await _user.save(MainInherited.of(context).userId);
             setState(() {
               _showSaving = false;              
             });

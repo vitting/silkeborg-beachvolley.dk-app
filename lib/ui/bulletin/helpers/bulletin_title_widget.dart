@@ -31,7 +31,7 @@ class BulletinTitle extends StatelessWidget {
 
     widgets.add(Expanded(child: Text(name, overflow: TextOverflow.ellipsis)));
 
-    if (!isDetailMode && MainInherited.of(context).loggedInUser.uid == userId) {
+    if (!isDetailMode && MainInherited.of(context).userId == userId) {
       widgets.add(
         IconButton(
           icon: Icon(Icons.more_horiz),

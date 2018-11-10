@@ -45,7 +45,7 @@ class RankingMatches extends StatelessWidget {
             RankingMatchData item = list[position];
             return RankingMatchesRow(
               match: item,
-              userId: MainInherited.of(context).loggedInUser.uid,
+              userId: MainInherited.of(context).userId,
               icon: _menuIcon(context, item),
               iconOnTap: (RankingMatchData match) {
                 _showDelete(context, match);
@@ -59,7 +59,7 @@ class RankingMatches extends StatelessWidget {
 
   IconData _menuIcon(BuildContext context, RankingMatchData match) {
     IconData icon;
-    if (MainInherited.of(context).loggedInUser.uid == match.userId) {
+    if (MainInherited.of(context).userId == match.userId) {
       icon = Icons.more_horiz;
     }
     return icon;

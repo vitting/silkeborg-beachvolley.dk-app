@@ -66,8 +66,7 @@ class _LivescoreState extends State<Livescore> {
   }
 
   Widget _floatingActionButton(BuildContext context) {
-    if (MainInherited.of(context).loggedInUser != null &&
-        MainInherited.of(context).loggedInUser.uid != null) {
+    if (MainInherited.of(context).userId != null) {
       return FloatingActionButton(
         backgroundColor: SilkeborgBeachvolleyTheme.buttonTextColor,
         onPressed: () {

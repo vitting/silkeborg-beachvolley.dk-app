@@ -37,7 +37,7 @@ class SilkeborgBeacvolleyScaffoldDrawerState
   }
 
   void _setUserInfo(BuildContext context) {
-    if (MainInherited.of(context).loggedInUser.uid != null) {
+    if (MainInherited.of(context).userId != null) {
       if (mounted) {
         setState(() {
           _photoUrl = MainInherited.of(context).loggedInUser.photoUrl;

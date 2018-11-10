@@ -25,7 +25,7 @@ class EnrollmentMadeByUserState extends State<EnrollmentMadeByUser> {
             context, "enrollment.enrollmentMadeByUser.title"),
         body: FutureBuilder(
           future: EnrollmentUserData.getAllAddedByUser(
-              MainInherited.of(context).loggedInUser.uid),
+              MainInherited.of(context).userId),
           builder: (BuildContext context,
               AsyncSnapshot<List<EnrollmentUserData>> snapshot) {
             if (snapshot.hasError) {

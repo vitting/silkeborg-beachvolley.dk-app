@@ -100,7 +100,7 @@ class LivescoreOverviewMatches extends StatelessWidget {
                   match: match,
                   isMatchAdmin: MainInherited.of(context).loggedInUser != null
                       ? match.userId ==
-                          MainInherited.of(context).loggedInUser.uid
+                          MainInherited.of(context).userId
                       : false,
                   isLive: false,
                   onLongPressRow: (LivescoreData selectedMatch) {

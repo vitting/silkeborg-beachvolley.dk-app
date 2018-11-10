@@ -293,7 +293,7 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
               title: Text(FlutterI18n.translate(
                   context, "writeTo.adminWriteToCreateMain.string13")),
               children: users.map<Widget>((UserInfoData user) {
-                if (user.id == MainInherited.of(context).loggedInUser.uid)
+                if (user.id == MainInherited.of(context).userId)
                   return Container();
                 return ListTile(
                   onTap: () {

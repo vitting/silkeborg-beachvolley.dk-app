@@ -44,7 +44,7 @@ class BulletinEventItemState extends State<BulletinEventItem> {
   _initCommitted(BuildContext context) async {
     if (widget.isDetailMode) {
       bool commited = await widget.bulletinItem
-          .isCommitted(MainInherited.of(context).loggedInUser.uid);
+          .isCommitted(MainInherited.of(context).userId);
       if (mounted) {
         setState(() {
           if (commited) {

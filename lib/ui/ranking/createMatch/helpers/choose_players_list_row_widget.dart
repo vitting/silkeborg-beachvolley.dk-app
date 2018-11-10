@@ -50,7 +50,7 @@ class ChoosePlayerListRowState extends State<ChoosePlayerListRow> {
       leading: GestureDetector(
           onLongPress: () {
             if (widget.player.userId !=
-                MainInherited.of(context).loggedInUser.uid) {
+                MainInherited.of(context).userId) {
               widget.onLongPress(widget.isFavorite);
             }
           },

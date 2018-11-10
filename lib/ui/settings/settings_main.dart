@@ -161,7 +161,7 @@ class SettingsState extends State<Settings> {
     return SwitchListTile(
       onChanged: (bool state) async {
         MainInherited.of(context).settings = await _settingsData.setShowWeather(
-            MainInherited.of(context).loggedInUser.uid, state);
+            MainInherited.of(context).userId, state);
 
         setState(() {
           _showWeatherState = state;
@@ -180,7 +180,7 @@ class SettingsState extends State<Settings> {
           onChanged: (bool state) async {
             MainInherited.of(context).settings =
                 await _settingsData.setNotificationNews(
-                    MainInherited.of(context).loggedInUser.uid, state);
+                    MainInherited.of(context).userId, state);
 
             if (state) {
               _messagingData.addSubscription(NotificationCategory.news);
@@ -200,7 +200,7 @@ class SettingsState extends State<Settings> {
           onChanged: (bool state) async {
             MainInherited.of(context).settings =
                 await _settingsData.setNotificationEvent(
-                    MainInherited.of(context).loggedInUser.uid, state);
+                    MainInherited.of(context).userId, state);
             if (state) {
               _messagingData.addSubscription(NotificationCategory.event);
             } else {
@@ -219,7 +219,7 @@ class SettingsState extends State<Settings> {
           onChanged: (bool state) async {
             MainInherited.of(context).settings =
                 await _settingsData.setNotificationPlay(
-                    MainInherited.of(context).loggedInUser.uid, state);
+                    MainInherited.of(context).userId, state);
 
             if (state) {
               _messagingData.addSubscription(NotificationCategory.play);
@@ -239,7 +239,7 @@ class SettingsState extends State<Settings> {
           onChanged: (bool state) async {
             MainInherited.of(context).settings =
                 await _settingsData.setNotificationWriteTo(
-                    MainInherited.of(context).loggedInUser.uid, state);
+                    MainInherited.of(context).userId, state);
 
             if (state) {
               _messagingData.addSubscription(NotificationCategory.writeTo);
@@ -260,7 +260,7 @@ class SettingsState extends State<Settings> {
                 onChanged: (bool state) async {
                   MainInherited.of(context).settings =
                       await _settingsData.setNotificationWriteToAdmin(
-                          MainInherited.of(context).loggedInUser.uid, state);
+                          MainInherited.of(context).userId, state);
 
                   if (state) {
                     _messagingData
@@ -304,7 +304,7 @@ class SettingsState extends State<Settings> {
         } else {
           MainInherited.of(context).settings =
               await _settingsData.setRankingName(
-                  MainInherited.of(context).loggedInUser.uid, value);
+                  MainInherited.of(context).userId, value);
         }
 
         setState(() {
@@ -350,7 +350,7 @@ class SettingsState extends State<Settings> {
           value: radioValue,
           onChanged: (String value) async {
             MainInherited.of(context).settings = await _settingsData.setSex(
-                MainInherited.of(context).loggedInUser.uid, value);
+                MainInherited.of(context).userId, value);
 
             setState(() {
               _sexValue = value;
@@ -368,7 +368,7 @@ class SettingsState extends State<Settings> {
         onChanged: (bool state) async {
           MainInherited.of(context).settings =
               await _settingsData.setLivescoreBoardKeepScreenOnPublic(
-                  MainInherited.of(context).loggedInUser.uid, state);
+                  MainInherited.of(context).userId, state);
 
           setState(() {
             _livescorePublicBoardKeepScreenOn = state;
@@ -382,7 +382,7 @@ class SettingsState extends State<Settings> {
         onChanged: (bool state) async {
           MainInherited.of(context).settings =
               await _settingsData.setLivescoreBoardKeepScreenOnControl(
-                  MainInherited.of(context).loggedInUser.uid, state);
+                  MainInherited.of(context).userId, state);
 
           setState(() {
             _livescoreControlBoardKeepScreenOn = state;

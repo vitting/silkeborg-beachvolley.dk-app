@@ -48,7 +48,7 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
     List<dynamic> playerFavorites = [];
 
     DocumentSnapshot doc = await RankingFirestore.getPlayer(
-        MainInherited.of(context).loggedInUser.uid);
+        MainInherited.of(context).userId);
     QuerySnapshot snapshot = await RankingFirestore.getAllPlayers();
 
     if (doc.exists) {
@@ -256,7 +256,7 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
           _showSaving = true;
         });
       }
-      await match.save(MainInherited.of(context).loggedInUser.uid);
+      await match.save(MainInherited.of(context).userId);
       if (mounted) {
         setState(() {
           _showSaving = false;

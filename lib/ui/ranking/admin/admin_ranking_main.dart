@@ -106,7 +106,7 @@ class AdminRankingState extends State<AdminRanking> {
       });
 
       await FirebaseFunctions.resetRanking(
-          MainInherited.of(context).loggedInUser.uid);
+          MainInherited.of(context).userId);
 
       setState(() {
         _showLoader = false;

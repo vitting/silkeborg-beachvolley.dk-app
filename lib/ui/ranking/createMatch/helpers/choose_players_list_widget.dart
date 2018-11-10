@@ -99,7 +99,7 @@ class _ChoosePlayersListState extends State<ChoosePlayersList> {
         onLongPress: (bool isFavoerite) {
           if (isFavoerite) {
             RankingFirestore.removePlayerAsFavorite(
-                MainInherited.of(context).loggedInUser.uid, player.userId);
+                MainInherited.of(context).userId, player.userId);
             widget.listOfFavoritePlayers.remove(player);
 
             widget.listOfPlayers.add(player);
@@ -109,7 +109,7 @@ class _ChoosePlayersListState extends State<ChoosePlayersList> {
             });
           } else {
             RankingFirestore.addPlayerAsFavorite(
-                MainInherited.of(context).loggedInUser.uid, player.userId);
+                MainInherited.of(context).userId, player.userId);
             widget.listOfPlayers.remove(player);
 
             widget.listOfFavoritePlayers.add(player);

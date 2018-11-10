@@ -53,7 +53,7 @@ class AdminRankingMatchesState extends State<AdminRankingMatches> {
             RankingMatchData item = list[position];
             return RankingMatchesRow(
               match: item,
-              userId: MainInherited.of(context).loggedInUser.uid,
+              userId: MainInherited.of(context).userId,
               icon: _menuIcon(context, item),
               iconOnTap: (RankingMatchData match) {
                 _showDelete(context, match);

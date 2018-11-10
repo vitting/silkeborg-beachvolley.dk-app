@@ -218,7 +218,7 @@ class _LivescoreCreateEditState extends State<LivescoreCreateEdit> {
                               _formState.currentState.save();
 
                               await _match.save(
-                                  MainInherited.of(context).loggedInUser.uid);
+                                  MainInherited.of(context).userId);
                               // await LivescoreSharedPref.setPlayerNames(
                               //     _match.getNamesAsList());
                               Navigator.of(context).pop();

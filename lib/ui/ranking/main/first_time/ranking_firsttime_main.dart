@@ -22,7 +22,7 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _rankingPlayerData = RankingPlayerData(
-        userId: MainInherited.of(context).loggedInUser.uid,
+        userId: MainInherited.of(context).userId,
         photoUrl: MainInherited.of(context).loggedInUser.photoUrl,
         name: MainInherited.of(context).loggedInUser.displayName);
   }

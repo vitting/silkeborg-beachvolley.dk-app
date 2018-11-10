@@ -86,7 +86,7 @@ class RankingState extends State<Ranking> {
 
   void _checkIfPlayerExists(BuildContext context) async {
     if (await RankingSharedPref.isItfirstTime(
-        MainInherited.of(context).loggedInUser.uid)) {
+        MainInherited.of(context).userId)) {
       _showFirstTimeSetup(context);
     }
   }

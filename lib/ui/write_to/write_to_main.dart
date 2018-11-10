@@ -41,7 +41,7 @@ class WriteToState extends State<WriteTo> {
       ),
       body: StreamBuilder(
         stream: WriteToData.getAllMessagesByUserId(
-            MainInherited.of(context).loggedInUser.uid),
+            MainInherited.of(context).userId),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return LoaderSpinner();
           if (snapshot.hasData && snapshot.data.documents.length == 0)
