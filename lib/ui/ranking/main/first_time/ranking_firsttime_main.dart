@@ -143,15 +143,16 @@ class _RankingFirstTimeState extends State<RankingFirstTime> {
   }
 
   void _savePlayer(BuildContext context) async {
-    SettingsData settings =
-        await SettingsData.getSettings(_rankingPlayerData.userId);
+    SettingsData settings = MainInherited.of(context).settings;
+        
     if (settings != null) {
       settings.rankingName = _rankingPlayerData.name;
       settings.sex = _rankingPlayerData.sex;
-      MainInherited.of(context).settings =
-          await settings.save(MainInherited.of(context).loggedInUser);
+      MainInherited.of(context).settings = await settings.save(MainInherited.of(context).loggedInUser);
     }
+
     await _rankingPlayerData.save();
+    
     Navigator.of(context).pop();
   }
 }
