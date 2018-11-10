@@ -81,6 +81,7 @@ class MainInheritedState extends State<MainInherited> {
   bool isLoggedIn;
   bool isStartup = false;
   String systemLanguageCode = "en";
+  String userId;
 
   SystemMode get modeProfile => widget.mode;
 
@@ -116,6 +117,7 @@ class MainInheritedState extends State<MainInherited> {
     canVibrate = widget.canVibrate;
     settings = widget.settings;
     loggedInUser = widget.user;
+    userId = widget.user?.uid;
     isLoggedIn = widget.user != null ? true : false;
     isAdmin1 = widget.isAdmin1;
     isAdmin2 = widget.isAdmin2;
@@ -129,11 +131,13 @@ class MainInheritedState extends State<MainInherited> {
         isAdmin1 = userInfoData.admin1;
         isAdmin2 = userInfoData.admin2;
         settings = await SettingsData.initSettings(user);
+        await _firebaseMessaging.getToken();
       }
 
-      if (mounted) {
+      if (!isStartup && mounted) {
         setState(() {
           loggedInUser = user;
+          userId = user?.uid;
           isLoggedIn = user != null ? true : false;
         });
       }
@@ -188,16 +192,14 @@ class MainInheritedState extends State<MainInherited> {
 
     _firebaseMessaging.onTokenRefresh.listen((token) {
       if (loggedInUser != null) {
-        UserMessagingData userMessagingData = _createUserMessaging(token);
-        userMessagingData.save();
-        userMessaging = userMessagingData;
+        this.userMessaging = _initUserMessaging(token);
       }
     });
 
     await _firebaseMessaging.getToken();
   }
 
-  UserMessagingData _createUserMessaging(String token) {
+  UserMessagingData _initUserMessaging(String token) {
     ///Default categories
     List<NotificationCategory> categories = [];
     if (settings.notificationsShowNews) {
@@ -212,6 +214,16 @@ class MainInheritedState extends State<MainInherited> {
       categories.add(NotificationCategory.play);
     }
 
+    if (settings.notificationsShowWriteTo) {
+      categories.add(NotificationCategory.writeTo);
+    }
+
+    if (userInfoData.admin2) {
+      if (settings.notificationsShowWriteToAdmin) {
+        categories.add(NotificationCategory.writeToAdmin);
+      }
+    }
+  
     UserMessagingData userMessagingData = UserMessagingData(
         userId: loggedInUser.uid,
         token: token,
@@ -219,7 +231,8 @@ class MainInheritedState extends State<MainInherited> {
         languageCode: systemLanguageCode,
         isAdmin1: isAdmin1,
         isAdmin2: isAdmin2);
-
+    
+    userMessagingData.save();
     return userMessagingData;
   }
 

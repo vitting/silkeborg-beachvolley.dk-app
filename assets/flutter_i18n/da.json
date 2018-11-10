@@ -396,7 +396,9 @@
             "string12": "Køn",
             "string13": "Live score - Hold skærmen vågen",
             "string14": "Scoreboard",
-            "string15": "Scoreboard kontrol"
+            "string15": "Scoreboard kontrol",
+            "string16": "Beskeder fra Silkeborg Beachvolley",
+            "string17": "Beskeder fra bruger"
         }
     },
     "tournamentCalendar": {
