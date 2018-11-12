@@ -552,7 +552,21 @@
             "string2": "Svar fra Silkeborg Beachvolley"
         },
         "adminWriteToMain": {
-            "title": "Beskeder",
+            "title1": "Modtaget beskeder",
+            "title2": "Sendte beskeder",
+            "title3": "Sendte e-mails"
+        },
+        "adminWriteToSentMessages": {
+            "string1": "Der blev ikke fundet nogen beskeder",
+            "string2": "Slet",
+            "string3": "Vil du slette beskeden?"
+        },
+        "adminWriteToSentMail": {
+            "string1": "Der blev ikke fundet nogen beskeder",
+            "string2": "Slet",
+            "string3": "Vil du slette beskeden?"
+        },
+        "adminWriteToReceived": {
             "string1": "Der blev ikke fundet nogen beskeder",
             "string2": "Slet",
             "string3": "Vil du slette beskeden?"
@@ -576,17 +590,18 @@
             "string2": "Ny e-mail",
             "string3": "Ny besked"
         },
-        "writeToRow": {
-            "string1": "E-mail til",
-            "string2": "Besked til",
-            "string3": "Besked fra"
-        },
         "writeToTextfieldWidget": {
             "string1": "Besked"
         },
-        "writeToMain": {
-            "title": "Mine beskeder",
+        "writeToReceivedWidget": {
             "string1": "Der blev ikke fundet nogen beskeder"
+        },
+        "writeToSentWidget": {
+            "string1": "Der blev ikke fundet nogen beskeder"
+        },
+        "writeToMain": {
+            "title1": "Modtaget beskeder",
+            "title2": "Sendte beskeder"
         }
     }
 }

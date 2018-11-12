@@ -42,9 +42,10 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
         fromEmail: SilkeborgBeachvolleyConstants.email,
         fromName: SilkeborgBeachvolleyConstants.name,
         message: "",
-        fromPhotoUrl: "",
+        fromPhotoUrl: "locale",
         sendToEmail: "",
         sendToName: "",
+        sendToPhotoUrl: "public",
         messageRepliedToId: null);
   }
 
@@ -317,6 +318,7 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
       _writeToData.sendToUserId = selectedUser.id;
       _writeToData.sendToName = selectedUser.name;
       _writeToData.sendToEmail = selectedUser.email;
+      _writeToData.sendToPhotoUrl = selectedUser.photoUrl;
       _nameController.text = selectedUser.name;
     }
   }

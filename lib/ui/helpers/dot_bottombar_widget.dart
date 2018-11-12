@@ -1,5 +1,6 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 
 enum DotBottomBarButton { left, right, both }
 
@@ -24,7 +25,7 @@ class DotBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-        color: Colors.blue,
+        color: SilkeborgBeachvolleyTheme.bottomBarBackgroundColor,
         child: Row(
           children: <Widget>[
             Expanded(
@@ -38,7 +39,7 @@ class DotBottomBar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   DotsIndicator(
-                    dotActiveColor: Colors.white,
+                    dotActiveColor: SilkeborgBeachvolleyTheme.bottomBarDotColor, 
                     numberOfDot: numberOfDot,
                     position: position,
                   )
@@ -57,7 +58,7 @@ class DotBottomBar extends StatelessWidget {
   Text _getLabel(String label) {
     return Text(label,
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.white, fontSize: 12.0));
+        style: TextStyle(color: SilkeborgBeachvolleyTheme.bottomBarTextColor, fontSize: 12.0));
   }
 
   Widget _getButton(DotBottomBarButton direction) {
@@ -86,7 +87,7 @@ class DotBottomBar extends StatelessWidget {
         onPressed: () {
           onPressed(direction);
         },
-        icon: Icon(icon, color: Colors.white),
+        icon: Icon(icon, color: SilkeborgBeachvolleyTheme.bottomBarTextColor),
       );
     }
 

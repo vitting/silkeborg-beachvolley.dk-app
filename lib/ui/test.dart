@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 List<String> names = [
   "Christian Nicolaisen",
@@ -17,13 +17,6 @@ class TestWidget extends StatefulWidget {
 }
 
 class _TestWidgetState extends State<TestWidget> {
-  // GlobalKey<FormState> _formState = GlobalKey<FormState>();
-  @override
-  void initState() {
-    super.initState();
-  
-  }
-
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
@@ -32,14 +25,16 @@ class _TestWidgetState extends State<TestWidget> {
           children: <Widget>[
             RaisedButton(
               onPressed: () async {
-                try {
-                String data = await DefaultAssetBundle.of(context).loadString("assets/files/config2.json");
-                Map<String, dynamic> jsonData = json.decode(data);
-                print(jsonData["mail"]);  
-                } catch (e) {
-                  print(e);
-                }
-                
+                QuerySnapshot snapshot = await Firestore.instance
+                    .collection("write_to_sbv")
+                    .where("sendToUserId",
+                        isEqualTo: "bpxa64leuva3kh8FA7EzQbDBIfr1")
+                    .where("type", isEqualTo: "message")
+                    .where("deleted", isEqualTo: false)
+                    .orderBy("createdDate", descending: true)
+                    .getDocuments();
+
+                    print("NUMBER OF DOCS: ${snapshot.documents.length}");
               },
               child: Text("TEST"),
             )

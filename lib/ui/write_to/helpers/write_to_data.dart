@@ -17,6 +17,7 @@ class WriteToData {
   String sendToEmail;
   String sendToEmailSubject;
   String sendToName;
+  String sendToPhotoUrl;
   String fromPhotoUrl;
   String type;
   bool deleted;
@@ -34,6 +35,7 @@ class WriteToData {
       this.sendToEmailSubject,
       this.sendToEmail,
       this.sendToName,
+      this.sendToPhotoUrl,
       this.deleted = false,
       @required this.type,
       this.fromPhotoUrl});
@@ -53,6 +55,7 @@ class WriteToData {
         sendToEmailStatus: item["sendToEmailStatus"],
         sendToEmail: item["sendToEmail"],
         sendToName: item["sendToName"],
+        sendToPhotoUrl: item["sendToPhotoUrl"],
         sendToEmailSubject: item["sendToEmailSubject"],
         deleted: item["deleted"]);
   }
@@ -69,7 +72,7 @@ class WriteToData {
     fromUserId = user != null ? user.uid : null;
     fromPhotoUrl = fromPhotoUrl != null
         ? fromPhotoUrl
-        : user != null ? user.photoUrl : null;
+        : user != null ? user.photoUrl : "public";
     fromName =
         fromName != null ? fromName : user != null ? user.displayName : null;
     if (messageRepliedToId == null) {
@@ -97,6 +100,7 @@ class WriteToData {
       "sendToEmail": sendToEmail,
       "sendToEmailSubject": sendToEmailSubject,
       "sendToName": sendToName,
+      "sendToPhotoUrl": sendToPhotoUrl,
       "sendToUserId": sendToUserId,
       "deleted": deleted,
       "type": type
@@ -107,11 +111,23 @@ class WriteToData {
     return WriteToFirestore.getAllReplyMessage(id);
   }
 
-  static Stream<QuerySnapshot> getAllMessages() {
-    return WriteToFirestore.getAllMessages();
+  static Stream<QuerySnapshot> getAllMessagesReceived() {
+    return WriteToFirestore.getAllMessagesReceived();
   }
 
-  static Stream<QuerySnapshot> getAllMessagesByUserId(String userId) {
-    return WriteToFirestore.getAllMessagesByUserId(userId);
+  static Stream<QuerySnapshot> getAllMessagesSentMessage() {
+    return WriteToFirestore.getAllMessagesSentMessage();
+  }
+
+  static Stream<QuerySnapshot> getAllMessagesSentMail() {
+    return WriteToFirestore.getAllMessagesSentMail();
+  }
+
+  static Stream<QuerySnapshot> getAllMessagesSentByUserId(String userId) {
+    return WriteToFirestore.getAllMessagesSentByUserId(userId);
+  }
+
+  static Stream<QuerySnapshot> getAllMessagesReceivedByUserId(String userId) {
+    return WriteToFirestore.getAllMessagesReceivedByUserId(userId);
   }
 }

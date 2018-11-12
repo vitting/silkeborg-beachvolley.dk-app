@@ -552,8 +552,22 @@
             "string2": "Answer from Silkeborg Beachvolley"
         },
         "adminWriteToMain": {
-            "title": "Messages",
-            "string1": "No messages were found",
+            "title1": "Received messages",
+            "title2": "Sent messages",
+            "title3": "Sent emails"
+        },
+        "adminWriteToSentMessages": {
+            "string1": "There were no messages found",
+            "string2": "Delete",
+            "string3": "Do you want to delete the message?"
+        },
+        "adminWriteToSentMails": {
+            "string1": "There were no messages found",
+            "string2": "Delete",
+            "string3": "Do you want to delete the message?"
+        },
+        "adminWriteToReceived": {
+            "string1": "There were no messages found",
             "string2": "Delete",
             "string3": "Do you want to delete the message?"
         },
@@ -576,17 +590,18 @@
             "string2": "New email",
             "string3": "New message"
         },
-        "writeToRow": {
-            "string1": "Email to",
-            "string2": "Message to",
-            "string3": "Message from"
-        },
         "writeToTextfieldWidget": {
             "string1": "Message"
         },
-        "writeToMain": {
-            "title": "Your messages",
+        "writeToReceivedWidget": {
             "string1": "No messages were found"
+        },
+        "writeToSentWidget": {
+            "string1": "No messages were found"
+        },
+        "writeToMain": {
+            "title1": "Received messages",
+            "title2": "Sent messages"
         }
     }
 }

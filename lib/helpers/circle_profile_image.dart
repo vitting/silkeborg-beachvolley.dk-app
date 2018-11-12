@@ -42,8 +42,8 @@ class CircleProfileImage extends StatelessWidget {
             ],
           );
     } else if (url == "public") {
-      value = ClipOval(
-        child: Image.asset("assets/images/no_profile_picture_120x120.png"),
+      value = CircleAvatar(
+        backgroundImage: AssetImage("assets/images/no_profile_picture_120x120.png"),
       );
     } else if (url == "locale") {
       value = CircleAvatar(

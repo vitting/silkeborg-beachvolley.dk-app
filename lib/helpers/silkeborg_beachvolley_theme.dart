@@ -9,6 +9,9 @@ class SilkeborgBeachvolleyTheme {
   static Color drawerIconColor = Colors.blue[700];
   static Color buttonTextColor = Colors.deepOrange[700];
   static Color buttonDisabledTextColor = Colors.deepOrange[200];
+  static Color bottomBarBackgroundColor = Colors.blue;
+  static Color bottomBarDotColor = Colors.white;
+  static Color bottomBarTextColor = Colors.white;
   static BoxDecoration gradientColorBoxDecoration = BoxDecoration(
       gradient: LinearGradient(
     begin: Alignment.topLeft,

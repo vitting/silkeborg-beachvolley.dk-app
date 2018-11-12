@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_data.dart';
 
@@ -45,15 +44,44 @@ class WriteToFirestore {
     return _firestore.collection(_collectionName).document(id).get();
   }
 
-  static Stream<QuerySnapshot> getAllMessages() {
+  static Stream<QuerySnapshot> getAllMessagesReceived() {
     return _firestore
         .collection(_collectionName)
+        .where("type", isEqualTo: "public")
         .where("deleted", isEqualTo: false)
         .orderBy("createdDate", descending: true)
         .snapshots();
   }
 
-  static Stream<QuerySnapshot> getAllMessagesByUserId(String userId) {
+  static Stream<QuerySnapshot> getAllMessagesSentMessage() {
+    return _firestore
+        .collection(_collectionName)
+        .where("type", isEqualTo: "message")
+        .where("deleted", isEqualTo: false)
+        .orderBy("createdDate", descending: true)
+        .snapshots();
+  }
+
+  static Stream<QuerySnapshot> getAllMessagesSentMail() {
+    return _firestore
+        .collection(_collectionName)
+        .where("type", isEqualTo: "mail")
+        .where("deleted", isEqualTo: false)
+        .orderBy("createdDate", descending: true)
+        .snapshots();
+  }
+
+  static Stream<QuerySnapshot> getAllMessagesReceivedByUserId(String userId) {
+    return _firestore
+        .collection(_collectionName)
+        .where("sendToUserId", isEqualTo: userId)
+        .where("type", isEqualTo: "message")
+        .where("deleted", isEqualTo: false)
+        .orderBy("createdDate", descending: true)
+        .snapshots();
+  }
+
+  static Stream<QuerySnapshot> getAllMessagesSentByUserId(String userId) {
     return _firestore
         .collection(_collectionName)
         .where("fromUserId", isEqualTo: userId)
