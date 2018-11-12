@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/main/bulletin_main.dart';
-import 'package:silkeborgbeachvolley/ui/home/home_launcher_main.dart';
 import 'package:silkeborgbeachvolley/ui/login/login_main.dart';
 
 class Home extends StatefulWidget {
@@ -10,7 +9,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Widget homeWidget = HomeLauncherSplash();
+  Widget homeWidget = Container();
 
   @override
   void didChangeDependencies() {

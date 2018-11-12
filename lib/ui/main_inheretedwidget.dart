@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:silkeborgbeachvolley/helpers/config_data.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_categories_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_data.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
 import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
+import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
 
 enum SystemMode { release, develop }
@@ -24,34 +26,11 @@ class MainInherited extends StatefulWidget {
   ///Indicate if this device can vibrate
   final bool canVibrate;
 
-  ///user from Firebase auth. Null if we isn't logged in.
-  final FirebaseUser user;
-
-  ///User info data
-  final UserInfoData userInfoData;
-
-  ///Settings for the app
-  final SettingsData settings;
-
-  ///Is the logged in user admin1
-  final bool isAdmin1;
-
-  ///Is the logged in user admin2
-  final bool isAdmin2;
-
-  ///Is this app starting up
-  final bool isStartup;
-
-  MainInherited(
-      {this.child,
-      this.mode,
-      this.canVibrate = false,
-      this.user,
-      this.settings,
-      this.isAdmin1 = false,
-      this.isAdmin2 = false,
-      this.userInfoData,
-      this.isStartup = false});
+  MainInherited({
+    this.child,
+    this.mode,
+    this.canVibrate = false,
+  });
 
   @override
   MainInheritedState createState() => new MainInheritedState();
@@ -79,9 +58,10 @@ class MainInheritedState extends State<MainInherited> {
   bool isAdmin1 = false;
   bool isAdmin2 = false;
   bool isLoggedIn;
-  bool isStartup = false;
+  // bool isStartup = false;
   String systemLanguageCode = "en";
   String userId;
+  bool _loading = true;
 
   SystemMode get modeProfile => widget.mode;
 
@@ -112,21 +92,13 @@ class MainInheritedState extends State<MainInherited> {
     _notificationController.close();
   }
 
-  void _initProperties() async {
-    isStartup = widget.isStartup;
+  Future<void> _initProperties() async {
     canVibrate = widget.canVibrate;
-    settings = widget.settings;
-    loggedInUser = widget.user;
-    userId = widget.user?.uid;
-    isLoggedIn = widget.user != null ? true : false;
-    isAdmin1 = widget.isAdmin1;
-    isAdmin2 = widget.isAdmin2;
-    userInfoData = widget.userInfoData;
   }
 
-  void _initUserAuth() {
+  Future<void> _initUserAuth() async {
     UserAuth.firebaseAuth.onAuthStateChanged.listen((user) async {
-      if (!isStartup && user != null) {
+      if (user != null) {
         userInfoData = await UserInfoData.getUserInfo(user.uid);
         isAdmin1 = userInfoData.admin1;
         isAdmin2 = userInfoData.admin2;
@@ -134,21 +106,21 @@ class MainInheritedState extends State<MainInherited> {
         await _firebaseMessaging.getToken();
       }
 
-      if (!isStartup && mounted) {
+      if (mounted) {
         setState(() {
           loggedInUser = user;
           userId = user?.uid;
           isLoggedIn = user != null ? true : false;
+          _loading = false;
         });
       }
-
-      isStartup = false;
     });
   }
 
-  void _initMessaging() async {
+  Future<void> _initMessaging() async {
     systemLanguageCode = await SystemHelpers.systemLanguageCode();
-    _firebaseMessaging.requestNotificationPermissions(IosNotificationSettings(alert: true, badge: true, sound: true));
+    _firebaseMessaging.requestNotificationPermissions(
+        IosNotificationSettings(alert: true, badge: true, sound: true));
     _firebaseMessaging.configure(
 
         ///OnLaunch er der ikke body og titel med. Bliver executed når appen er termineret
@@ -166,6 +138,8 @@ class MainInheritedState extends State<MainInherited> {
 
         ///OnMessage er der body og titel med. Bliver executed når appen er aktiv
         onMessage: (Map<String, dynamic> message) {
+      print("******************ONMESSAGE*****************");
+      print(message);
       NotificationData data;
       if (message != null && message["data"] != null) {
         data = NotificationData(
@@ -223,7 +197,7 @@ class MainInheritedState extends State<MainInherited> {
         categories.add(NotificationCategory.writeToAdmin);
       }
     }
-  
+
     UserMessagingData userMessagingData = UserMessagingData(
         userId: loggedInUser.uid,
         token: token,
@@ -231,17 +205,30 @@ class MainInheritedState extends State<MainInherited> {
         languageCode: systemLanguageCode,
         isAdmin1: isAdmin1,
         isAdmin2: isAdmin2);
-    
+
     userMessagingData.save();
     return userMessagingData;
   }
 
   @override
   Widget build(BuildContext context) {
-    return new _MainInherited(
-      data: this,
-      child: widget.child,
-    );
+    return _loading
+        ? Container(
+            decoration: SilkeborgBeachvolleyTheme.gradientColorBoxDecoration,
+            // color: Colors.yellow,
+            child: Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image.asset("assets/images/logo_white_with_text_210x200.png"),
+                LoaderSpinner()
+              ],
+            )),
+          )
+        : new _MainInherited(
+            data: this,
+            child: widget.child,
+          );
   }
 }
 
