@@ -7,11 +7,25 @@ class WriteToFirestore {
   static final _collectionReplyName = "write_to_replies_sbv";
   static Firestore _firestore = Firestore.instance;
 
+  static Future<void> setSendEmailReplyStatus(String id, bool status) {
+    return _firestore
+        .collection(_collectionReplyName)
+        .document(id)
+        .updateData({"sendToEmailStatus": status});
+  }
+
   static Future<void> setSendEmailStatus(String id, bool status) {
     return _firestore
         .collection(_collectionName)
         .document(id)
         .updateData({"sendToEmailStatus": status});
+  }
+
+  static Future<void> setNewMessageStatus(String documentId, bool status) {
+    return _firestore
+        .collection(_collectionName)
+        .document(documentId)
+        .updateData({"newMessageStatus": status});
   }
 
   static Future<void> saveMessage(WriteToData message) {
@@ -44,51 +58,99 @@ class WriteToFirestore {
     return _firestore.collection(_collectionName).document(id).get();
   }
 
-  static Stream<QuerySnapshot> getAllMessagesReceived() {
-    return _firestore
+  static Future<List<WriteToData>> getAllMessages() async {
+    List<WriteToData> list = [];
+    QuerySnapshot snap1 = await _firestore
         .collection(_collectionName)
         .where("type", isEqualTo: "public")
         .where("deleted", isEqualTo: false)
         .orderBy("createdDate", descending: true)
-        .snapshots();
-  }
+        .getDocuments();
 
-  static Stream<QuerySnapshot> getAllMessagesSentMessage() {
-    return _firestore
+    QuerySnapshot snap2 = await _firestore
         .collection(_collectionName)
-        .where("type", isEqualTo: "message")
+        .where("type", isEqualTo: "admin")
+        .where("subType", isEqualTo: "message")
         .where("deleted", isEqualTo: false)
         .orderBy("createdDate", descending: true)
-        .snapshots();
+        .getDocuments();
+    
+    list.addAll(snap1.documents.map((DocumentSnapshot doc) {
+      return WriteToData.fromMap(doc.data);
+    }).toList());
+    
+    list.addAll(snap2.documents.map((DocumentSnapshot doc) {
+      return WriteToData.fromMap(doc.data);
+    }).toList());
+    
+    list.sort((WriteToData item1, WriteToData item2) {
+      return item2.createdDate.compareTo(item1.createdDate);
+    });
+
+    return list;
   }
+
+  // static Stream<QuerySnapshot> getAllMessagesReceived() {
+  //   return _firestore
+  //       .collection(_collectionName)
+  //       .where("type", isEqualTo: "public")
+  //       .where("deleted", isEqualTo: false)
+  //       .orderBy("createdDate", descending: true)
+  //       .snapshots();
+  // }
+
+  // static Stream<QuerySnapshot> getAllMessagesSentMessage() {
+  //   return _firestore
+  //       .collection(_collectionName)
+  //       .where("type", isEqualTo: "admin")
+  //       .where("subType", isEqualTo: "message")
+  //       .where("deleted", isEqualTo: false)
+  //       .orderBy("createdDate", descending: true)
+  //       .snapshots();
+  // }
 
   static Stream<QuerySnapshot> getAllMessagesSentMail() {
     return _firestore
         .collection(_collectionName)
-        .where("type", isEqualTo: "mail")
+        .where("type", isEqualTo: "admin")
+        .where("subType", isEqualTo: "mail")
         .where("deleted", isEqualTo: false)
         .orderBy("createdDate", descending: true)
         .snapshots();
   }
 
-  static Stream<QuerySnapshot> getAllMessagesReceivedByUserId(String userId) {
-    return _firestore
+  static Future<List<WriteToData>> getAllMessagesByUserId(String userId) async {
+    List<WriteToData> list = [];
+    QuerySnapshot snap1 = await _firestore
         .collection(_collectionName)
         .where("sendToUserId", isEqualTo: userId)
-        .where("type", isEqualTo: "message")
+        .where("type", isEqualTo: "admin")
+        .where("subType", isEqualTo: "message")
         .where("deleted", isEqualTo: false)
         .orderBy("createdDate", descending: true)
-        .snapshots();
-  }
+        .getDocuments();
 
-  static Stream<QuerySnapshot> getAllMessagesSentByUserId(String userId) {
-    return _firestore
+    QuerySnapshot snap2 = await _firestore
         .collection(_collectionName)
         .where("fromUserId", isEqualTo: userId)
         .where("type", isEqualTo: "public")
         .where("deleted", isEqualTo: false)
         .orderBy("createdDate", descending: true)
-        .snapshots();
+        .getDocuments();
+    
+    list.addAll(snap1.documents.map((DocumentSnapshot doc) {
+      return WriteToData.fromMap(doc.data);
+    }).toList());
+    
+    list.addAll(snap2.documents.map((DocumentSnapshot doc) {
+      return WriteToData.fromMap(doc.data);
+    }).toList());
+    
+    list.sort((WriteToData item1, WriteToData item2) {
+      return item2.createdDate.compareTo(item1.createdDate);
+    });
+
+    return list;
   }
 
   static Future<void> saveReplyMessage(WriteToData replyMessage) {

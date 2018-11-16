@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
@@ -9,27 +8,43 @@ import 'package:silkeborgbeachvolley/ui/write_to/admin/admin_write_to_detail_mai
 import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_data.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_row.dart';
 
-class AdminWriteToReceived extends StatelessWidget {
+class AdminWriteToMessages extends StatefulWidget {
+  @override
+  AdminWriteToMessagesState createState() {
+    return new AdminWriteToMessagesState();
+  }
+}
+
+class AdminWriteToMessagesState extends State<AdminWriteToMessages> {
+  Future<List<WriteToData>> list;
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: WriteToData.getAllMessagesReceived(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    list = WriteToData.getAllMessagesReceived();
+    return FutureBuilder(
+        future: list,
+        builder: (BuildContext context, AsyncSnapshot<List<WriteToData>> snapshot) {
           if (!snapshot.hasData) return LoaderSpinner();
-          if (snapshot.hasData && snapshot.data.documents.length == 0)
+          if (snapshot.hasData && snapshot.data.length == 0)
             return NoData(FlutterI18n.translate(
-                context, "writeTo.adminWriteToReceived.string1"));
+                context, "writeTo.adminWriteToMessages.string1"));
 
-          return ListView.builder(
-            itemCount: snapshot.data.documents.length,
+          return RefreshIndicator(
+            backgroundColor: Colors.deepOrange[700],
+            color: Colors.white,
+            onRefresh: () {
+              setState(() {
+              list = WriteToData.getAllMessagesReceived();
+            });
+            return Future.value(true);
+            },
+            child: ListView.builder(
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemCount: snapshot.data.length,
             itemBuilder: (BuildContext context, int position) {
-              WriteToData doc =
-                  WriteToData.fromMap(snapshot.data.documents[position].data);
-
               return WriteToRow(
-                item: doc,
-                isAdmin: true,
+                item: snapshot.data[position],
                 showSettings: true,
+                isAdmin: true,
                 onSettingPressed: (WriteToData item) async {
                   bool delete = await _deleteMessage(context);
                   if (delete) {
@@ -47,6 +62,7 @@ class AdminWriteToReceived extends StatelessWidget {
                 },
               );
             },
+          ),
           );
         },
       );
@@ -56,14 +72,14 @@ class AdminWriteToReceived extends StatelessWidget {
     bool value = false;
     int result = await Dialogs.modalBottomSheet(context, [
       DialogsModalBottomSheetItem(
-          FlutterI18n.translate(context, "writeTo.adminWriteToReceived.string2"),
+          FlutterI18n.translate(context, "writeTo.adminWriteToMessages.string2"),
           Icons.delete,
           0)
     ]);
 
     if (result != null && result == 0) {
       ConfirmDialogAction action = await Dialogs.confirmDelete(context,
-          FlutterI18n.translate(context, "writeTo.adminWriteToReceived.string3"));
+          FlutterI18n.translate(context, "writeTo.adminWriteToMessages.string3"));
 
       if (action != null && action == ConfirmDialogAction.delete) {
         value = true;
@@ -72,5 +88,4 @@ class AdminWriteToReceived extends StatelessWidget {
 
     return value;
   }
-
 }

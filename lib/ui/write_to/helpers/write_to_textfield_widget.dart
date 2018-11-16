@@ -7,9 +7,10 @@ import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
 class WriteToTextfield extends StatefulWidget {
   final ValueChanged<String> onTextFieldSubmit;
   final Color backgroundColor;
+  final bool isEmail;
 
   const WriteToTextfield(
-      {Key key, this.onTextFieldSubmit, this.backgroundColor = Colors.white70})
+      {Key key, this.onTextFieldSubmit, this.backgroundColor = Colors.white70, this.isEmail = false})
       : super(key: key);
 
   @override
@@ -56,8 +57,7 @@ class WriteToTextfieldState extends State<WriteToTextfield> {
             border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.black, width: 2.0),
             ),
-            hintText: FlutterI18n.translate(
-                context, "writeTo.writeToTextfieldWidget.string1")),
+            hintText: widget.isEmail ? FlutterI18n.translate(context, "writeTo.writeToTextfieldWidget.string2") : FlutterI18n.translate(context, "writeTo.writeToTextfieldWidget.string1")),
       ),
     );
   }

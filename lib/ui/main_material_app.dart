@@ -55,7 +55,7 @@ class _MainMaterialAppState extends State<MainMaterialApp> {
         Settings.routeName: (BuildContext context) => Settings(),
         Ranking.routeName: (BuildContext context) => Ranking(),
         WriteTo.routeName: (BuildContext context) => WriteTo(),
-        WriteToCreate.routeName: (BuildContext context) => WriteToCreate(),
+        WriteToCreate.routeName: (BuildContext context) => WriteToCreate(user: null),
         WriteTo.routeName: (BuildContext context) => WriteTo(),
         AdminWriteTo.routeName: (BuildContext context) => AdminWriteTo(),
         AdminRanking.routeName: (BuildContext context) => AdminRanking(),

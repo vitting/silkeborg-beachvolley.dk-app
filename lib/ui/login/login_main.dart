@@ -115,7 +115,9 @@ class LoginState extends State<Login> {
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         fullscreenDialog: true,
-                        builder: (BuildContext context) => WriteToCreate()));
+                        builder: (BuildContext context) => WriteToCreate(
+                          user: null
+                        )));
                   })
             ]));
   }

@@ -56,15 +56,14 @@ class WeatherData {
 
   factory WeatherData.fromJson(Map<String, dynamic> json) {
     return WeatherData(
-        localtionName: json["LocationName"],
-        sky: json["CurrentData"]["skyText"],
-        temperature: json["CurrentData"]["temperature"],
-        wind: json["CurrentData"]["windText"]);
+        localtionName: json["CurrentData"] == null ? "" : json["LocationName"],
+        sky: json["CurrentData"] == null ? "" : json["CurrentData"]["skyText"],
+        temperature: json["CurrentData"] == null ? "" : json["CurrentData"]["temperature"],
+        wind: json["CurrentData"] == null ? "" : json["CurrentData"]["windText"]);
   }
 }
 
 WeatherData parseJson(String responseBody) {
-  Map<String, dynamic> bodyJson = json
-      .decode(responseBody.replaceFirst("<pre>", "").replaceAll("</pre>", ""));
+  Map<String, dynamic> bodyJson = json.decode(responseBody.replaceFirst("<pre>", "").replaceAll("</pre>", ""));
   return WeatherData.fromJson(bodyJson);
 }

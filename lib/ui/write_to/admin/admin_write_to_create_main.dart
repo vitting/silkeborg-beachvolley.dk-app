@@ -37,26 +37,27 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
   @override
   void initState() {
     super.initState();
+
     _writeToData = WriteToData(
-        type: widget.type == WriteToCreateFabType.mail ? "mail" : "message",
+        type: "admin",
+        newMessageStatus: true,
+        subType: widget.type == WriteToCreateFabType.mail ? "mail" : "message",
         fromEmail: SilkeborgBeachvolleyConstants.email,
         fromName: SilkeborgBeachvolleyConstants.name,
-        message: "",
         fromPhotoUrl: "locale",
+        fromUserId: "",
         sendToEmail: "",
         sendToName: "",
         sendToPhotoUrl: "public",
+        sendToEmailSubject: "",
+        sendToUserId: "",
+        message: "",
         messageRepliedToId: null);
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _config = MainInherited.of(context).config;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    _config = MainInherited.of(context).config;
     if (MainInherited.of(context).modeProfile == SystemMode.develop) {
       _writeToData.sendToEmail = _config.emailDebug;
     }
@@ -87,19 +88,19 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
                             _saving = true;
                           });
 
-                          final bool saveResult = await _save(context);
+                          final bool saveResult = await _save();
+                          if (saveResult) {
+                            if (widget.type == WriteToCreateFabType.mail) {
+                              final bool sendResult = await _sendMail(context);
+                              _writeToData.setSendEmailStatus(sendResult);
+                            }
 
-                          if (saveResult &&
-                              widget.type == WriteToCreateFabType.mail) {
-                            final bool sendResult = await _sendMail(context);
-                            _writeToData.setSendEmailStatus(sendResult);
-                          }
-
-                          setState(() {
+                            Navigator.of(context).pop();
+                          } else {
+                            setState(() {
                             _saving = false;
                           });
-
-                          Navigator.of(context).pop();
+                          }
                         },
                       )
                     ],
@@ -147,10 +148,10 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
       onSaved: (String value) {
-        _writeToData.sendToName = value;
+        _writeToData.sendToName = value.trim();
       },
       validator: (String value) {
-        if (value.isEmpty)
+        if (value.trim().isEmpty || _writeToData.sendToUserId.isEmpty)
           return FlutterI18n.translate(
               context, "writeTo.adminWriteToCreateMain.string3");
       },
@@ -167,7 +168,7 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
       onSaved: (String value) {
-        _writeToData.sendToEmailSubject = value;
+        _writeToData.sendToEmailSubject = value.trim();
       },
       validator: (String value) {
         if (value.isEmpty)
@@ -187,7 +188,7 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
       onSaved: (String value) {
-        _writeToData.sendToEmail = value;
+        _writeToData.sendToEmail = value.trim();
       },
       validator: (String value) {
         if (value.isEmpty)
@@ -212,12 +213,13 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
               context, "writeTo.adminWriteToCreateMain.string9")),
       maxLength: 1000,
       onSaved: (String value) {
-        _writeToData.message = value;
+        _writeToData.message = value.trim();
       },
       validator: (String value) {
-        if (value.isEmpty)
+        if (value.trim().isEmpty) {
           return FlutterI18n.translate(
               context, "writeTo.adminWriteToCreateMain.string10");
+        }
       },
     );
   }
@@ -252,12 +254,13 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
     return value;
   }
 
-  Future<bool> _save(BuildContext context) async {
+  Future<bool> _save() async {
     bool value = false;
     if (_formKey.currentState.validate()) {
       value = true;
       _formKey.currentState.save();
-      await _writeToData.save(MainInherited.of(context).loggedInUser);
+      _writeToData.fromUserId = MainInherited.of(context).loggedInUser.uid;
+      await _writeToData.save();
     }
 
     return value;

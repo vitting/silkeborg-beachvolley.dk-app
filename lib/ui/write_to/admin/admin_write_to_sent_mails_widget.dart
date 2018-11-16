@@ -5,7 +5,6 @@ import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/no_data_widget.dart';
-import 'package:silkeborgbeachvolley/ui/write_to/admin/admin_write_to_detail_main.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_data.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_row.dart';
 
@@ -34,15 +33,6 @@ class AdminWriteToSentMails extends StatelessWidget {
                   bool delete = await _deleteMessage(context);
                   if (delete) {
                     item.delete();
-                  }
-                },
-                onRowTap: (WriteToData item) {
-                  if (item.type != "mail") {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        fullscreenDialog: true,
-                        builder: (BuildContext context) => AdminWriteToDetail(
-                              item: item,
-                            )));
                   }
                 },
               );

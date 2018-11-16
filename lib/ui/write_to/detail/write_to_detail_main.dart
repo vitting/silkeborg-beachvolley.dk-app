@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_constant.dart';
 import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
@@ -19,11 +20,6 @@ class WriteToDetail extends StatefulWidget {
 }
 
 class WriteToDetailState extends State<WriteToDetail> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
@@ -69,7 +65,7 @@ class WriteToDetailState extends State<WriteToDetail> {
                                     snapshotReply
                                         .data.documents[position].data);
                                 return Padding(
-                                  padding: docReply.type != "reply_locale" || docReply.type != "reply_locale_mail"
+                                  padding: docReply.type == "admin"
                                       ? const EdgeInsets.only(left: 20.0)
                                       : const EdgeInsets.only(right: 20.0),
                                   child: WriteToRow(
@@ -104,11 +100,22 @@ class WriteToDetailState extends State<WriteToDetail> {
 
   Future<WriteToData> _save(BuildContext context, String message) async {
     WriteToData replyData = WriteToData(
-        type: "reply",
-        messageRepliedToId: widget.item.id,
-        message: message.trim());
+        type: "public",
+        subType: "reply",
+        newMessageStatus: true,
+        fromEmail: MainInherited.of(context).loggedInUser.email,
+        fromName: MainInherited.of(context).loggedInUser.displayName,
+        fromPhotoUrl: MainInherited.of(context).loggedInUser.photoUrl,
+        fromUserId: MainInherited.of(context).loggedInUser.uid,
+        sendToEmailSubject: "",
+        sendToUserId: "",
+        sendToPhotoUrl: "locale",
+        sendToEmail: SilkeborgBeachvolleyConstants.email,
+        sendToName: SilkeborgBeachvolleyConstants.name,
+        message: message.trim(),
+        messageRepliedToId: widget.item.id);
 
-    await replyData.save(MainInherited.of(context).loggedInUser);
+    await replyData.save();
 
     return replyData;
   }

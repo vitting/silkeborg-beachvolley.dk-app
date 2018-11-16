@@ -549,12 +549,12 @@
             "title1": "Send besked",
             "title2": "Send e-mail",
             "string1": "Ups der skete en fejl.",
-            "string2": "Svar fra Silkeborg Beachvolley"
+            "string2": "Svar fra Silkeborg Beachvolley",
+            "string3": "Dit svar til en anonym besked vil blive sendt som e-mail"
         },
         "adminWriteToMain": {
-            "title1": "Modtaget beskeder",
-            "title2": "Sendte beskeder",
-            "title3": "Sendte e-mails"
+            "title1": "Beskeder",
+            "title2": "Sendte e-mails"
         },
         "adminWriteToSentMessages": {
             "string1": "Der blev ikke fundet nogen beskeder",
@@ -566,7 +566,7 @@
             "string2": "Slet",
             "string3": "Vil du slette beskeden?"
         },
-        "adminWriteToReceived": {
+        "adminWriteToMessages": {
             "string1": "Der blev ikke fundet nogen beskeder",
             "string2": "Slet",
             "string3": "Vil du slette beskeden?"
@@ -591,17 +591,17 @@
             "string3": "Ny besked"
         },
         "writeToTextfieldWidget": {
-            "string1": "Besked"
+            "string1": "Besked",
+            "string2": "E-mail"
         },
-        "writeToReceivedWidget": {
-            "string1": "Der blev ikke fundet nogen beskeder"
-        },
-        "writeToSentWidget": {
-            "string1": "Der blev ikke fundet nogen beskeder"
+        "writeToRow": {
+            "string1": "Besked sendt til",
+            "string2": "Besked modtaget fra",
+            "string3": "Besked modtaget fra bruger ikke logget ind"
         },
         "writeToMain": {
-            "title1": "Modtaget beskeder",
-            "title2": "Sendte beskeder"
+            "title1": "Beskeder",
+            "string1": "Der blev ikke fundet nogen beskeder"
         }
     }
 }

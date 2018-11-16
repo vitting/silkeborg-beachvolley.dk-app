@@ -3,9 +3,8 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/dot_bottombar_widget.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/admin/admin_write_to_create_main.dart';
-import 'package:silkeborgbeachvolley/ui/write_to/admin/admin_write_to_received_widget.dart';
+import 'package:silkeborgbeachvolley/ui/write_to/admin/admin_write_to_messages_widget.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/admin/admin_write_to_sent_mails_widget.dart';
-import 'package:silkeborgbeachvolley/ui/write_to/admin/admin_write_to_sent_messages_widget.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_create_fab_widget.dart';
 
 class AdminWriteTo extends StatefulWidget {
@@ -35,7 +34,7 @@ class AdminWriteToState extends State<AdminWriteTo> {
   }
 
   _initPages() {
-    _pages = [AdminWriteToReceived(), AdminWriteToSentMessages(), AdminWriteToSentMails()];
+    _pages = [AdminWriteToMessages(), AdminWriteToSentMails()];
   }
 
   @override
@@ -73,8 +72,6 @@ class AdminWriteToState extends State<AdminWriteTo> {
       title = FlutterI18n.translate(context, "writeTo.adminWriteToMain.title1");
     if (page == 1)
       title = FlutterI18n.translate(context, "writeTo.adminWriteToMain.title2");
-    if (page == 2)
-      title = FlutterI18n.translate(context, "writeTo.adminWriteToMain.title3");
     return title;
   }
 }

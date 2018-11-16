@@ -549,12 +549,12 @@
             "title1": "Send message",
             "title2": "Send email",
             "string1": "Ups! An error occurred.",
-            "string2": "Answer from Silkeborg Beachvolley"
+            "string2": "Answer from Silkeborg Beachvolley",
+            "string3": "Your reply to a anonymous message will be sent as a email"
         },
         "adminWriteToMain": {
-            "title1": "Received messages",
-            "title2": "Sent messages",
-            "title3": "Sent emails"
+            "title1": "Messages",
+            "title2": "Sent emails"
         },
         "adminWriteToSentMessages": {
             "string1": "There were no messages found",
@@ -566,7 +566,7 @@
             "string2": "Delete",
             "string3": "Do you want to delete the message?"
         },
-        "adminWriteToReceived": {
+        "adminWriteToMessages": {
             "string1": "There were no messages found",
             "string2": "Delete",
             "string3": "Do you want to delete the message?"
@@ -591,17 +591,17 @@
             "string3": "New message"
         },
         "writeToTextfieldWidget": {
-            "string1": "Message"
+            "string1": "Message",
+            "string2": "Email"
         },
-        "writeToReceivedWidget": {
-            "string1": "No messages were found"
-        },
-        "writeToSentWidget": {
-            "string1": "No messages were found"
+        "writeToRow": {
+            "string1": "Message sent to",
+            "string2": "Message received from",
+            "string3": "Message received from user not logged in"
         },
         "writeToMain": {
-            "title1": "Received messages",
-            "title2": "Sent messages"
+            "title1": "Messages",
+            "string1": "No messages were found"
         }
     }
 }

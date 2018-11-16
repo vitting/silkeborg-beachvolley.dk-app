@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
@@ -10,6 +11,9 @@ import 'package:validate/validate.dart';
 
 class WriteToCreate extends StatefulWidget {
   static final String routeName = "/writetocreate";
+  final FirebaseUser user;
+
+  const WriteToCreate({Key key, @required this.user}) : super(key: key);
   @override
   WriteToCreateState createState() {
     return new WriteToCreateState();
@@ -21,22 +25,25 @@ class WriteToCreateState extends State<WriteToCreate> {
   WriteToData _writeToData;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
 
     _writeToData = WriteToData(
-        type: "public",
-        fromEmail: MainInherited.of(context).loggedInUser != null
-            ? MainInherited.of(context).loggedInUser.email
-            : "",
-        message: "",
-        fromName: MainInherited.of(context).loggedInUser != null
-            ? MainInherited.of(context).loggedInUser.displayName
-            : "",
-        sendToPhotoUrl: "locale",
-        sendToName: SilkeborgBeachvolleyConstants.name,
-        sendToEmail: SilkeborgBeachvolleyConstants.email,
-        messageRepliedToId: null);
+      type: "public",
+      newMessageStatus: true,
+      subType: widget.user != null ? "message" : "mail",
+      fromEmail: widget.user != null ? widget.user.email : "",
+      fromName: widget.user != null ? widget.user.displayName : "",
+      fromPhotoUrl: widget.user != null ? widget.user.photoUrl : "public",
+      fromUserId: widget.user != null ? widget.user.uid : "",
+      sendToPhotoUrl: "locale",
+      sendToName: SilkeborgBeachvolleyConstants.name,
+      sendToEmail: SilkeborgBeachvolleyConstants.email,
+      sendToEmailSubject: "",
+      sendToUserId: "",
+      message: "",
+      messageRepliedToId: null,
+    );
   }
 
   @override
@@ -63,7 +70,7 @@ class WriteToCreateState extends State<WriteToCreate> {
                           keyboardType: TextInputType.text,
                           textInputAction: TextInputAction.next,
                           onSaved: (String value) {
-                            _writeToData.fromName = value;
+                            _writeToData.fromName = value.trim();
                           },
                           validator: (String value) {
                             if (value.isEmpty)
@@ -83,7 +90,7 @@ class WriteToCreateState extends State<WriteToCreate> {
                                 keyboardType: TextInputType.emailAddress,
                                 textInputAction: TextInputAction.next,
                                 onSaved: (String value) {
-                                  _writeToData.fromEmail = value;
+                                  _writeToData.fromEmail = value.trim();
                                 },
                                 validator: (String value) {
                                   if (value.isEmpty)
@@ -104,9 +111,9 @@ class WriteToCreateState extends State<WriteToCreate> {
                           decoration: InputDecoration(
                               labelText: FlutterI18n.translate(context,
                                   "writeTo.writeToCreateMain.string6")),
-                          maxLength: 1000,
+                          maxLength: 500,
                           onSaved: (String value) {
-                            _writeToData.message = value;
+                            _writeToData.message = value.trim();
                           },
                           validator: (String value) {
                             if (value.isEmpty)
@@ -122,8 +129,7 @@ class WriteToCreateState extends State<WriteToCreate> {
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
-                              await _writeToData
-                                  .save(MainInherited.of(context).loggedInUser);
+                              await _writeToData.save();
                               Navigator.of(context).pop();
                             }
                           },
