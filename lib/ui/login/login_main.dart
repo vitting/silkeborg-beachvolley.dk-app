@@ -1,12 +1,12 @@
 import "package:flutter/material.dart";
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
+import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/main/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/main/livescore_main.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/create/write_to_create_main.dart';
-import 'helpers/auth_functions.dart' as authFunctions;
 
 class Login extends StatefulWidget {
   static final routeName = "/login";
@@ -57,7 +57,7 @@ class LoginState extends State<Login> {
                       _showSpinner = true;
                     });
 
-                    await authFunctions.signInWithFacebook();
+                    await UserAuth.signInWithFacebook();
 
                     setState(() {
                       _showSpinner = false;

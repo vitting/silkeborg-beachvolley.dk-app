@@ -15,6 +15,7 @@
     "matchWinner": "Match winner",
     "setWinner": "Set winner",
     "startMatch": "Start",
+    "logout": "Logout",
     "monthsLong": {
         "1": "January",
         "2": "February",
@@ -236,12 +237,6 @@
         }
     },
     "login": {
-        "authFunctions": {
-            "string1": "Log out",
-            "string2": "Are you sure you want to log out?",
-            "string3": "Yes",
-            "string4": "No"
-        },
         "loginMain": {
             "string1": "Welcome to Silkeborg Beachvolley",
             "string2": "Sign in with Facebook",
@@ -376,7 +371,8 @@
             "string8": "Manage ranking",
             "string9": "Manage users",
             "string10": "Contact us",
-            "string11": "Manage messages"
+            "string11": "Manage messages",
+            "string12": "Are you sure you want to log out?"
         }
     },
     "settings": {

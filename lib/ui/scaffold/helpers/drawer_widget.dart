@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
-import 'package:silkeborgbeachvolley/helpers/confirm_action_enum.dart';
+import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
+import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/main/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/admin/admin_ranking_main.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_sharedpref.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/main/livescore_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/settings_main.dart';
@@ -15,9 +17,11 @@ import 'package:silkeborgbeachvolley/ui/tournament_calendar/main/tournament_cale
 import 'package:silkeborgbeachvolley/ui/users/admin/admin_users_main.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/admin/admin_write_to_main.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/write_to_main.dart';
-import '../../login/helpers/auth_functions.dart' as authFunctions;
 
 class SilkeborgBeacvolleyScaffoldDrawer extends StatefulWidget {
+  final BuildContext scaffoldContext;
+
+  const SilkeborgBeacvolleyScaffoldDrawer({Key key, @required this.scaffoldContext}) : super(key: key);
   @override
   SilkeborgBeacvolleyScaffoldDrawerState createState() {
     return new SilkeborgBeacvolleyScaffoldDrawerState();
@@ -111,10 +115,13 @@ class SilkeborgBeacvolleyScaffoldDrawerState
             FlutterI18n.translate(context, "scaffold.drawerWidget.string5")),
         onTap: () async {
           Navigator.of(context).pop();
-          ConfirmAction logoutAction =
-              await authFunctions.logoutConfirm(context);
-          if (logoutAction == ConfirmAction.yes) {
-            await authFunctions.logout();
+
+          ConfirmDialogAction logoutAction = await Dialogs.confirmLogout(
+              widget.scaffoldContext,
+              FlutterI18n.translate(widget.scaffoldContext, "scaffold.drawerWidget.string12"));
+          if (logoutAction == ConfirmDialogAction.yes) {
+            await UserAuth.signOutWithFacebook();
+            await RankingSharedPref.removeIsItFirstTime();
           }
         },
       ),
@@ -129,7 +136,8 @@ class SilkeborgBeacvolleyScaffoldDrawerState
       )
     ];
 
-    if (MainInherited.of(context).isAdmin1 || MainInherited.of(context).isAdmin2) {
+    if (MainInherited.of(context).isAdmin1 ||
+        MainInherited.of(context).isAdmin2) {
       widgets.add(Divider());
       widgets.add(ListTile(
         leading: Icon(Icons.people,

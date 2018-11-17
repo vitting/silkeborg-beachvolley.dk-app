@@ -77,7 +77,7 @@ class UserInfoData {
     );
   }
 
-  static Future<void> setUserInfo(FirebaseUser user) async {
+  static Future<UserInfoData> initUserInfo(FirebaseUser user) async {
     UserInfoData userInfo;
     UserInfoData storedUserInfo = await UserInfoData.getUserInfo(user.uid);
     if (storedUserInfo != null) {
@@ -86,7 +86,9 @@ class UserInfoData {
       userInfo = UserInfoData.fromFireBaseUser(user);
     }
 
-    return UserFirestore.setUserInfo(userInfo);
+    await UserFirestore.setUserInfo(userInfo);
+
+    return userInfo;
   }
 
   factory UserInfoData.fromMap(Map<String, dynamic> user) {

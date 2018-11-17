@@ -2,9 +2,23 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:silkeborgbeachvolley/helpers/confirm_dialog_action_enum.dart';
 
 import 'confirm_dialog_functions.dart' as confirmFunctions;
+
+enum ConfirmDialogAction {
+  delete,
+  cancel,
+  ok,
+  yes,
+  no,
+  none,
+  save,
+  close,
+  hide,
+  unhide,
+  reset,
+  start
+}
 
 class Dialogs {
   static Future<ConfirmDialogAction> confirmDelete(
@@ -91,6 +105,16 @@ class Dialogs {
     return confirmFunctions.confirmDialog(context,
         body: [Text(body)],
         title: Text(FlutterI18n.translate(context, "areYouSure")),
+        actionLeft: ConfirmDialogAction.no,
+        actionRight: ConfirmDialogAction.yes,
+        barrierDismissible: false);
+  }
+
+  static Future<ConfirmDialogAction> confirmLogout(
+      BuildContext context, String body) async {
+    return confirmFunctions.confirmDialog(context,
+        body: [Text(body)],
+        title: Text(FlutterI18n.translate(context, "logout")),
         actionLeft: ConfirmDialogAction.no,
         actionRight: ConfirmDialogAction.yes,
         barrierDismissible: false);

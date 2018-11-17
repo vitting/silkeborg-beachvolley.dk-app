@@ -43,7 +43,9 @@ class _BulletinBottomNavigationBarState
       super.didChangeDependencies();
 
       MainInherited.of(context, false).notificationsAsStream.listen((NotificationData value) {
-        _setBulletinItemsCount(value);
+        if (value.type == "bulletin") {
+          _setBulletinItemsCount(value);
+        }
       });
     }
 
@@ -104,8 +106,8 @@ class _BulletinBottomNavigationBarState
 
     if (value != null &&
         value.state == NotificationState.message &&
-        value.bulletinType.isNotEmpty) {
-      switch (value.bulletinType) {
+        value.subType.isNotEmpty) {
+      switch (value.subType) {
         case BulletinTypeHelper.news:
           newsCount++;
           break;

@@ -39,6 +39,6 @@ class _SilkeborgBeachvolleyScaffoldState
         body: widget.body,
         floatingActionButton: widget.floatingActionButton,
         bottomNavigationBar: widget.bottomNavigationBar,
-        drawer: widget.showDrawer ? SilkeborgBeacvolleyScaffoldDrawer() : null);
+        drawer: widget.showDrawer ? SilkeborgBeacvolleyScaffoldDrawer(scaffoldContext: context) : null);
   }
 }

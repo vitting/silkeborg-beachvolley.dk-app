@@ -77,7 +77,6 @@ class MainInheritedState extends State<MainInherited> {
     super.initState();
     _initProperties();
     _initUserAuth();
-    _initMessaging();
   }
 
   @override
@@ -98,19 +97,20 @@ class MainInheritedState extends State<MainInherited> {
 
   Future<void> _initUserAuth() async {
     UserAuth.firebaseAuth.onAuthStateChanged.listen((user) async {
+      loggedInUser = user;
+      userId = user?.uid;
+      isLoggedIn = user != null ? true : false;
+
       if (user != null) {
-        userInfoData = await UserInfoData.getUserInfo(user.uid);
+        userInfoData = await UserInfoData.initUserInfo(user);
         isAdmin1 = userInfoData.admin1;
         isAdmin2 = userInfoData.admin2;
         settings = await SettingsData.initSettings(user);
-        await _firebaseMessaging.getToken();
+        _initMessaging();
       }
 
       if (mounted) {
         setState(() {
-          loggedInUser = user;
-          userId = user?.uid;
-          isLoggedIn = user != null ? true : false;
           _loading = false;
         });
       }
@@ -129,7 +129,7 @@ class MainInheritedState extends State<MainInherited> {
       if (message != null) {
         data = NotificationData(
             type: message["dataType"] ?? "",
-            bulletinType: message["bulletinType"] ?? "",
+            subType: message["subType"] ?? "",
             state: NotificationState.launch);
       }
 
@@ -144,7 +144,7 @@ class MainInheritedState extends State<MainInherited> {
       if (message != null && message["data"] != null) {
         data = NotificationData(
             type: message["data"]["dataType"] ?? "",
-            bulletinType: message["data"]["bulletinType"] ?? "",
+            subType: message["data"]["subType"] ?? "",
             state: NotificationState.message);
       }
 
@@ -157,7 +157,7 @@ class MainInheritedState extends State<MainInherited> {
       if (message != null) {
         data = NotificationData(
             type: message["dataType"] ?? "",
-            bulletinType: message["bulletinType"] ?? "",
+            subType: message["subType"] ?? "",
             state: NotificationState.resume);
       }
 
@@ -170,7 +170,7 @@ class MainInheritedState extends State<MainInherited> {
       }
     });
 
-    await _firebaseMessaging.getToken();
+    await _firebaseMessaging.getToken();  
   }
 
   UserMessagingData _initUserMessaging(String token) {

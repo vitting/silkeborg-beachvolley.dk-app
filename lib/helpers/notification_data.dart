@@ -2,8 +2,8 @@ enum NotificationState { message, resume, launch, none }
 
 class NotificationData {
   final String type;
-  final String bulletinType;
+  final String subType;
   final NotificationState state;
 
-  NotificationData({this.type, this.bulletinType, this.state});
+  const NotificationData({this.type, this.subType, this.state});
 }
