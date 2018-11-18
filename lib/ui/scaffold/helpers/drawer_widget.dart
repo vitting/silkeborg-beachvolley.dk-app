@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
-import 'package:silkeborgbeachvolley/helpers/dialogs_class.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
-import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/main/enrollment_main.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/admin/admin_ranking_main.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_sharedpref.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/main/ranking_main.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/main/livescore_main.dart';
 import 'package:silkeborgbeachvolley/ui/settings/settings_main.dart';
@@ -19,9 +16,9 @@ import 'package:silkeborgbeachvolley/ui/write_to/admin/admin_write_to_main.dart'
 import 'package:silkeborgbeachvolley/ui/write_to/write_to_main.dart';
 
 class SilkeborgBeacvolleyScaffoldDrawer extends StatefulWidget {
-  final BuildContext scaffoldContext;
+  final ValueChanged<bool> onTapLogout;  
 
-  const SilkeborgBeacvolleyScaffoldDrawer({Key key, @required this.scaffoldContext}) : super(key: key);
+  const SilkeborgBeacvolleyScaffoldDrawer({Key key, this.onTapLogout}) : super(key: key);
   @override
   SilkeborgBeacvolleyScaffoldDrawerState createState() {
     return new SilkeborgBeacvolleyScaffoldDrawerState();
@@ -113,16 +110,9 @@ class SilkeborgBeacvolleyScaffoldDrawerState
             color: SilkeborgBeachvolleyTheme.drawerIconColor),
         title: Text(
             FlutterI18n.translate(context, "scaffold.drawerWidget.string5")),
-        onTap: () async {
+        onTap: () {
           Navigator.of(context).pop();
-
-          ConfirmDialogAction logoutAction = await Dialogs.confirmLogout(
-              widget.scaffoldContext,
-              FlutterI18n.translate(widget.scaffoldContext, "scaffold.drawerWidget.string12"));
-          if (logoutAction == ConfirmDialogAction.yes) {
-            await UserAuth.signOutWithFacebook();
-            await RankingSharedPref.removeIsItFirstTime();
-          }
+          widget.onTapLogout(true);
         },
       ),
       ListTile(

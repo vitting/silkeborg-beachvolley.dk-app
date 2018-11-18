@@ -371,8 +371,10 @@
             "string8": "Manage ranking",
             "string9": "Manage users",
             "string10": "Contact us",
-            "string11": "Manage messages",
-            "string12": "Are you sure you want to log out?"
+            "string11": "Manage messages"
+        },
+        "silkeborgBeahcvolleyScaffold": {
+            "string1": "Are you sure you want to log out?"
         }
     },
     "settings": {

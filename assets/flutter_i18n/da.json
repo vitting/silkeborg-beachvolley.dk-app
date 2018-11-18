@@ -371,8 +371,10 @@
             "string8": "Administrere Ranglisten",
             "string9": "Administrere Brugere",
             "string10": "Kontakt os",
-            "string11": "Administrere beskeder til os",
-            "string12": "Er du sikker på at du vil logge ud?"
+            "string11": "Administrere beskeder til os"
+        },
+        "silkeborgBeahcvolleyScaffold": {
+            "string1": "Er du sikker på at du vil logge ud?"
         }
     },
     "settings": {

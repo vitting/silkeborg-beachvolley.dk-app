@@ -83,4 +83,8 @@ class UserMessagingData {
 
     return data;
   }
+
+  static Future<void> deleteUserMessaging(String userId) async {
+    return UserFirestore.deleteUserMessaging(userId);
+  }
 }

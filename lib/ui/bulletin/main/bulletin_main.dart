@@ -56,6 +56,28 @@ class _BulletinState extends State<Bulletin> {
         },
       ),
       actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.notifications),
+          onPressed: () async {
+            int result  = await showDialog<int>(
+              context: context,
+              barrierDismissible: true,
+              builder: (BuildContext context) => Dialog(
+                child: ListView(
+                children: <Widget>[
+                  ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: AssetImage("assets/images/no_profile_picture_120x120.png"),
+                    ),
+                    title: Text("Christian Nicolaisen har sendt dit en besked"),
+                  ),
+                  
+                ],
+              ),
+              )
+            );
+          },
+        ),
         InkWell(
           child: _weatherCache,
           onTap: () {

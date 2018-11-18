@@ -54,10 +54,10 @@ class UserFirestore {
         .setData(item.toMap());
   }
 
-  static Future<void> deleteUserMessaging(String id) {
+  static Future<void> deleteUserMessaging(String userId) {
     return _firestore
         .collection(_collectionNameUsersMessaging)
-        .document(id)
+        .document(userId)
         .delete();
   }
 

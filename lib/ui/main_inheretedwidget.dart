@@ -12,6 +12,7 @@ import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
 import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_sharedpref.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
 
 enum SystemMode { release, develop }
@@ -72,6 +73,17 @@ class MainInheritedState extends State<MainInherited> {
     _notificationController.add(data);
   }
 
+  Future<bool> deleteFirebaseMessagingSession() {
+    return _firebaseMessaging.deleteInstanceID();
+  }
+
+  Future<void> logout() async {
+    await _firebaseMessaging.deleteInstanceID();
+    await UserMessagingData.deleteUserMessaging(userId);
+    await UserAuth.signOutWithFacebook();
+    await RankingSharedPref.removeIsItFirstTime();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -119,12 +131,15 @@ class MainInheritedState extends State<MainInherited> {
 
   Future<void> _initMessaging() async {
     systemLanguageCode = await SystemHelpers.systemLanguageCode();
+    _firebaseMessaging.setAutoInitEnabled(true);
     _firebaseMessaging.requestNotificationPermissions(
         IosNotificationSettings(alert: true, badge: true, sound: true));
     _firebaseMessaging.configure(
 
         ///OnLaunch er der ikke body og titel med. Bliver executed når appen er termineret
         onLaunch: (Map<String, dynamic> message) {
+        print("******************ONLAUNCH*****************");
+      print(message);
       NotificationData data;
       if (message != null) {
         data = NotificationData(
@@ -150,9 +165,10 @@ class MainInheritedState extends State<MainInherited> {
 
       addNotification(data);
     },
-
         ///OnResume er der ikke body og titel med. Bliver executed når appen er minimeret
         onResume: (Map<String, dynamic> message) {
+          print("******************ONRESUME*****************");
+      print(message);
       NotificationData data;
       if (message != null) {
         data = NotificationData(
