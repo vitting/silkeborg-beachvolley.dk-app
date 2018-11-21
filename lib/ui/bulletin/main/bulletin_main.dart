@@ -12,6 +12,7 @@ import 'package:silkeborgbeachvolley/ui/bulletin/items/createItem/create_item_ma
 import 'package:silkeborgbeachvolley/ui/bulletin/main/bulletin_bottom_navigationbar_main.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/main/bulletin_main_fab.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/no_data_widget.dart';
+import 'package:silkeborgbeachvolley/ui/notifications/notification_button_widget.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:silkeborgbeachvolley/ui/weather/weather_widget.dart';
 import './bulletin_main_functions.dart' as bulletinMainFunctions;
@@ -31,6 +32,10 @@ class _BulletinState extends State<Bulletin> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    _setWeather();
+  }
+
+  void _setWeather() {
     _weatherCache = MainInherited.of(context).settings.showWeather
         ? Weather.withWind()
         : Container();
@@ -56,35 +61,12 @@ class _BulletinState extends State<Bulletin> {
         },
       ),
       actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.notifications),
-          onPressed: () async {
-            int result  = await showDialog<int>(
-              context: context,
-              barrierDismissible: true,
-              builder: (BuildContext context) => Dialog(
-                child: ListView(
-                children: <Widget>[
-                  ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: AssetImage("assets/images/no_profile_picture_120x120.png"),
-                    ),
-                    title: Text("Christian Nicolaisen har sendt dit en besked"),
-                  ),
-                  
-                ],
-              ),
-              )
-            );
-          },
-        ),
+        NotiticationButton(),
         InkWell(
           child: _weatherCache,
           onTap: () {
             setState(() {
-              _weatherCache = MainInherited.of(context).settings.showWeather
-                  ? Weather.withWind()
-                  : Container();
+              _setWeather();
             });
           },
         )

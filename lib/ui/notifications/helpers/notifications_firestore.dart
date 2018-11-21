@@ -4,13 +4,19 @@ class NotificationsFirestore {
   static Firestore _firestore = Firestore.instance;
   static final _collectionName = "notifications";
 
-  static Future<void> setShownState(String docId, bool state) {
-    return _firestore.collection(_collectionName).document(docId).updateData({
-      "shown": state
-    });
+  static Future<void> setShownState(String docId, String userId) {
+    return _firestore
+        .collection(_collectionName)
+        .document(docId)
+        .updateData({"userIds": FieldValue.arrayRemove([userId])});
   }
 
   static Future<QuerySnapshot> getNotificationsFromUserId(String userId) {
-    return _firestore.collection(_collectionName).where("userId", isEqualTo: userId).orderBy("creationDate", descending: true).getDocuments();
+    return _firestore
+        .collection(_collectionName)
+        .where("userIds", arrayContains: userId)
+        .where("shown", isEqualTo: false)
+        .orderBy("creationDate", descending: true)
+        .getDocuments();
   }
 }

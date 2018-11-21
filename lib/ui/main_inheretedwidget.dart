@@ -59,7 +59,6 @@ class MainInheritedState extends State<MainInherited> {
   bool isAdmin1 = false;
   bool isAdmin2 = false;
   bool isLoggedIn;
-  // bool isStartup = false;
   String systemLanguageCode = "en";
   String userId;
   bool _loading = true;
@@ -138,7 +137,7 @@ class MainInheritedState extends State<MainInherited> {
 
         ///OnLaunch er der ikke body og titel med. Bliver executed når appen er termineret
         onLaunch: (Map<String, dynamic> message) {
-        print("******************ONLAUNCH*****************");
+      print("******************ONLAUNCH*****************");
       print(message);
       NotificationData data;
       if (message != null) {
@@ -165,9 +164,10 @@ class MainInheritedState extends State<MainInherited> {
 
       addNotification(data);
     },
+
         ///OnResume er der ikke body og titel med. Bliver executed når appen er minimeret
         onResume: (Map<String, dynamic> message) {
-          print("******************ONRESUME*****************");
+      print("******************ONRESUME*****************");
       print(message);
       NotificationData data;
       if (message != null) {
@@ -186,7 +186,7 @@ class MainInheritedState extends State<MainInherited> {
       }
     });
 
-    await _firebaseMessaging.getToken();  
+    await _firebaseMessaging.getToken();
   }
 
   UserMessagingData _initUserMessaging(String token) {

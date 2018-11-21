@@ -7,24 +7,41 @@ class NotificationsData {
   String type;
   String subType;
   String fromUserId;
-  String userId;
-  bool shown;
+  String fromName;
+  String fromDisplayUrl;
+  List<String> userIds;
 
-  NotificationsData({this.docId, this.creationDate, this.type, this.subType, this.fromUserId, this.userId, this.shown});
+  NotificationsData(
+      {this.docId,
+      this.creationDate,
+      this.type,
+      this.subType,
+      this.fromUserId,
+      this.fromName,
+      this.fromDisplayUrl,
+      this.userIds});
 
   factory NotificationsData.fromMap(Map<String, dynamic> item, String docId) {
     return NotificationsData(
-      creationDate: item["creationDate"],
-      type: item["type"],
-      subType: item["subType"],
-      fromUserId: item["fromUserId"],
-      userId: item["userId"],
-      shown: item["shown"],
-      docId: docId
-    );
+        creationDate: item["creationDate"],
+        type: item["type"],
+        subType: item["subType"],
+        fromUserId: item["fromUserId"],
+        fromName: item["fromName"],
+        fromDisplayUrl: item["fromDisplayUrl"],
+        userIds: item["userIds"] == null
+            ? []
+            : (item["userIds"] as List<dynamic>).map((dynamic item) {
+                return item.toString();
+              }).toList(),
+        docId: docId);
   }
 
-  Future<void> setShownState(bool shown) {
-    return NotificationsFirestore.setShownState(docId, shown);
+  Future<void> setShownState(String userId) {
+    return NotificationsFirestore.setShownState(docId, userId);
+  }
+
+  static Future<QuerySnapshot> getUserNotifications(String userId) {
+    return NotificationsFirestore.getNotificationsFromUserId(userId);
   }
 }

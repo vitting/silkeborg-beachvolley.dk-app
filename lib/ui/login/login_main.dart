@@ -57,6 +57,7 @@ class LoginState extends State<Login> {
                       _showSpinner = true;
                     });
 
+                    //TODO: If return null there is a error
                     await UserAuth.signInWithFacebook();
 
                     setState(() {

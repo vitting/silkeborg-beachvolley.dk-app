@@ -18,7 +18,7 @@ class LoaderSpinner extends StatelessWidget {
           FadeInImage(
             image: AssetImage("assets/images/loader-bar.gif"),
             placeholder: MemoryImage(kTransparentImage),
-            height: 8.0,
+            height: 5.0,
           )
         ],
       ),
