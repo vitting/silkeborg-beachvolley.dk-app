@@ -29,7 +29,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        multiDexEnabled true // CHRISTIAN: Add this
+        // multiDexEnabled true // CHRISTIAN: Add this
     }
 
     buildTypes {
@@ -55,4 +55,5 @@ dependencies {
 
 apply plugin: 'com.google.gms.google-services'
 
-com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
+// CHRISTIAN: Add this
+// com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true

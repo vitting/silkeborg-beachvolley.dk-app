@@ -24,6 +24,7 @@ subprojects {
 subprojects {
     project.evaluationDependsOn(':app')
 
+    // CHRISTIAN: Add this
     project.configurations.all {
 
         resolutionStrategy.eachDependency { details ->
