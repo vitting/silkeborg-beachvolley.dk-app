@@ -10,6 +10,7 @@ class UserInfoData {
   String name;
   String email;
   String photoUrl;
+  bool enabled;
 
   ///Admin1
   bool admin1;
@@ -19,6 +20,7 @@ class UserInfoData {
       @required this.name,
       @required this.photoUrl,
       @required this.email,
+      this.enabled = true,
       this.admin1 = false,
       this.admin2 = false});
 
@@ -29,7 +31,8 @@ class UserInfoData {
       "admin2": admin2,
       "name": name,
       "email": email,
-      "photoUrl": photoUrl
+      "photoUrl": photoUrl,
+      "enabled": enabled
     };
   }
 
@@ -86,9 +89,15 @@ class UserInfoData {
       userInfo = UserInfoData.fromFireBaseUser(user);
     }
 
+    userInfo.enabled = true;
+
     await UserFirestore.setUserInfo(userInfo);
 
     return userInfo;
+  }
+
+  static Future<void> setEnabledState(String userId, bool enabled) {
+    return UserFirestore.enabled(userId, enabled);
   }
 
   factory UserInfoData.fromMap(Map<String, dynamic> user) {
@@ -97,6 +106,7 @@ class UserInfoData {
         name: user["name"] ?? "",
         email: user["email"] ?? "",
         photoUrl: user["photoUrl"] ?? "",
+        enabled: user["enabled"],
         admin1: user["admin1"] ?? false,
         admin2: user["admin2"] ?? false);
   }

@@ -24,10 +24,18 @@ class Bulletin extends StatefulWidget {
 }
 
 class _BulletinState extends State<Bulletin> {
+  final StreamController<int> _bottombarStreamController =
+      StreamController<int>.broadcast();
   final int _numberOfItemsToLoadDefault = 20;
   Widget _weatherCache;
   int _bottombarSelected = 0;
   int _listNumberOfItemsToLoad = 20;
+
+  @override
+  void dispose() {
+    super.dispose();
+    _bottombarStreamController.close();
+  }
 
   @override
   void didChangeDependencies() {
@@ -50,18 +58,19 @@ class _BulletinState extends State<Bulletin> {
       showDrawer: true,
       floatingActionButton: _scaffoldFloatingActionButton(context),
       bottomNavigationBar: BulletinBottomNavigationBar(
+        bottombarChange: _bottombarStreamController.stream,
         initValue: _bottombarSelected,
-        selectedItem: (int value) {
-          if (mounted) {
-            setState(() {
-              _listNumberOfItemsToLoad = _numberOfItemsToLoadDefault;
-              _bottombarSelected = value;
-            });
-          }
+        selectedItem: (int selected) {
+          _setBottomBarValue(selected);
         },
       ),
       actions: <Widget>[
-        NotiticationButton(),
+        NotiticationButton(
+          onBulletinSelected: (int bottomBarToSelect) {
+            _bottombarStreamController.add(bottomBarToSelect);
+            _setBottomBarValue(bottomBarToSelect);
+          },
+        ),
         InkWell(
           child: _weatherCache,
           onTap: () {
@@ -144,6 +153,13 @@ class _BulletinState extends State<Bulletin> {
         }
       },
     );
+  }
+
+  void _setBottomBarValue(int selected) {
+    setState(() {
+      _listNumberOfItemsToLoad = _numberOfItemsToLoadDefault;
+      _bottombarSelected = selected;
+    });
   }
 
   Future<void> _gotoCreateNewsDialog(

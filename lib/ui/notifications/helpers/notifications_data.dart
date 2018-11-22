@@ -10,6 +10,7 @@ class NotificationsData {
   String fromName;
   String fromDisplayUrl;
   List<String> userIds;
+  String subjectId;
 
   NotificationsData(
       {this.docId,
@@ -19,7 +20,9 @@ class NotificationsData {
       this.fromUserId,
       this.fromName,
       this.fromDisplayUrl,
-      this.userIds});
+      this.subjectId,
+      this.userIds
+      });
 
   factory NotificationsData.fromMap(Map<String, dynamic> item, String docId) {
     return NotificationsData(
@@ -34,6 +37,7 @@ class NotificationsData {
             : (item["userIds"] as List<dynamic>).map((dynamic item) {
                 return item.toString();
               }).toList(),
+        subjectId: item["subjectId"],
         docId: docId);
   }
 
@@ -41,7 +45,7 @@ class NotificationsData {
     return NotificationsFirestore.setShownState(docId, userId);
   }
 
-  static Future<QuerySnapshot> getUserNotifications(String userId) {
-    return NotificationsFirestore.getNotificationsFromUserId(userId);
+  static Stream<QuerySnapshot> getUserNotificationsAsStream(String userId) {
+    return NotificationsFirestore.getNotificationsFromUserIdAsStream(userId);
   }
 }

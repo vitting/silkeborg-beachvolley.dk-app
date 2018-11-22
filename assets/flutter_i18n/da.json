@@ -601,5 +601,11 @@
             "title1": "Beskeder",
             "string1": "Der blev ikke fundet nogen beskeder"
         }
+    },
+    "notifications": {
+        "notificationButtonWidget": {
+            "string1": "Notifikationer",
+            "string2": "Der er ingen notifikationer"
+        }
     }
 }

@@ -601,5 +601,11 @@
             "title1": "Messages",
             "string1": "No messages were found"
         }
+    },
+    "notifications": {
+        "notificationButtonWidget": {
+            "string1": "Notifications",
+            "string2": "No notifications"
+        }
     }
 }

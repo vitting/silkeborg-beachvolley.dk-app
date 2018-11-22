@@ -63,26 +63,6 @@ class MainInheritedState extends State<MainInherited> {
   String userId;
   bool _loading = true;
 
-  SystemMode get modeProfile => widget.mode;
-
-  Stream<NotificationData> get notificationsAsStream =>
-      _notificationController.stream;
-
-  void addNotification(NotificationData data) {
-    _notificationController.add(data);
-  }
-
-  Future<bool> deleteFirebaseMessagingSession() {
-    return _firebaseMessaging.deleteInstanceID();
-  }
-
-  Future<void> logout() async {
-    await _firebaseMessaging.deleteInstanceID();
-    await UserMessagingData.deleteUserMessaging(userId);
-    await UserAuth.signOutWithFacebook();
-    await RankingSharedPref.removeIsItFirstTime();
-  }
-
   @override
   void initState() {
     super.initState();
@@ -102,6 +82,28 @@ class MainInheritedState extends State<MainInherited> {
     _notificationController.close();
   }
 
+  SystemMode get modeProfile => widget.mode;
+
+  Stream<NotificationData> get notificationsAsStream =>
+      _notificationController.stream;
+
+  void addNotification(NotificationData data) {
+    _notificationController.add(data);
+  }
+
+  Future<bool> deleteFirebaseMessagingSession() {
+    return _firebaseMessaging.deleteInstanceID();
+  }
+
+  Future<void> logout() async {
+    isLoggedIn = false;
+    await _firebaseMessaging.deleteInstanceID();
+    await UserMessagingData.deleteUserMessaging(userId);
+    await UserInfoData.setEnabledState(userId, false);
+    await RankingSharedPref.removeIsItFirstTime();
+    await UserAuth.signOutWithFacebook();
+  }
+
   Future<void> _initProperties() async {
     canVibrate = widget.canVibrate;
   }
@@ -113,6 +115,7 @@ class MainInheritedState extends State<MainInherited> {
       isLoggedIn = user != null ? true : false;
 
       if (user != null) {
+        print("**********************INITUSERAUTH**********************");
         userInfoData = await UserInfoData.initUserInfo(user);
         isAdmin1 = userInfoData.admin1;
         isAdmin2 = userInfoData.admin2;
@@ -181,7 +184,8 @@ class MainInheritedState extends State<MainInherited> {
     });
 
     _firebaseMessaging.onTokenRefresh.listen((token) {
-      if (loggedInUser != null) {
+      if (isLoggedIn) {
+        print("**********************Token refresh*********************");
         this.userMessaging = _initUserMessaging(token);
       }
     });
