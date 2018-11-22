@@ -26,15 +26,25 @@ class Bulletin extends StatefulWidget {
 class _BulletinState extends State<Bulletin> {
   final StreamController<int> _bottombarStreamController =
       StreamController<int>.broadcast();
-  final int _numberOfItemsToLoadDefault = 20;
+  final ScrollController _scrollController = ScrollController();
+  final _defaultNumberOfItemsToLoad = 20;
+  int _numberOfItemsToLoad;
+  int _currentLengthOfLoadedItems = 0;
   Widget _weatherCache;
   int _bottombarSelected = 0;
-  int _listNumberOfItemsToLoad = 20;
+
+  @override
+  void initState() {
+    super.initState();
+    _numberOfItemsToLoad = _defaultNumberOfItemsToLoad;
+    _scrollController.addListener(_handleScrollLoadMore);
+  }
 
   @override
   void dispose() {
     super.dispose();
     _bottombarStreamController.close();
+    _scrollController.dispose();
   }
 
   @override
@@ -95,7 +105,7 @@ class _BulletinState extends State<Bulletin> {
     return StreamBuilder(
       stream: BulletinFirestore.getBulletinsByTypeAsStream(
           bulletinMainFunctions.getSelectedType(_bottombarSelected),
-          _listNumberOfItemsToLoad),
+          _numberOfItemsToLoad),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           print("ERROR bulletin_main StreamBuilder: ${snapshot.error}");
@@ -111,38 +121,13 @@ class _BulletinState extends State<Bulletin> {
             return NoData(FlutterI18n.translate(
                 context, "bulletin.bulletinMain.string1"));
           } else {
+            _currentLengthOfLoadedItems = snapshot.data.documents.length;
+
             return Scrollbar(
               child: ListView.builder(
+                controller: _scrollController,
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (BuildContext context, int position) {
-                  if (position == snapshot.data.documents.length - 1 &&
-                      snapshot.data.documents.length - 1 ==
-                          _listNumberOfItemsToLoad - 1) {
-                    return Card(
-                        child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 5.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          FlatButton.icon(
-                            textColor: Colors.deepOrange,
-                            onPressed: () {
-                              if (mounted) {
-                                setState(() {
-                                  _listNumberOfItemsToLoad =
-                                      _listNumberOfItemsToLoad * 2;
-                                });
-                              }
-                            },
-                            icon: Icon(Icons.refresh),
-                            label: Text(FlutterI18n.translate(
-                                context, "bulletin.bulletinMain.string2")),
-                          )
-                        ],
-                      ),
-                    ));
-                  }
-
                   DocumentSnapshot item = snapshot.data.documents[position];
 
                   return BulletinItemMain(item.data);
@@ -157,7 +142,9 @@ class _BulletinState extends State<Bulletin> {
 
   void _setBottomBarValue(int selected) {
     setState(() {
-      _listNumberOfItemsToLoad = _numberOfItemsToLoadDefault;
+      _numberOfItemsToLoad = _defaultNumberOfItemsToLoad;
+      _scrollController.jumpTo(0.0);
+      _currentLengthOfLoadedItems = 0;
       _bottombarSelected = selected;
     });
   }
@@ -169,5 +156,15 @@ class _BulletinState extends State<Bulletin> {
           return new CreateBulletinItem(bulletinType);
         },
         fullscreenDialog: true));
+  }
+
+  void _handleScrollLoadMore() {
+    if (_scrollController.position.extentAfter == 0) {
+      if (_currentLengthOfLoadedItems >= _numberOfItemsToLoad)
+        setState(() {
+          _numberOfItemsToLoad =
+              _numberOfItemsToLoad + _defaultNumberOfItemsToLoad;
+        });
+    }
   }
 }

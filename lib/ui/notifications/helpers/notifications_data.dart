@@ -45,7 +45,7 @@ class NotificationsData {
     return NotificationsFirestore.setShownState(docId, userId);
   }
 
-  static Stream<QuerySnapshot> getUserNotificationsAsStream(String userId) {
-    return NotificationsFirestore.getNotificationsFromUserIdAsStream(userId);
+  static Stream<QuerySnapshot> getUserNotificationsAsStream(String userId, int limit) {
+    return NotificationsFirestore.getNotificationsFromUserIdAsStream(userId, limit);
   }
 }

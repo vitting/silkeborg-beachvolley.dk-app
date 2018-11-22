@@ -121,20 +121,12 @@ class WriteToData {
     return WriteToFirestore.getAllReplyMessage(id);
   }
 
-  // static Stream<QuerySnapshot> getAllMessagesReceived() {
-  //   return WriteToFirestore.getAllMessagesReceived();
-  // }
-
-  // static Stream<QuerySnapshot> getAllMessagesSentMessage() {
-  //   return WriteToFirestore.getAllMessagesSentMessage();
-  // }
-
   static Future<List<WriteToData>> getAllMessagesReceived() {
     return WriteToFirestore.getAllMessages();
   }
 
-  static Stream<QuerySnapshot> getAllMessagesSentMail() {
-    return WriteToFirestore.getAllMessagesSentMail();
+  static Stream<QuerySnapshot> getAllMessagesSentMailAsStream(int limit) {
+    return WriteToFirestore.getAllMessagesSentMailAsStream(limit);
   }
 
   static Future<List<WriteToData>> getAllMessagesByUserId(String userId) {

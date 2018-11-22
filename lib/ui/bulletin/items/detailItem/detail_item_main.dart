@@ -27,9 +27,22 @@ class BulletinDetailItem extends StatefulWidget {
 
 class _BulletinDetailItemState extends State<BulletinDetailItem> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final ScrollController _scrollController = ScrollController();
+  final _defaultNumberOfItemsToLoad = 50;
+  int _numberOfItemsToLoad;
+  int _currentLengthOfLoadedItems = 0;
+
   @override
   void initState() {
     super.initState();
+    _numberOfItemsToLoad = _defaultNumberOfItemsToLoad;
+    _scrollController.addListener(_handleScrollLoadMore);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
   }
 
   @override
@@ -41,11 +54,13 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
 
   Widget _main(BuildContext context) {
     return ListView(
+      primary: false,
+      controller: _scrollController,
       children: <Widget>[
         _createBulletinMainItem(),
         _addComment(context),
         StreamBuilder(
-          stream: widget.bulletinItem.getCommentsAsStream(),
+          stream: widget.bulletinItem.getCommentsAsStream(_numberOfItemsToLoad),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
@@ -54,29 +69,52 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
             }
 
             if (!snapshot.hasData) return LoaderSpinner();
+
             widget.bulletinItem.numberOfcomments =
                 snapshot.data.documents.length;
-            return Column(
-                children:
-                    snapshot.data.documents.map<Widget>((DocumentSnapshot doc) {
-              BulletinCommentItemData item =
-                  BulletinCommentItemData.fromMap(doc.data);
-              return ListItemCard(
-                child: BulletinCommentItemRow(
-                  bulletinItem: item,
-                  onTapMenu: (ConfirmDialogAction action) async {
-                    if (action == ConfirmDialogAction.delete) {
-                      await item.delete();
+            _currentLengthOfLoadedItems = snapshot.data.documents.length;
 
-                      ///Get comment counter updated
-                      if (mounted) {
+            return ListView.builder(
+              primary: false,
+              shrinkWrap: true,
+              itemCount: snapshot.data.documents.length,
+              itemBuilder: (BuildContext context, int position) {
+                BulletinCommentItemData item = BulletinCommentItemData.fromMap(
+                    snapshot.data.documents[position].data);
+                return ListItemCard(
+                  child: BulletinCommentItemRow(
+                    bulletinItem: item,
+                    onTapMenu: (ConfirmDialogAction action) async {
+                      if (action == ConfirmDialogAction.delete) {
+                        await item.delete();
+
+                        ///Get comment counter updated
                         setState(() {});
                       }
-                    }
-                  },
-                ),
-              );
-            }).toList());
+                    },
+                  ),
+                );
+              },
+            );
+
+            // return Column(
+            //     children:
+            //         snapshot.data.documents.map<Widget>((DocumentSnapshot doc) {
+            //   BulletinCommentItemData item = BulletinCommentItemData.fromMap(doc.data);
+            //   return ListItemCard(
+            //     child: BulletinCommentItemRow(
+            //       bulletinItem: item,
+            //       onTapMenu: (ConfirmDialogAction action) async {
+            //         if (action == ConfirmDialogAction.delete) {
+            //           await item.delete();
+
+            //           ///Get comment counter updated
+            //           setState(() {});
+            //         }
+            //       },
+            //     ),
+            //   );
+            // }).toList());
           },
         )
       ],
@@ -154,5 +192,15 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
   Future<void> _saveBulletinCommentItem(
       FirebaseUser user, BulletinCommentItemData item) async {
     await item.save(user);
+  }
+
+  void _handleScrollLoadMore() {
+    if (_scrollController.position.extentAfter == 0) {
+      if (_currentLengthOfLoadedItems >= _numberOfItemsToLoad)
+        setState(() {
+          _numberOfItemsToLoad =
+              _numberOfItemsToLoad + _defaultNumberOfItemsToLoad;
+        });
+    }
   }
 }

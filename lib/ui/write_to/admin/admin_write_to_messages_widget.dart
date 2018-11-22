@@ -16,27 +16,34 @@ class AdminWriteToMessages extends StatefulWidget {
 
 class AdminWriteToMessagesState extends State<AdminWriteToMessages> {
   Future<List<WriteToData>> list;
+
+  @override
+  void didChangeDependencies() {
+    list = WriteToData.getAllMessagesReceived();
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
-    list = WriteToData.getAllMessagesReceived();
     return FutureBuilder(
-        future: list,
-        builder: (BuildContext context, AsyncSnapshot<List<WriteToData>> snapshot) {
-          if (!snapshot.hasData) return LoaderSpinner();
-          if (snapshot.hasData && snapshot.data.length == 0)
-            return NoData(FlutterI18n.translate(
-                context, "writeTo.adminWriteToMessages.string1"));
+      future: list,
+      builder:
+          (BuildContext context, AsyncSnapshot<List<WriteToData>> snapshot) {
+        if (!snapshot.hasData) return LoaderSpinner();
+        if (snapshot.hasData && snapshot.data.length == 0)
+          return NoData(FlutterI18n.translate(
+              context, "writeTo.adminWriteToMessages.string1"));
 
-          return RefreshIndicator(
-            backgroundColor: Colors.deepOrange[700],
-            color: Colors.white,
-            onRefresh: () {
-              setState(() {
+        return RefreshIndicator(
+          backgroundColor: Colors.deepOrange[700],
+          color: Colors.white,
+          onRefresh: () {
+            setState(() {
               list = WriteToData.getAllMessagesReceived();
             });
             return Future.value(true);
-            },
-            child: ListView.builder(
+          },
+          child: ListView.builder(
             physics: const AlwaysScrollableScrollPhysics(),
             itemCount: snapshot.data.length,
             itemBuilder: (BuildContext context, int position) {
@@ -62,23 +69,26 @@ class AdminWriteToMessagesState extends State<AdminWriteToMessages> {
               );
             },
           ),
-          );
-        },
-      );
+        );
+      },
+    );
   }
 
   Future<bool> _deleteMessage(BuildContext context) async {
     bool value = false;
     int result = await Dialogs.modalBottomSheet(context, [
       DialogsModalBottomSheetItem(
-          FlutterI18n.translate(context, "writeTo.adminWriteToMessages.string2"),
+          FlutterI18n.translate(
+              context, "writeTo.adminWriteToMessages.string2"),
           Icons.delete,
           0)
     ]);
 
     if (result != null && result == 0) {
-      ConfirmDialogAction action = await Dialogs.confirmDelete(context,
-          FlutterI18n.translate(context, "writeTo.adminWriteToMessages.string3"));
+      ConfirmDialogAction action = await Dialogs.confirmDelete(
+          context,
+          FlutterI18n.translate(
+              context, "writeTo.adminWriteToMessages.string3"));
 
       if (action != null && action == ConfirmDialogAction.delete) {
         value = true;

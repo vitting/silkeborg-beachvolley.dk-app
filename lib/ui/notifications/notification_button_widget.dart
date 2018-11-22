@@ -23,7 +23,19 @@ class NotiticationButton extends StatefulWidget {
 
 class NotiticationButtonState extends State<NotiticationButton> {
   final Color notificationColor = Colors.white;
+  final ScrollController _scrollController = ScrollController();
+  final _defaultNumberOfItemsToLoad = 20;
+  int _numberOfItemsToLoad;
   bool showNewNotificationIndicator = false;
+  int _currentLengthOfLoadedItems = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _numberOfItemsToLoad = _defaultNumberOfItemsToLoad;
+    _scrollController.addListener(_handleScrollLoadMore);
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -37,6 +49,12 @@ class NotiticationButtonState extends State<NotiticationButton> {
         });
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -85,7 +103,7 @@ class NotiticationButtonState extends State<NotiticationButton> {
         builder: (BuildContext context) => Dialog(
                 child: StreamBuilder(
               stream: NotificationsData.getUserNotificationsAsStream(
-                  MainInherited.of(context).userId),
+                  MainInherited.of(context).userId, _numberOfItemsToLoad),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (!snapshot.hasData) return LoaderSpinner();
@@ -93,6 +111,7 @@ class NotiticationButtonState extends State<NotiticationButton> {
                   return NoData(FlutterI18n.translate(context,
                       "notifications.notificationButtonWidget.string2"));
 
+                _currentLengthOfLoadedItems = snapshot.data.documents.length;
                 return Container(
                     padding: EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 10.0),
                     child: _buildListOfNotifications(snapshot.data));
@@ -102,15 +121,13 @@ class NotiticationButtonState extends State<NotiticationButton> {
 
   Widget _buildListOfNotifications(QuerySnapshot snapshot) {
     return Scrollbar(
-          child: ListView.builder(
+      child: ListView.builder(
+        controller: _scrollController,
         itemCount: snapshot.documents.length,
         itemBuilder: (BuildContext context, int position) {
-          print("LENGHT: ${snapshot.documents.length} / POSITION: $position");
-          if (snapshot.documents.length -1 == position) {
-            print("THIS IS THE LAST ONE");
-          }
           DocumentSnapshot docSnapshot = snapshot.documents[position];
-          NotificationsData item = NotificationsData.fromMap(docSnapshot.data, docSnapshot.documentID);
+          NotificationsData item = NotificationsData.fromMap(
+              docSnapshot.data, docSnapshot.documentID);
 
           return NotificationsRow(
               item: item,
@@ -158,6 +175,17 @@ class NotiticationButtonState extends State<NotiticationButton> {
             builder: (BuildContext context) => WriteTo()));
       }
       print(notification.subType);
+    }
+  }
+
+  void _handleScrollLoadMore() {
+    if (_scrollController.position.extentAfter == 0) {
+      if (_currentLengthOfLoadedItems >= _numberOfItemsToLoad) {
+        setState(() {
+          _numberOfItemsToLoad =
+              _numberOfItemsToLoad + _defaultNumberOfItemsToLoad;
+        });
+      }
     }
   }
 }

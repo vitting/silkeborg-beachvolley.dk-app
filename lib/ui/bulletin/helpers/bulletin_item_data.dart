@@ -68,8 +68,8 @@ class BulletinItemData {
     return BulletinFirestore.deleteCommentsByBulletinId(id);
   }
 
-  Stream<QuerySnapshot> getCommentsAsStream() {
-    return BulletinFirestore.getAllBulletinCommentsAsStream(id);
+  Stream<QuerySnapshot> getCommentsAsStream(int limit) {
+    return BulletinFirestore.getAllBulletinCommentsAsStream(id, limit);
   }
 
   String get creationDateFormatted {

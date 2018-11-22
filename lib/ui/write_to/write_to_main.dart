@@ -23,6 +23,12 @@ class WriteToState extends State<WriteTo> {
   Future<List<WriteToData>> list;
 
   @override
+    void didChangeDependencies() {
+      list = WriteToData.getAllMessagesByUserId(MainInherited.of(context).userId);
+      super.didChangeDependencies();
+    }
+
+  @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
         title: FlutterI18n.translate(context, "writeTo.writeToMain.title1"),
@@ -52,10 +58,8 @@ class WriteToState extends State<WriteTo> {
   }
 
   Widget _main() {
-    list = WriteToData.getAllMessagesByUserId(MainInherited.of(context).userId);
     return FutureBuilder(
       future: list,
-      // future: WriteToData.getAllMessagesByUserId(MainInherited.of(context).userId),
       builder:
           (BuildContext context, AsyncSnapshot<List<WriteToData>> snapshot) {
         if (!snapshot.hasData) return LoaderSpinner();

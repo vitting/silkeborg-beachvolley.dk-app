@@ -13,11 +13,12 @@ class BulletinFirestore {
   static Firestore _firestore = Firestore.instance;
 
   static Stream<QuerySnapshot> getAllBulletinCommentsAsStream(
-      String bulletinId) {
+      String bulletinId, int limit) {
     return _firestore
         .collection(_bulletinCommentsCollectionName)
         .where("bulletinId", isEqualTo: bulletinId)
         .orderBy("creationDate", descending: false)
+        .limit(limit)
         .snapshots();
   }
 

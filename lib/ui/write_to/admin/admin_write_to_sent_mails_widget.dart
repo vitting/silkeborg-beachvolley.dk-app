@@ -7,18 +7,45 @@ import 'package:silkeborgbeachvolley/ui/helpers/no_data_widget.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_data.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_row.dart';
 
-class AdminWriteToSentMails extends StatelessWidget {
+class AdminWriteToSentMails extends StatefulWidget {
+  @override
+  AdminWriteToSentMailsState createState() {
+    return new AdminWriteToSentMailsState();
+  }
+}
+
+class AdminWriteToSentMailsState extends State<AdminWriteToSentMails> {
+  final ScrollController _scrollController = ScrollController();
+  final _defaultNumberOfItemsToLoad = 20;
+  int _numberOfItemsToLoad;
+  int _currentLengthOfLoadedItems = 0;
+
+@override
+  void initState() {
+    super.initState();
+    _numberOfItemsToLoad = _defaultNumberOfItemsToLoad;
+    _scrollController.addListener(_handleScrollLoadMore);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: WriteToData.getAllMessagesSentMail(),
+        stream: WriteToData.getAllMessagesSentMailAsStream(_numberOfItemsToLoad),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return LoaderSpinner();
           if (snapshot.hasData && snapshot.data.documents.length == 0)
             return NoData(FlutterI18n.translate(
                 context, "writeTo.adminWriteToSentMails.string1"));
 
+          _currentLengthOfLoadedItems = snapshot.data.documents.length;
           return ListView.builder(
+            controller: _scrollController,
             itemCount: snapshot.data.documents.length,
             itemBuilder: (BuildContext context, int position) {
               WriteToData doc =
@@ -62,4 +89,13 @@ class AdminWriteToSentMails extends StatelessWidget {
     return value;
   }
 
+  void _handleScrollLoadMore() {
+    if (_scrollController.position.extentAfter == 0) {
+      if (_currentLengthOfLoadedItems >= _numberOfItemsToLoad)
+        setState(() {
+          _numberOfItemsToLoad =
+              _numberOfItemsToLoad + _defaultNumberOfItemsToLoad;
+        });
+    }
+  }
 }

@@ -90,32 +90,14 @@ class WriteToFirestore {
     return list;
   }
 
-  // static Stream<QuerySnapshot> getAllMessagesReceived() {
-  //   return _firestore
-  //       .collection(_collectionName)
-  //       .where("type", isEqualTo: "public")
-  //       .where("deleted", isEqualTo: false)
-  //       .orderBy("createdDate", descending: true)
-  //       .snapshots();
-  // }
-
-  // static Stream<QuerySnapshot> getAllMessagesSentMessage() {
-  //   return _firestore
-  //       .collection(_collectionName)
-  //       .where("type", isEqualTo: "admin")
-  //       .where("subType", isEqualTo: "message")
-  //       .where("deleted", isEqualTo: false)
-  //       .orderBy("createdDate", descending: true)
-  //       .snapshots();
-  // }
-
-  static Stream<QuerySnapshot> getAllMessagesSentMail() {
+  static Stream<QuerySnapshot> getAllMessagesSentMailAsStream(int limit) {
     return _firestore
         .collection(_collectionName)
         .where("type", isEqualTo: "admin")
         .where("subType", isEqualTo: "mail")
         .where("deleted", isEqualTo: false)
         .orderBy("createdDate", descending: true)
+        .limit(limit)
         .snapshots();
   }
 

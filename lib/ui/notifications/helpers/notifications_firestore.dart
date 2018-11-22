@@ -11,12 +11,12 @@ class NotificationsFirestore {
         .updateData({"userIds": FieldValue.arrayRemove([userId])});
   }
 
-  static Stream<QuerySnapshot> getNotificationsFromUserIdAsStream(String userId) {
+  static Stream<QuerySnapshot> getNotificationsFromUserIdAsStream(String userId, int limit) {
     return _firestore
         .collection(_collectionName)
         .where("userIds", arrayContains: userId)
         .orderBy("creationDate", descending: true)
-        .limit(20)
+        .limit(limit)
         .snapshots();
   }
 }
