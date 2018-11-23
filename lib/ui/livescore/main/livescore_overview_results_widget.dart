@@ -12,7 +12,7 @@ class LivescoreOverviewResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: LivescoreData.getMatchesEnded(),
+      stream: LivescoreData.getMatchesEndedAsStream(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (!snapshot.hasData) return LoaderSpinner();
         if (snapshot.hasData && snapshot.data.documents.length == 0)

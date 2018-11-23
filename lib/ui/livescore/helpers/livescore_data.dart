@@ -349,15 +349,15 @@ class LivescoreData {
     return LivescoreFirestore.deleteMatch(id);
   }
 
-  static Stream<QuerySnapshot> getMatchesUpcoming() {
+  static Stream<QuerySnapshot> getMatchesUpcomingAsStream() {
     return LivescoreFirestore.getAllUpcomingMatchesAsStream();
   }
 
-  static Stream<QuerySnapshot> getMatchesStarted() {
+  static Stream<QuerySnapshot> getMatchesStartedAsStream() {
     return LivescoreFirestore.getAllStartedMatchesAsStream();
   }
 
-  static Stream<QuerySnapshot> getMatchesEnded() {
+  static Stream<QuerySnapshot> getMatchesEndedAsStream() {
     return LivescoreFirestore.getAllEndedMatchesAsStream();
   }
 

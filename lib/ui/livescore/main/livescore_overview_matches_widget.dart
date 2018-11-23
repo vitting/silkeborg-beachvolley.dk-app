@@ -22,7 +22,7 @@ class LivescoreOverviewMatches extends StatelessWidget {
 
   Widget _activeMatches() {
     return StreamBuilder(
-      stream: LivescoreData.getMatchesStarted(),
+      stream: LivescoreData.getMatchesStartedAsStream(),
       builder:
           (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshotStarted) {
         if (!snapshotStarted.hasData) return LoaderSpinner();
@@ -70,7 +70,7 @@ class LivescoreOverviewMatches extends StatelessWidget {
 
   Widget _upcomingMatches() {
     return StreamBuilder(
-      stream: LivescoreData.getMatchesUpcoming(),
+      stream: LivescoreData.getMatchesUpcomingAsStream(),
       builder: (BuildContext context,
           AsyncSnapshot<QuerySnapshot> snapshotUpcoming) {
         if (!snapshotUpcoming.hasData) return LoaderSpinner();

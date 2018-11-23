@@ -103,6 +103,7 @@ class MainInheritedState extends State<MainInherited> {
 
   Future<void> _initUserAuth() async {
     UserAuth.firebaseAuth.onAuthStateChanged.listen((user) async {
+      // print("*****************START INIT USER AUTH: ${DateTime.now().toIso8601String()}");
       loggedInUser = user;
       userId = user?.uid;
       isLoggedIn = user != null ? true : false;
@@ -113,7 +114,7 @@ class MainInheritedState extends State<MainInherited> {
         isAdmin1 = userInfoData.admin1;
         isAdmin2 = userInfoData.admin2;
         settings = await SettingsData.initSettings(user);
-        _initMessaging();
+        await _initMessaging();
       }
 
       if (mounted) {
@@ -121,10 +122,12 @@ class MainInheritedState extends State<MainInherited> {
           _loading = false;
         });
       }
+      // print("*****************END INIT USER AUTH: ${DateTime.now().toIso8601String()}");
     });
   }
 
   Future<void> _initMessaging() async {
+    // print("*****************START INIT MESSAGING: ${DateTime.now().toIso8601String()}");
     systemLanguageCode = await SystemHelpers.getSystemLanguageCode();
     _firebaseMessaging.setAutoInitEnabled(true);
     _firebaseMessaging.requestNotificationPermissions(
@@ -184,6 +187,7 @@ class MainInheritedState extends State<MainInherited> {
     });
 
     await _firebaseMessaging.getToken();
+    // print("*****************END INIT MESSAGING: ${DateTime.now().toIso8601String()}");
   }
 
   UserMessagingData _initUserMessaging(String token) {
