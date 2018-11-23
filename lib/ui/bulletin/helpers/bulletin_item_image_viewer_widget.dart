@@ -13,7 +13,7 @@ class BulletinItemImageViewer extends StatelessWidget {
         child: new PhotoView(
       imageProvider: CachedNetworkImageProvider(imageUrl),
       minScale: PhotoViewComputedScale.contained * 0.8,
-      maxScale: 4.0,
+      maxScale: 4.0
     ));
   }
 }

@@ -57,6 +57,7 @@ class LoaderSpinnerOverlay extends StatelessWidget {
         ),
       ));
     }
+    
     return loaderWidgets;
   }
 }

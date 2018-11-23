@@ -6,7 +6,7 @@ import 'package:silkeborgbeachvolley/ui/enrollment/form/enrollment_form.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/main/enrollment_payment.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/main/enrollment_readme.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:silkeborgbeachvolley/ui/helpers/dot_bottombar_widget.dart';
+// import 'package:silkeborgbeachvolley/ui/helpers/dot_bottombar_widget.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/silkeborgBeachvolleyScaffold.dart';
 
 class Enrollment extends StatefulWidget {
@@ -19,7 +19,7 @@ class _EnrollmentState extends State<Enrollment> {
   final PageController _controller = PageController();
   final String _mobilePayUrl =
       "https://www.mobilepay.dk/erhverv/betalingslink/betalingslink-svar?phone=18185&amount=25&comment=Kontigent%20-%20";
-  int _position = 0;
+  // int _position = 0;
   @override
   void dispose() {
     _controller.dispose();
@@ -30,8 +30,8 @@ class _EnrollmentState extends State<Enrollment> {
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
       actions: <Widget>[_actionMenu(context)],
-      bottomNavigationBar: DotBottomBar(
-          showNavigationButtons: false, numberOfDot: 3, position: _position),
+      // bottomNavigationBar: DotBottomBar(
+      //     showNavigationButtons: false, numberOfDot: 3, position: _position),
       title: FlutterI18n.translate(context, "enrollment.enrollmentMain.title"),
       body: Card(
           child: Container(
@@ -46,9 +46,9 @@ class _EnrollmentState extends State<Enrollment> {
                     curve: Curves.easeIn,
                     duration: Duration(milliseconds: 400));
 
-                setState(() {
-                  _position = 1;
-                });
+                // setState(() {
+                //   _position = 1;
+                // });
               },
             ),
             EnrollmentForm(
@@ -56,9 +56,9 @@ class _EnrollmentState extends State<Enrollment> {
                 _controller.nextPage(
                     curve: Curves.easeIn,
                     duration: Duration(milliseconds: 400));
-                setState(() {
-                  _position = 2;
-                });
+                // setState(() {
+                //   _position = 2;
+                // });
               },
             ),
             EnrollmentPayment(
@@ -67,9 +67,9 @@ class _EnrollmentState extends State<Enrollment> {
                     curve: Curves.easeIn,
                     duration: Duration(milliseconds: 400));
 
-                setState(() {
-                  _position = 0;
-                });
+                // setState(() {
+                //   _position = 0;
+                // });
               },
               onTapMobilePayUrl: (bool value) {
                 _launchUrl(_mobilePayUrl);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/chip_header_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/enrollment/admin/admin_enrollment_detail_row.dart';
@@ -36,6 +37,8 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
                 Expanded(
                   child: ChipHeader(
                     payment.year.toString(),
+                    roundedCorners: false,
+                    expanded: true, 
                     textAlign: TextAlign.center,
                     fontWeight: FontWeight.bold,
                   ),
@@ -48,7 +51,7 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
                   IconButton(
                     tooltip: FlutterI18n.translate(context,
                         "enrollment.adminEnrollmentDetailPayments.string2"),
-                    color: Colors.deepOrange,
+                    color: SilkeborgBeachvolleyTheme.buttonTextColor,
                     icon: Icon(Icons.delete),
                     onPressed: () {
                       onPressedDeletePayment(payment);
@@ -57,7 +60,7 @@ class AdminEnrollmentDetailPayments extends StatelessWidget {
                   IconButton(
                     tooltip: FlutterI18n.translate(context,
                         "enrollment.adminEnrollmentDetailPayments.string3"),
-                    color: Colors.deepOrange,
+                    color: SilkeborgBeachvolleyTheme.buttonTextColor,
                     icon: Icon(Icons.comment),
                     iconSize: 20.0,
                     onPressed: () {

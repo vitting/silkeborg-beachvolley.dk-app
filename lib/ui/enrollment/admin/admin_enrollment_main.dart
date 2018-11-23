@@ -93,35 +93,6 @@ class _AdminEnrollmentState extends State<AdminEnrollment> {
     );
   }
 
-  // Widget _main() {
-  //   return Container(
-  //     child: Scrollbar(
-  //       child: ListView.builder(
-  //         shrinkWrap: false,
-  //         itemCount: _data.length + 1,
-  //         itemBuilder: (BuildContext context, int position) {
-  //           if (position == 0) {
-  //             return SearchBar(
-  //               searchValue: _search,
-  //             );
-  //           }
-
-  //           EnrollmentUserData item = _data[position - 1];
-  //           return GestureDetector(
-  //             child: _row(context, item),
-  //             onTap: () {
-  //               Navigator.of(context).push(MaterialPageRoute(
-  //                   fullscreenDialog: true,
-  //                   builder: (BuildContext context) =>
-  //                       EnrollmentDetail(enrollment: item)));
-  //             }
-  //           );
-  //         },
-  //       ),
-  //     ),
-  //   );
-  // }
-
   Widget _row(BuildContext context, EnrollmentUserData item) {
     return ListItemCard(
       padding: EdgeInsets.all(10.0),
