@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
@@ -13,6 +14,24 @@ class AdminUsers extends StatefulWidget {
 }
 
 class _AdminUsersState extends State<AdminUsers> {
+   final ScrollController _scrollController = ScrollController();
+  final _defaultNumberOfItemsToLoad = 20;
+  int _numberOfItemsToLoad;
+  int _currentLengthOfLoadedItems = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _numberOfItemsToLoad = _defaultNumberOfItemsToLoad;
+    _scrollController.addListener(_handleScrollLoadMore);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SilkeborgBeachvolleyScaffold(
@@ -21,17 +40,19 @@ class _AdminUsersState extends State<AdminUsers> {
   }
 
   Widget _main() {
-    return FutureBuilder(
-      future: UserInfoData.getAllUsers(),
-      builder:
-          (BuildContext context, AsyncSnapshot<List<UserInfoData>> snapshot) {
+    return StreamBuilder(
+      stream: UserInfoData.getAllUsersAsStream(_numberOfItemsToLoad),
+      builder:(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (!snapshot.hasData) return LoaderSpinner();
 
-        return Container(
+        _currentLengthOfLoadedItems = snapshot.data.documents.length;
+        return Scrollbar(
           child: ListView.builder(
-            itemCount: snapshot.data.length,
+            controller: _scrollController,
+            itemCount: snapshot.data.documents.length,
             itemBuilder: (BuildContext context, int index) {
-              UserInfoData user = snapshot.data[index];
+              DocumentSnapshot docSnapshot = snapshot.data.documents[index];
+              UserInfoData user = UserInfoData.fromMap(docSnapshot.data);
               return Card(
                 child: ListTile(
                   leading: CircleProfileImage(
@@ -153,7 +174,17 @@ class _AdminUsersState extends State<AdminUsers> {
             },
           ),
         );
-      },
+      }
     );
+  }
+
+  void _handleScrollLoadMore() {
+    if (_scrollController.position.extentAfter == 0) {
+      if (_currentLengthOfLoadedItems >= _numberOfItemsToLoad)
+        setState(() {
+          _numberOfItemsToLoad =
+              _numberOfItemsToLoad + _defaultNumberOfItemsToLoad;
+        });
+    }
   }
 }

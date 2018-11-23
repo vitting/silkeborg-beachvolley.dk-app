@@ -16,10 +16,29 @@ class AdminRankingMatches extends StatefulWidget {
 }
 
 class AdminRankingMatchesState extends State<AdminRankingMatches> {
+  final ScrollController _scrollController = ScrollController();
+  final _defaultNumberOfItemsToLoad = 50;
+  int _numberOfItemsToLoad;
+  int _currentLengthOfLoadedItems = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _numberOfItemsToLoad = _defaultNumberOfItemsToLoad;
+    _scrollController.addListener(_handleScrollLoadMore);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: RankingMatchData.getMatchesAsStream(),
+      stream: RankingMatchData.getMatchesAsStream(_numberOfItemsToLoad),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           print(
@@ -31,6 +50,8 @@ class AdminRankingMatchesState extends State<AdminRankingMatches> {
           return NoData(FlutterI18n.translate(
               context, "ranking.adminRankingMatchesMain.string1"));
         }
+
+        _currentLengthOfLoadedItems = snapshot.data.documents.length;
         List<RankingMatchData> list = snapshot.data.documents
             .map<RankingMatchData>((DocumentSnapshot doc) {
           return RankingMatchData.fromMap(doc.data);
@@ -46,6 +67,7 @@ class AdminRankingMatchesState extends State<AdminRankingMatches> {
       constraints: BoxConstraints.expand(),
       child: Scrollbar(
         child: ListView.builder(
+          controller: _scrollController,
           shrinkWrap: true,
           itemCount: list.length,
           itemBuilder: (BuildContext context, int position) {
@@ -90,6 +112,16 @@ class AdminRankingMatchesState extends State<AdminRankingMatches> {
       if (action != null && action == ConfirmDialogAction.delete) {
         match.delete();
       }
+    }
+  }
+
+  void _handleScrollLoadMore() {
+    if (_scrollController.position.extentAfter == 0) {
+      if (_currentLengthOfLoadedItems >= _numberOfItemsToLoad)
+        setState(() {
+          _numberOfItemsToLoad =
+              _numberOfItemsToLoad + _defaultNumberOfItemsToLoad;
+        });
     }
   }
 }

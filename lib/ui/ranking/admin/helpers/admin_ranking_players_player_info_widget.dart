@@ -41,9 +41,11 @@ class AdminRankingPlayersPlayerInfo extends StatelessWidget {
                       message: FlutterI18n.translate(context,
                           "ranking.adminRankingPlayersPlayerInfoWidget.string2"),
                       child: Icon(FontAwesomeIcons.idCard, size: 12.0)),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: Text(player.userId, textAlign: TextAlign.center),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 5.0),
+                      child: Text(player.userId, textAlign: TextAlign.center),
+                    ),
                   )
                 ],
               ),

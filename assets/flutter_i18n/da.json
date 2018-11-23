@@ -531,7 +531,7 @@
             "title2": "Skriv besked",
             "string1": "Sender besked",
             "string2": "Navn",
-            "string3": "Udfyld navn",
+            "string3": "Vælg en bruger",
             "string4": "Emne",
             "string5": "Udfyld emne",
             "string6": "E-mail",
@@ -541,7 +541,8 @@
             "string10": "Udfyld besked",
             "string11": "Send e-mail",
             "string12": "Send besked",
-            "string13": "Vælg bruger"
+            "string13": "Vælg bruger",
+            "string14": "Tryk på knappen for a vælge en bruger"
         },
         "adminWriteToDetailMain": {
             "title1": "Send besked",

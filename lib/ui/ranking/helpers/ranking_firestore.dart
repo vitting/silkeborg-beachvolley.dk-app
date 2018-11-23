@@ -79,11 +79,12 @@ class RankingFirestore {
         .snapshots();
   }
 
-  static Stream<QuerySnapshot> getMatchesAsStream([bool descending = true]) {
+  static Stream<QuerySnapshot> getMatchesAsStream(bool descending, int limit) {
     return _firestore
         .collection(_collectionNameMatch)
         .where("enabled", isEqualTo: true)
         .orderBy("createdDate", descending: descending)
+        .limit(limit)
         .snapshots();
   }
 
@@ -106,11 +107,12 @@ class RankingFirestore {
         .getDocuments();
   }
 
-  static Stream<QuerySnapshot> getAllPlayersAsStream([bool deleted = false]) {
+  static Stream<QuerySnapshot> getAllPlayersAsStream(bool deleted, int limit) {
     return _firestore
         .collection(_collectionNamePlayer)
         .where("deleted", isEqualTo: deleted)
         .orderBy("name")
+        .limit(limit)
         .snapshots();
   }
 

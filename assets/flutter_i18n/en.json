@@ -531,7 +531,7 @@
             "title2": "Write message",
             "string1": "Send message",
             "string2": "Name",
-            "string3": "Fill out name",
+            "string3": "Choose a user",
             "string4": "Subject",
             "string5": "Fill out subject",
             "string6": "Email",
@@ -541,7 +541,8 @@
             "string10": "Fill out message",
             "string11": "Send email",
             "string12": "Send message",
-            "string13": "Choose user"
+            "string13": "Choose user",
+            "string14": "Use the button to choose a user"
         },
         "adminWriteToDetailMain": {
             "title1": "Send message",

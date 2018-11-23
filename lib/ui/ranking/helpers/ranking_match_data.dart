@@ -67,8 +67,8 @@ class RankingMatchData {
     return RankingFirestore.getMatchesAsStreamWithLimit(limit);
   }
 
-  static Stream<QuerySnapshot> getMatchesAsStream() {
-    return RankingFirestore.getMatchesAsStream();
+  static Stream<QuerySnapshot> getMatchesAsStream(int limit) {
+    return RankingFirestore.getMatchesAsStream(true, limit);
   }
 
   static RankingMatchData fromMap(Map<String, dynamic> item) {

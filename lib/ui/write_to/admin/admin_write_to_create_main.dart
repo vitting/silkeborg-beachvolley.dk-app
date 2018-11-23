@@ -134,8 +134,8 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
     return TextFormField(
       controller: _nameController,
       decoration: InputDecoration(
-          labelText: FlutterI18n.translate(
-              context, "writeTo.adminWriteToCreateMain.string2"),
+          labelText: FlutterI18n.translate(context, "writeTo.adminWriteToCreateMain.string2"),
+          hintText: FlutterI18n.translate(context, "writeTo.adminWriteToCreateMain.string14"),
           suffixIcon: IconButton(
             color: SilkeborgBeachvolleyTheme.buttonTextColor,
             icon: Icon(Icons.person),
@@ -296,8 +296,7 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
               title: Text(FlutterI18n.translate(
                   context, "writeTo.adminWriteToCreateMain.string13")),
               children: users.map<Widget>((UserInfoData user) {
-                if (user.id == MainInherited.of(context).userId)
-                  return Container();
+                if (user.id == MainInherited.of(context).userId) return Container();
                 return ListTile(
                   onTap: () {
                     Navigator.of(contextModal).pop(user);

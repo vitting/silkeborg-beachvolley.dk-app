@@ -12,8 +12,18 @@ class UserFirestore {
   static Future<QuerySnapshot> getAllUsers() {
     return _firestore
         .collection(_collectionNameUsers)
+        .where("enabled", isEqualTo: true)
         .orderBy("name")
         .getDocuments();
+  }
+
+  static Stream<QuerySnapshot> getAllUsersAsStream(int limit) {
+    return _firestore
+        .collection(_collectionNameUsers)
+        .where("enabled", isEqualTo: true)
+        .orderBy("name")
+        .limit(limit)
+        .snapshots();
   }
 
   static Future<void> deleteUser(String userId) {

@@ -60,7 +60,6 @@ class UserInfoData {
     return userInfoData;
   }
 
-/// TODO: Should we only get enabled users
   static Future<List<UserInfoData>> getAllUsers() async {
     List<UserInfoData> list = [];
     QuerySnapshot snapshot = await UserFirestore.getAllUsers();
@@ -70,6 +69,10 @@ class UserInfoData {
       }).toList();
     }
     return list;
+  }
+
+  static Stream<QuerySnapshot> getAllUsersAsStream(int limit) {
+    return UserFirestore.getAllUsersAsStream(limit);
   }
 
   static UserInfoData fromFireBaseUser(FirebaseUser user) {

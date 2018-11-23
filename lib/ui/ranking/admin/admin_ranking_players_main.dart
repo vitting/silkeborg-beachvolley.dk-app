@@ -20,22 +20,42 @@ class AdminRankingPlayers extends StatefulWidget {
 }
 
 class _AdminRankingPlayersState extends State<AdminRankingPlayers> {
+  final ScrollController _scrollController = ScrollController();
+  final _defaultNumberOfItemsToLoad = 50;
+  int _numberOfItemsToLoad;
+  int _currentLengthOfLoadedItems = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _numberOfItemsToLoad = _defaultNumberOfItemsToLoad;
+    _scrollController.addListener(_handleScrollLoadMore);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: RankingPlayerData.getPlayersAsStream(widget.showDeletedPlayers),
+      stream: RankingPlayerData.getPlayersAsStream(widget.showDeletedPlayers, _numberOfItemsToLoad),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
-          print(
-              "ERROR admin_ranking_players_main StreamBuilder: ${snapshot.error}");
+          print("ERROR admin_ranking_players_main StreamBuilder: ${snapshot.error}");
           return Container();
         }
         if (!snapshot.hasData) return LoaderSpinner();
-        if (snapshot.hasData && snapshot.data.documents.length == 0)
-          return NoData(FlutterI18n.translate(
-              context, "ranking.adminRankingPlayersMain.string1"));
-        return Container(
+        if (snapshot.hasData && snapshot.data.documents.length == 0) {
+          return NoData(FlutterI18n.translate(context, "ranking.adminRankingPlayersMain.string1"));
+        }
+          
+        _currentLengthOfLoadedItems = snapshot.data.documents.length;
+        return Scrollbar(
           child: ListView.builder(
+            controller: _scrollController,
             itemCount: snapshot.data.documents.length,
             itemBuilder: (BuildContext context, int position) {
               DocumentSnapshot doc = snapshot.data.documents[position];
@@ -106,5 +126,15 @@ class _AdminRankingPlayersState extends State<AdminRankingPlayers> {
             player: player,
           );
         });
+  }
+
+  void _handleScrollLoadMore() {
+    if (_scrollController.position.extentAfter == 0) {
+      if (_currentLengthOfLoadedItems >= _numberOfItemsToLoad)
+        setState(() {
+          _numberOfItemsToLoad =
+              _numberOfItemsToLoad + _defaultNumberOfItemsToLoad;
+        });
+    }
   }
 }

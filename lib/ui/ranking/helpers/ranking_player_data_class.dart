@@ -52,8 +52,8 @@ class RankingPlayerData {
     return RankingFirestore.deletePlayerMarkAsNotDeleted(userId);
   }
 
-  static Stream<QuerySnapshot> getPlayersAsStream(bool showOnlyDeleted) {
-    return RankingFirestore.getAllPlayersAsStream(showOnlyDeleted);
+  static Stream<QuerySnapshot>getPlayersAsStream(bool showOnlyDeleted, int limit) {
+    return RankingFirestore.getAllPlayersAsStream(showOnlyDeleted, limit);
   }
 
   static Stream<QuerySnapshot> getRankingAsStream() {
