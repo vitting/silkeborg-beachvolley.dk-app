@@ -9,13 +9,18 @@ class ConfigData {
   final String emailUsername;
   final String emailPassword;
   final String emailDebug;
+  final String clubName;
+  final String clubEmail;
 
   ConfigData(
       {this.emailFromName,
       this.emailFromMail,
       this.emailUsername,
       this.emailPassword,
-      this.emailDebug});
+      this.emailDebug,
+      this.clubName,
+      this.clubEmail
+      });
 
   factory ConfigData.fromMap(Map<String, dynamic> item) {
     return ConfigData(
@@ -23,7 +28,10 @@ class ConfigData {
         emailFromMail: item["emailFromMail"],
         emailUsername: item["emailUsername"],
         emailPassword: item["emailPassword"],
-        emailDebug: item["emailDebug"]);
+        emailDebug: item["emailDebug"],
+        clubName: item["clubName"],
+        clubEmail: item["clubEmail"]
+        );
   }
 
   static Future<ConfigData> getConfig(

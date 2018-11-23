@@ -5,7 +5,6 @@ import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
 import 'package:silkeborgbeachvolley/helpers/circle_profile_image.dart';
 import 'package:silkeborgbeachvolley/helpers/config_data.dart';
-import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_constant.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
 import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
@@ -35,15 +34,15 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
   WriteToData _writeToData;
 
   @override
-  void initState() {
-    super.initState();
+    void didChangeDependencies() {
+      super.didChangeDependencies();
 
-    _writeToData = WriteToData(
+      _writeToData = WriteToData(
         type: "admin",
         newMessageStatus: true,
         subType: widget.type == WriteToCreateFabType.mail ? "mail" : "message",
-        fromEmail: SilkeborgBeachvolleyConstants.email,
-        fromName: SilkeborgBeachvolleyConstants.name,
+        fromEmail: MainInherited.of(context).config.clubEmail,
+        fromName: MainInherited.of(context).config.clubName,
         fromPhotoUrl: "locale",
         fromUserId: "",
         sendToEmail: "",
@@ -53,7 +52,7 @@ class AdminWriteToCreateState extends State<AdminWriteToCreate> {
         sendToUserId: "",
         message: "",
         messageRepliedToId: null);
-  }
+    }
 
   @override
   Widget build(BuildContext context) {

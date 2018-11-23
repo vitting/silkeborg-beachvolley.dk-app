@@ -66,7 +66,7 @@ class MainInheritedState extends State<MainInherited> {
   @override
   void initState() {
     super.initState();
-    _initProperties();
+    canVibrate = widget.canVibrate;
     _initUserAuth();
   }
 
@@ -91,21 +91,14 @@ class MainInheritedState extends State<MainInherited> {
     _notificationController.add(data);
   }
 
-  Future<bool> deleteFirebaseMessagingSession() {
-    return _firebaseMessaging.deleteInstanceID();
-  }
-
   Future<void> logout() async {
+    print("**********************LOGOUT**********************");
     isLoggedIn = false;
     await _firebaseMessaging.deleteInstanceID();
     await UserMessagingData.deleteUserMessaging(userId);
     await UserInfoData.setEnabledState(userId, false);
     await RankingSharedPref.removeIsItFirstTime();
     await UserAuth.signOutWithFacebook();
-  }
-
-  Future<void> _initProperties() async {
-    canVibrate = widget.canVibrate;
   }
 
   Future<void> _initUserAuth() async {
@@ -115,7 +108,7 @@ class MainInheritedState extends State<MainInherited> {
       isLoggedIn = user != null ? true : false;
 
       if (user != null) {
-        print("**********************INITUSERAUTH**********************");
+        print("**********************INIT USER AUTH**********************");
         userInfoData = await UserInfoData.initUserInfo(user);
         isAdmin1 = userInfoData.admin1;
         isAdmin2 = userInfoData.admin2;
@@ -132,7 +125,7 @@ class MainInheritedState extends State<MainInherited> {
   }
 
   Future<void> _initMessaging() async {
-    systemLanguageCode = await SystemHelpers.systemLanguageCode();
+    systemLanguageCode = await SystemHelpers.getSystemLanguageCode();
     _firebaseMessaging.setAutoInitEnabled(true);
     _firebaseMessaging.requestNotificationPermissions(
         IosNotificationSettings(alert: true, badge: true, sound: true));
@@ -185,7 +178,7 @@ class MainInheritedState extends State<MainInherited> {
 
     _firebaseMessaging.onTokenRefresh.listen((token) {
       if (isLoggedIn) {
-        print("**********************Token refresh*********************");
+        print("******************Token refresh******************");
         this.userMessaging = _initUserMessaging(token);
       }
     });
@@ -235,7 +228,6 @@ class MainInheritedState extends State<MainInherited> {
     return _loading
         ? Container(
             decoration: SilkeborgBeachvolleyTheme.gradientColorBoxDecoration,
-            // color: Colors.yellow,
             child: Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

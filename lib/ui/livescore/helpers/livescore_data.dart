@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
-import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
+import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/livescore/helpers/livescore_sets_played_data.dart';
 
@@ -339,7 +339,7 @@ class LivescoreData {
   }
 
   Future<void> save(String userId) {
-    id = id ?? UuidHelpers.generateUuid();
+    id = id ?? SystemHelpers.generateUuid();
     userId = userId ?? userId;
     createdDate = createdDate ?? Timestamp.now();
     return LivescoreFirestore.saveMatch(this);

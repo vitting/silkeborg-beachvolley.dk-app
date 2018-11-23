@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
 import 'package:silkeborgbeachvolley/helpers/image_helpers.dart';
-import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
+import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_image_data.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_item_data.dart';
@@ -90,7 +90,7 @@ class BulletinEventItemData extends BulletinItemData {
   }
 
   Future<void> save(FirebaseUser user) {
-    id = id ?? UuidHelpers.generateUuid();
+    id = id ?? SystemHelpers.generateUuid();
     creationDate = creationDate ?? Timestamp.now();
     authorId = user.uid;
     authorName = user.displayName;

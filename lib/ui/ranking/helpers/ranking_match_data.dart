@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
-import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
+import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_match_player_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
@@ -36,7 +36,7 @@ class RankingMatchData {
   }
 
   Future<void> save(String userId) async {
-    id = id ?? UuidHelpers.generateUuid();
+    id = id ?? SystemHelpers.generateUuid();
     userId = userId ?? userId;
     createdDate = createdDate ?? Timestamp.now();
     year = year ?? matchDate.year;

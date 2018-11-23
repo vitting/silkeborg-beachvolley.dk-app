@@ -11,7 +11,7 @@ class UserMessagingData {
   final bool isAdmin2;
   final String languageCode;
   final List<NotificationCategory> subscriptions;
-  
+
   const UserMessagingData(
       {this.userId,
       this.token,

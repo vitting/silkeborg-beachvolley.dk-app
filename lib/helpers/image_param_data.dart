@@ -8,7 +8,7 @@ class ImageParamData {
   final File file;
   final Directory tempDir;
   final String fileName;
-  ImageParamData(
+  const ImageParamData(
       {@required this.file,
       @required this.imageSize,
       @required this.firebaseStorageFolder,

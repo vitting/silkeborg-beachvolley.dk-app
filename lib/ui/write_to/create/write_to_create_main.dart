@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_constant.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
 import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
@@ -25,8 +24,8 @@ class WriteToCreateState extends State<WriteToCreate> {
   WriteToData _writeToData;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
     _writeToData = WriteToData(
       type: "public",
@@ -37,8 +36,8 @@ class WriteToCreateState extends State<WriteToCreate> {
       fromPhotoUrl: widget.user != null ? widget.user.photoUrl : "public",
       fromUserId: widget.user != null ? widget.user.uid : "",
       sendToPhotoUrl: "locale",
-      sendToName: SilkeborgBeachvolleyConstants.name,
-      sendToEmail: SilkeborgBeachvolleyConstants.email,
+      sendToName: MainInherited.of(context).config.clubName,
+      sendToEmail: MainInherited.of(context).config.clubEmail,
       sendToEmailSubject: "",
       sendToUserId: "",
       message: "",

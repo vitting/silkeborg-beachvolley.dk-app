@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:screen/screen.dart';
+import 'package:uuid/uuid.dart';
 
 class SystemHelpers {
   static void hideKeyboardWithNoFocus(BuildContext context) {
@@ -37,7 +38,7 @@ class SystemHelpers {
     }
   }
 
-  static Future<String> systemLanguageCode() async {
+  static Future<String> getSystemLanguageCode() async {
     String value = "en";
     String systemLocale = await findSystemLocale();
     if (systemLocale != null) {
@@ -50,7 +51,7 @@ class SystemHelpers {
     return value;
   }
 
-  static Future<String> systemContryCode() async {
+  static Future<String> getSystemContryCode() async {
     String value = "US";
     String systemLocale = await findSystemLocale();
     if (systemLocale != null) {
@@ -61,5 +62,10 @@ class SystemHelpers {
     }
   
     return value;
+  }
+
+  static String generateUuid() {
+    Uuid _uuid = new Uuid();
+    return _uuid.v4().toString();
   }
 }

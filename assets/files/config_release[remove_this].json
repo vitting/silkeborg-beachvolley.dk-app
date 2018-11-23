@@ -1,4 +1,6 @@
 {
+    "clubName": "put name of club here",
+    "clubEmail": "put club email address here",
     "emailFromName": "Silkeborg Beachvolley",
     "emailFromMail": "put your email address here",
     "emailUsername": "put your smtp username here",

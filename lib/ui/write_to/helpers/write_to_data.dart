@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
-import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
+import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/write_to/helpers/write_to_firestore.dart';
 
 class WriteToData {
@@ -70,7 +70,7 @@ class WriteToData {
   }
 
   Future<void> save() {
-    id = id ?? UuidHelpers.generateUuid();
+    id = id ?? SystemHelpers.generateUuid();
     createdDate = createdDate ?? Timestamp.now();
     if (messageRepliedToId == null) {
       return WriteToFirestore.saveMessage(this);

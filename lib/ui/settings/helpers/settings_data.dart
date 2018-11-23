@@ -53,7 +53,8 @@ class SettingsData {
         notificationsShowEvent: item["notificationsShowEvent"] ?? true,
         notificationsShowPlay: item["notificationsShowPlay"] ?? true,
         notificationsShowWriteTo: item["notificationsShowWriteTo"] ?? true,
-        notificationsShowWriteToAdmin: item["notificationsShowWriteToAdmin"] ?? true,
+        notificationsShowWriteToAdmin:
+            item["notificationsShowWriteToAdmin"] ?? true,
         livescorePublicBoardKeepScreenOn:
             item["livescorePublicBoardKeepScreenOn"] ?? true,
         livescoreControlBoardKeepScreenOn:
@@ -72,7 +73,8 @@ class SettingsData {
     return this;
   }
 
-  Future<SettingsData> setNotificationEvent(String userId, bool showEvent) async {
+  Future<SettingsData> setNotificationEvent(
+      String userId, bool showEvent) async {
     this.notificationsShowEvent = showEvent;
     await SettingsFirestore.setNotificationEvent(userId, showEvent);
     return this;
@@ -84,15 +86,18 @@ class SettingsData {
     return this;
   }
 
-  Future<SettingsData> setNotificationWriteTo(String userId, bool showWriteTo) async {
+  Future<SettingsData> setNotificationWriteTo(
+      String userId, bool showWriteTo) async {
     this.notificationsShowWriteTo = showWriteTo;
     await SettingsFirestore.setNotificationWriteTo(userId, showWriteTo);
     return this;
   }
 
-  Future<SettingsData> setNotificationWriteToAdmin(String userId, bool showWriteToAdmin) async {
+  Future<SettingsData> setNotificationWriteToAdmin(
+      String userId, bool showWriteToAdmin) async {
     this.notificationsShowWriteToAdmin = showWriteToAdmin;
-    await SettingsFirestore.setNotificationWriteToAdmin(userId, showWriteToAdmin);
+    await SettingsFirestore.setNotificationWriteToAdmin(
+        userId, showWriteToAdmin);
     return this;
   }
 
@@ -108,15 +113,19 @@ class SettingsData {
     return this;
   }
 
-  Future<SettingsData> setLivescoreBoardKeepScreenOnControl(String userId, bool keepScreenOn) async {
+  Future<SettingsData> setLivescoreBoardKeepScreenOnControl(
+      String userId, bool keepScreenOn) async {
     this.livescoreControlBoardKeepScreenOn = keepScreenOn;
-    await SettingsFirestore.setLivescoreBoardKeepScreenOnControl(userId, keepScreenOn);
+    await SettingsFirestore.setLivescoreBoardKeepScreenOnControl(
+        userId, keepScreenOn);
     return this;
   }
 
-  Future<SettingsData> setLivescoreBoardKeepScreenOnPublic(String userId, bool keepScreenOn) async {
+  Future<SettingsData> setLivescoreBoardKeepScreenOnPublic(
+      String userId, bool keepScreenOn) async {
     this.livescorePublicBoardKeepScreenOn = keepScreenOn;
-    await SettingsFirestore.setLivescoreBoardKeepScreenOnPublic(userId, keepScreenOn);
+    await SettingsFirestore.setLivescoreBoardKeepScreenOnPublic(
+        userId, keepScreenOn);
     return this;
   }
 

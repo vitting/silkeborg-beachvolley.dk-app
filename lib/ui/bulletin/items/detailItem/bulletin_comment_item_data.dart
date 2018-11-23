@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:silkeborgbeachvolley/helpers/datetime_helpers.dart';
-import 'package:silkeborgbeachvolley/helpers/uuid_helpers.dart';
+import 'package:silkeborgbeachvolley/helpers/system_helpers.dart';
 import 'package:silkeborgbeachvolley/ui/bulletin/helpers/bulletin_firestore.dart';
 
 class BulletinCommentItemData {
@@ -39,7 +39,7 @@ class BulletinCommentItemData {
   }
 
   Future<void> save(FirebaseUser user) {
-    id = id ?? UuidHelpers.generateUuid();
+    id = id ?? SystemHelpers.generateUuid();
     authorId = authorId ?? user.uid;
     authorName = authorName ?? user.displayName;
     authorPhotoUrl = authorPhotoUrl ?? user.photoUrl;
