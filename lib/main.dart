@@ -14,7 +14,9 @@ void main() async {
   final FirebaseApp app = FirebaseApp(name: "[DEFAULT]");
   final Firestore firestore = Firestore(app: app);
   await firestore.settings(timestampsInSnapshotsEnabled: true);
+  /// Set screen orientation always to be portrait
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  /// Get info if device can vibrate
   final bool canVibrate = await Vibrate.canVibrate;
   
   runApp(MainInherited(
