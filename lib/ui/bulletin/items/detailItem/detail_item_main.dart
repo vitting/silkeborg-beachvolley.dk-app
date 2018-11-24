@@ -96,25 +96,6 @@ class _BulletinDetailItemState extends State<BulletinDetailItem> {
                 );
               },
             );
-
-            // return Column(
-            //     children:
-            //         snapshot.data.documents.map<Widget>((DocumentSnapshot doc) {
-            //   BulletinCommentItemData item = BulletinCommentItemData.fromMap(doc.data);
-            //   return ListItemCard(
-            //     child: BulletinCommentItemRow(
-            //       bulletinItem: item,
-            //       onTapMenu: (ConfirmDialogAction action) async {
-            //         if (action == ConfirmDialogAction.delete) {
-            //           await item.delete();
-
-            //           ///Get comment counter updated
-            //           setState(() {});
-            //         }
-            //       },
-            //     ),
-            //   );
-            // }).toList());
           },
         )
       ],
