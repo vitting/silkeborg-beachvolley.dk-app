@@ -336,16 +336,6 @@
         "rankingMatchesStatRowWidget": {
             "string1": "Points"
         },
-        "rankingFirsttimeMain": {
-            "string1": "Welcome to the Rankings",
-            "string2": "Before you can start registering your matches, we just need to know a few things about you. You can always change your information later in settings.",
-            "string3": "Fill out ranking name",
-            "string4": "Your ranking name",
-            "string5": "Choose your sex",
-            "string6": "Female",
-            "string7": "Male",
-            "string8": "Save my profile"
-        },
         "rankingMatchesMain": {
             "string1": "No matches where found",
             "string2": "Are you sure you want to delete the match?"

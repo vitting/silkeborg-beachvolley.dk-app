@@ -5,6 +5,7 @@ import 'package:silkeborgbeachvolley/ui/main_inheretedwidget.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/chip_header_widget.dart';
 import 'package:silkeborgbeachvolley/helpers/notification_categories_enum.dart';
 import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/scaffold/SilkeborgBeachvolleyScaffold.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
 
@@ -178,9 +179,8 @@ class SettingsState extends State<Settings> {
       children: <Widget>[
         SwitchListTile(
           onChanged: (bool state) async {
-            MainInherited.of(context).settings =
-                await _settingsData.setNotificationNews(
-                    MainInherited.of(context).userId, state);
+            MainInherited.of(context).settings = await _settingsData
+                .setNotificationNews(MainInherited.of(context).userId, state);
 
             if (state) {
               _messagingData.addSubscription(NotificationCategory.news);
@@ -198,9 +198,8 @@ class SettingsState extends State<Settings> {
         ),
         SwitchListTile(
           onChanged: (bool state) async {
-            MainInherited.of(context).settings =
-                await _settingsData.setNotificationEvent(
-                    MainInherited.of(context).userId, state);
+            MainInherited.of(context).settings = await _settingsData
+                .setNotificationEvent(MainInherited.of(context).userId, state);
             if (state) {
               _messagingData.addSubscription(NotificationCategory.event);
             } else {
@@ -217,9 +216,8 @@ class SettingsState extends State<Settings> {
         ),
         SwitchListTile(
           onChanged: (bool state) async {
-            MainInherited.of(context).settings =
-                await _settingsData.setNotificationPlay(
-                    MainInherited.of(context).userId, state);
+            MainInherited.of(context).settings = await _settingsData
+                .setNotificationPlay(MainInherited.of(context).userId, state);
 
             if (state) {
               _messagingData.addSubscription(NotificationCategory.play);
@@ -287,7 +285,6 @@ class SettingsState extends State<Settings> {
     return TextField(
       controller: _rankingNameController,
       keyboardType: TextInputType.text,
-      // textInputAction: TextInputAction.done,
       inputFormatters: [LengthLimitingTextInputFormatter(50)],
       decoration: InputDecoration(
           errorText: _rankingNameError,
@@ -302,9 +299,10 @@ class SettingsState extends State<Settings> {
               FlutterI18n.translate(context, "settings.settingsMain.string9");
           color = Colors.red;
         } else {
+          String userId = MainInherited.of(context).userId;
+          RankingPlayerData.setName(userId, value);
           MainInherited.of(context).settings =
-              await _settingsData.setRankingName(
-                  MainInherited.of(context).userId, value);
+              await _settingsData.setRankingName(userId, value);
         }
 
         setState(() {
@@ -349,8 +347,10 @@ class SettingsState extends State<Settings> {
           groupValue: _sexValue,
           value: radioValue,
           onChanged: (String value) async {
-            MainInherited.of(context).settings = await _settingsData.setSex(
-                MainInherited.of(context).userId, value);
+            String userId = MainInherited.of(context).userId;
+            RankingPlayerData.setSex(userId, value);
+            MainInherited.of(context).settings =
+                await _settingsData.setRankingSex(userId, value);
 
             setState(() {
               _sexValue = value;

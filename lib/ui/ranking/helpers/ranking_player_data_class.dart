@@ -1,6 +1,6 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_firestore.dart';
 import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_stats_data_class.dart';
 
@@ -52,7 +52,8 @@ class RankingPlayerData {
     return RankingFirestore.deletePlayerMarkAsNotDeleted(userId);
   }
 
-  static Stream<QuerySnapshot>getPlayersAsStream(bool showOnlyDeleted, int limit) {
+  static Stream<QuerySnapshot> getPlayersAsStream(
+      bool showOnlyDeleted, int limit) {
     return RankingFirestore.getAllPlayersAsStream(showOnlyDeleted, limit);
   }
 
@@ -68,6 +69,29 @@ class RankingPlayerData {
     }
 
     return data;
+  }
+
+  static Future<RankingPlayerData> initPlayer(FirebaseUser user) async {
+    RankingPlayerData data = await RankingPlayerData.getPlayer(user.uid);
+    if (data == null) {
+      data = RankingPlayerData(
+          userId: user.uid,
+          name: user.displayName,
+          sex: "male",
+          photoUrl: user.photoUrl);
+
+      await data.save();
+    }
+
+    return data;
+  }
+
+  static Future<void> setName(String userId, String name) {
+    return RankingFirestore.setName(userId, name);
+  }
+
+  static Future<void> setSex(String userId, String sex) {
+    return RankingFirestore.setSex(userId, sex);
   }
 
   factory RankingPlayerData.fromMap(Map<String, dynamic> doc) {

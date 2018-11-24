@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:silkeborgbeachvolley/helpers/silkeborg_beachvolley_theme.dart';
@@ -58,9 +57,13 @@ class LoginState extends State<Login> {
                       _showSpinner = true;
                     });
 
-                    //TODO: If return null there is a error
-                    FirebaseUser user = await UserAuth.signInWithFacebook();
-
+                    try {
+                      await UserAuth.signInWithFacebook();  
+                    } catch (e) {
+                      print("User login error");
+                      print(e);
+                    }
+                  
                     setState(() {
                       _showSpinner = false;
                     });

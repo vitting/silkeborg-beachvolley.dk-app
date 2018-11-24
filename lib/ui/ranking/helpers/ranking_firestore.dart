@@ -162,6 +162,18 @@ class RankingFirestore {
     });
   }
 
+  static Future<void> setName(String userId, String name) {
+    return _firestore.collection(_collectionNamePlayer).document(userId).updateData({
+      "name": name
+    });
+  }
+
+  static Future<void> setSex(String userId, String sex) {
+    return _firestore.collection(_collectionNamePlayer).document(userId).updateData({
+      "sex": sex
+    });
+  }
+
 //CHRISTIAN: Only for testing
   static createFakePlayers(int numberToCreate) async {
     Faker faker = Faker();

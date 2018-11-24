@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,7 @@ import 'package:silkeborgbeachvolley/helpers/user_info_data.dart';
 import 'package:silkeborgbeachvolley/helpers/user_messaging_data.dart';
 import 'package:silkeborgbeachvolley/helpers/userauth.dart';
 import 'package:silkeborgbeachvolley/ui/helpers/loader_spinner_widget.dart';
-import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_sharedpref.dart';
+import 'package:silkeborgbeachvolley/ui/ranking/helpers/ranking_player_data_class.dart';
 import 'package:silkeborgbeachvolley/ui/settings/helpers/settings_data.dart';
 
 enum SystemMode { release, develop }
@@ -97,13 +96,11 @@ class MainInheritedState extends State<MainInherited> {
     await _firebaseMessaging.deleteInstanceID();
     await UserMessagingData.deleteUserMessaging(userId);
     await UserInfoData.setEnabledState(userId, false);
-    await RankingSharedPref.removeIsItFirstTime();
     await UserAuth.signOutWithFacebook();
   }
 
   Future<void> _initUserAuth() async {
     UserAuth.firebaseAuth.onAuthStateChanged.listen((user) async {
-      // print("*****************START INIT USER AUTH: ${DateTime.now().toIso8601String()}");
       loggedInUser = user;
       userId = user?.uid;
       isLoggedIn = user != null ? true : false;
@@ -113,6 +110,7 @@ class MainInheritedState extends State<MainInherited> {
         userInfoData = await UserInfoData.initUserInfo(user);
         isAdmin1 = userInfoData.admin1;
         isAdmin2 = userInfoData.admin2;
+        RankingPlayerData.initPlayer(user);
         settings = await SettingsData.initSettings(user);
         await _initMessaging();
       }
@@ -122,12 +120,10 @@ class MainInheritedState extends State<MainInherited> {
           _loading = false;
         });
       }
-      // print("*****************END INIT USER AUTH: ${DateTime.now().toIso8601String()}");
     });
   }
 
   Future<void> _initMessaging() async {
-    // print("*****************START INIT MESSAGING: ${DateTime.now().toIso8601String()}");
     systemLanguageCode = await SystemHelpers.getSystemLanguageCode();
     _firebaseMessaging.setAutoInitEnabled(true);
     _firebaseMessaging.requestNotificationPermissions(
@@ -187,7 +183,6 @@ class MainInheritedState extends State<MainInherited> {
     });
 
     await _firebaseMessaging.getToken();
-    // print("*****************END INIT MESSAGING: ${DateTime.now().toIso8601String()}");
   }
 
   UserMessagingData _initUserMessaging(String token) {

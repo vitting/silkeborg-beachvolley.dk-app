@@ -60,9 +60,9 @@ class SettingsFirestore {
     });
   }
 
-  static Future<void> setSex(String userId, String sex) {
+  static Future<void> setRankingSex(String userId, String sex) {
     return _firestore.collection(_collectionName).document(userId).updateData({
-      "set": sex
+      "sex": sex
     });
   }
 

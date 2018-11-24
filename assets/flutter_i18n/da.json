@@ -336,16 +336,6 @@
         "rankingMatchesStatRowWidget": {
             "string1": "Point"
         },
-        "rankingFirsttimeMain": {
-            "string1": "Velkommen til Ranglisten",
-            "string2": "Før du kan gå i gang med at registere dine kampe skal vi lige vide et par ting om dig. Du kan altid senere ændre dine oplysninger i indstillinger.",
-            "string3": "Du skal udfylde dit rangliste navn",
-            "string4": "Dit rangliste navn",
-            "string5": "Du skal vælge dit køn",
-            "string6": "Kvinde",
-            "string7": "Mand",
-            "string8": "Gem min profil"
-        },
         "rankingMatchesMain": {
             "string1": "Der blev ikke fundet nogen kampe",
             "string2": "Er du sikker på du vil slette kampen?"
