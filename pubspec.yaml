@@ -1,5 +1,7 @@
 name: silkeborgbeachvolley
-description: A Silkeborg Beachvolley project.
+description: Silkeborg Beachvolley Demo
+version: 1.0.0
+author: Christian Nicolaisen
  
 dependencies:
   validate: ^1.7.0
