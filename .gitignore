@@ -15,3 +15,4 @@ google-services.json
 lib/ui/test.dart
 assets/files/config_develop.json
 assets/files/config_release.json
+android/key.properties
