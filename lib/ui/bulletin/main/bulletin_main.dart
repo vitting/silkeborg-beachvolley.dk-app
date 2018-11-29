@@ -143,7 +143,11 @@ class _BulletinState extends State<Bulletin> {
   void _setBottomBarValue(int selected) {
     setState(() {
       _numberOfItemsToLoad = _defaultNumberOfItemsToLoad;
-      _scrollController.jumpTo(0.0);
+      if (_scrollController.hasClients) {
+        _scrollController.jumpTo(0.0);
+      }
+
+      
       _currentLengthOfLoadedItems = 0;
       _bottombarSelected = selected;
     });
