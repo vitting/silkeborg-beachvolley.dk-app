@@ -147,7 +147,6 @@ class _BulletinState extends State<Bulletin> {
         _scrollController.jumpTo(0.0);
       }
 
-      
       _currentLengthOfLoadedItems = 0;
       _bottombarSelected = selected;
     });
