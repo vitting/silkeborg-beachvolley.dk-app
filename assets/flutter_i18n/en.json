@@ -498,7 +498,8 @@
             "string3": "Will you control the match?",
             "string4": "Redigere",
             "string5": "Slet",
-            "string6": "Do you want to delete the match?"
+            "string6": "Do you want to delete the match?",
+            "string7": "No matches where found"
         },
         "livescoreOverviewResultsWidget": {
             "string1": "No ended matches where found"

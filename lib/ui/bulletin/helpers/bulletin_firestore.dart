@@ -37,7 +37,7 @@ class BulletinFirestore {
         .delete();
   }
 
-  static Future<Null> deleteCommentsByBulletinId(String bulletinId) async {
+  static Future<void> deleteCommentsByBulletinId(String bulletinId) async {
     QuerySnapshot snapshot = await _firestore
         .collection(_bulletinCommentsCollectionName)
         .where("bulletinId", isEqualTo: bulletinId)
@@ -138,7 +138,7 @@ class BulletinFirestore {
     });
   }
 
-  static Future<Null> deleteCommittedByBulletinId(String bulletinId) async {
+  static Future<void> deleteCommittedByBulletinId(String bulletinId) async {
     QuerySnapshot snapshot = await _firestore
         .collection(_bulletinCommittedCollectionName)
         .where("bulletinId", isEqualTo: bulletinId)

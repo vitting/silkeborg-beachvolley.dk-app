@@ -116,9 +116,8 @@ class RankingFirestore {
         .snapshots();
   }
 
-  static Future<DocumentSnapshot> getPlayer(String userId,
-      [bool deleted = false]) async {
-    return _firestore.collection(_collectionNamePlayer).document(userId).get();
+  static Future<DocumentSnapshot> getPlayer(String userId, [bool deleted = false]) async {
+      return _firestore.collection(_collectionNamePlayer).document(userId).get();
   }
 
   static Future<void> savePlayer(RankingPlayerData player) async {

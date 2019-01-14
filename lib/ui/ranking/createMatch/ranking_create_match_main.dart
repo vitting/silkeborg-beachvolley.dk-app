@@ -256,6 +256,7 @@ class _RankingCreateMatchState extends State<RankingCreateMatch> {
           _showSaving = true;
         });
       }
+      
       await match.save(MainInherited.of(context).userId);
       if (mounted) {
         setState(() {

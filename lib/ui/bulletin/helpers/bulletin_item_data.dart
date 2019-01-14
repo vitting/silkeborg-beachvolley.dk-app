@@ -64,7 +64,7 @@ class BulletinItemData {
     }
   }
 
-  Future<Null> deleteComments() async {
+  Future<void> deleteComments() async {
     return BulletinFirestore.deleteCommentsByBulletinId(id);
   }
 
@@ -103,7 +103,7 @@ class BulletinItemData {
     return BulletinFirestore.deleteCommitted(id, authorId);
   }
 
-  Future<Null> deleteCommitted() async {
+  Future<void> deleteCommitted() async {
     return BulletinFirestore.deleteCommittedByBulletinId(id);
   }
 

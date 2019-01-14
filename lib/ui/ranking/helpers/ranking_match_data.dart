@@ -32,15 +32,16 @@ class RankingMatchData {
       this.enabled = true});
 
   Future<RankingPlayerData> getPlayerCreatedMatch() {
-    return RankingPlayerData.getPlayer(userId);
+    print(id);
+    return RankingPlayerData.getPlayer(userId);  
   }
 
   Future<void> save(String userId) async {
     id = id ?? SystemHelpers.generateUuid();
-    userId = userId ?? userId;
+    this.userId = this.userId ?? userId;
     createdDate = createdDate ?? Timestamp.now();
     year = year ?? matchDate.year;
-
+    
     await RankingFirestore.saveMatch(this);
   }
 

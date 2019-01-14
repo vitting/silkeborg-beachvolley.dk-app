@@ -29,6 +29,8 @@ class _MainMaterialAppState extends State<MainMaterialApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       showPerformanceOverlay: false,
+      debugShowCheckedModeBanner: false,
+      showSemanticsDebugger: false,
       debugShowMaterialGrid: false,
       title: "Silkeborg Beachvolley",
       localizationsDelegates: [

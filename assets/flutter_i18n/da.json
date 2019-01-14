@@ -498,7 +498,8 @@
             "string3": "Vil du kontrollere kampen?",
             "string4": "Redigere",
             "string5": "Slet",
-            "string6": "Vil du slette kampen?"
+            "string6": "Vil du slette kampen?",
+            "string7": "Der blev ikke fundet nogen kampe"
         },
         "livescoreOverviewResultsWidget": {
             "string1": "Der blev ikke fundet nogen afsluttede kampe"
