@@ -11,7 +11,6 @@ void main() async {
   debugPaintBaselinesEnabled = false;
 
   /// Set firestore to save and return dates as Timestamp
-  // final FirebaseApp app = FirebaseApp(name: "[DEFAULT]");
   final Firestore firestore = Firestore();
   await firestore.settings(timestampsInSnapshotsEnabled: true);
 
