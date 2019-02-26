@@ -77,11 +77,15 @@ class BulletinItemPictures extends StatelessWidget {
       if (image is String) link = image;
       if (image is ImageInfoData) link = image.linkFirebaseStorage;
       data = CachedNetworkImage(
-        placeholder: LoaderSpinner(
+        placeholder: (BuildContext context, String url) {
+          return LoaderSpinner(
           width: width,
           height: height,
-        ),
-        errorWidget: Image.memory(kTransparentImage),
+        );
+        },
+        errorWidget: (BuildContext context, String url, Exception error) {
+          return Image.memory(kTransparentImage);
+        },
         imageUrl: link,
         fit: BoxFit.cover,
         width: width,

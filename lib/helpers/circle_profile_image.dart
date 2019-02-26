@@ -54,16 +54,20 @@ class CircleProfileImage extends StatelessWidget {
         child: CachedNetworkImage(
                     fit: BoxFit.cover,
                     imageUrl: url,
-                    errorWidget: errorWidget ??
+                    errorWidget: (BuildContext context, String url, Exception error) {
+                      return errorWidget ??
                         Image.asset(
                             "assets/images/no_profile_picture_120x120.png",
                             width: size,
-                            height: size),
-                    placeholder: placeHolder ??
+                            height: size);
+                    },
+                    placeholder: (BuildContext context, String url) {
+                      return placeHolder ??
                         Image.asset(
                             "assets/images/no_profile_picture_120x120.png",
                             width: size,
-                            height: size),
+                            height: size);
+                    }, 
                     width: size,
                     height: size,
                   )
