@@ -27,10 +27,13 @@ class UserAuth {
     FacebookLoginResult result =
         await facebookSignIn.logInWithReadPermissions(facebookPermissions);
 
-    if (result == null || result.status == FacebookLoginStatus.cancelledByUser)
+    if (result == null || result.status == FacebookLoginStatus.cancelledByUser) {
       return null;
-    FirebaseUser user = await firebaseAuth.signInWithFacebook(
-        accessToken: result.accessToken.token);
+    }
+      
+    final AuthCredential credential =FacebookAuthProvider.getCredential(accessToken: result.accessToken.token);
+      
+    FirebaseUser user = await firebaseAuth.signInWithCredential(credential);
     return user;
   }
 
